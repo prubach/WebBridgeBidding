@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class Application {
 
@@ -20,7 +22,8 @@ public class Application {
 	@Bean
 	public CommandLineRunner demo(BidRepository bidRepo) {
 		return (args) -> {
-			Bid bid1C = new Bid(0, 1, "C", 12, 37, "5+", "F", "", false, "Wieloznaczny trefl", "3 znaczenia", null);
+
+			/*Bid bid1C = new Bid(0, 1, "C", 12, 37, "5+", "F", "", false, "Wieloznaczny trefl", "3 znaczenia", null);
 			Bid bid1D = new Bid(0, 1, "D", 12, 18, "5", "S", "", false, "Słabe 1 karo", "Słabe 1 karo",null);
 			Bid bid1DP = new Bid(1, 1, "P", 0, 6, "0+", "S", "", false, "Brak punktów","Brak punktów",  bid1D);
 			Bid bid1C1D = new Bid(1, 1, "D", 0, 37, "0+", "S", "", false, "Negat na 1 trefl","Negat na 1 trefl", bid1C);
@@ -42,6 +45,11 @@ public class Application {
 			bidRepo.save(bid1C1D1S1NT);
 			bidRepo.save(bid1C1H1NT);
 			bidRepo.save(bid1C1H2H);
+*/
+			List<Bid> bids = XlsBridgeReader.readBridgeBidsFromXls();
+			for (Bid b : bids)
+				bidRepo.save(b);
+			//XlsBridgeWriter.writeBridgeBidsToXlsx(bidRepo.findAll());
 		};
 	}
 

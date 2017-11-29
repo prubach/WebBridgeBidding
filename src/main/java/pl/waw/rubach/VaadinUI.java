@@ -13,6 +13,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 
+import javax.swing.text.html.CSS;
 import java.util.ArrayList;
 
 @SpringUI
@@ -36,7 +37,8 @@ public class VaadinUI extends UI {
 	private Bid curBid = null;
 
 	private Integer curLevel = 0;
-	private Label curBidLabel = new Label("Choose bid\n\n");
+	private Label navigatorLabel = new Label("Choose bid");
+	private Label curBidLabel = new Label("");
 
 //	private final Button addNewDebitAccountBtn;
 
@@ -59,8 +61,11 @@ public class VaadinUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		// build layout
+		navigatorLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setContentMode(ContentMode.HTML);
-		HorizontalLayout actions = new HorizontalLayout(filter, backBtn, curBidLabel);
+		HorizontalLayout topLayout = new HorizontalLayout(filter, backBtn, navigatorLabel);
+		CssLayout actions = new CssLayout(topLayout,curBidLabel);
+		Responsive.makeResponsive(actions);
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
 		bidGrid.setHeightByRows(8);
@@ -73,7 +78,7 @@ public class VaadinUI extends UI {
 		//verticalLayout.setExpandRatio(grid, 1);
 		//verticalLayout.setSizeFull();
 		// Configure layouts and components
-		actions.setSpacing(true);
+		//actions.setSpacing(true);
 		//mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 
@@ -169,10 +174,11 @@ public class VaadinUI extends UI {
 	}
 
 	private String replaceSuitsInDesc(String desc) {
-		desc = desc.replaceAll("kier", "<font color=\"red\">\u2665</font color>");
-		desc = desc.replaceAll("karo", "<font color=\"red\">\u2666</font color>");
-		desc = desc.replaceAll("trefl", "\u2663");
-		desc = desc.replaceAll("pik", "\u2660");
+		if (desc==null) return desc;
+		desc = desc.replaceAll("kier ", "<font color=\"red\">\u2665</font color> ");
+		desc = desc.replaceAll("karo ", "<font color=\"red\">\u2666</font color> ");
+		desc = desc.replaceAll("trefl ", "\u2663 ");
+		desc = desc.replaceAll("pik ", "\u2660 ");
 		return desc;
 	}
 
@@ -196,7 +202,7 @@ public class VaadinUI extends UI {
 	}
 	private void setCurrentBid(Bid bid) {
 		curBid = bid;
-		if (bid==null) curBidLabel.setValue("Choose bid");
+		if (bid==null) navigatorLabel.setValue("Choose bid");
 		else {
 			String desc = "";
 			Bid tempBid = curBid.getParentBid();
@@ -204,8 +210,9 @@ public class VaadinUI extends UI {
 				desc = getBidLevelSuit(tempBid) + " -> " + desc;
 				tempBid = tempBid.getParentBid();
 			}
-			curBidLabel.setValue(desc + getBidLevelSuit(curBid) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-					+ replaceSuitsInDesc(curBid.getDescription()));
+			navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
+			curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
+			curBidLabel.setWidth("100%");
 		}
 	}
 

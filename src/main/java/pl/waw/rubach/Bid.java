@@ -7,7 +7,7 @@ public class Bid {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long bidID;
+    private Integer bidID;
 
     private Integer bidLevel;
 
@@ -60,11 +60,11 @@ public class Bid {
         this.suitLength = suitLength;
     }
 
-    public Long getBidID() {
+    public Integer getBidID() {
         return bidID;
     }
 
-    public void setBidID(Long bidID) {
+    public void setBidID(Integer bidID) {
         this.bidID = bidID;
     }
 
