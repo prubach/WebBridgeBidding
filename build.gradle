@@ -44,6 +44,7 @@ dependencies {
     compile("com.vaadin:vaadin-spring-boot-starter:2.0.1")
     compile 'org.xerial:sqlite-jdbc:3.21.0'
     compile 'org.hibernate.dialect:sqlite-dialect:0.1.0'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
     testCompile("junit:junit")
 }
 
