@@ -2,7 +2,9 @@ package pl.waw.rubach;
 
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.Responsive;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.renderers.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
@@ -57,42 +59,55 @@ public class VaadinUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		// build layout
+		curBidLabel.setContentMode(ContentMode.HTML);
 		HorizontalLayout actions = new HorizontalLayout(filter, backBtn, curBidLabel);
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
+		bidGrid.setHeightByRows(8);
+		bidGrid2nd.setHeightByRows(8);
 		Responsive.makeResponsive(cssLayout);
 
 		VerticalLayout mainLayout = new VerticalLayout(actions, cssLayout);
-
+		//mainLayout.setSizeFull();
 		setContent(mainLayout);
 		//verticalLayout.setExpandRatio(grid, 1);
 		//verticalLayout.setSizeFull();
 		// Configure layouts and components
 		actions.setSpacing(true);
-		mainLayout.setMargin(true);
+		//mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 
-		bidGrid.setColumns("shortDesc", "suitLength", "bidLevel");
+		bidGrid.setColumns("suitLength"/*, "bidLevel"*/);
 
 		// Add generated full name column
-		Grid.Column<String, Bid> levelSuit = bidGrid.addColumn(bid-> getBidLevelSuit((Bid)bid));
+		Grid.Column<String, Bid> levelSuit = bidGrid.addColumn(bid-> getBidLevelSuit((Bid)bid), new HtmlRenderer());
 		levelSuit.setCaption("Name");
 		levelSuit.setId("name");
 		Grid.Column<String, Bid> points = bidGrid.addColumn(bid-> getPointsForBid((Bid)bid));
 		points.setCaption("Points");
 		points.setId("points");
-		bidGrid.setColumnOrder("name", "points", "suitLength", "shortDesc"/*, "bidLevel" */);
+		Grid.Column<String, Bid> shortDesc = bidGrid.addColumn(bid-> replaceSuitsInDesc(((Bid)bid).getShortDesc()), new HtmlRenderer());
+		shortDesc.setCaption("Short Desc");
+		shortDesc.setId("shortDesc");
+		bidGrid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
+
+		bidGrid.getColumn("suitLength").setCaption("# in Suit");
 		bidGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
 
-		bidGrid2nd.setColumns("shortDesc", "suitLength", "bidLevel");
+		bidGrid2nd.setColumns("suitLength" /*, "bidLevel"*/);
+		bidGrid2nd.getColumn("suitLength").setCaption("# in Suit");
 		bidGrid2nd.setSelectionMode(Grid.SelectionMode.SINGLE);
 		// Add generated full name column
-		Grid.Column<String, Bid> levelSuit2nd = bidGrid2nd.addColumn(bid-> getBidLevelSuit((Bid)bid));
+		Grid.Column<String, Bid> levelSuit2nd = bidGrid2nd.addColumn(bid-> getBidLevelSuit((Bid)bid), new HtmlRenderer());
 		levelSuit2nd.setCaption("Name");
 		levelSuit2nd.setId("name");
+		//levelSuit.set
 		Grid.Column<String, Bid> points2nd = bidGrid2nd.addColumn(bid-> getPointsForBid((Bid)bid));
 		points2nd.setCaption("Points");
 		points2nd.setId("points");
+		Grid.Column<String, Bid> shortDesc2nd = bidGrid2nd.addColumn(bid-> replaceSuitsInDesc(((Bid)bid).getShortDesc()), new HtmlRenderer());
+		shortDesc2nd.setCaption("Short Desc");
+		shortDesc2nd.setId("shortDesc");
 		bidGrid2nd.setColumnOrder("name", "points", "suitLength", "shortDesc"/*, "bidLevel"*/ );
 
 
@@ -153,9 +168,28 @@ public class VaadinUI extends UI {
 		}
 	}
 
+	private String replaceSuitsInDesc(String desc) {
+		desc = desc.replaceAll("kier", "<font color=\"red\">\u2665</font color>");
+		desc = desc.replaceAll("karo", "<font color=\"red\">\u2666</font color>");
+		desc = desc.replaceAll("trefl", "\u2663");
+		desc = desc.replaceAll("pik", "\u2660");
+		return desc;
+	}
+
+	private String getBidSuit(Bid bid) {
+		switch (bid.getSuit()) {
+			case "C" : return "\u2663";
+			case "D" : return "<font color=\"red\">\u2666</font color>";
+			case "H" : return "<font color=\"red\">\u2665</font color>";
+			case "S" : return "\u2660";
+			case "NT" : return "NT";
+		}
+		return "";
+	}
+
 	private String getBidLevelSuit(Bid bid) {
 		return bid.getSuit().equals("P") ? "PASS" :
-				bid.getLevel() + " " + bid.getSuit();
+				bid.getLevel() + " " + getBidSuit(bid);
 	}
 	private String getPointsForBid(Bid bid) {
 		return bid.getPointsMin() + (bid.getPointsMax() >= 37 ? "+" : "-" + bid.getPointsMax());
@@ -170,7 +204,8 @@ public class VaadinUI extends UI {
 				desc = getBidLevelSuit(tempBid) + " -> " + desc;
 				tempBid = tempBid.getParentBid();
 			}
-			curBidLabel.setValue(desc + getBidLevelSuit(curBid) + "\t" + curBid.getDescription());
+			curBidLabel.setValue(desc + getBidLevelSuit(curBid) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+					+ replaceSuitsInDesc(curBid.getDescription()));
 		}
 	}
 

@@ -19,7 +19,7 @@ public class Bid {
 
     private Integer pointsMax;
 
-    private Integer suitLength;
+    private String suitLength;
 
     private String bidType;
 
@@ -37,7 +37,7 @@ public class Bid {
     public Bid() {
     }
 
-    public Bid(Integer bidLevel, Integer level, String suit, Integer pointsMin, Integer pointsMax, Integer suitLength, String bidType, String bidClass, boolean afterInterven, String shortDesc, String description, Bid parentBid) {
+    public Bid(Integer bidLevel, Integer level, String suit, Integer pointsMin, Integer pointsMax, String suitLength, String bidType, String bidClass, boolean afterInterven, String shortDesc, String description, Bid parentBid) {
         this.bidLevel = bidLevel;
         this.level = level;
         this.suit = suit;
@@ -50,6 +50,14 @@ public class Bid {
         this.shortDesc = shortDesc;
         this.description = description;
         this.parentBid = parentBid;
+    }
+
+    public String getSuitLength() {
+        return suitLength;
+    }
+
+    public void setSuitLength(String suitLength) {
+        this.suitLength = suitLength;
     }
 
     public Long getBidID() {
@@ -98,14 +106,6 @@ public class Bid {
 
     public void setPointsMax(Integer pointsMax) {
         this.pointsMax = pointsMax;
-    }
-
-    public Integer getSuitLength() {
-        return suitLength;
-    }
-
-    public void setSuitLength(Integer suitLength) {
-        this.suitLength = suitLength;
     }
 
     public String getBidType() {
@@ -165,7 +165,7 @@ public class Bid {
                 ", suit='" + suit + '\'' +
                 ", pointsMin=" + pointsMin +
                 ", pointsMax=" + pointsMax +
-                ", suitLength=" + suitLength +
+                ", suitLength='" + suitLength + '\'' +
                 ", bidType='" + bidType + '\'' +
                 ", bidClass='" + bidClass + '\'' +
                 ", afterInterven=" + afterInterven +
