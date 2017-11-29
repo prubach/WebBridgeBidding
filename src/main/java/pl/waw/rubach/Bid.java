@@ -27,6 +27,8 @@ public class Bid {
 
     private boolean afterInterven;
 
+    private String shortDesc;
+
     private String description;
 
     @ManyToOne
@@ -35,7 +37,7 @@ public class Bid {
     public Bid() {
     }
 
-    public Bid(Integer bidLevel, Integer level, String suit, Integer pointsMin, Integer pointsMax, Integer suitLength, String bidType, String bidClass, boolean afterInterven, String description, Bid parentBid) {
+    public Bid(Integer bidLevel, Integer level, String suit, Integer pointsMin, Integer pointsMax, Integer suitLength, String bidType, String bidClass, boolean afterInterven, String shortDesc, String description, Bid parentBid) {
         this.bidLevel = bidLevel;
         this.level = level;
         this.suit = suit;
@@ -45,6 +47,7 @@ public class Bid {
         this.bidType = bidType;
         this.bidClass = bidClass;
         this.afterInterven = afterInterven;
+        this.shortDesc = shortDesc;
         this.description = description;
         this.parentBid = parentBid;
     }
@@ -145,6 +148,14 @@ public class Bid {
         this.parentBid = parentBid;
     }
 
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
+    }
+
     @Override
     public String toString() {
         return "Bid{" +
@@ -158,6 +169,7 @@ public class Bid {
                 ", bidType='" + bidType + '\'' +
                 ", bidClass='" + bidClass + '\'' +
                 ", afterInterven=" + afterInterven +
+                ", shortDesc='" + shortDesc + '\'' +
                 ", description='" + description + '\'' +
                 ", parentBid=" + parentBid +
                 '}';

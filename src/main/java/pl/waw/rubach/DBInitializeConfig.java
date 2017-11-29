@@ -35,25 +35,9 @@ public class DBInitializeConfig {
 							+ "BID_TYPE VARCHAR(30),"
 							+ "BID_CLASS VARCHAR(30),"
 							+ "AFTER_INTERVEN BOOLEAN,"
+							+ "SHORT_DESC VARCHAR(100),"
 							+ "DESCRIPTION VARCHAR(1000),"
 							+ "PARENT_BID_BIDID LONG"
-							+ ") ");
-
-			statement.execute("DROP TABLE IF EXISTS CUSTOMER");
-			statement.execute("DROP TABLE IF EXISTS ACCOUNT");
-			statement.executeUpdate(
-					"create table CUSTOMER ( "
-							+ "CUSTOMERID INTEGER PRIMARY KEY, "
-							+ "FIRST_NAME VARCHAR(50), "
-							+ "LAST_NAME VARCHAR(50)"
-							+ ") ");
-			statement.executeUpdate(
-					"create table ACCOUNT ( "
-							+ "ACCOUNTID INTEGER PRIMARY KEY, "
-							+ "BALANCE NUMERIC, "
-							+ "SAVINGS BOOLEAN,"
-							+ "CUSTOMER_CUSTOMERID INTEGER,"
-							+ "DTYPE VARCHAR(40)"
 							+ ") ");
 			statement.close();
 			connection.close();

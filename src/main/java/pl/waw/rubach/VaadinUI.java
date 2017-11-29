@@ -1,6 +1,8 @@
 package pl.waw.rubach;
 
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.server.Responsive;
+import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
@@ -8,12 +10,6 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 import java.util.ArrayList;
 
@@ -35,7 +31,10 @@ public class VaadinUI extends UI {
 
 	private final Button backBtn;
 
+	private Bid curBid = null;
+
 	private Integer curLevel = 0;
+	private Label curBidLabel = new Label("Choose bid\n\n");
 
 //	private final Button addNewDebitAccountBtn;
 
@@ -58,63 +57,53 @@ public class VaadinUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		// build layout
-		HorizontalLayout actions = new HorizontalLayout(filter, backBtn);
+		HorizontalLayout actions = new HorizontalLayout(filter, backBtn, curBidLabel);
 
-		VerticalLayout customerLayout = new VerticalLayout(bidGrid);
+		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
+		Responsive.makeResponsive(cssLayout);
 
-		VerticalLayout accountLayout = new VerticalLayout(bidGrid2nd);
-
-		HorizontalLayout grids = new HorizontalLayout(customerLayout, accountLayout);
-
-		VerticalLayout mainLayout = new VerticalLayout(actions, grids);
+		VerticalLayout mainLayout = new VerticalLayout(actions, cssLayout);
 
 		setContent(mainLayout);
-
+		//verticalLayout.setExpandRatio(grid, 1);
+		//verticalLayout.setSizeFull();
 		// Configure layouts and components
 		actions.setSpacing(true);
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 
-		bidGrid.setColumns("description", "suitLength", "bidLevel");
+		bidGrid.setColumns("shortDesc", "suitLength", "bidLevel");
 
 		// Add generated full name column
-		Grid.Column<String, Bid> levelSuit = bidGrid.addColumn(bid-> ((Bid)bid).getLevel() + " " + ((Bid)bid).getSuit());
+		Grid.Column<String, Bid> levelSuit = bidGrid.addColumn(bid-> getBidLevelSuit((Bid)bid));
 		levelSuit.setCaption("Name");
 		levelSuit.setId("name");
-		Grid.Column<String, Bid> points = bidGrid.addColumn(bid-> ((Bid)bid).getPointsMin() + "-" + ((Bid)bid).getPointsMax());
+		Grid.Column<String, Bid> points = bidGrid.addColumn(bid-> getPointsForBid((Bid)bid));
 		points.setCaption("Points");
 		points.setId("points");
-		bidGrid.setColumnOrder("name", "points", "suitLength", "description", "bidLevel" );
+		bidGrid.setColumnOrder("name", "points", "suitLength", "shortDesc"/*, "bidLevel" */);
+		bidGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
 
-
-		bidGrid2nd.setColumns("description", "suitLength", "bidLevel");
-
+		bidGrid2nd.setColumns("shortDesc", "suitLength", "bidLevel");
+		bidGrid2nd.setSelectionMode(Grid.SelectionMode.SINGLE);
 		// Add generated full name column
-		Grid.Column<String, Bid> levelSuit2nd = bidGrid2nd.addColumn(bid-> ((Bid)bid).getLevel() + " " + ((Bid)bid).getSuit());
+		Grid.Column<String, Bid> levelSuit2nd = bidGrid2nd.addColumn(bid-> getBidLevelSuit((Bid)bid));
 		levelSuit2nd.setCaption("Name");
 		levelSuit2nd.setId("name");
-		Grid.Column<String, Bid> points2nd = bidGrid2nd.addColumn(bid-> ((Bid)bid).getPointsMin() + "-" + ((Bid)bid).getPointsMax());
+		Grid.Column<String, Bid> points2nd = bidGrid2nd.addColumn(bid-> getPointsForBid((Bid)bid));
 		points2nd.setCaption("Points");
 		points2nd.setId("points");
-		bidGrid2nd.setColumnOrder("name", "points", "suitLength", "description", "bidLevel" );
+		bidGrid2nd.setColumnOrder("name", "points", "suitLength", "shortDesc"/*, "bidLevel"*/ );
 
 
 		filter.setPlaceholder("Filter by description");
 		filter.setVisible(false);
 
-		// Hook logic to components
-
-		// Replace listing with filtered content when user changes filter
-		//filter.addValueChangeListener(e -> listCustomers(e.getValue()));
-
 		// Connect selected Customer to editor or hide if none is selected
 		bidGrid.addSelectionListener(e -> {
-			if (e.getAllSelectedItems().isEmpty()) {
-				//editor.setVisible(false);
-				listBids(null);
-			}
-			else {
+			if (!e.getAllSelectedItems().isEmpty()) {
 				Bid selBid = new ArrayList<Bid>(bidGrid.getSelectedItems()).get(0);
+				setCurrentBid(selBid);
 				//editor.editCustomer(selCust);
 				listBids2nd(selBid);
 			}
@@ -123,17 +112,13 @@ public class VaadinUI extends UI {
 		bidGrid2nd.addSelectionListener(e -> {
 			if (!e.getAllSelectedItems().isEmpty()) {
 				Bid selBid = new ArrayList<Bid>(bidGrid2nd.getSelectedItems()).get(0);
-
-				System.out.println("Bid level: " + selBid.getLevel());
-				listBids(selBid.getLevel());
+				listBids(selBid);
 				listBids2nd(selBid);
 			}
 		});
 
-
-		// Instantiate and edit new Customer the new button is clicked
 		backBtn.addClickListener(e -> {
-			listBids(curLevel -1);
+			listBids(curBid!=null && curBid.getParentBid()!=null ? curBid.getParentBid() : null);
 			listBids2nd(null);
 		});
 
@@ -141,29 +126,52 @@ public class VaadinUI extends UI {
 		listBids(null);
 	}
 
-	private void listBids(Integer level) {
-		if (level==null) {
+	private void listBids(Bid bid) {
+		setCurrentBid(bid);
+		if (bid==null) {
 			bidGrid.setDataProvider(
-					new ListDataProvider<Bid>(bidRepo.findByBidLevel(0)));
+					new ListDataProvider<>(bidRepo.findByBidLevel(0)));
 		}
 		else {
-			curLevel = level;
-			bidGrid.setDataProvider(new ListDataProvider<Bid>(
-					bidRepo.findByBidLevel(level)));
-	//		bidGrid.setDataProvider(new ListDataProvider<Bid>(
-//					bidRepo.findByParentBid(parentBid)));
+			bidGrid.setDataProvider(new ListDataProvider<>(
+					bidRepo.findByParentBid(bid.getParentBid())));
+			//TODO Selection doesn't work!!!
+			bidGrid.asSingleSelect().setValue(bid);
+			bidGrid.select(bid);
+			bidGrid.markAsDirtyRecursive();
 		}
 	}
 
-	// tag::listCustomers[]
 	private void listBids2nd(Bid parentBid) {
 		if (parentBid==null) {
 			bidGrid2nd.setDataProvider(
-					new ListDataProvider<Bid>(bidRepo.findByBidLevel(999)));
+					new ListDataProvider<>(bidRepo.findByBidLevel(999)));
 		}
 		else {
-			bidGrid2nd.setDataProvider(new ListDataProvider<Bid>(
+			bidGrid2nd.setDataProvider(new ListDataProvider<>(
 					bidRepo.findByParentBid(parentBid)));
 		}
 	}
+
+	private String getBidLevelSuit(Bid bid) {
+		return bid.getSuit().equals("P") ? "PASS" :
+				bid.getLevel() + " " + bid.getSuit();
+	}
+	private String getPointsForBid(Bid bid) {
+		return bid.getPointsMin() + (bid.getPointsMax() >= 37 ? "+" : "-" + bid.getPointsMax());
+	}
+	private void setCurrentBid(Bid bid) {
+		curBid = bid;
+		if (bid==null) curBidLabel.setValue("Choose bid");
+		else {
+			String desc = "";
+			Bid tempBid = curBid.getParentBid();
+			while (tempBid!=null) {
+				desc = getBidLevelSuit(tempBid) + " -> " + desc;
+				tempBid = tempBid.getParentBid();
+			}
+			curBidLabel.setValue(desc + getBidLevelSuit(curBid) + "\t" + curBid.getDescription());
+		}
+	}
+
 }
