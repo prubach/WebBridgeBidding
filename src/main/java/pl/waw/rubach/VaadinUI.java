@@ -132,8 +132,12 @@ public class VaadinUI extends UI {
 		bidGrid2nd.addSelectionListener(e -> {
 			if (!e.getAllSelectedItems().isEmpty()) {
 				Bid selBid = new ArrayList<Bid>(bidGrid2nd.getSelectedItems()).get(0);
-				listBids(selBid);
-				listBids2nd(selBid);
+				if (!bidRepo.findByParentBid(selBid).isEmpty()) {
+					listBids(selBid);
+					listBids2nd(selBid);
+				} else {
+					setCurrentBid(selBid);
+				}
 			}
 		});
 
