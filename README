@@ -1,0 +1,11 @@
+To compile WebBridgeBidding please get the Sqlite Dialect: https://github.com/gwenn/sqlite-dialect
+
+git clone https://github.com/gwenn/sqlite-dialect.git
+cd sqlite-dialect
+mvn install
+
+To compile and run this project use gradle
+
+gradle bootRun
+
+In Browser navigate to: http://localhost:8080
