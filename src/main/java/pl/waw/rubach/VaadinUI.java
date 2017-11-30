@@ -15,6 +15,7 @@ import com.vaadin.spring.annotation.SpringUI;
 
 import javax.swing.text.html.CSS;
 import java.util.ArrayList;
+import java.util.List;
 
 @SpringUI
 @Theme("valo")
@@ -22,9 +23,7 @@ public class VaadinUI extends UI {
 
 	private final BidRepository bidRepo;
 
-//	private final CustomerEditor editor;
-
-//	private final AccountEditor accountEditor;
+	private final BidSystemRepository bidSystemRepo;
 
 	private final Grid bidGrid;
 
@@ -36,26 +35,21 @@ public class VaadinUI extends UI {
 
 	private Bid curBid = null;
 
+	private BidSystem curBidSystem = null;
+
 	private Integer curLevel = 0;
+	private Label bidSystemLabel = new Label("");
 	private Label navigatorLabel = new Label("Choose bid");
 	private Label curBidLabel = new Label("");
 
-//	private final Button addNewDebitAccountBtn;
-
-//	private final Button addNewSavingsAccountBtn;
-
-
 	@Autowired
-	public VaadinUI(BidRepository bidRepository) {
+	public VaadinUI(BidRepository bidRepository, BidSystemRepository bidSystemRepo) {
 		this.bidRepo = bidRepository;
+		this.bidSystemRepo = bidSystemRepo;
 		this.bidGrid = new Grid(Bid.class);
 		this.bidGrid2nd = new Grid(Bid.class);
-//		this.editor = editor;
-//		this.accountEditor = accountEditor;
 		this.filter = new TextField();
 		this.backBtn = new Button("Back", FontAwesome.ARROW_CIRCLE_LEFT);
-//		this.addNewDebitAccountBtn = new Button("New debit account", FontAwesome.PLUS);/
-//		this.addNewSavingsAccountBtn = new Button("New savings account", FontAwesome.PLUS);
 	}
 
 	@Override
@@ -63,8 +57,11 @@ public class VaadinUI extends UI {
 		// build layout
 		navigatorLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setContentMode(ContentMode.HTML);
-		HorizontalLayout topLayout = new HorizontalLayout(filter, backBtn, navigatorLabel);
-		CssLayout actions = new CssLayout(topLayout,curBidLabel);
+		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel);
+		topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_RIGHT);
+		HorizontalLayout topLayout = new HorizontalLayout(backBtn, navigatorLabel);
+		//topLayout.setWidth("100%");
+		CssLayout actions = new CssLayout(topRightLayout, topLayout,curBidLabel);
 		Responsive.makeResponsive(actions);
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
@@ -82,8 +79,11 @@ public class VaadinUI extends UI {
 		//mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 
-		bidGrid.setColumns("suitLength"/*, "bidLevel"*/);
+		List<BidSystem> bidSystemList = bidSystemRepo.findAll();
+		curBidSystem = bidSystemList.get(0);
+		bidSystemLabel.setValue(curBidSystem.getName());
 
+		bidGrid.setColumns("suitLength"/*, "bidLevel"*/);
 		// Add generated full name column
 		Grid.Column<String, Bid> levelSuit = bidGrid.addColumn(bid-> getBidLevelSuit((Bid)bid), new HtmlRenderer());
 		levelSuit.setCaption("Name");
@@ -154,7 +154,7 @@ public class VaadinUI extends UI {
 		setCurrentBid(bid);
 		if (bid==null) {
 			bidGrid.setDataProvider(
-					new ListDataProvider<>(bidRepo.findByBidLevel(0)));
+					new ListDataProvider<>(bidRepo.findByBidSystemAndBidLevel(curBidSystem,0)));
 		}
 		else {
 			bidGrid.setDataProvider(new ListDataProvider<>(
@@ -169,7 +169,7 @@ public class VaadinUI extends UI {
 	private void listBids2nd(Bid parentBid) {
 		if (parentBid==null) {
 			bidGrid2nd.setDataProvider(
-					new ListDataProvider<>(bidRepo.findByBidLevel(999)));
+					new ListDataProvider<>(bidRepo.findByBidSystemAndBidLevel(curBidSystem,999)));
 		}
 		else {
 			bidGrid2nd.setDataProvider(new ListDataProvider<>(

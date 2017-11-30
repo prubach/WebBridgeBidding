@@ -20,7 +20,7 @@ public class Application {
 	}
 
 	@Bean
-	public CommandLineRunner demo(BidRepository bidRepo) {
+	public CommandLineRunner demo(BidRepository bidRepo, BidSystemRepository bidSystemRepo) {
 		return (args) -> {
 
 			/*Bid bid1C = new Bid(0, 1, "C", 12, 37, "5+", "F", "", false, "Wieloznaczny trefl", "3 znaczenia", null);
@@ -47,8 +47,12 @@ public class Application {
 			bidRepo.save(bid1C1H2H);
 */
 			List<Bid> bids = XlsBridgeReader.readBridgeBidsFromXls();
-			for (Bid b : bids)
+			int i=0;
+			for (Bid b : bids) {
+				if (i==0) bidSystemRepo.save(b.getBidSystem());
 				bidRepo.save(b);
+				i++;
+			}
 			//XlsBridgeWriter.writeBridgeBidsToXlsx(bidRepo.findAll());
 		};
 	}

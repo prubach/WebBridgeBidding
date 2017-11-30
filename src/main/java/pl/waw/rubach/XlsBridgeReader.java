@@ -66,7 +66,9 @@ public class XlsBridgeReader extends XlsBridge {
         try {
             FileInputStream excelFile = new FileInputStream(new File(FILE_NAME_IN));
             Workbook workbook = new XSSFWorkbook(excelFile);
+
             Sheet datatypeSheet = workbook.getSheetAt(0);
+            BidSystem bidSystem = new BidSystem(datatypeSheet.getSheetName());
             Iterator<Row> iterator = datatypeSheet.iterator();
             // Check Head
             Row currentRow = iterator.next();
@@ -79,7 +81,7 @@ public class XlsBridgeReader extends XlsBridge {
                 currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 Bid newBid = new Bid();
-
+                newBid.setBidSystem(bidSystem);
                 int m = 0;
                 while (cellIterator.hasNext()) {
                     Cell currentCell = cellIterator.next();
@@ -138,7 +140,7 @@ public class XlsBridgeReader extends XlsBridge {
      /*   for (Bid b : newBids) {
             b.setBidID(null);
         }*/
-        System.out.println(newBids);
+        //System.out.println(newBids);
         return newBids;
     }
 

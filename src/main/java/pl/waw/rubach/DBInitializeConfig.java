@@ -37,7 +37,14 @@ public class DBInitializeConfig {
 							+ "AFTER_INTERVEN BOOLEAN,"
 							+ "SHORT_DESC VARCHAR(100),"
 							+ "DESCRIPTION VARCHAR(1000),"
-							+ "PARENT_BID_BIDID LONG"
+							+ "PARENT_BID_BIDID INTEGER,"
+							+ "BID_SYSTEM_BID_SYSTEMID INTEGER"
+							+ ") ");
+			statement.execute("DROP TABLE IF EXISTS BID_SYSTEM");
+			statement.executeUpdate(
+					"create table BID_SYSTEM ( "
+							+ "BID_SYSTEMID INTEGER PRIMARY KEY, "
+							+ "NAME VARCHAR(50)"
 							+ ") ");
 			statement.close();
 			connection.close();

@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface BidRepository extends JpaRepository<Bid, Long> {
 
+    List<Bid> findByBidSystem(BidSystem bidSystem);
+
     List<Bid> findByParentBid(Bid parentBid);
 
-    List<Bid> findByBidLevel(Integer bidLevel);
+    List<Bid> findByBidSystemAndBidLevel(BidSystem bidSystem, Integer bidLevel);
 
     List<Bid> findByBidID(Long bidID);
 }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Bid {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bidID;
 
     private Integer bidLevel;
@@ -33,6 +33,9 @@ public class Bid {
 
     @ManyToOne
     private Bid parentBid;
+
+    @ManyToOne
+    private BidSystem bidSystem;
 
     public Bid() {
     }
@@ -156,6 +159,14 @@ public class Bid {
         this.shortDesc = shortDesc;
     }
 
+    public BidSystem getBidSystem() {
+        return bidSystem;
+    }
+
+    public void setBidSystem(BidSystem bidSystem) {
+        this.bidSystem = bidSystem;
+    }
+
     @Override
     public String toString() {
         return "Bid{" +
@@ -172,6 +183,7 @@ public class Bid {
                 ", shortDesc='" + shortDesc + '\'' +
                 ", description='" + description + '\'' +
                 ", parentBid=" + parentBid +
+                ", bidSystem=" + bidSystem +
                 '}';
     }
 }
