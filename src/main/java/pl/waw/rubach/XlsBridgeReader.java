@@ -2,6 +2,8 @@ package pl.waw.rubach;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.waw.rubach.exceptions.XlsReaderException;
 
 import java.io.File;
@@ -12,53 +14,18 @@ import java.util.*;
 
 public class XlsBridgeReader extends XlsBridge {
 
+    private static Logger logger = LoggerFactory.getLogger(XlsBridgeReader.class);
 
-    private static boolean checkHeader(Row row) throws XlsReaderException {
-        Iterator<Cell> cellIterator = row.iterator();
-
-        int i = 0;
-        while (cellIterator.hasNext()) {
-            Cell cell = cellIterator.next();
-            if (!header[i].equalsIgnoreCase(cell.getStringCellValue())) {
-                throw new XlsReaderException("Problem reading Xls File Header at Cell: " + cell.getAddress());
-            }
-            i++;
-        }
-        return true;
-    }
-
-    private static int getInt(Cell currentCell) throws XlsReaderException {
-        Double val = null;
-        try {
-            val = currentCell.getNumericCellValue();
-            return Double.valueOf(val).intValue();
-        } catch (IllegalStateException e) {
-            try {
-                val = Double.parseDouble(currentCell.getStringCellValue());
-                return Double.valueOf(val).intValue();
-            } catch (IllegalStateException | NumberFormatException ee) {
-                throw new XlsReaderException("Problem reading Xls File at Cell: " + currentCell.getAddress()+ "\n" + ee.getMessage());
-            }
-        }
-    }
-
-    private static String getStr(Cell currentCell) throws XlsReaderException {
-        try {
-            return currentCell.getStringCellValue();
-        } catch (IllegalStateException e) {
-            try {
-                return new Double(currentCell.getNumericCellValue()).toString();
-            } catch (IllegalStateException | NumberFormatException ee) {
-                throw new XlsReaderException("Problem reading Xls File at Cell: " + currentCell.getAddress() + "\n" + ee.getMessage());
-            }
-        }
-    }
-
-
-    private static boolean getBool(Cell currentCell) throws XlsReaderException {
-        return getInt(currentCell)==1;
-    }
-
+    /**
+     * Read the XLSX file containing Bidding Systems into the database.
+     * Treats each sheet as a separate bidding system and adds the bids on that sheet to it
+     *
+     * @return list of all bids (for all bidding systems found in the file
+     * @throws XlsReaderException - occurs when there is a problem interpreting the XLSX file:
+     *      * the header is not the same as expected
+     *      * the cell type (Text/Numeric) is not as expected
+     *
+     */
     public static List<Bid> readBridgeBidsFromXls() throws XlsReaderException {
         List<Bid> newBids = new ArrayList<>();
         try {
@@ -71,10 +38,8 @@ public class XlsBridgeReader extends XlsBridge {
                 Iterator<Row> iterator = datatypeSheet.iterator();
                 // Check Head
                 Row currentRow = iterator.next();
-                if (!checkHeader(currentRow)) {
-                    System.out.println("Problem reading Header!!!!");
-                    return newBids;
-                }
+                checkHeader(currentRow);
+
                 Map<Integer, Bid> bidMap = new HashMap<>();
                 while (iterator.hasNext()) {
                     currentRow = iterator.next();
@@ -84,66 +49,31 @@ public class XlsBridgeReader extends XlsBridge {
                     int m = 0;
                     while (cellIterator.hasNext()) {
                         Cell currentCell = cellIterator.next();
-                        switch (m) {
-                            case 0:
-                                newBid.setBidID(getInt(currentCell));
-                                break;
-                            case 1:
-                                newBid.setParentBid(bidMap.get(getInt(currentCell)));
-                                break;
-                            case 2:
-                                newBid.setBidLevel(getInt(currentCell));
-                                break;
-                            case 3:
-                                newBid.setLevel(getInt(currentCell));
-                                break;
-                            case 4:
-                                newBid.setSuit(getStr(currentCell));
-                                break;
-                            case 5:
-                                newBid.setPointsMin(getInt(currentCell));
-                                break;
-                            case 6:
-                                newBid.setPointsMax(getInt(currentCell));
-                                break;
-                            case 7:
-                                newBid.setSuitLength(getStr(currentCell));
-                                break;
-                            case 8:
-                                newBid.setAfterInterven(getBool(currentCell));
-                                break;
-                            case 9:
-                                newBid.setShortDesc(getStr(currentCell));
-                                break;
-                            case 10:
-                                newBid.setDescription(getStr(currentCell));
-                                break;
-                            case 11:
-                                newBid.setBidType(getStr(currentCell));
-                                break;
-                            case 12:
-                                newBid.setBidClass(getStr(currentCell));
-                                break;
-                        }
+                        cellReader(currentCell, m, newBid, bidMap);
                         m++;
                     }
                     bidMap.put(newBid.getBidID(), newBid);
                     newBids.add(newBid);
                 }
-               // System.out.println(newBids);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Can't load Bridge XLSX file, file not found or not readable: " + new File(FILE_NAME_IN).getAbsolutePath());
         }
+        // Remove IDs from the loaded bids so that the database can create their own.
+        // This way it is possible to use the same IDs on different Sheets (Bidding Systems) since they will be replaced
+        // by the database later
         for (Bid b : newBids) {
             b.setBidID(null);
         }
-        //System.out.println(newBids);
         return newBids;
     }
 
+    /**
+     * Test the XlsBridgeReader
+     *
+     * @param args
+     * @throws XlsReaderException
+     */
     public static void main(String[] args) throws XlsReaderException {
         readBridgeBidsFromXls();
     }
