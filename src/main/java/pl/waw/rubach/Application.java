@@ -47,11 +47,11 @@ public class Application {
 			bidRepo.save(bid1C1H2H);
 */
 			List<Bid> bids = XlsBridgeReader.readBridgeBidsFromXls();
-			int i=0;
+			BidSystem curBidSystem = null;
 			for (Bid b : bids) {
-				if (i==0) bidSystemRepo.save(b.getBidSystem());
+				if (curBidSystem==null || !curBidSystem.getName().equals(b.getBidSystem()))
+					curBidSystem = bidSystemRepo.save(b.getBidSystem());
 				bidRepo.save(b);
-				i++;
 			}
 			//XlsBridgeWriter.writeBridgeBidsToXlsx(bidRepo.findAll());
 		};

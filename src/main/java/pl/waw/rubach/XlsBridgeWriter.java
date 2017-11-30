@@ -19,12 +19,12 @@ public class XlsBridgeWriter extends XlsBridge {
         Bid bid1C1D = new Bid(1, 1, "D", 0, 37, "0+", "S", "", false, "Negat na 1 trefl","Negat na 1 trefl", bid1C);
         Bid bid1C1D1H = new Bid(2, 1, "H", 12, 18, "4+", "S", "", false, "Zgłoszenie 4ki kier", "Zgłoszenie 4ki kier", bid1C1D);
         List<Bid> list = Arrays.asList(bid1C,bid1D, bid1C1D, bid1C1D1H);
-        writeBridgeBidsToXlsx(list);
+        writeBridgeBidsToXlsx(new BidSystem("W-J"),list);
     }
 
-    public static void writeBridgeBidsToXlsx(List<Bid> bids) {
+    public static void writeBridgeBidsToXlsx(BidSystem bidSystem, List<Bid> bids) {
         XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("Bridge Bids");
+        XSSFSheet sheet = workbook.createSheet(bidSystem.getName());
         int rowNum = 0;
         System.out.println("Creating excel");
 

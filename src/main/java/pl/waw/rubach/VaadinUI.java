@@ -4,6 +4,10 @@ import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.renderers.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -14,6 +18,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 
 import javax.swing.text.html.CSS;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +42,9 @@ public class VaadinUI extends UI {
 
 	private BidSystem curBidSystem = null;
 
-	private Integer curLevel = 0;
 	private Label bidSystemLabel = new Label("");
-	private Label navigatorLabel = new Label("Choose bid");
+	private MenuBar bidSystemMenuBar = new MenuBar();
+	private Label navigatorLabel = new Label("");
 	private Label curBidLabel = new Label("");
 
 	@Autowired
@@ -57,11 +62,19 @@ public class VaadinUI extends UI {
 		// build layout
 		navigatorLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setContentMode(ContentMode.HTML);
-		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel);
+		curBidLabel.setWidth("100%");
+		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, bidSystemMenuBar);
 		topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_RIGHT);
+		topRightLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);
+		topRightLayout.setWidth("100%");
 		HorizontalLayout topLayout = new HorizontalLayout(backBtn, navigatorLabel);
-		//topLayout.setWidth("100%");
-		CssLayout actions = new CssLayout(topRightLayout, topLayout,curBidLabel);
+		topLayout.setComponentAlignment(navigatorLabel,Alignment.MIDDLE_LEFT);
+		VerticalLayout topVertLayout = new VerticalLayout(topRightLayout, topLayout);
+		topVertLayout.setSpacing(false);
+		topVertLayout.setMargin(false);
+		topVertLayout.setWidth("100%");
+		CssLayout actions = new CssLayout(topVertLayout, curBidLabel);
+		actions.setWidth("100%");
 		Responsive.makeResponsive(actions);
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
@@ -80,8 +93,14 @@ public class VaadinUI extends UI {
 		mainLayout.setSpacing(true);
 
 		List<BidSystem> bidSystemList = bidSystemRepo.findAll();
+		//MenuBar.MenuItem menuItem = new MenuIte
 		curBidSystem = bidSystemList.get(0);
+		MenuBar.Command menuCommand = selectedItem -> switchBidSystem(bidSystemRepo.findByName(selectedItem.getText()).get(0));
+		for (BidSystem bidSystem : bidSystemList) {
+			bidSystemMenuBar.addItem(bidSystem.getName(), menuCommand);
+		}
 		bidSystemLabel.setValue(curBidSystem.getName());
+		navigatorLabel.setValue("Choose Bid");
 
 		bidGrid.setColumns("suitLength"/*, "bidLevel"*/);
 		// Add generated full name column
@@ -124,7 +143,6 @@ public class VaadinUI extends UI {
 			if (!e.getAllSelectedItems().isEmpty()) {
 				Bid selBid = new ArrayList<Bid>(bidGrid.getSelectedItems()).get(0);
 				setCurrentBid(selBid);
-				//editor.editCustomer(selCust);
 				listBids2nd(selBid);
 			}
 		});
@@ -142,6 +160,7 @@ public class VaadinUI extends UI {
 		});
 
 		backBtn.addClickListener(e -> {
+			System.out.println("back and curBid: " + curBid);
 			listBids(curBid!=null && curBid.getParentBid()!=null ? curBid.getParentBid() : null);
 			listBids2nd(null);
 		});
@@ -187,6 +206,7 @@ public class VaadinUI extends UI {
 	}
 
 	private String getBidSuit(Bid bid) {
+		if (bid==null) return "";
 		switch (bid.getSuit()) {
 			case "C" : return "\u2663";
 			case "D" : return "<font color=\"red\">\u2666</font color>";
@@ -198,15 +218,22 @@ public class VaadinUI extends UI {
 	}
 
 	private String getBidLevelSuit(Bid bid) {
-		return bid.getSuit().equals("P") ? "PASS" :
+		if (bid==null || bid.getLevel()==null) return "null";
+		return "P".equals(bid.getSuit()) ? "PASS" :
 				bid.getLevel() + " " + getBidSuit(bid);
 	}
+
 	private String getPointsForBid(Bid bid) {
+		if (bid==null) return "";
 		return bid.getPointsMin() + (bid.getPointsMax() >= 37 ? "+" : "-" + bid.getPointsMax());
 	}
+
 	private void setCurrentBid(Bid bid) {
 		curBid = bid;
-		if (bid==null) navigatorLabel.setValue("Choose bid");
+		if (bid==null) {
+			navigatorLabel.setValue("Choose bid");
+			curBidLabel.setValue("");
+		}
 		else {
 			String desc = "";
 			Bid tempBid = curBid.getParentBid();
@@ -216,7 +243,16 @@ public class VaadinUI extends UI {
 			}
 			navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
 			curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
-			curBidLabel.setWidth("100%");
+		}
+	}
+
+	private void switchBidSystem(BidSystem newbidSystem) {
+		if (!curBidSystem.getName().equals(newbidSystem.getName())) {
+			curBidSystem = newbidSystem;
+			bidSystemLabel.setValue(curBidSystem.getName());
+			// Initialize listing
+			listBids(null);
+			listBids2nd(null);
 		}
 	}
 

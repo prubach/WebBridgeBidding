@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.*;
 
 public class XlsBridgeReader extends XlsBridge {
@@ -67,79 +65,81 @@ public class XlsBridgeReader extends XlsBridge {
             FileInputStream excelFile = new FileInputStream(new File(FILE_NAME_IN));
             Workbook workbook = new XSSFWorkbook(excelFile);
 
-            Sheet datatypeSheet = workbook.getSheetAt(0);
-            BidSystem bidSystem = new BidSystem(datatypeSheet.getSheetName());
-            Iterator<Row> iterator = datatypeSheet.iterator();
-            // Check Head
-            Row currentRow = iterator.next();
-            if (!checkHeader(currentRow)) {
-                System.out.println("Problem reading Header!!!!");
-                return newBids;
-            }
-            Map<Integer, Bid> bidMap = new HashMap<>();
-            while (iterator.hasNext()) {
-                currentRow = iterator.next();
-                Iterator<Cell> cellIterator = currentRow.iterator();
-                Bid newBid = new Bid();
-                newBid.setBidSystem(bidSystem);
-                int m = 0;
-                while (cellIterator.hasNext()) {
-                    Cell currentCell = cellIterator.next();
-                    switch (m) {
-                        case 0:
-                            newBid.setBidID(getInt(currentCell));
-                            break;
-                        case 1:
-                            newBid.setParentBid(bidMap.get(getInt(currentCell)));
-                            break;
-                        case 2:
-                            newBid.setBidLevel(getInt(currentCell));
-                            break;
-                        case 3:
-                            newBid.setLevel(getInt(currentCell));
-                            break;
-                        case 4:
-                            newBid.setSuit(getStr(currentCell));
-                            break;
-                        case 5:
-                            newBid.setPointsMin(getInt(currentCell));
-                            break;
-                        case 6:
-                            newBid.setPointsMax(getInt(currentCell));
-                            break;
-                        case 7:
-                            newBid.setSuitLength(getStr(currentCell));
-                            break;
-                        case 8:
-                            newBid.setAfterInterven(getBool(currentCell));
-                            break;
-                        case 9:
-                            newBid.setShortDesc(getStr(currentCell));
-                            break;
-                        case 10:
-                            newBid.setDescription(getStr(currentCell));
-                            break;
-                        case 11:
-                            newBid.setBidType(getStr(currentCell));
-                            break;
-                        case 12:
-                            newBid.setBidClass(getStr(currentCell));
-                            break;
-                    }
-                    m++;
+            for (int sheetNum=0;sheetNum<workbook.getNumberOfSheets();sheetNum++) {
+                Sheet datatypeSheet = workbook.getSheetAt(sheetNum);
+                BidSystem bidSystem = new BidSystem(datatypeSheet.getSheetName());
+                Iterator<Row> iterator = datatypeSheet.iterator();
+                // Check Head
+                Row currentRow = iterator.next();
+                if (!checkHeader(currentRow)) {
+                    System.out.println("Problem reading Header!!!!");
+                    return newBids;
                 }
-                bidMap.put(newBid.getBidID(),newBid);
-                newBids.add(newBid);
+                Map<Integer, Bid> bidMap = new HashMap<>();
+                while (iterator.hasNext()) {
+                    currentRow = iterator.next();
+                    Iterator<Cell> cellIterator = currentRow.iterator();
+                    Bid newBid = new Bid();
+                    newBid.setBidSystem(bidSystem);
+                    int m = 0;
+                    while (cellIterator.hasNext()) {
+                        Cell currentCell = cellIterator.next();
+                        switch (m) {
+                            case 0:
+                                newBid.setBidID(getInt(currentCell));
+                                break;
+                            case 1:
+                                newBid.setParentBid(bidMap.get(getInt(currentCell)));
+                                break;
+                            case 2:
+                                newBid.setBidLevel(getInt(currentCell));
+                                break;
+                            case 3:
+                                newBid.setLevel(getInt(currentCell));
+                                break;
+                            case 4:
+                                newBid.setSuit(getStr(currentCell));
+                                break;
+                            case 5:
+                                newBid.setPointsMin(getInt(currentCell));
+                                break;
+                            case 6:
+                                newBid.setPointsMax(getInt(currentCell));
+                                break;
+                            case 7:
+                                newBid.setSuitLength(getStr(currentCell));
+                                break;
+                            case 8:
+                                newBid.setAfterInterven(getBool(currentCell));
+                                break;
+                            case 9:
+                                newBid.setShortDesc(getStr(currentCell));
+                                break;
+                            case 10:
+                                newBid.setDescription(getStr(currentCell));
+                                break;
+                            case 11:
+                                newBid.setBidType(getStr(currentCell));
+                                break;
+                            case 12:
+                                newBid.setBidClass(getStr(currentCell));
+                                break;
+                        }
+                        m++;
+                    }
+                    bidMap.put(newBid.getBidID(), newBid);
+                    newBids.add(newBid);
+                }
+               // System.out.println(newBids);
             }
-            System.out.println(newBids);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-     /*   for (Bid b : newBids) {
+        for (Bid b : newBids) {
             b.setBidID(null);
-        }*/
+        }
         //System.out.println(newBids);
         return newBids;
     }
