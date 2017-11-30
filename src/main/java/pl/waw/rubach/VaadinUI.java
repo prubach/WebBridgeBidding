@@ -26,6 +26,8 @@ import java.util.List;
 @Theme("valo")
 public class VaadinUI extends UI {
 
+	private final int TABLE_SIZE=10;
+
 	private final BidRepository bidRepo;
 
 	private final BidSystemRepository bidSystemRepo;
@@ -33,8 +35,6 @@ public class VaadinUI extends UI {
 	private final Grid bidGrid;
 
 	private final Grid bidGrid2nd;
-
-	private final TextField filter;
 
 	private final Button backBtn;
 
@@ -53,7 +53,6 @@ public class VaadinUI extends UI {
 		this.bidSystemRepo = bidSystemRepo;
 		this.bidGrid = new Grid(Bid.class);
 		this.bidGrid2nd = new Grid(Bid.class);
-		this.filter = new TextField();
 		this.backBtn = new Button("Back", FontAwesome.ARROW_CIRCLE_LEFT);
 	}
 
@@ -78,8 +77,8 @@ public class VaadinUI extends UI {
 		Responsive.makeResponsive(actions);
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
-		bidGrid.setHeightByRows(8);
-		bidGrid2nd.setHeightByRows(8);
+		bidGrid.setHeightByRows(TABLE_SIZE);
+		bidGrid2nd.setHeightByRows(TABLE_SIZE);
 		Responsive.makeResponsive(cssLayout);
 
 		VerticalLayout mainLayout = new VerticalLayout(actions, cssLayout);
@@ -135,9 +134,6 @@ public class VaadinUI extends UI {
 		bidGrid2nd.setColumnOrder("name", "points", "suitLength", "shortDesc"/*, "bidLevel"*/ );
 
 
-		filter.setPlaceholder("Filter by description");
-		filter.setVisible(false);
-
 		// Connect selected Customer to editor or hide if none is selected
 		bidGrid.addSelectionListener(e -> {
 			if (!e.getAllSelectedItems().isEmpty()) {
@@ -160,7 +156,6 @@ public class VaadinUI extends UI {
 		});
 
 		backBtn.addClickListener(e -> {
-			System.out.println("back and curBid: " + curBid);
 			listBids(curBid!=null && curBid.getParentBid()!=null ? curBid.getParentBid() : null);
 			listBids2nd(null);
 		});
@@ -169,6 +164,10 @@ public class VaadinUI extends UI {
 		listBids(null);
 	}
 
+	/**
+	 * Load bids into the left side Grid
+	 * @param bid
+	 */
 	private void listBids(Bid bid) {
 		setCurrentBid(bid);
 		if (bid==null) {
@@ -185,6 +184,10 @@ public class VaadinUI extends UI {
 		}
 	}
 
+	/**
+	 * Load bids into the right side Grid
+	 * @param parentBid
+	 */
 	private void listBids2nd(Bid parentBid) {
 		if (parentBid==null) {
 			bidGrid2nd.setDataProvider(
@@ -196,6 +199,11 @@ public class VaadinUI extends UI {
 		}
 	}
 
+	/**
+	 * Automatically replace the text that means Suits in the descriptions with Suit symbols and color them
+	 * @param desc
+	 * @return
+	 */
 	private String replaceSuitsInDesc(String desc) {
 		if (desc==null) return desc;
 		desc = desc.replaceAll("kier ", "<font color=\"red\">\u2665</font color> ");
@@ -205,6 +213,11 @@ public class VaadinUI extends UI {
 		return desc;
 	}
 
+	/**
+	 * Use the Suit symbols instead of letters, add red color to hearts and diamonds
+	 * @param bid
+	 * @return
+	 */
 	private String getBidSuit(Bid bid) {
 		if (bid==null) return "";
 		switch (bid.getSuit()) {
@@ -217,17 +230,29 @@ public class VaadinUI extends UI {
 		return "";
 	}
 
+	/**
+	 * Present Level + Suit, in case of PASS just say PASS
+	 * @param bid
+	 * @return
+	 */
 	private String getBidLevelSuit(Bid bid) {
-		if (bid==null || bid.getLevel()==null) return "null";
 		return "P".equals(bid.getSuit()) ? "PASS" :
 				bid.getLevel() + " " + getBidSuit(bid);
 	}
 
+	/**
+	 * Present points as 12-17 or 12+ depending on what's the pointsMax
+	 * @param bid
+	 * @return
+	 */
 	private String getPointsForBid(Bid bid) {
-		if (bid==null) return "";
 		return bid.getPointsMin() + (bid.getPointsMax() >= 37 ? "+" : "-" + bid.getPointsMax());
 	}
 
+	/**
+	 * Set current bid - load its description into the curBidLabel below the Back button
+	 * @param bid
+	 */
 	private void setCurrentBid(Bid bid) {
 		curBid = bid;
 		if (bid==null) {
@@ -246,6 +271,11 @@ public class VaadinUI extends UI {
 		}
 	}
 
+	/**
+	 * Switch the Bidding System - load the new system only when the button pressed is for a different system than
+	 * the one currently active and reinitialize the view
+	 * @param newbidSystem
+	 */
 	private void switchBidSystem(BidSystem newbidSystem) {
 		if (!curBidSystem.getName().equals(newbidSystem.getName())) {
 			curBidSystem = newbidSystem;
