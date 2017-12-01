@@ -1,5 +1,7 @@
-package pl.waw.rubach;
+package pl.waw.rubach.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -18,11 +20,14 @@ public class DBInitializeConfig {
 
 	@Autowired
 	private DataSource dataSource;
+
+	private static Logger logger = LoggerFactory.getLogger(DBInitializeConfig.class);
 	
 	@PostConstruct
 	public void initialize(){
 		try {
 			if (clearDatabase) {
+				logger.info("Deleting existing data in the database and recreating the structure");
 				Connection connection = dataSource.getConnection();
 				Statement statement = connection.createStatement();
 				statement.execute("DROP TABLE IF EXISTS BID");

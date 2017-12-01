@@ -1,4 +1,4 @@
-package pl.waw.rubach;
+package pl.waw.rubach.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package pl.waw.rubach;
+package pl.waw.rubach.xls;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -6,7 +6,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.waw.rubach.exceptions.XlsWriterException;
+import pl.waw.rubach.model.Bid;
+import pl.waw.rubach.model.BidSystem;
+import pl.waw.rubach.repo.BidRepository;
+import pl.waw.rubach.xls.exceptions.XlsWriterException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,6 +30,7 @@ public class XlsBridgeWriter extends XlsBridge {
     public static void writeBridgeBidsToXlsx(List<BidSystem> bidSystems, BidRepository bidRepo)
             throws XlsWriterException {
         XSSFWorkbook workbook = new XSSFWorkbook();
+        logger.info("Exporting data from database to XLSX file");
 
         for (BidSystem bidSystem : bidSystems) {
             // Create a new sheet for every BidSystem

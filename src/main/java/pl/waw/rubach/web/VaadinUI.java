@@ -1,4 +1,4 @@
-package pl.waw.rubach;
+package pl.waw.rubach.web;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.provider.ListDataProvider;
@@ -9,6 +9,10 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
+import pl.waw.rubach.model.Bid;
+import pl.waw.rubach.model.BidSystem;
+import pl.waw.rubach.repo.BidRepository;
+import pl.waw.rubach.repo.BidSystemRepository;
 
 import java.util.ArrayList;
 import java.util.List;

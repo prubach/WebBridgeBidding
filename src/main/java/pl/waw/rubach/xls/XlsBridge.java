@@ -1,8 +1,9 @@
-package pl.waw.rubach;
+package pl.waw.rubach.xls;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import pl.waw.rubach.exceptions.XlsReaderException;
+import pl.waw.rubach.model.Bid;
+import pl.waw.rubach.xls.exceptions.XlsReaderException;
 
 import java.util.Iterator;
 import java.util.Map;

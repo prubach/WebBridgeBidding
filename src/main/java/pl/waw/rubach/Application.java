@@ -7,6 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import pl.waw.rubach.model.Bid;
+import pl.waw.rubach.model.BidSystem;
+import pl.waw.rubach.repo.BidRepository;
+import pl.waw.rubach.repo.BidSystemRepository;
+import pl.waw.rubach.xls.XlsBridgeReader;
+import pl.waw.rubach.xls.XlsBridgeWriter;
 
 import java.util.List;
 

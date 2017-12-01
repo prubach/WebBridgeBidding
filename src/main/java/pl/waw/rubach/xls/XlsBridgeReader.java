@@ -1,4 +1,4 @@
-package pl.waw.rubach;
+package pl.waw.rubach.xls;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -7,7 +7,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.waw.rubach.exceptions.XlsReaderException;
+import pl.waw.rubach.model.Bid;
+import pl.waw.rubach.model.BidSystem;
+import pl.waw.rubach.xls.exceptions.XlsReaderException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +32,7 @@ public class XlsBridgeReader extends XlsBridge {
      */
     public static List<Bid> readBridgeBidsFromXls() throws XlsReaderException {
         List<Bid> newBids = new ArrayList<>();
+        logger.info("Importing data from XLSX file: " + new File(FILE_NAME_IN).getAbsolutePath());
         try {
             FileInputStream excelFile = new FileInputStream(new File(FILE_NAME_IN));
             Workbook workbook = new XSSFWorkbook(excelFile);
@@ -58,14 +61,15 @@ public class XlsBridgeReader extends XlsBridge {
                     newBids.add(newBid);
                 }
             }
+            // Remove IDs from the loaded bids so that the database can create their own.
+            // This way it is possible to use the same IDs on different Sheets (Bidding Systems) since they will be replaced
+            // by the database later
+            for (Bid b : newBids) {
+                b.setBidID(null);
+            }
+            logger.info("Data import successful!");
         } catch (IOException e) {
             logger.error("Can't load Bridge XLSX file, file not found or not readable: " + new File(FILE_NAME_IN).getAbsolutePath());
-        }
-        // Remove IDs from the loaded bids so that the database can create their own.
-        // This way it is possible to use the same IDs on different Sheets (Bidding Systems) since they will be replaced
-        // by the database later
-        for (Bid b : newBids) {
-            b.setBidID(null);
         }
         return newBids;
     }
