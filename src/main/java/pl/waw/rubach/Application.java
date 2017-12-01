@@ -2,7 +2,7 @@ package pl.waw.rubach;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,14 +15,19 @@ public class Application {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+	@Value("${webbridge.loadBidsFromXlsx}")
+	private Boolean readBids = false;
+
+	@Value("${webbridge.writeBidsToXlsx}")
+	private Boolean writeBids = false;
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 
 	/**
-	 *  This Bean is not necessary when the bidding system doesn't change as the application
-	 *  uses a persistence storage in form of a database (bridge.db). You can disable it by commenting the
-	 *  @Bean annotation below
+	 *  Importing data from the XLSX file to the database can be enabled/disabled by using the
+	 *  webbridge.loadBidsFromXlsx property
 	 *
 	 * @param bidRepo
 	 * @param bidSystemRepo
@@ -31,30 +36,30 @@ public class Application {
 	@Bean
 	public CommandLineRunner loadBidsFromXlsx(BidRepository bidRepo, BidSystemRepository bidSystemRepo) {
 		return (args) -> {
-			List<Bid> bids = XlsBridgeReader.readBridgeBidsFromXls();
-			BidSystem curBidSystem = null;
-			for (Bid b : bids) {
-				if (curBidSystem==null || !curBidSystem.getName().equals(b.getBidSystem()))
-					curBidSystem = bidSystemRepo.save(b.getBidSystem());
-				bidRepo.save(b);
+			if (readBids) {
+				List<Bid> bids = XlsBridgeReader.readBridgeBidsFromXls();
+				BidSystem curBidSystem = null;
+				for (Bid b : bids) {
+					if (curBidSystem == null || !curBidSystem.getName().equals(b.getBidSystem().getName()))
+						curBidSystem = bidSystemRepo.save(b.getBidSystem());
+					bidRepo.save(b);
+				}
 			}
-			//XlsBridgeWriter.writeBridgeBidsToXlsx(bidRepo.findAll());
 		};
 	}
 
 	/**
-	 *  This Bean is not necessary when the bidding system doesn't change as the application
-	 *  uses a persistence storage in form of a database (bridge.db). You can disable it by commenting the
-	 *  @Bean annotation below
+	 *  Exporting data from the database to an XLSX file can be enabled/disabled by using the
+	 *  webbridge.writeBidsToXlsx property
 	 *
 	 * @param bidRepo
 	 * @param bidSystemRepo
 	 * @return
 	 */
-	//@Bean
+	@Bean
 	public CommandLineRunner writeBidsToXlsx(BidRepository bidRepo, BidSystemRepository bidSystemRepo) {
 		return (args) -> {
-			XlsBridgeWriter.writeBridgeBidsToXlsx(bidSystemRepo.findAll(), bidRepo);
+			if (writeBids) XlsBridgeWriter.writeBridgeBidsToXlsx(bidSystemRepo.findAll(), bidRepo);
 		};
 	}
 

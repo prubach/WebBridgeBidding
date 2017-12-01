@@ -1,15 +1,17 @@
 package pl.waw.rubach;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.waw.rubach.exceptions.XlsWriterException;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class XlsBridgeWriter extends XlsBridge {
@@ -17,19 +19,19 @@ public class XlsBridgeWriter extends XlsBridge {
     private static Logger logger = LoggerFactory.getLogger(XlsBridgeWriter.class);
 
     /**
+     * Write the content of the database into an Xlsx file
      *
-     *
-     * @param bidSystems
-     * @param bidRepo
+     * @param bidSystems - list of bid Systems to export
+     * @param bidRepo - bid repository reference to find the bids
      */
-    public static void writeBridgeBidsToXlsx(List<BidSystem> bidSystems, BidRepository bidRepo) {
+    public static void writeBridgeBidsToXlsx(List<BidSystem> bidSystems, BidRepository bidRepo)
+            throws XlsWriterException {
         XSSFWorkbook workbook = new XSSFWorkbook();
 
         for (BidSystem bidSystem : bidSystems) {
+            // Create a new sheet for every BidSystem
             XSSFSheet sheet = workbook.createSheet(bidSystem.getName());
             int rowNum = 0;
-            System.out.println("Creating excel");
-
             Row row = sheet.createRow(rowNum++);
             int colNum = 0;
             // Create a header
@@ -52,18 +54,15 @@ public class XlsBridgeWriter extends XlsBridge {
                     }
                 }
             }
-
-            try {
-                FileOutputStream outputStream = new FileOutputStream(FILE_NAME_OUT);
-                workbook.write(outputStream);
-                workbook.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
-        logger.info("File created!");
+        try {
+            FileOutputStream outputStream = new FileOutputStream(FILE_NAME_OUT);
+            workbook.write(outputStream);
+            workbook.close();
+        } catch (IOException e) {
+            throw new XlsWriterException("Can't write to file: " + new File(FILE_NAME_OUT).getAbsolutePath() + " " + e.getMessage());
+        }
+        logger.info("File created: " + new File(FILE_NAME_OUT).getAbsolutePath());
     }
 
     // Test the procedure

@@ -1,47 +1,39 @@
 package pl.waw.rubach;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.renderers.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
-import com.vaadin.annotations.Theme;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.spring.annotation.SpringUI;
-
-import javax.swing.text.html.CSS;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_LEFT;
 
 @SpringUI
 @Theme("valo")
 public class VaadinUI extends UI {
 
-	private final int TABLE_SIZE=10;
-
-	private final BidRepository bidRepo;
-
-	private final BidSystemRepository bidSystemRepo;
-
-	private final Grid bidGrid;
-
-	private final Grid bidGrid2nd;
-
-	private final Button backBtn;
+	private final int TABLE_SIZE = 10;
 
 	private Bid curBid = null;
 
 	private BidSystem curBidSystem = null;
 
+	private final BidRepository bidRepo;
+
+	private final BidSystemRepository bidSystemRepo;
+
+	private final Grid<Bid> bidGrid = new Grid(Bid.class);
+
+	private final Grid<Bid> bidGrid2nd = new Grid(Bid.class);
+
+	private final Button backBtn = new Button("Back", ARROW_CIRCLE_LEFT);
 	private Label bidSystemLabel = new Label("");
 	private MenuBar bidSystemMenuBar = new MenuBar();
 	private Label navigatorLabel = new Label("");
@@ -51,9 +43,6 @@ public class VaadinUI extends UI {
 	public VaadinUI(BidRepository bidRepository, BidSystemRepository bidSystemRepo) {
 		this.bidRepo = bidRepository;
 		this.bidSystemRepo = bidSystemRepo;
-		this.bidGrid = new Grid(Bid.class);
-		this.bidGrid2nd = new Grid(Bid.class);
-		this.backBtn = new Button("Back", FontAwesome.ARROW_CIRCLE_LEFT);
 	}
 
 	@Override
@@ -101,51 +90,49 @@ public class VaadinUI extends UI {
 		bidSystemLabel.setValue(curBidSystem.getName());
 		navigatorLabel.setValue("Choose Bid");
 
+		// Define Left Grid Columns
 		bidGrid.setColumns("suitLength"/*, "bidLevel"*/);
-		// Add generated full name column
-		Grid.Column<String, Bid> levelSuit = bidGrid.addColumn(bid-> getBidLevelSuit((Bid)bid), new HtmlRenderer());
+		Grid.Column<Bid, String> levelSuit = bidGrid.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
 		levelSuit.setCaption("Name");
 		levelSuit.setId("name");
-		Grid.Column<String, Bid> points = bidGrid.addColumn(bid-> getPointsForBid((Bid)bid));
+		Grid.Column<Bid, String> points = bidGrid.addColumn(bid -> getPointsForBid(bid));
 		points.setCaption("Points");
 		points.setId("points");
-		Grid.Column<String, Bid> shortDesc = bidGrid.addColumn(bid-> replaceSuitsInDesc(((Bid)bid).getShortDesc()), new HtmlRenderer());
+		Grid.Column<Bid, String> shortDesc = bidGrid.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
 		shortDesc.setCaption("Short Desc");
 		shortDesc.setId("shortDesc");
 		bidGrid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
-
 		bidGrid.getColumn("suitLength").setCaption("# in Suit");
 		bidGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
 
+		// Define Right Grid Columns
 		bidGrid2nd.setColumns("suitLength" /*, "bidLevel"*/);
 		bidGrid2nd.getColumn("suitLength").setCaption("# in Suit");
 		bidGrid2nd.setSelectionMode(Grid.SelectionMode.SINGLE);
-		// Add generated full name column
-		Grid.Column<String, Bid> levelSuit2nd = bidGrid2nd.addColumn(bid-> getBidLevelSuit((Bid)bid), new HtmlRenderer());
+		Grid.Column<Bid, String> levelSuit2nd = bidGrid2nd.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
 		levelSuit2nd.setCaption("Name");
 		levelSuit2nd.setId("name");
-		//levelSuit.set
-		Grid.Column<String, Bid> points2nd = bidGrid2nd.addColumn(bid-> getPointsForBid((Bid)bid));
+		Grid.Column<Bid, String> points2nd = bidGrid2nd.addColumn(bid -> getPointsForBid(bid));
 		points2nd.setCaption("Points");
 		points2nd.setId("points");
-		Grid.Column<String, Bid> shortDesc2nd = bidGrid2nd.addColumn(bid-> replaceSuitsInDesc(((Bid)bid).getShortDesc()), new HtmlRenderer());
+		Grid.Column<Bid, String> shortDesc2nd = bidGrid2nd.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
 		shortDesc2nd.setCaption("Short Desc");
 		shortDesc2nd.setId("shortDesc");
 		bidGrid2nd.setColumnOrder("name", "points", "suitLength", "shortDesc"/*, "bidLevel"*/ );
 
-
-		// Connect selected Customer to editor or hide if none is selected
+		// Define what happens when user clicks on a bid in the left Grid
 		bidGrid.addSelectionListener(e -> {
 			if (!e.getAllSelectedItems().isEmpty()) {
-				Bid selBid = new ArrayList<Bid>(bidGrid.getSelectedItems()).get(0);
+				Bid selBid = new ArrayList<>(bidGrid.getSelectedItems()).get(0);
 				setCurrentBid(selBid);
 				listBids2nd(selBid);
 			}
 		});
 
+		// Define what happens when user clicks on a bid in the right Grid
 		bidGrid2nd.addSelectionListener(e -> {
 			if (!e.getAllSelectedItems().isEmpty()) {
-				Bid selBid = new ArrayList<Bid>(bidGrid2nd.getSelectedItems()).get(0);
+				Bid selBid = new ArrayList<>(bidGrid2nd.getSelectedItems()).get(0);
 				if (!bidRepo.findByParentBid(selBid).isEmpty()) {
 					listBids(selBid);
 					listBids2nd(selBid);
@@ -155,18 +142,19 @@ public class VaadinUI extends UI {
 			}
 		});
 
+		// Define behaviour of the Back Button
 		backBtn.addClickListener(e -> {
 			listBids(curBid!=null && curBid.getParentBid()!=null ? curBid.getParentBid() : null);
 			listBids2nd(null);
 		});
 
-		// Initialize listing
+		// Initialize upon startup
 		listBids(null);
 	}
 
 	/**
 	 * Load bids into the left side Grid
-	 * @param bid
+	 * @param bid - bid to load as the currently displayed one
 	 */
 	private void listBids(Bid bid) {
 		setCurrentBid(bid);
@@ -186,10 +174,11 @@ public class VaadinUI extends UI {
 
 	/**
 	 * Load bids into the right side Grid
-	 * @param parentBid
+	 * @param parentBid - bid that is a parent to the ones on the right
 	 */
 	private void listBids2nd(Bid parentBid) {
 		if (parentBid==null) {
+			// Load an empty list of bids to the right Grid
 			bidGrid2nd.setDataProvider(
 					new ListDataProvider<>(bidRepo.findByBidSystemAndBidLevel(curBidSystem,999)));
 		}
@@ -205,7 +194,7 @@ public class VaadinUI extends UI {
 	 * @return
 	 */
 	private String replaceSuitsInDesc(String desc) {
-		if (desc==null) return desc;
+		if (desc == null) return null;
 		desc = desc.replaceAll("kier ", "<font color=\"red\">\u2665</font color> ");
 		desc = desc.replaceAll("karo ", "<font color=\"red\">\u2666</font color> ");
 		desc = desc.replaceAll("trefl ", "\u2663 ");
@@ -274,7 +263,7 @@ public class VaadinUI extends UI {
 	/**
 	 * Switch the Bidding System - load the new system only when the button pressed is for a different system than
 	 * the one currently active and reinitialize the view
-	 * @param newbidSystem
+	 * @param newbidSystem - the BidSystem to which to switch
 	 */
 	private void switchBidSystem(BidSystem newbidSystem) {
 		if (!curBidSystem.getName().equals(newbidSystem.getName())) {

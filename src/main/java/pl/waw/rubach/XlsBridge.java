@@ -60,11 +60,11 @@ public abstract class XlsBridge {
 
     /**
      *
-     * @param bid
-     * @return
+     * @param bid to write
+     * @return array of objects containing the fields (properties) of the provided bid
      */
     protected static Object[] cellWriter(Bid bid) {
-        Object[] fields = new Object[]{
+        return new Object[]{
                 bid.getBidID(),
                 (bid.getParentBid() != null ? bid.getParentBid().getBidID() : null),
                 bid.getBidLevel(),
@@ -77,17 +77,17 @@ public abstract class XlsBridge {
                 bid.getShortDesc(),
                 bid.getDescription(),
                 bid.getBidType(),
-                bid.getBidClass()};
-        return fields;
+                bid.getBidClass()
+        };
     }
 
 
     /**
      * Check the header. See if the column names are the same as in the definition (XlsBridge.header)
      *
-     * @param row
-     * @return
-     * @throws XlsReaderException
+     * @param row - reference to the row containing the header
+     * @return true when header is ok
+     * @throws XlsReaderException - thrown when header is not ok
      */
     protected static boolean checkHeader(Row row) throws XlsReaderException {
         Iterator<Cell> cellIterator = row.iterator();
@@ -114,11 +114,11 @@ public abstract class XlsBridge {
         Double val;
         try {
             val = currentCell.getNumericCellValue();
-            return Double.valueOf(val).intValue();
+            return val.intValue();
         } catch (IllegalStateException e) {
             try {
                 val = Double.parseDouble(currentCell.getStringCellValue());
-                return Double.valueOf(val).intValue();
+                return val.intValue();
             } catch (IllegalStateException | NumberFormatException ee) {
                 throw new XlsReaderException("Problem reading Xls File at Cell: " + currentCell.getAddress()+ "\n" + ee.getMessage());
             }
@@ -137,7 +137,7 @@ public abstract class XlsBridge {
             return currentCell.getStringCellValue();
         } catch (IllegalStateException e) {
             try {
-                return new Double(currentCell.getNumericCellValue()).toString();
+                return Double.toString(currentCell.getNumericCellValue());
             } catch (IllegalStateException | NumberFormatException ee) {
                 throw new XlsReaderException("Problem reading Xls File at Cell: " + currentCell.getAddress() + "\n" + ee.getMessage());
             }
@@ -154,6 +154,5 @@ public abstract class XlsBridge {
     protected static boolean getBool(Cell currentCell) throws XlsReaderException {
         return getInt(currentCell)==1;
     }
-
 
 }

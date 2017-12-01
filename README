@@ -1,11 +1,28 @@
-To compile WebBridgeBidding please get the Sqlite Dialect: https://github.com/gwenn/sqlite-dialect
-
-git clone https://github.com/gwenn/sqlite-dialect.git
-cd sqlite-dialect
-mvn install
-
-To compile and run this project use gradle
+To compile WebBridgeBidding and run this project use gradle
 
 gradle bootRun
 
 In Browser navigate to: http://localhost:8080
+
+======================
+
+WebBridgeBidding can load bids from an XLSX file and uses sqlite to persist the data.
+The default behaviour is to clear the database at every startup and reload the bids from the bridgeIn.xlsx file
+located in the current working directory.
+
+The application can also export bids from an existing database into the bridgeOut.xlsx file located in the
+current working directory, however, this behaviour is disabled by default.
+
+
+The loading/writing and clearing the database can be adjusted by changing the following properties:
+
+webbridge.cleardatabase=true
+webbridge.loadBidsFromXlsx=true
+webbridge.writeBidsToXlsx=false
+
+These properties can be adjusted in the application.properties in the project or can be provided at runtime as
+parameters for the execution of the executable JAR file. For example:
+
+cd build/libs/
+java -jar -Dwebbridge.cleardatabase=false -Dwebbridge.loadBidsFromXlsx=false webbridgebidding-0.1.1.jar
+
