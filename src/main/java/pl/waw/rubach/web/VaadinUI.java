@@ -23,7 +23,7 @@ import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_LEFT;
 @Theme("valo")
 public class VaadinUI extends UI {
 
-	private final int TABLE_SIZE = 10;
+	private final int TABLE_SIZE = 16;
 
 	private Bid curBid = null;
 
@@ -39,6 +39,8 @@ public class VaadinUI extends UI {
 
 	private final Button backBtn = new Button("Back", ARROW_CIRCLE_LEFT);
 	private Label bidSystemLabel = new Label("");
+
+	private Label bidingPersonLabel = new Label("");
 	private MenuBar bidSystemMenuBar = new MenuBar();
 	private Label navigatorLabel = new Label("");
 	private Label curBidLabel = new Label("");
@@ -53,6 +55,7 @@ public class VaadinUI extends UI {
 	protected void init(VaadinRequest request) {
 		// build layout
 		navigatorLabel.setContentMode(ContentMode.HTML);
+//		bidingPersonLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setWidth("100%");
 		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, bidSystemMenuBar);
@@ -62,6 +65,7 @@ public class VaadinUI extends UI {
 		HorizontalLayout topLayout = new HorizontalLayout(backBtn, navigatorLabel);
 		topLayout.setComponentAlignment(navigatorLabel,Alignment.MIDDLE_LEFT);
 		VerticalLayout topVertLayout = new VerticalLayout(topRightLayout, topLayout);
+		//topVertLayout.setComponentAlignment(bidingPersonLabel,Alignment.BOTTOM_CENTER);
 		topVertLayout.setSpacing(false);
 		topVertLayout.setMargin(false);
 		topVertLayout.setWidth("100%");
@@ -93,6 +97,7 @@ public class VaadinUI extends UI {
 		}
 		bidSystemLabel.setValue(curBidSystem.getName());
 		navigatorLabel.setValue("Choose Bid");
+	//	bidingPersonLabel.setValue("Opening");
 
 		// Define Left Grid Columns
 		bidGrid.setColumns("suitLength"/*, "bidLevel"*/);
@@ -250,6 +255,7 @@ public class VaadinUI extends UI {
 		curBid = bid;
 		if (bid==null) {
 			navigatorLabel.setValue("Choose bid");
+		//	bidingPersonLabel.setValue("Opening");
 			curBidLabel.setValue("");
 		}
 		else {
@@ -260,6 +266,7 @@ public class VaadinUI extends UI {
 				tempBid = tempBid.getParentBid();
 			}
 			navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
+		//	bidingPersonLabel.setValue("Answer");
 			curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
 		}
 	}
