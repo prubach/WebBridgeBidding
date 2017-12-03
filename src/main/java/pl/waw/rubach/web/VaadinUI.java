@@ -37,10 +37,9 @@ public class VaadinUI extends UI {
 
 	private final Grid<Bid> bidGrid2nd = new Grid(Bid.class);
 
-	private final Button backBtn = new Button("Back", ARROW_CIRCLE_LEFT);
+	private final Button backBtn = new Button("Wróć", ARROW_CIRCLE_LEFT);
 	private Label bidSystemLabel = new Label("");
 
-	private Label bidingPersonLabel = new Label("");
 	private MenuBar bidSystemMenuBar = new MenuBar();
 	private Label navigatorLabel = new Label("");
 	private Label curBidLabel = new Label("");
@@ -55,7 +54,6 @@ public class VaadinUI extends UI {
 	protected void init(VaadinRequest request) {
 		// build layout
 		navigatorLabel.setContentMode(ContentMode.HTML);
-//		bidingPersonLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setWidth("100%");
 		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, bidSystemMenuBar);
@@ -75,7 +73,11 @@ public class VaadinUI extends UI {
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
 		bidGrid.setHeightByRows(TABLE_SIZE);
+		bidGrid.setCaption("Otwierający");
+		bidGrid.setWidth("670px");
 		bidGrid2nd.setHeightByRows(TABLE_SIZE);
+		bidGrid2nd.setCaption("Odpowiadający");
+		bidGrid2nd.setWidth("550px");
 		Responsive.makeResponsive(cssLayout);
 
 		VerticalLayout mainLayout = new VerticalLayout(actions, cssLayout);
@@ -96,36 +98,36 @@ public class VaadinUI extends UI {
 			bidSystemMenuBar.addItem(bidSystem.getName(), menuCommand);
 		}
 		bidSystemLabel.setValue(curBidSystem.getName());
-		navigatorLabel.setValue("Choose Bid");
+		navigatorLabel.setValue("Wybierz odzywkę:");
 	//	bidingPersonLabel.setValue("Opening");
 
 		// Define Left Grid Columns
 		bidGrid.setColumns("suitLength"/*, "bidLevel"*/);
 		Grid.Column<Bid, String> levelSuit = bidGrid.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
-		levelSuit.setCaption("Name");
+		levelSuit.setCaption("Nazwa");
 		levelSuit.setId("name");
 		Grid.Column<Bid, String> points = bidGrid.addColumn(bid -> getPointsForBid(bid));
-		points.setCaption("Points");
+		points.setCaption("Punkty");
 		points.setId("points");
 		Grid.Column<Bid, String> shortDesc = bidGrid.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
-		shortDesc.setCaption("Short Desc");
+		shortDesc.setCaption("Opis");
 		shortDesc.setId("shortDesc");
 		bidGrid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
-		bidGrid.getColumn("suitLength").setCaption("# in Suit");
+		bidGrid.getColumn("suitLength").setCaption("Układ");
 		bidGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
 
 		// Define Right Grid Columns
 		bidGrid2nd.setColumns("suitLength" /*, "bidLevel"*/);
-		bidGrid2nd.getColumn("suitLength").setCaption("# in Suit");
+		bidGrid2nd.getColumn("suitLength").setCaption("Układ");
 		bidGrid2nd.setSelectionMode(Grid.SelectionMode.SINGLE);
 		Grid.Column<Bid, String> levelSuit2nd = bidGrid2nd.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
-		levelSuit2nd.setCaption("Name");
+		levelSuit2nd.setCaption("Nazwa");
 		levelSuit2nd.setId("name");
 		Grid.Column<Bid, String> points2nd = bidGrid2nd.addColumn(bid -> getPointsForBid(bid));
-		points2nd.setCaption("Points");
+		points2nd.setCaption("Punkty");
 		points2nd.setId("points");
 		Grid.Column<Bid, String> shortDesc2nd = bidGrid2nd.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
-		shortDesc2nd.setCaption("Short Desc");
+		shortDesc2nd.setCaption("Opis");
 		shortDesc2nd.setId("shortDesc");
 		bidGrid2nd.setColumnOrder("name", "points", "suitLength", "shortDesc"/*, "bidLevel"*/ );
 
@@ -229,7 +231,7 @@ public class VaadinUI extends UI {
 			case "D" : return "<font color=\"red\">\u2666</font color>";
 			case "H" : return "<font color=\"red\">\u2665</font color>";
 			case "S" : return "<font color=\"black\">\u2660</font color>";
-			case "NT" : return "NT";
+			case "NT" : return "BA";
 		}
 		return "";
 	}
@@ -260,8 +262,8 @@ public class VaadinUI extends UI {
 	private void setCurrentBid(Bid bid) {
 		curBid = bid;
 		if (bid==null) {
-			navigatorLabel.setValue("Choose bid");
-		//	bidingPersonLabel.setValue("Opening");
+			navigatorLabel.setValue("Wybierz odzywkę:");
+			bidGrid.setCaption("Otwierający:");
 			curBidLabel.setValue("");
 		}
 		else {
@@ -270,9 +272,11 @@ public class VaadinUI extends UI {
 			while (tempBid!=null) {
 				desc = getBidLevelSuit(tempBid) + " -> " + desc;
 				tempBid = tempBid.getParentBid();
+
 			}
+			if(tempBid.getBidLevel()==1) bidGrid.setCaption("Odpowiadający:");
+			else bidGrid.setCaption("Otwierający");
 			navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
-		//	bidingPersonLabel.setValue("Answer");
 			curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
 		}
 	}

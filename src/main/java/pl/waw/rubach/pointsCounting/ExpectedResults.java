@@ -1,15 +1,16 @@
 package pl.waw.rubach.pointsCounting;
 
-public class ExpectedResults {
-    public int getResults() {
+class ExpectedResults {
+
+    int getResults() {
         return results;
     }
 
-    public void setResults(int results) {
+    void setResults(int results) {
         this.results = results;
     }
 
-    int results;
+    private int results;
 
     ExpectedResults(int poinst){
        int  results =0;

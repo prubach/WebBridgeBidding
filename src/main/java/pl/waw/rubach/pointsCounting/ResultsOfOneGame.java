@@ -15,7 +15,7 @@ public class ResultsOfOneGame {
         this.pointsInBothHands=pointsInBothHands;
         this.pointsOfContract = pointsOfContract;
         this.pointDifferent= pointsOfContract - new ExpectedResults(pointsInBothHands).getResults();
-        this.results = results;
+        this.results = new ImpTable(pointDifferent).getResults();
 
     }
 }

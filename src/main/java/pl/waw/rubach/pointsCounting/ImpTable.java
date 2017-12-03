@@ -1,9 +1,18 @@
 package pl.waw.rubach.pointsCounting;
 
-public class ImpTable {
+class ImpTable {
 
-   int results;
-   ImpTable(int pointDifferent){
+    int getResults() {
+        return results;
+    }
+
+    void setResults(int results) {
+        this.results = results;
+    }
+
+   private int results;
+
+    ImpTable(int pointDifferent){
        int result;
        if (pointDifferent>=4000) result = 24;
        else if (pointDifferent>=3500) result = 23;
