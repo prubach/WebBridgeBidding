@@ -207,13 +207,13 @@ public class VaadinUI extends UI {
 		desc = desc.replaceAll("kier ", "<font color=\"red\">\u2665</font color> ");
 		desc = desc.replaceAll("karo ", "<font color=\"red\">\u2666</font color> ");
 		desc = desc.replaceAll("trefl ", "<font color=\"black\">\u2663</font color>");
-		desc = desc.replaceAll("pik ", "<font color=\"black\">\u2663</font color>");
+		desc = desc.replaceAll("pik ", "<font color=\"black\">\u2660</font color>");
 
 
 		desc = desc.replaceAll("kiery ", "<font color=\"red\">\u2665</font color> ");
 		desc = desc.replaceAll("kara ", "<font color=\"red\">\u2666</font color> ");
 		desc = desc.replaceAll("trefle ", "<font color=\"black\">\u2663</font color>");
-		desc = desc.replaceAll("piki ", "<font color=\"black\">\u2663</font color>");
+		desc = desc.replaceAll("piki ", "<font color=\"black\">\u2660</font color>");
 		return desc;
 	}
 
@@ -228,7 +228,7 @@ public class VaadinUI extends UI {
 			case "C" : return "<font color=\"black\">\u2663</font color>";
 			case "D" : return "<font color=\"red\">\u2666</font color>";
 			case "H" : return "<font color=\"red\">\u2665</font color>";
-			case "S" : return "<font color=\"black\">\u2663</font color>";
+			case "S" : return "<font color=\"black\">\u2660</font color>";
 			case "NT" : return "NT";
 		}
 		return "";
