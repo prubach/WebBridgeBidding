@@ -73,10 +73,10 @@ public class VaadinUI extends UI {
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
 		bidGrid.setHeightByRows(TABLE_SIZE);
-		bidGrid.setCaption("Otwierający");
+		bidGrid.setCaption("Otwarcie");
 		bidGrid.setWidth("670px");
 		bidGrid2nd.setHeightByRows(TABLE_SIZE);
-		bidGrid2nd.setCaption("Odpowiadający");
+		bidGrid2nd.setCaption("Odp.");
 		bidGrid2nd.setWidth("550px");
 		Responsive.makeResponsive(cssLayout);
 
@@ -263,7 +263,7 @@ public class VaadinUI extends UI {
 		curBid = bid;
 		if (bid==null) {
 			navigatorLabel.setValue("Wybierz odzywkę:");
-			bidGrid.setCaption("Otwierający:");
+			bidGrid.setCaption("Otwarcie - gracz S:");
 			curBidLabel.setValue("");
 		}
 		else {
@@ -274,8 +274,12 @@ public class VaadinUI extends UI {
 				tempBid = tempBid.getParentBid();
 
 			}
-			if(tempBid.getBidLevel()==1) bidGrid.setCaption("Odpowiadający:");
-			else bidGrid.setCaption("Otwierający");
+			if(curBid.getBidLevel() % 2 == 0)
+			{bidGrid.setCaption("Gracz S:");
+			bidGrid2nd.setCaption("Gracz N");
+			}
+			else {bidGrid.setCaption("Gracz N");
+			bidGrid2nd.setCaption("Gracz S");}
 			navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
 			curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
 		}

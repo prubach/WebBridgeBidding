@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Bid {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bidID;
 
     private Integer bidLevel;
@@ -55,6 +55,25 @@ public class Bid {
         this.parentBid = parentBid;
     }
 
+    //**********************Function to change bid to different auction type - to have only one in table? *************
+    /**
+     * Function to move bid to some number of biding level (adding bothSide auction)
+     * (or 1?)
+     */
+    public void addBidingLevel(int number) {
+        this.bidLevel = bidLevel + number;
+    }
+    public void addBidingLevel(){
+        addBidingLevel(1);
+    }
+
+    /**
+     * Function to change suit for similar bids
+     * */
+    public void changeSuitOfBid(String previusSuit, String newSuit){
+        if(this.suit.equals(previusSuit)) this.suit = newSuit;
+    }
+    //************************ Getters and setters
     public String getSuitLength() {
         return suitLength;
     }
@@ -186,4 +205,6 @@ public class Bid {
                 ", bidSystem=" + bidSystem +
                 '}';
     }
+
+
 }
