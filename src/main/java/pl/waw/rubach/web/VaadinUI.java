@@ -206,8 +206,14 @@ public class VaadinUI extends UI {
 		if (desc == null) return null;
 		desc = desc.replaceAll("kier ", "<font color=\"red\">\u2665</font color> ");
 		desc = desc.replaceAll("karo ", "<font color=\"red\">\u2666</font color> ");
-		desc = desc.replaceAll("trefl ", "\u2663 ");
-		desc = desc.replaceAll("pik ", "\u2660 ");
+		desc = desc.replaceAll("trefl ", "<font color=\"black\">\u2663</font color>");
+		desc = desc.replaceAll("pik ", "<font color=\"black\">\u2663</font color>");
+
+
+		desc = desc.replaceAll("kiery ", "<font color=\"red\">\u2665</font color> ");
+		desc = desc.replaceAll("kara ", "<font color=\"red\">\u2666</font color> ");
+		desc = desc.replaceAll("trefle ", "<font color=\"black\">\u2663</font color>");
+		desc = desc.replaceAll("piki ", "<font color=\"black\">\u2663</font color>");
 		return desc;
 	}
 
@@ -219,10 +225,10 @@ public class VaadinUI extends UI {
 	private String getBidSuit(Bid bid) {
 		if (bid==null) return "";
 		switch (bid.getSuit()) {
-			case "C" : return "\u2663";
+			case "C" : return "<font color=\"black\">\u2663</font color>";
 			case "D" : return "<font color=\"red\">\u2666</font color>";
 			case "H" : return "<font color=\"red\">\u2665</font color>";
-			case "S" : return "\u2660";
+			case "S" : return "<font color=\"black\">\u2663</font color>";
 			case "NT" : return "NT";
 		}
 		return "";
