@@ -1,6 +1,7 @@
 package pl.waw.rubach.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Bid {
@@ -184,6 +185,33 @@ public class Bid {
 
     public void setBidSystem(BidSystem bidSystem) {
         this.bidSystem = bidSystem;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bid bid = (Bid) o;
+        return afterInterven == bid.afterInterven &&
+                Objects.equals(bidID, bid.bidID) &&
+                Objects.equals(bidLevel, bid.bidLevel) &&
+                Objects.equals(level, bid.level) &&
+                Objects.equals(suit, bid.suit) &&
+                Objects.equals(pointsMin, bid.pointsMin) &&
+                Objects.equals(pointsMax, bid.pointsMax) &&
+                Objects.equals(suitLength, bid.suitLength) &&
+                Objects.equals(bidType, bid.bidType) &&
+                Objects.equals(bidClass, bid.bidClass) &&
+                Objects.equals(shortDesc, bid.shortDesc) &&
+                Objects.equals(description, bid.description) &&
+                Objects.equals(parentBid, bid.parentBid) &&
+                Objects.equals(bidSystem, bid.bidSystem);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(bidID, bidLevel, level, suit, pointsMin, pointsMax, suitLength, bidType, bidClass, afterInterven, shortDesc, description, parentBid, bidSystem);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package pl.waw.rubach.web;
 
 import com.vaadin.annotations.Theme;
-import com.vaadin.data.provider.GridSortOrderBuilder;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.SerializableComparator;
@@ -9,10 +8,11 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
-import com.vaadin.ui.components.grid.Header;
 import com.vaadin.ui.components.grid.HeaderCell;
 import com.vaadin.ui.components.grid.HeaderRow;
 import com.vaadin.ui.renderers.HtmlRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.waw.rubach.model.Bid;
 import pl.waw.rubach.model.BidSystem;
@@ -27,6 +27,8 @@ import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_LEFT;
 @SpringUI
 @Theme("WebBridgeBidding")
 public class VaadinUI extends UI {
+
+	private static Logger logger = LoggerFactory.getLogger(VaadinUI.class);
 
 	private final int TABLE_SIZE = 16;
 
@@ -84,7 +86,6 @@ public class VaadinUI extends UI {
 		//bidGrid.setCaption("Otwarcie");
 		bidGrid.setWidth("670px");
 		bidGrid2nd.setHeightByRows(TABLE_SIZE);
-		//bidGrid2nd.setCaption("Odp.");
 		bidGrid2nd.setWidth("550px");
 		Responsive.makeResponsive(cssLayout);
 
@@ -154,6 +155,7 @@ public class VaadinUI extends UI {
 	 * @param grid grid to initialize
 	 */
 	private void initializeGridLayout(Grid<Bid> grid) {
+		grid.setSelectionMode(Grid.SelectionMode.SINGLE);
 		grid.setColumns("suitLength"/*, "bidLevel"*/);
 		Grid.Column<Bid, String> levelSuit = grid.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
 		levelSuit.setCaption("Nazwa");
@@ -161,9 +163,15 @@ public class VaadinUI extends UI {
 		levelSuit.setComparator(new SerializableComparator<Bid>() {
 			@Override
 			public int compare(Bid o1, Bid o2) {
-				if (!o1.getBidLevel().equals(o2.getBidLevel()))
-					return o1.getBidLevel().compareTo(o2.getBidLevel());
-				return o1.getSuit().compareTo(o2.getSuit());
+				if (!o1.getLevel().equals(o2.getLevel()))
+					return o1.getLevel().compareTo(o2.getLevel());
+				if (!o1.getSuit().equals("NT") && !o2.getSuit().equals("NT"))
+					return o1.getSuit().compareTo(o2.getSuit());
+				else {
+					if (o1.getSuit().equals(o2.getSuit())) return 0;
+					if (o1.getSuit().equals("NT")) return 1;
+					else return -1;
+				}
 			}
 		});
 		Grid.Column<Bid, String> points = grid.addColumn(bid -> getPointsForBid(bid));
@@ -174,7 +182,6 @@ public class VaadinUI extends UI {
 		shortDesc.setId("shortDesc");
 		grid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
 		grid.getColumn("suitLength").setCaption("Układ");
-		grid.setSelectionMode(Grid.SelectionMode.SINGLE);
 		grid.setStyleGenerator(rowReference -> getRowColor(rowReference));
 	}
 
@@ -206,10 +213,14 @@ public class VaadinUI extends UI {
 		else {
 			bidGrid.setDataProvider(new ListDataProvider<>(
 					bidRepo.findByParentBid(bid.getParentBid())));
+			logger.warn("Selecting bid in bidGrid: " + getBidLevelSuit(bid));
 			//TODO Selection doesn't work!!!
+			bidGrid.deselectAll();
 			bidGrid.asSingleSelect().setValue(bid);
 			bidGrid.select(bid);
-			bidGrid.markAsDirtyRecursive();
+			//bidGrid.select(bid.getParentBid());
+			//bidGrid.markAsDirtyRecursive();
+			bidGrid.sort("name");
 		}
 	}
 
