@@ -20,6 +20,7 @@ $v-unit-size: 32px !default;
 
   .v-grid-row > td {
     background-color: transparent;
+
   }
 
   // Header with description
@@ -33,19 +34,84 @@ $v-unit-size: 32px !default;
     text-align: center;
   }
 
-  // Colors for rows depending on bidType
-  .v-grid-row.rowI {
-    background-color: red !important;
-  }
+   // Colors for rows depending on bidType
+    .v-grid-row.rowI {
+      background-color: rgb(255, 200, 102) !important;
+    }
 
-  .v-grid-row.rowS {
-    //	color: black;
-    background-color: red !important;
-  }
+    .v-grid-row.rowS {
+      //	color: black;
+      background-color: rgb(255, 255, 102) !important;
+    }
 
-  .v-grid-row.rowFD {
-    //color: black;
-	background-color: palegreen !important;
-  }
+     .v-grid-row.rowF1 {
+     //	color: black;
+     background-color: rgb(150, 255, 150) !important;
+        }
+
+     .v-grid-row.rowFD {
+     //	color: black;
+     background-color: rgb(225, 255, 255) !important;
+     }
+
+     .v-grid-row.rowNF {
+          //	color: black;
+     background-color:  rgb(200, 200, 200) !important;
+     }
+
+     .v-grid-row.rowBL {
+          //	color: black;
+     background-color:  rgb(255, 200, 255) !important;
+     }
+
+
+
+     .v-grid-row.rowR {
+     color: red;
+     font-family: cursive;
+     }
+
+ /*    .v-grid-row.rowIR {
+           color: red;
+           background-color: rgb(255, 200, 102) !important;
+         }
+
+         .v-grid-row.rowSR {
+           //	color: black;
+            color: red;
+           //  font-weight: bold;
+           background-color: rgb(255, 255, 102) !important;
+         }
+
+          .v-grid-row.rowF1R {
+          //	color: black;
+           color: red;
+         // font-style: italic;
+        //   font-weight: bold;
+       //    font-weight: 900  !important;
+               background-color: rgb(150, 255, 150) !important;
+             }
+
+          .v-grid-row.rowFDR {
+           color: red;
+          //	color: black;
+
+          background-color: rgb(225, 255, 255) !important;
+          }
+
+          .v-grid-row.rowNFR {
+           color: red;
+               //	color: black;
+          background-color:  rgb(200, 200, 200) !important;
+          }
+          .v-grid-row.rowBLR {
+           color: red;
+               //	color: black;
+          background-color:  rgb(255, 200, 255) !important;
+          }
+
+
+*/
+
 
 }

@@ -182,7 +182,8 @@ public class VaadinUI extends UI {
 		shortDesc.setId("shortDesc");
 		grid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
 		grid.getColumn("suitLength").setCaption("Układ");
-		grid.setStyleGenerator(rowReference -> getRowColor(rowReference));
+		grid.setStyleGenerator(rowReference -> getRowColorAndStyle(rowReference));
+
 	}
 
 	/**
@@ -304,7 +305,7 @@ public class VaadinUI extends UI {
 		if (bid==null) {
 			navigatorLabel.setValue("Wybierz odzywkę:");
 			//bidGrid.setCaption("Otwarcie - gracz S:");
-			leftHeaderCell.setText("Otwarcie - gracz S:");
+			leftHeaderCell.setText("Otwarcia - gracz S:");
 			rightHeaderCell.setText("");
 			curBidLabel.setValue("");
 		}
@@ -317,12 +318,12 @@ public class VaadinUI extends UI {
 
 			}
 			if(curBid.getBidLevel() % 2 == 0) {
-				leftHeaderCell.setText("Gracz S:");
-				rightHeaderCell.setText("Gracz N");
+				leftHeaderCell.setText("Gracz S (ten który otworzył licytację) :");
+				rightHeaderCell.setText("Gracz N (odpowiadający): ");
 			}
 			else {
-				leftHeaderCell.setText("Gracz N:");
-				rightHeaderCell.setText("Gracz S");
+				leftHeaderCell.setText("Gracz N (odpowiadający): ");
+				rightHeaderCell.setText("Gracz S (ten który otworzył licytację) :");
 			}
 			navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
 			curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
@@ -336,14 +337,25 @@ public class VaadinUI extends UI {
 	 * @param bid bid to analyze for bidType
 	 * @return style name to add to row
 	 */
-	private static String getRowColor(Bid bid) {
+	private static String getRowColorAndStyle(Bid bid) {
+
+		String style;
 		switch (bid.getBidType()) {
-			case "I" : return "rowI";
-			case "FD" : return "rowFD";
-			case "S": return "rowS";
-			default: return "";
+			case "I" : style= "rowI"; break;
+			case "FD" : style= "rowFD"; break;
+			case "S": style= "rowS"; break;
+			case "F1": style= "rowF1"; break;
+			case "NF": style= "rowNF"; break;
+			case "BL": style= "rowBL"; break;
+			default: style="";
 		}
+
+	//	if(bid.getBidClass().equals("Relay")) style = style +"R";
+
+		return style;
 	}
+
+
 
 	/**
 	 * Switch the Bidding System - load the new system only when the button pressed is for a different system than

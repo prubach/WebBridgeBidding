@@ -14802,13 +14802,30 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .WebBridgeBidding .v-grid-row.rowI {
-	background-color: red !important;
+	background-color: #ffc866 !important;
 }
 
 .WebBridgeBidding .v-grid-row.rowS {
-	background-color: red !important;
+	background-color: #ffff66 !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowF1 {
+	background-color: #96ff96 !important;
 }
 
 .WebBridgeBidding .v-grid-row.rowFD {
-	background-color: palegreen !important;
+	background-color: #e1ffff !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowNF {
+	background-color: #c8c8c8 !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowBL {
+	background-color: #ffc8ff !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowR {
+	color: red;
+	font-family: cursive;
 }
