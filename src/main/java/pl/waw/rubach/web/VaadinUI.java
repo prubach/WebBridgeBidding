@@ -1,12 +1,17 @@
 package pl.waw.rubach.web;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.data.provider.GridSortOrderBuilder;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.SerializableComparator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
+import com.vaadin.ui.components.grid.Header;
+import com.vaadin.ui.components.grid.HeaderCell;
+import com.vaadin.ui.components.grid.HeaderRow;
 import com.vaadin.ui.renderers.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.waw.rubach.model.Bid;
@@ -20,7 +25,7 @@ import java.util.List;
 import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_LEFT;
 
 @SpringUI
-@Theme("valo")
+@Theme("WebBridgeBidding")
 public class VaadinUI extends UI {
 
 	private final int TABLE_SIZE = 16;
@@ -43,6 +48,9 @@ public class VaadinUI extends UI {
 	private MenuBar bidSystemMenuBar = new MenuBar();
 	private Label navigatorLabel = new Label("");
 	private Label curBidLabel = new Label("");
+
+	private HeaderCell leftHeaderCell;
+	private HeaderCell rightHeaderCell;
 
 	@Autowired
 	public VaadinUI(BidRepository bidRepository, BidSystemRepository bidSystemRepo) {
@@ -73,10 +81,10 @@ public class VaadinUI extends UI {
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
 		bidGrid.setHeightByRows(TABLE_SIZE);
-		bidGrid.setCaption("Otwarcie");
+		//bidGrid.setCaption("Otwarcie");
 		bidGrid.setWidth("670px");
 		bidGrid2nd.setHeightByRows(TABLE_SIZE);
-		bidGrid2nd.setCaption("Odp.");
+		//bidGrid2nd.setCaption("Odp.");
 		bidGrid2nd.setWidth("550px");
 		Responsive.makeResponsive(cssLayout);
 
@@ -102,34 +110,11 @@ public class VaadinUI extends UI {
 	//	bidingPersonLabel.setValue("Opening");
 
 		// Define Left Grid Columns
-		bidGrid.setColumns("suitLength"/*, "bidLevel"*/);
-		Grid.Column<Bid, String> levelSuit = bidGrid.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
-		levelSuit.setCaption("Nazwa");
-		levelSuit.setId("name");
-		Grid.Column<Bid, String> points = bidGrid.addColumn(bid -> getPointsForBid(bid));
-		points.setCaption("Punkty");
-		points.setId("points");
-		Grid.Column<Bid, String> shortDesc = bidGrid.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
-		shortDesc.setCaption("Opis");
-		shortDesc.setId("shortDesc");
-		bidGrid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
-		bidGrid.getColumn("suitLength").setCaption("Układ");
-		bidGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
-
+		initializeGridLayout(bidGrid);
+		leftHeaderCell = prependHeaderCell(bidGrid);
 		// Define Right Grid Columns
-		bidGrid2nd.setColumns("suitLength" /*, "bidLevel"*/);
-		bidGrid2nd.getColumn("suitLength").setCaption("Układ");
-		bidGrid2nd.setSelectionMode(Grid.SelectionMode.SINGLE);
-		Grid.Column<Bid, String> levelSuit2nd = bidGrid2nd.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
-		levelSuit2nd.setCaption("Nazwa");
-		levelSuit2nd.setId("name");
-		Grid.Column<Bid, String> points2nd = bidGrid2nd.addColumn(bid -> getPointsForBid(bid));
-		points2nd.setCaption("Punkty");
-		points2nd.setId("points");
-		Grid.Column<Bid, String> shortDesc2nd = bidGrid2nd.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
-		shortDesc2nd.setCaption("Opis");
-		shortDesc2nd.setId("shortDesc");
-		bidGrid2nd.setColumnOrder("name", "points", "suitLength", "shortDesc"/*, "bidLevel"*/ );
+		initializeGridLayout(bidGrid2nd);
+		rightHeaderCell = prependHeaderCell(bidGrid2nd);
 
 		// Define what happens when user clicks on a bid in the left Grid
 		bidGrid.addSelectionListener(e -> {
@@ -163,6 +148,51 @@ public class VaadinUI extends UI {
 		listBids(null);
 	}
 
+	/**
+	 * Setup columns and colorize rows in grid
+	 *
+	 * @param grid grid to initialize
+	 */
+	private void initializeGridLayout(Grid<Bid> grid) {
+		grid.setColumns("suitLength"/*, "bidLevel"*/);
+		Grid.Column<Bid, String> levelSuit = grid.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
+		levelSuit.setCaption("Nazwa");
+		levelSuit.setId("name");
+		levelSuit.setComparator(new SerializableComparator<Bid>() {
+			@Override
+			public int compare(Bid o1, Bid o2) {
+				if (!o1.getBidLevel().equals(o2.getBidLevel()))
+					return o1.getBidLevel().compareTo(o2.getBidLevel());
+				return o1.getSuit().compareTo(o2.getSuit());
+			}
+		});
+		Grid.Column<Bid, String> points = grid.addColumn(bid -> getPointsForBid(bid));
+		points.setCaption("Punkty");
+		points.setId("points");
+		Grid.Column<Bid, String> shortDesc = grid.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
+		shortDesc.setCaption("Opis");
+		shortDesc.setId("shortDesc");
+		grid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
+		grid.getColumn("suitLength").setCaption("Układ");
+		grid.setSelectionMode(Grid.SelectionMode.SINGLE);
+		grid.setStyleGenerator(rowReference -> getRowColor(rowReference));
+	}
+
+	/**
+	 * Add extra header to grid and group columns
+	 *
+	 * @param grid to which to add header
+	 * @return reference to the header Cell
+	 */
+	private HeaderCell prependHeaderCell(Grid grid) {
+		HeaderRow groupingHeader = grid.prependHeaderRow();
+		HeaderCell groupCell = groupingHeader.join(groupingHeader.getCell("name"),
+				groupingHeader.getCell("points"), groupingHeader.getCell("suitLength"), groupingHeader.getCell("shortDesc"));
+		groupCell.setStyleName("header-grouped");
+		return groupCell;
+	}
+	
+	
 	/**
 	 * Load bids into the left side Grid
 	 * @param bid - bid to load as the currently displayed one
@@ -210,7 +240,6 @@ public class VaadinUI extends UI {
 		desc = desc.replaceAll("karo ", "<font color=\"red\">\u2666</font color> ");
 		desc = desc.replaceAll("trefl ", "<font color=\"black\">\u2663</font color>");
 		desc = desc.replaceAll("pik ", "<font color=\"black\">\u2660</font color>");
-
 
 		desc = desc.replaceAll("kiery ", "<font color=\"red\">\u2665</font color> ");
 		desc = desc.replaceAll("kara ", "<font color=\"red\">\u2666</font color> ");
@@ -263,7 +292,9 @@ public class VaadinUI extends UI {
 		curBid = bid;
 		if (bid==null) {
 			navigatorLabel.setValue("Wybierz odzywkę:");
-			bidGrid.setCaption("Otwarcie - gracz S:");
+			//bidGrid.setCaption("Otwarcie - gracz S:");
+			leftHeaderCell.setText("Otwarcie - gracz S:");
+			rightHeaderCell.setText("");
 			curBidLabel.setValue("");
 		}
 		else {
@@ -274,14 +305,32 @@ public class VaadinUI extends UI {
 				tempBid = tempBid.getParentBid();
 
 			}
-			if(curBid.getBidLevel() % 2 == 0)
-			{bidGrid.setCaption("Gracz S:");
-			bidGrid2nd.setCaption("Gracz N");
+			if(curBid.getBidLevel() % 2 == 0) {
+				leftHeaderCell.setText("Gracz S:");
+				rightHeaderCell.setText("Gracz N");
 			}
-			else {bidGrid.setCaption("Gracz N");
-			bidGrid2nd.setCaption("Gracz S");}
+			else {
+				leftHeaderCell.setText("Gracz N:");
+				rightHeaderCell.setText("Gracz S");
+			}
 			navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
 			curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
+		}
+	}
+
+	/**
+	 * Return the style name for grid row depending on the bidType
+	 * Look in webbridgebidding.scss for the mapping of those style names to styles (background and font colors)
+	 *
+	 * @param bid bid to analyze for bidType
+	 * @return style name to add to row
+	 */
+	private static String getRowColor(Bid bid) {
+		switch (bid.getBidType()) {
+			case "I" : return "rowI";
+			case "FD" : return "rowFD";
+			case "S": return "rowS";
+			default: return "";
 		}
 	}
 

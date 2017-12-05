@@ -1,0 +1,51 @@
+
+$v-font-size: 15px !default;
+$v-font-weight: 400 !default;
+$v-unit-size: 32px !default;
+
+
+@import "../valo/valo.scss";
+//@import "styles.scss";
+
+@mixin webbridgebidding {
+  @include valo;
+
+  .v-grid-row-stripe > td {
+    background-color: transparent;
+  }
+
+  .v-grid-cell {
+    background-color: transparent;
+  }
+
+  .v-grid-row > td {
+    background-color: transparent;
+  }
+
+  // Header with description
+  .v-grid-cell.header-grouped > th {
+    background-color: yellow;
+    text-align: center;
+  }
+
+  .v-grid-cell.header-grouped > td {
+    background-color: yellow;
+    text-align: center;
+  }
+
+  // Colors for rows depending on bidType
+  .v-grid-row.rowI {
+    background-color: red !important;
+  }
+
+  .v-grid-row.rowS {
+    //	color: black;
+    background-color: red !important;
+  }
+
+  .v-grid-row.rowFD {
+    //color: black;
+	background-color: palegreen !important;
+  }
+
+}
