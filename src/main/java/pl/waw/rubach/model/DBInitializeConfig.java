@@ -23,7 +23,7 @@ public class DBInitializeConfig {
 
 	private static Logger logger = LoggerFactory.getLogger(DBInitializeConfig.class);
 	
-	@PostConstruct
+	//@PostConstruct
 	public void initialize(){
 		try {
 			if (clearDatabase) {

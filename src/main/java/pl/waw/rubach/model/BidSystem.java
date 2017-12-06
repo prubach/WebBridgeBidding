@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class BidSystem {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer bidSystemID;
 
     private String name;

@@ -15,4 +15,7 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     List<Bid> findByBidSystemAndBidLevel(BidSystem bidSystem, Integer bidLevel);
 
     List<Bid> findByBidID(Long bidID);
+
+    //List<Bid> findByBidSystemAndSuit(BidSystem bidSystem, String suit);
+    List<Bid> findBySuit(String suit);
 }

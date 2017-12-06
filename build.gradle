@@ -54,6 +54,7 @@ dependencies {
     compile 'com.zsoltfabok:sqlite-dialect:1.0'
     //compile 'org.hibernate.dialect:sqlite-dialect:0.1.0'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
     testCompile("junit:junit")
 }
 

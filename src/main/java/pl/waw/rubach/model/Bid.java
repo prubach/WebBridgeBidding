@@ -1,13 +1,14 @@
 package pl.waw.rubach.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Bid {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer bidID;
 
     private Integer bidLevel;
@@ -37,6 +38,9 @@ public class Bid {
 
     @ManyToOne
     private BidSystem bidSystem;
+
+    @OneToMany(mappedBy = "parentBid", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Bid> childrenBids;
 
     public Bid() {
     }
@@ -187,6 +191,14 @@ public class Bid {
         this.bidSystem = bidSystem;
     }
 
+    public List<Bid> getChildrenBids() {
+        return childrenBids;
+    }
+
+    public void setChildrenBids(List<Bid> childrenBids) {
+        this.childrenBids = childrenBids;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -210,28 +222,25 @@ public class Bid {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(bidID, bidLevel, level, suit, pointsMin, pointsMax, suitLength, bidType, bidClass, afterInterven, shortDesc, description, parentBid, bidSystem);
     }
 
+
+
     @Override
     public String toString() {
-        return "Bid{" +
-                "bidID=" + bidID +
-                ", bidLevel=" + bidLevel +
-                ", level=" + level +
-                ", suit='" + suit + '\'' +
-                ", pointsMin=" + pointsMin +
-                ", pointsMax=" + pointsMax +
-                ", suitLength='" + suitLength + '\'' +
-                ", bidType='" + bidType + '\'' +
-                ", bidClass='" + bidClass + '\'' +
-                ", afterInterven=" + afterInterven +
+        return "BID{" +
+                "ID=" + bidID +
+                ", " + bidLevel +
+                ", " + level + " " + suit +
+                ", " + pointsMin + "-" + pointsMax +
+                ", ukl='" + suitLength + '\'' +
                 ", shortDesc='" + shortDesc + '\'' +
-                ", description='" + description + '\'' +
-                ", parentBid=" + parentBid +
-                ", bidSystem=" + bidSystem +
-                '}';
+                //", description='" + description + '\'' +
+                ", bs=" + bidSystem.getName() +
+                (parentBid!=null ?
+                        ", parent=" + parentBid.getBidID() + " " + parentBid.getLevel() + " " + parentBid.getSuit() + '}' :
+                        '}');
     }
 
 

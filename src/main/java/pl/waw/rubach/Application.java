@@ -11,6 +11,7 @@ import pl.waw.rubach.model.Bid;
 import pl.waw.rubach.model.BidSystem;
 import pl.waw.rubach.repo.BidRepository;
 import pl.waw.rubach.repo.BidSystemRepository;
+import pl.waw.rubach.xls.CheckHsBids;
 import pl.waw.rubach.xls.XlsBridgeReader;
 import pl.waw.rubach.xls.XlsBridgeWriter;
 
@@ -51,8 +52,12 @@ public class Application {
 					bidRepo.save(b);
 				}
 			}
+            log.info("Checking for HS records");
+			new CheckHsBids(bidRepo, bidSystemRepo).checkHS();
+            log.info("Data import finished!");
 		};
 	}
+
 
 	/**
 	 *  Exporting data from the database to an XLSX file can be enabled/disabled by using the

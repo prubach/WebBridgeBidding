@@ -67,7 +67,7 @@ public class XlsBridgeReader extends XlsBridge {
             for (Bid b : newBids) {
                 b.setBidID(null);
             }
-            logger.info("Data import successful!");
+            logger.info("XLSX Read successfully!");
         } catch (IOException e) {
             logger.error("Can't load Bridge XLSX file, file not found or not readable: " + new File(FILE_NAME_IN).getAbsolutePath());
         }
