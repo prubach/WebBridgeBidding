@@ -156,7 +156,11 @@ public class VaadinUI extends UI {
 	 */
 	private void initializeGridLayout(Grid<Bid> grid) {
 		grid.setSelectionMode(Grid.SelectionMode.SINGLE);
-		grid.setColumns("suitLength"/*, "bidLevel"*/);
+		grid.setColumns(/*"suitLength",*/ "bidLevel");
+		Grid.Column<Bid, String> suitLength = grid.addColumn(bid -> replaceSuitsInDesc(bid.getSuitLength()), new HtmlRenderer());
+		suitLength.setCaption("Układ");
+		suitLength.setId("suitLength");
+
 		Grid.Column<Bid, String> levelSuit = grid.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
 		levelSuit.setCaption("Nazwa");
 		levelSuit.setId("name");
@@ -181,7 +185,7 @@ public class VaadinUI extends UI {
 		shortDesc.setCaption("Opis");
 		shortDesc.setId("shortDesc");
 		grid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
-		grid.getColumn("suitLength").setCaption("Układ");
+		//grid.getColumn("suitLength").setCaption("Układ");
 		grid.setStyleGenerator(rowReference -> getRowColorAndStyle(rowReference));
 
 	}
@@ -257,6 +261,9 @@ public class VaadinUI extends UI {
 		desc = desc.replaceAll("kara ", "<font color=\"red\">\u2666</font color> ");
 		desc = desc.replaceAll("trefle ", "<font color=\"black\">\u2663</font color>");
 		desc = desc.replaceAll("piki ", "<font color=\"black\">\u2660</font color>");
+
+		desc = desc.replaceAll("SK", "<font color=\"black\">\u2660</font color>");
+
 		return desc;
 	}
 
@@ -350,7 +357,7 @@ public class VaadinUI extends UI {
 			default: style="";
 		}
 
-	//	if(bid.getBidClass().equals("Relay")) style = style +"R";
+		if(bid.getBidClass().equals("Relay")) style = style +"R";
 
 		return style;
 	}

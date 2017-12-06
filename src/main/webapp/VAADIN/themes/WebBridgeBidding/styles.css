@@ -14793,6 +14793,7 @@ div.v-layout.v-horizontal.v-widget {
 
 .WebBridgeBidding .v-grid-cell.header-grouped > th {
 	background-color: yellow;
+	color: red !important;
 	text-align: center;
 }
 
@@ -14802,30 +14803,62 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .WebBridgeBidding .v-grid-row.rowI {
-	background-color: #ffc866 !important;
+	background-color: #ffe196 !important;
 }
 
 .WebBridgeBidding .v-grid-row.rowS {
-	background-color: #ffff66 !important;
+	background-color: #ffff96 !important;
 }
 
 .WebBridgeBidding .v-grid-row.rowF1 {
-	background-color: #96ff96 !important;
+	background-color: #c8ffc8 !important;
 }
 
 .WebBridgeBidding .v-grid-row.rowFD {
-	background-color: #e1ffff !important;
+	background-color: #dcffff !important;
 }
 
 .WebBridgeBidding .v-grid-row.rowNF {
-	background-color: #c8c8c8 !important;
+	background-color: #e6e6e6 !important;
 }
 
 .WebBridgeBidding .v-grid-row.rowBL {
-	background-color: #ffc8ff !important;
+	background-color: #ffe6ff !important;
 }
 
 .WebBridgeBidding .v-grid-row.rowR {
 	color: red;
+	font-weight: bold;
+	font-weight: 900 !important;
 	font-family: cursive;
+}
+
+.WebBridgeBidding .v-grid-row.rowIR {
+	color: red;
+	background-color: #ffc866 !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowSR {
+	color: red;
+	background-color: #ffff66 !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowF1R {
+	color: red;
+	background-color: #96ff96 !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowFDR {
+	color: red;
+	background-color: #e1ffff !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowNFR {
+	color: red;
+	background-color: #c8c8c8 !important;
+}
+
+.WebBridgeBidding .v-grid-row.rowBLR {
+	color: red;
+	background-color: #ffc8ff !important;
 }

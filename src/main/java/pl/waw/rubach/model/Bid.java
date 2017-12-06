@@ -74,6 +74,7 @@ public class Bid {
     public void changeSuitOfBid(String previusSuit, String newSuit){
         if(this.suit.equals(previusSuit)) this.suit = newSuit;
     }
+
     //************************ Getters and setters
     public String getSuitLength() {
         return suitLength;
@@ -192,7 +193,7 @@ public class Bid {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bid bid = (Bid) o;
-        return afterInterven == bid.afterInterven &&
+        return afterInterven == bid.afterInterven &&  //pyt: dlaczego tutaj jest == a nie equals jak wszędzie niżej?
                 Objects.equals(bidID, bid.bidID) &&
                 Objects.equals(bidLevel, bid.bidLevel) &&
                 Objects.equals(level, bid.level) &&

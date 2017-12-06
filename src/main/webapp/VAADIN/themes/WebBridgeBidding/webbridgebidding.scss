@@ -26,6 +26,7 @@ $v-unit-size: 32px !default;
   // Header with description
   .v-grid-cell.header-grouped > th {
     background-color: yellow;
+    color: red !important;
     text-align: center;
   }
 
@@ -36,42 +37,44 @@ $v-unit-size: 32px !default;
 
    // Colors for rows depending on bidType
     .v-grid-row.rowI {
-      background-color: rgb(255, 200, 102) !important;
+      background-color: rgb(255, 225, 150) !important;
     }
 
     .v-grid-row.rowS {
       //	color: black;
-      background-color: rgb(255, 255, 102) !important;
+      background-color: rgb(255, 255, 150) !important;
     }
 
      .v-grid-row.rowF1 {
      //	color: black;
-     background-color: rgb(150, 255, 150) !important;
+     background-color: rgb(200, 255, 200) !important;
         }
 
      .v-grid-row.rowFD {
      //	color: black;
-     background-color: rgb(225, 255, 255) !important;
+     background-color: rgb(220, 255, 255) !important;
      }
 
      .v-grid-row.rowNF {
           //	color: black;
-     background-color:  rgb(200, 200, 200) !important;
+     background-color:  rgb(230, 230, 230) !important;
      }
 
      .v-grid-row.rowBL {
           //	color: black;
-     background-color:  rgb(255, 200, 255) !important;
+     background-color:  rgb(255, 230, 255) !important;
      }
 
 
 
      .v-grid-row.rowR {
      color: red;
+     font-weight: bold;
+     font-weight: 900  !important;
      font-family: cursive;
      }
 
- /*    .v-grid-row.rowIR {
+    .v-grid-row.rowIR {
            color: red;
            background-color: rgb(255, 200, 102) !important;
          }
@@ -86,10 +89,7 @@ $v-unit-size: 32px !default;
           .v-grid-row.rowF1R {
           //	color: black;
            color: red;
-         // font-style: italic;
-        //   font-weight: bold;
-       //    font-weight: 900  !important;
-               background-color: rgb(150, 255, 150) !important;
+           background-color: rgb(150, 255, 150) !important;
              }
 
           .v-grid-row.rowFDR {
@@ -111,7 +111,7 @@ $v-unit-size: 32px !default;
           }
 
 
-*/
+
 
 
 }
