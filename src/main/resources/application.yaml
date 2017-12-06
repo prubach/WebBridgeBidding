@@ -1,0 +1,47 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:sqlite:bridge.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    show_sql: false
+    database-platform: org.hibernate.dialect.SQLiteDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLiteDialect
+logging:
+  level:
+    org:
+      springframework:
+        web: WARN
+        hibernate: WARN
+        boot:
+          web:
+            servlet: WARN
+    com:
+      vaadin:
+        spring:
+          boot:
+            internal: WARN
+webbridge:
+  cleardatabase: true
+  loadBidsFromXlsx: true
+  writeBidsToXlsx: false
+vaadin:
+  servlet:
+    productionMode: false
+    heartbeatInterval: 60
+---
+spring:
+  profiles: production
+server:
+  port: 9000
+  ssl:
+    key-store: classpath:bridge.jks
+    key-store-password: haselkobridge
+    ssl.key-password: haselkobridge
+vaadin:
+  servlet:
+    productionMode: true
+    heartbeatInterval: 90
