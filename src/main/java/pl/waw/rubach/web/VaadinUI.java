@@ -84,9 +84,9 @@ public class VaadinUI extends UI {
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
 		bidGrid.setHeightByRows(TABLE_SIZE);
 		//bidGrid.setCaption("Otwarcie");
-		bidGrid.setWidth("670px");
+		bidGrid.setWidth("750px");
 		bidGrid2nd.setHeightByRows(TABLE_SIZE);
-		bidGrid2nd.setWidth("550px");
+		bidGrid2nd.setWidth("750px");
 		Responsive.makeResponsive(cssLayout);
 
 		VerticalLayout mainLayout = new VerticalLayout(actions, cssLayout);
