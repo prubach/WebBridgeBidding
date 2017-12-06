@@ -130,7 +130,7 @@ public class VaadinUI extends UI {
 		bidGrid2nd.addSelectionListener(e -> {
 			if (!e.getAllSelectedItems().isEmpty()) {
 				Bid selBid = new ArrayList<>(bidGrid2nd.getSelectedItems()).get(0);
-				if (!bidRepo.findByParentBid(selBid).isEmpty()) {
+				if (!bidRepo.findByBidSystemAndParentBid(curBidSystem, selBid).isEmpty()) {
 					listBids(selBid);
 					listBids2nd(selBid);
 				} else {
@@ -213,7 +213,7 @@ public class VaadinUI extends UI {
 		}
 		else {
 			bidGrid.setDataProvider(new ListDataProvider<>(
-					bidRepo.findByParentBid(bid.getParentBid())));
+					bidRepo.findByBidSystemAndParentBid(curBidSystem, bid.getParentBid())));
 			logger.warn("Selecting bid in bidGrid: " + getBidLevelSuit(bid));
 			//TODO Selection doesn't work!!!
 			bidGrid.deselectAll();
@@ -237,7 +237,7 @@ public class VaadinUI extends UI {
 		}
 		else {
 			bidGrid2nd.setDataProvider(new ListDataProvider<>(
-					bidRepo.findByParentBid(parentBid)));
+					bidRepo.findByBidSystemAndParentBid(curBidSystem, parentBid)));
 		}
 	}
 
