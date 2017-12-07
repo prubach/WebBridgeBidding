@@ -1,4 +1,3 @@
-
 $v-font-size: 15px !default;
 $v-font-weight: 400 !default;
 $v-unit-size: 32px !default;
@@ -35,83 +34,98 @@ $v-unit-size: 32px !default;
     text-align: center;
   }
 
-   // Colors for rows depending on bidType
-    .v-grid-row.rowI {
-      background-color: rgb(255, 225, 150) !important;
+  // Colors for rows depending on bidType
+  .v-grid-row.rowI {
+    background-color: rgb(255, 225, 150) !important;
+  }
+
+  .v-grid-row.rowS {
+    //	color: black;
+    background-color: rgb(255, 255, 150) !important;
+  }
+
+  .v-grid-row.rowF1 {
+    //	color: black;
+    background-color: rgb(200, 255, 200) !important;
+  }
+
+  .v-grid-row.rowFD {
+    //	color: black;
+    background-color: rgb(220, 255, 255) !important;
+  }
+
+  .v-grid-row.rowNF {
+    //	color: black;
+    background-color: rgb(230, 230, 230) !important;
+  }
+
+  .v-grid-row.rowBL {
+    //	color: black;
+    background-color: rgb(255, 230, 255) !important;
+  }
+
+  .v-grid-row.rowR {
+    color: red;
+    font-weight: bold;
+    font-weight: 900 !important;
+    font-family: cursive;
+  }
+
+  .v-grid-row.rowIR {
+    color: red;
+    background-color: rgb(255, 200, 102) !important;
+  }
+
+  .v-grid-row.rowSR {
+    //	color: black;
+    color: red;
+    //  font-weight: bold;
+    background-color: rgb(255, 255, 102) !important;
+  }
+
+  .v-grid-row.rowF1R {
+    //	color: black;
+    color: red;
+    background-color: rgb(150, 255, 150) !important;
+  }
+
+  .v-grid-row.rowFDR {
+    color: red;
+    //	color: black;
+
+    background-color: rgb(225, 255, 255) !important;
+  }
+
+  .v-grid-row.rowNFR {
+    color: red;
+    //	color: black;
+    background-color: rgb(200, 200, 200) !important;
+  }
+  .v-grid-row.rowBLR {
+    color: red;
+    //	color: black;
+    background-color: rgb(255, 200, 255) !important;
+  }
+
+ /* .v-grid-bidGrid {
+    min-width: 700px;
+  }
+
+  .v-grid-bidGrid2nd {
+    min-width: 660px;
+  }*/
+  /*
+  @media (min-width: 600px) and (orientation: landscape) {
+    .v-csslayout {
+      flex-direction: row;
     }
-
-    .v-grid-row.rowS {
-      //	color: black;
-      background-color: rgb(255, 255, 150) !important;
+    .bidGrid {
+      min-width: 600px;
     }
-
-     .v-grid-row.rowF1 {
-     //	color: black;
-     background-color: rgb(200, 255, 200) !important;
-        }
-
-     .v-grid-row.rowFD {
-     //	color: black;
-     background-color: rgb(220, 255, 255) !important;
-     }
-
-     .v-grid-row.rowNF {
-          //	color: black;
-     background-color:  rgb(230, 230, 230) !important;
-     }
-
-     .v-grid-row.rowBL {
-          //	color: black;
-     background-color:  rgb(255, 230, 255) !important;
-     }
-
-
-
-     .v-grid-row.rowR {
-     color: red;
-     font-weight: bold;
-     font-weight: 900  !important;
-     font-family: cursive;
-     }
-
-    .v-grid-row.rowIR {
-           color: red;
-           background-color: rgb(255, 200, 102) !important;
-         }
-
-         .v-grid-row.rowSR {
-           //	color: black;
-            color: red;
-           //  font-weight: bold;
-           background-color: rgb(255, 255, 102) !important;
-         }
-
-          .v-grid-row.rowF1R {
-          //	color: black;
-           color: red;
-           background-color: rgb(150, 255, 150) !important;
-             }
-
-          .v-grid-row.rowFDR {
-           color: red;
-          //	color: black;
-
-          background-color: rgb(225, 255, 255) !important;
-          }
-
-          .v-grid-row.rowNFR {
-           color: red;
-               //	color: black;
-          background-color:  rgb(200, 200, 200) !important;
-          }
-          .v-grid-row.rowBLR {
-           color: red;
-               //	color: black;
-          background-color:  rgb(255, 200, 255) !important;
-          }
-
-
-
-
+    .bidGrid2nd {
+      flex-basis: 100%;
+    }
+  }
+  */
 
 }

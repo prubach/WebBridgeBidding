@@ -90,9 +90,11 @@ public class VaadinUI extends UI {
 		Responsive.makeResponsive(cssLayout);
 
 		VerticalLayout mainLayout = new VerticalLayout(actions, cssLayout);
-		//mainLayout.setSizeFull();
+		//mainLayout.setWidth("100%");
+		mainLayout.setSizeFull();
 		setContent(mainLayout);
-		//verticalLayout.setExpandRatio(grid, 1);
+		mainLayout.setExpandRatio(cssLayout, 1);
+		//cssLayout.setExpandRatio(grid, 1);
 		//verticalLayout.setSizeFull();
 		// Configure layouts and components
 		//actions.setSpacing(true);
@@ -113,9 +115,11 @@ public class VaadinUI extends UI {
 		// Define Left Grid Columns
 		initializeGridLayout(bidGrid);
 		leftHeaderCell = prependHeaderCell(bidGrid);
+		bidGrid.setStyleName("bidGrid");
 		// Define Right Grid Columns
 		initializeGridLayout(bidGrid2nd);
 		rightHeaderCell = prependHeaderCell(bidGrid2nd);
+		bidGrid2nd.setStyleName("bidGrid2nd");
 
 		// Define what happens when user clicks on a bid in the left Grid
 		bidGrid.addSelectionListener(e -> {
@@ -156,10 +160,9 @@ public class VaadinUI extends UI {
 	 */
 	private void initializeGridLayout(Grid<Bid> grid) {
 		grid.setSelectionMode(Grid.SelectionMode.SINGLE);
-		grid.setColumns(/*"suitLength",*/ "bidLevel");
 		Grid.Column<Bid, String> suitLength = grid.addColumn(bid -> replaceSuitsInDesc(bid.getSuitLength()), new HtmlRenderer());
 		suitLength.setCaption("Układ");
-		suitLength.setId("suitLength");
+		suitLength.setId("suits");
 
 		Grid.Column<Bid, String> levelSuit = grid.addColumn(bid -> getBidLevelSuit(bid), new HtmlRenderer());
 		levelSuit.setCaption("Nazwa");
@@ -183,11 +186,11 @@ public class VaadinUI extends UI {
 		points.setId("points");
 		Grid.Column<Bid, String> shortDesc = grid.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
 		shortDesc.setCaption("Opis");
-		shortDesc.setId("shortDesc");
-		grid.setColumnOrder("name", "points", "suitLength", "shortDesc" /*, "bidLevel" */);
+		shortDesc.setId("shortDsc");
+		grid.setColumns("name", "points", "suits", "shortDsc"/* "bidLevel"*/);
+		grid.setColumnOrder("name", "points", "suits", "shortDsc" /*, "bidLevel" */);
 		//grid.getColumn("suitLength").setCaption("Układ");
 		grid.setStyleGenerator(rowReference -> getRowColorAndStyle(rowReference));
-
 	}
 
 	/**
@@ -199,7 +202,7 @@ public class VaadinUI extends UI {
 	private HeaderCell prependHeaderCell(Grid grid) {
 		HeaderRow groupingHeader = grid.prependHeaderRow();
 		HeaderCell groupCell = groupingHeader.join(groupingHeader.getCell("name"),
-				groupingHeader.getCell("points"), groupingHeader.getCell("suitLength"), groupingHeader.getCell("shortDesc"));
+				groupingHeader.getCell("points"), groupingHeader.getCell("suits"), groupingHeader.getCell("shortDsc"));
 		groupCell.setStyleName("header-grouped");
 		return groupCell;
 	}
