@@ -107,15 +107,19 @@ $v-unit-size: 32px !default;
     background-color: rgb(255, 200, 255) !important;
   }
 
-  .v-grid-bidGrid[width-range~="1201px-"] {
-    min-width: 600px;
-    max-height: 100% !important;
+  @media (max-width: 1100px) {
+    //[width-range~="0px-1100px"]
+    .v-grid-bidGrid {
+      min-width: 550px;
+      width: 100%;
+      max-height: 50% !important;
+    }
   }
 
-  .v-grid-bidGrid[width-range~="0px-1200px"] {
-    min-width: 600px;
-    width: 100%;
-    max-height: 50% !important;
+  @media (min-width: 1101px) {
+    .v-grid-bidGrid {
+      min-width: 500px;
+      max-height: 100% !important;
+    }
   }
-
 }
