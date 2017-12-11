@@ -41,8 +41,27 @@ class ExpectedResults {
         { if(auctionAssumption) results=490; else  results =690;}
         else if ((poinst==30 && fitInOlderColor) )
         { if(auctionAssumption) results=550; else  results =750;}
-        //TODo dokończyć
-        else results=0;
+//*******************************************************************************************
+        else if ( poinst==31 && !fitInOlderColor)
+        { if(auctionAssumption) results=520; else  results =720;}
+        else if ((poinst==31 && fitInOlderColor) || poinst==32 && !fitInOlderColor)
+        { if(auctionAssumption) results=600; else  results =800;}
+        else if ((poinst==32 && fitInOlderColor) || poinst==33 && !fitInOlderColor)
+        { if(auctionAssumption) results=700; else  results =1050;}
+        else if ((poinst==33 && fitInOlderColor) || poinst==34 && !fitInOlderColor)
+        { if(auctionAssumption) results=900; else  results =1350;}
+        else if ((poinst==34 && fitInOlderColor) || poinst==35 && !fitInOlderColor)
+        { if(auctionAssumption) results=1000; else  results =1500;}
+        else if ((poinst==35 && fitInOlderColor) || poinst==36 && !fitInOlderColor)
+        { if(auctionAssumption) results=1100; else  results =1650;}
+        else if ((poinst==36 && fitInOlderColor) || poinst==37 && !fitInOlderColor)
+        { if(auctionAssumption) results=1200; else  results =1800;}
+        else if ((poinst==37 && fitInOlderColor) || poinst==38 && !fitInOlderColor)
+        { if(auctionAssumption) results=1400; else  results =2100;}
+
+        else results=0;  //TODO should print error message
+
+        //find what to do if there is half point (calculate two and divide etc? not in table?
     }
 
 

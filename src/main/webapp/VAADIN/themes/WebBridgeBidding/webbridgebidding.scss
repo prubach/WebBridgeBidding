@@ -17,6 +17,9 @@ $orange-darkcolor: rgb(255, 200, 100);
 $rose-darkcolor: rgb(255, 200, 255);
 $grey-darkcolor: rgb(200, 200, 200);
 
+$back-color: rgb(238, 255, 204);
+$f-color: rgb(51, 153, 255);
+
 
 @import "../valo/valo.scss";
 //@import "styles.scss";
@@ -25,33 +28,57 @@ $grey-darkcolor: rgb(200, 200, 200);
   @include valo;
 
  .v-ui {
-    background: rgb(238, 255, 204);
+    background:  $back-color;
+    //color: $f-color;
   }
 
 
 /* All buttons have blue caption and some margin */
   .v-button {
     margin: 10px;
+    background:   $back-color;
 
     /* A nested selector to increase specificity */
     .v-button-caption {
-      color: rgb(51, 153, 255);
+      color: $f-color;
     }
   }
 
 .v-label{
-//color: rgb(51, 153, 255);
+//color: $f-color;
 }
+
 
 .v-menubar {
-  background:  rgb(238, 255, 204);
-  color: rgb(51, 153, 255);
-}
+ background:   $back-color;
 
+    .v-menubar-caption {
+  color:$f-color;
+}
+}
 
 .v-menubar-selected {
-color: red;
+ .v-menubar-caption {
+  color: red;
 }
+}
+
+/* Specific part of ui */
+.title{
+color:red;
+font-size: 20px;
+font-weight: bold;
+//text-decoration: underline overline;
+background:   $back-color;
+}
+
+
+.window{
+color: $f-color;
+//font-size: 20px;
+background:   $back-color;
+}
+
 .blue  {
   background-color: $blue-color;
   color: black;

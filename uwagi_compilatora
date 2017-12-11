@@ -1,3 +1,14 @@
+Nowe: (11 grudnia)
+
+To pierwsze to chyba wiem że chhodzi o to żze jakiś obrazek jest stary, ale o co chodzi w tym drugim (to hjuż było wcześniej) to nie wiem
+Note: /home/magdalena/komputerowe/java/IdeaProjects/brydz/WebBridgeBidding/src/main/java/pl/waw/rubach/web/VaadinUI.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /home/magdalena/komputerowe/java/IdeaProjects/brydz/WebBridgeBidding/src/main/java/pl/waw/rubach/web/VaadinUI.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+
+
+*****************
 Note: /home/magdalena/komputerowe/java/IdeaProjects/brydz/WebBridgeBidding/src/main/java/pl/waw/rubach/web/VaadinUI.java uses unchecked or unsafe operations.
 Note: Recompile with -Xlint:unchecked for details.
 

@@ -14,10 +14,6 @@ class ImpTable {
 
     ImpTable(int poinst){
 
-    //   if (pointDifferent>=4000) result = 24;
-     //  else if (pointDifferent>=3500) result = 23;
-      // else if (pointDifferent>=3000) result = 22;
-      // else result=0;
         if (poinst<20) results=0;
         else if (poinst<40) results =1;
         else if (poinst<80) results =2;
@@ -29,8 +25,20 @@ class ImpTable {
         else if (poinst<360) results =8;
         else if (poinst<420) results =9;
         else if (poinst<490) results =10;
-            //TODO uzupełnić :)
-        else results=11;
+        else if (poinst<590) results =11;
+        else if (poinst<740) results =12;
+        else if (poinst<890) results =13;
+        else if (poinst<1090) results =14;
+        else if (poinst<1220) results =15;
+        else if (poinst<1490) results =16;
+        else if (poinst<1740) results =17;
+        else if (poinst<1990) results =18;
+        else if (poinst<2240) results =19;
+        else if (poinst<2490) results =20;
+        else if (poinst<2990) results =21;
+        else if (poinst<3490) results =22;
+        else if (poinst<3990) results =23;
+        else results=24;
 
    }
 
