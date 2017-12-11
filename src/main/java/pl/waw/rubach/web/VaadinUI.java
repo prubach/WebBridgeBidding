@@ -2,6 +2,7 @@ package pl.waw.rubach.web;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.SerializableComparator;
 import com.vaadin.server.VaadinRequest;
@@ -12,6 +13,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.HeaderCell;
 import com.vaadin.ui.components.grid.HeaderRow;
 import com.vaadin.ui.renderers.HtmlRenderer;
+import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +33,6 @@ public class VaadinUI extends UI {
 
 	private static Logger logger = LoggerFactory.getLogger(VaadinUI.class);
 
-	private final int TABLE_SIZE = 16;
-
 	private Bid curBid = null;
 
 	private BidSystem curBidSystem = null;
@@ -49,11 +49,46 @@ public class VaadinUI extends UI {
 	private Label bidSystemLabel = new Label("");
 
 	private MenuBar bidSystemMenuBar = new MenuBar();
+
+	private MenuBar legendMenuBar = new MenuBar();
 	private Label navigatorLabel = new Label("");
 	private Label curBidLabel = new Label("");
 
 	private HeaderCell leftHeaderCell;
 	private HeaderCell rightHeaderCell;
+
+
+    private void createMenuBar() {
+
+        // A top-level menu item that opens a submenu
+        MenuBar.MenuItem legendMenuItemsAuctionAssumption = legendMenuBar.addItem("Założenia licytacyjne", null, null);
+        legendMenuItemsAuctionAssumption.addItem("Obie przed partią", FontAwesome.QUESTION_CIRCLE,null);
+        legendMenuItemsAuctionAssumption.addItem("My przed, oni po",null,null);
+        legendMenuItemsAuctionAssumption.addItem("Oni przed, my po",null,null);
+        legendMenuItemsAuctionAssumption.addItem("Obie po partii",null,null);
+
+        // Another top-level item
+        MenuBar.MenuItem legendMenuItemBidsTypes = legendMenuBar.addItem("Legenda: Typy odzywkek: ", null, null);
+        legendMenuItemBidsTypes.addItem("Niebieski - Forsuje do dogranej", null, null);
+        legendMenuItemBidsTypes.addItem("Zielony - Forsuje na jedną kolejkę", null, null);
+        legendMenuItemBidsTypes.addItem("Zółty -Sing off", null, null);
+        legendMenuItemBidsTypes.addItem("Pomarańczowy -Inwit",  null,  null);
+        legendMenuItemBidsTypes.addItem("Różowy - Blok", null, null);
+        legendMenuItemBidsTypes.addItem("Szary -Nie forsuje", null, null);
+
+        legendMenuItemBidsTypes.addSeparator();
+        legendMenuItemBidsTypes.addItem("Silne - wytłuszczone (nie działa)",null,null);
+        legendMenuItemBidsTypes.addItem("Sztuczne - czerwona czcionka, mocniejszy kolor",null,null);
+
+
+        // Yet another top-level item
+        MenuBar.MenuItem legendMenuItemOthers = legendMenuBar.addItem("Inne: ", null, null);
+        legendMenuItemOthers.addItem("Car Service", null,null);
+        legendMenuItemOthers.addItem("Obliczanie punków za grę.", null,null);
+
+       // legendMenuBar.setStyleName("firstmenu");
+        legendMenuBar.setStyleName(ValoTheme.MENUBAR_BORDERLESS);
+        }
 
 	@Autowired
 	public VaadinUI(BidRepository bidRepository, BidSystemRepository bidSystemRepo) {
@@ -67,10 +102,13 @@ public class VaadinUI extends UI {
 		navigatorLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setWidth("100%");
-		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, bidSystemMenuBar);
-		topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_RIGHT);
+        createMenuBar();
+		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, legendMenuBar, bidSystemMenuBar);
+		topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_LEFT);
+        topRightLayout.setComponentAlignment(legendMenuBar,Alignment.MIDDLE_RIGHT);
 		topRightLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);
 		topRightLayout.setExpandRatio(bidSystemMenuBar,1);
+        topRightLayout.setExpandRatio(legendMenuBar,1);
 		topRightLayout.setWidth("100%");
 		HorizontalLayout topLayout = new HorizontalLayout(backBtn, navigatorLabel);
 		topLayout.setComponentAlignment(navigatorLabel,Alignment.MIDDLE_LEFT);

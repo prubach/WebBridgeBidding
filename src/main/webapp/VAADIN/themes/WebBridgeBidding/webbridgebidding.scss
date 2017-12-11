@@ -9,6 +9,16 @@ $v-unit-size: 32px !default;
 @mixin webbridgebidding {
   @include valo;
 
+
+
+.firstmenu .v-menubar-menuitem-highlight {
+    background-color: #000040; /* Dark blue */
+}
+
+
+
+
+
   .v-grid-row-stripe > td {
     background-color: transparent;
   }
@@ -93,7 +103,7 @@ $v-unit-size: 32px !default;
     color: red;
     //	color: black;
 
-    background-color: rgb(225, 255, 255) !important;
+    background-color: rgb(200, 255, 255) !important;
   }
 
   .v-grid-row.rowNFR {
@@ -122,4 +132,7 @@ $v-unit-size: 32px !default;
       max-height: 100% !important;
     }
   }
+
+
+
 }
