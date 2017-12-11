@@ -58,7 +58,7 @@ public class VaadinUI extends UI {
 	private HeaderCell leftHeaderCell;
 	private HeaderCell rightHeaderCell;
 
-	private void createLegendLabel() {
+	private HorizontalLayout createLegendLabel() {
 	    Label legendTitle = new Label("Legenda: ");
         Label legendLabelBlue =new Label("FD");
         legendLabelBlue.addStyleName("blue");
@@ -81,9 +81,56 @@ public class VaadinUI extends UI {
         legendLabel.addComponent(legendLabelRose);
         legendLabel.addComponent(legendLabelGrey);
 
+        return legendLabel;
 	}
 
+    private VerticalLayout createLegendDescription() {
+        VerticalLayout legendDescription = new VerticalLayout();
 
+	    Label legendTitle = new Label("Legenda - opis znaczeń odzywek: ");
+        Label legendLabelBlue =new Label("Niebieski - (FD) Forsuje do dogranej, czyli nie można spasować przed końcówką");
+        legendLabelBlue.addStyleName("blue");
+        Label legendLabelGreen =new Label("Zielony - (F1) Forsuje na jedną kolejkę, czyli jeżeli przeciwnicy się nie odezwą partner nie może spasować");
+        legendLabelGreen.addStyleName("green");
+        Label legendLabelYellow =new Label("Zółty - (SO) Sing off - sygnał końca licytacji - nie mam już nic wiecej - raczej pasuj ");
+        legendLabelYellow.addStyleName("yellow");
+        Label legendLabelOrange =new Label("Pomarańczowy - (I) Inwit - zaproszenie do wyższego kontraktu, ktorego jednak nie mogę już zaproponować");
+        legendLabelOrange.addStyleName("orange");
+        Label legendLabelRose =new Label("Różowy - (BL) Blok - odzwyka mająca na celu zablokowanie przeciwników bo pewnie mogłby im iść dobry kontrakt");
+        legendLabelRose.addStyleName("rose");
+        Label legendLabelGrey =new Label("Szary - (NF) Nie forsuje - nie zmusza do odpowiedzi (można spasować) ");
+        legendLabelGrey.addStyleName("grey");
+
+        legendDescription.addComponent(legendTitle);
+        legendDescription.addComponent(legendLabelBlue);
+        legendDescription.addComponent(legendLabelGreen);
+        legendDescription.addComponent(legendLabelYellow);
+        legendDescription.addComponent(legendLabelOrange);
+        legendDescription.addComponent(legendLabelRose);
+        legendDescription.addComponent(legendLabelGrey);
+
+        return legendDescription;
+    }
+
+    private MenuBar.Command mycommand = new MenuBar.Command() {
+        @Override
+        public void menuSelected(MenuBar.MenuItem selectedItem) {
+            actionOpenWindowWithLegend();
+        }};
+
+        private void actionOpenWindowWithLegend() {
+        final Window window = new Window("Legenda - opis typów odzywek");
+        window.setWidth("100%");
+        final FormLayout content = new FormLayout();
+        content.setMargin(true);
+        content.addComponent(createLegendDescription());
+        window.setContent(content);
+
+        addWindow(window);
+
+
+       // sample.getUI().getUI().addWindow(window);
+    }
 
     private void createMenuBar() {
 
@@ -95,13 +142,13 @@ public class VaadinUI extends UI {
         optionMenuItemsAuctionAssumption.addItem("Obie po partii",null,null);
 
         // Another top-level item
-        MenuBar.MenuItem legendMenuItemBidsTypes = optionMenuBar.addItem("Legenda: Typy odzywkek: ", null);
-        MenuBar.MenuItem blue = legendMenuItemBidsTypes.addItem("Niebieski - (FD) Forsuje do dogranej",  null);
-        MenuBar.MenuItem green =legendMenuItemBidsTypes.addItem("Zielony - (F1) Forsuje na jedną kolejkę", null);
-        MenuBar.MenuItem yellow =legendMenuItemBidsTypes.addItem("Zółty - (SO) Sing off", null);
-        MenuBar.MenuItem orange =legendMenuItemBidsTypes.addItem("Pomarańczowy - (I) Inwit",  null);
-        MenuBar.MenuItem red =legendMenuItemBidsTypes.addItem("Różowy - (BL) Blok",  null);
-        MenuBar.MenuItem grey =legendMenuItemBidsTypes.addItem("Szary - (NF) Nie forsuje", null);
+        MenuBar.MenuItem legendMenuItemBidsTypes = optionMenuBar.addItem("Opis typów odzywkek: ",mycommand);
+       //MenuBar.MenuItem blue = legendMenuItemBidsTypes.addItem("Niebieski - (FD) Forsuje do dogranej",  null);
+       //MenuBar.MenuItem green =legendMenuItemBidsTypes.addItem("Zielony - (F1) Forsuje na jedną kolejkę", null);
+       //MenuBar.MenuItem yellow =legendMenuItemBidsTypes.addItem("Zółty - (SO) Sing off", null);
+       //MenuBar.MenuItem orange =legendMenuItemBidsTypes.addItem("Pomarańczowy - (I) Inwit",  null);
+       //MenuBar.MenuItem red =legendMenuItemBidsTypes.addItem("Różowy - (BL) Blok",  null);
+       //MenuBar.MenuItem grey =legendMenuItemBidsTypes.addItem("Szary - (NF) Nie forsuje", null);
 
         legendMenuItemBidsTypes.addSeparator();
         legendMenuItemBidsTypes.addItem("Silne - wytłuszczone (nie działa)",null,null);
@@ -142,7 +189,7 @@ public class VaadinUI extends UI {
 //		//HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
         HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, legendLabel, optionMenuBar, bidSystemMenuBar);
 
-        topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_LEFT);
+        topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_RIGHT);
         topRightLayout.setComponentAlignment(optionMenuBar,Alignment.MIDDLE_RIGHT);
         topRightLayout.setComponentAlignment(legendLabel,Alignment.MIDDLE_RIGHT);
 		topRightLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);

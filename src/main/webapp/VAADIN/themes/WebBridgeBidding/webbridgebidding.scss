@@ -25,13 +25,18 @@ $v-unit-size: 32px !default;
   }
 
 .v-label{
-color: rgb(51, 153, 255);}
+//color: rgb(51, 153, 255);
+}
 
 .v-menubar {
   background:  rgb(238, 255, 204);
   color: rgb(51, 153, 255);
 }
 
+
+.v-menubar-selected {
+color: red;
+}
 .blue  {
   background-color: rgb(220, 255, 255);
   color: black;
