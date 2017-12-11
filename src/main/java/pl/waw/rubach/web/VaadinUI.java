@@ -54,8 +54,12 @@ public class VaadinUI extends UI {
 
     private HeaderCell leftHeaderCell;
     private HeaderCell rightHeaderCell;
-    private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> checkbox1.setValue(false);
-    private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> checkbox1.setValue(true);
+    private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {checkbox1.setValue(false);
+        if (checkbox1.getValue()) auctionAssumptionLabel.setValue("Założenia: Po parti");
+        else auctionAssumptionLabel.setValue("Założenia: Przed partią");};
+    private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> {checkbox1.setValue(true);
+        if (checkbox1.getValue()) auctionAssumptionLabel.setValue("Założenia: Po parti");
+        else auctionAssumptionLabel.setValue("Założenia: Przed partią");};
     private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend();
     private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints();
 
@@ -596,6 +600,8 @@ public class VaadinUI extends UI {
             }
             navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
             curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
+
+
         }
     }
 
