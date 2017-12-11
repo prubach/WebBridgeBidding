@@ -58,7 +58,7 @@ public class VaadinUI extends UI {
 	private HeaderCell leftHeaderCell;
 	private HeaderCell rightHeaderCell;
 
-	private HorizontalLayout createLegendLabel() {
+	private void createLegendLabel() {
 	    Label legendTitle = new Label("Legenda: ");
         Label legendLabelBlue =new Label("FD");
         legendLabelBlue.addStyleName("blue");
@@ -81,7 +81,6 @@ public class VaadinUI extends UI {
         legendLabel.addComponent(legendLabelRose);
         legendLabel.addComponent(legendLabelGrey);
 
-        return legendLabel;
 	}
 
     private VerticalLayout createLegendDescription() {
@@ -101,22 +100,49 @@ public class VaadinUI extends UI {
         Label legendLabelGrey =new Label("Szary - (NF) Nie forsuje - nie zmusza do odpowiedzi (można spasować) ");
         legendLabelGrey.addStyleName("grey");
 
-        legendDescription.addComponent(legendTitle);
-        legendDescription.addComponent(legendLabelBlue);
-        legendDescription.addComponent(legendLabelGreen);
-        legendDescription.addComponent(legendLabelYellow);
-        legendDescription.addComponent(legendLabelOrange);
-        legendDescription.addComponent(legendLabelRose);
-        legendDescription.addComponent(legendLabelGrey);
+		Label legendLabelBlueDark =new Label("- kolor niebieski jest ciemniejszy jeżeli odzwyka jest sztuczna... ");
+		legendLabelBlueDark.addStyleName("blueD");
+		Label legendLabelGreenDark =new Label("- kolor zielony jest ciemniejszy jeżeli odzwyka jest sztuczna...");
+		legendLabelGreenDark.addStyleName("greenD");
+		Label legendLabelYellowDark =new Label("- kolor żółty jest ciemniejszy jeżeli odzwyka jest sztuczna...");
+		legendLabelYellowDark.addStyleName("yellowD");
+		Label legendLabelOrangeDark =new Label("- kolor pomarańczowy jest ciemniejszy jeżeli odzwyka jest sztuczna...");
+		legendLabelOrangeDark.addStyleName("orangeD");
+		Label legendLabelRoseDark =new Label("- kolor różowy jest  ciemniejszy jeżeli odzwyka jest sztuczna...");
+		legendLabelRoseDark.addStyleName("roseD");
+		Label legendLabelGreyDark =new Label("- kolor  szary jest ciemniejszy jeżeli odzwyka jest sztuczna...");
+		legendLabelGreyDark.addStyleName("greyD");
 
-        return legendDescription;
+		HorizontalLayout horlBlue = new HorizontalLayout(legendLabelBlue, legendLabelBlueDark);
+		HorizontalLayout horlGreen = new HorizontalLayout(legendLabelGreen, legendLabelGreenDark);
+		HorizontalLayout horlYellow = new HorizontalLayout(legendLabelYellow, legendLabelYellowDark);
+		HorizontalLayout horlOrange = new HorizontalLayout(legendLabelOrange, legendLabelOrangeDark);
+		HorizontalLayout horlRose = new HorizontalLayout(legendLabelRose, legendLabelRoseDark);
+		HorizontalLayout horlGrey = new HorizontalLayout(legendLabelGrey, legendLabelGreyDark);
+
+        legendDescription.addComponent(legendTitle);
+        legendDescription.addComponent(horlBlue);
+        legendDescription.addComponent(horlGreen);
+        legendDescription.addComponent(horlYellow);
+        legendDescription.addComponent(horlOrange);
+        legendDescription.addComponent(horlRose);
+        legendDescription.addComponent(horlGrey);
+
+
+		Label silne = new Label("<b> Silne - wytłuszczone (nie działa)</b>", ContentMode.HTML);
+		Label sztuczne = new Label("<font color = red> Sztuczne - czerwona czcionka, mocniejszy kolor tła (patrz powyżej) </font >", ContentMode.HTML);
+
+		legendDescription.addComponent(silne);
+		legendDescription.addComponent(sztuczne);
+
+
+
+		return legendDescription;
     }
 
-    private MenuBar.Command mycommand = new MenuBar.Command() {
-        @Override
-        public void menuSelected(MenuBar.MenuItem selectedItem) {
-            actionOpenWindowWithLegend();
-        }};
+    private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend();
+
+	private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints();
 
         private void actionOpenWindowWithLegend() {
         final Window window = new Window("Legenda - opis typów odzywek");
@@ -132,6 +158,20 @@ public class VaadinUI extends UI {
        // sample.getUI().getUI().addWindow(window);
     }
 
+	private void actionCalculetePoints() {
+		final Window window = new Window("Okienko do liczenia punktów.");
+		window.setWidth("100%");
+		final FormLayout content = new FormLayout();
+		content.setMargin(true);
+		content.addComponent(new Label("jeszcze nie gotowe :)"));
+		window.setContent(content);
+
+		addWindow(window);
+
+
+		// sample.getUI().getUI().addWindow(window);
+	}
+
     private void createMenuBar() {
 
         // A top-level menu item that opens a submenu
@@ -142,7 +182,7 @@ public class VaadinUI extends UI {
         optionMenuItemsAuctionAssumption.addItem("Obie po partii",null,null);
 
         // Another top-level item
-        MenuBar.MenuItem legendMenuItemBidsTypes = optionMenuBar.addItem("Opis typów odzywkek: ",mycommand);
+        MenuBar.MenuItem legendMenuItemBidsTypes = optionMenuBar.addItem("Opis typów odzywkek: ", commandToOpenLegend);
        //MenuBar.MenuItem blue = legendMenuItemBidsTypes.addItem("Niebieski - (FD) Forsuje do dogranej",  null);
        //MenuBar.MenuItem green =legendMenuItemBidsTypes.addItem("Zielony - (F1) Forsuje na jedną kolejkę", null);
        //MenuBar.MenuItem yellow =legendMenuItemBidsTypes.addItem("Zółty - (SO) Sing off", null);
@@ -150,15 +190,15 @@ public class VaadinUI extends UI {
        //MenuBar.MenuItem red =legendMenuItemBidsTypes.addItem("Różowy - (BL) Blok",  null);
        //MenuBar.MenuItem grey =legendMenuItemBidsTypes.addItem("Szary - (NF) Nie forsuje", null);
 
-        legendMenuItemBidsTypes.addSeparator();
-        legendMenuItemBidsTypes.addItem("Silne - wytłuszczone (nie działa)",null,null);
-        legendMenuItemBidsTypes.addItem("Sztuczne - czerwona czcionka, mocniejszy kolor",null,null);
+       // legendMenuItemBidsTypes.addSeparator();
+        //legendMenuItemBidsTypes.addItem("Silne - wytłuszczone (nie działa)",null,null);
+        //legendMenuItemBidsTypes.addItem("Sztuczne - czerwona czcionka, mocniejszy kolor",null,null);
 
 
         // Yet another top-level item
         MenuBar.MenuItem optionMenuItemOthers = optionMenuBar.addItem("Inne: ", null, null);
         optionMenuItemOthers.addItem("Car Service", null,null);
-        optionMenuItemOthers.addItem("Obliczanie punków za grę.", null,null);
+        optionMenuItemOthers.addItem("Obliczanie punków za grę.", null,commandToCalculatePoints);
 
 
 

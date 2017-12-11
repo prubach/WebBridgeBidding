@@ -2,6 +2,21 @@ $v-font-size: 15px !default;
 $v-font-weight: 400 !default;
 $v-unit-size: 32px !default;
 
+$blue-color: rgb(230, 255, 255);
+$green-color:  rgb(200, 255, 200);
+$yellow-color:  rgb(255, 255, 150);
+$orange-color: rgb(255, 225, 150);
+$rose-color: rgb(255, 230, 255);
+$grey-color: rgb(230, 230, 230);
+
+
+$blue-darkcolor: rgb(200, 255, 255);
+$green-darkcolor:  rgb(150, 255, 150);
+$yellow-darkcolor:  rgb(255, 255, 120);
+$orange-darkcolor: rgb(255, 200, 100);
+$rose-darkcolor: rgb(255, 200, 255);
+$grey-darkcolor: rgb(200, 200, 200);
+
 
 @import "../valo/valo.scss";
 //@import "styles.scss";
@@ -38,36 +53,66 @@ $v-unit-size: 32px !default;
 color: red;
 }
 .blue  {
-  background-color: rgb(220, 255, 255);
+  background-color: $blue-color;
   color: black;
 }
 
 
 .green  {
-  background-color: rgb(200, 255, 200);
+  background-color: $green-color;
   color: black;
 }
 
 .yellow  {
-  background-color: rgb(255, 255, 150);
+  background-color: $yellow-color;
   color: black;
 }
 
 .orange  {
-  background-color: rgb(255, 225, 150);
+  background-color: $orange-color;
   color: black;
 }
 
 .rose  {
-  background-color: rgb(255, 230, 255);
+  background-color: $rose-color;
   color: black;
 }
 
 .grey  {
-  background-color: rgb(230, 230, 230);
+  background-color: $grey-color;
   color: black;
 }
 
+.blueD  {
+  background-color: $blue-darkcolor;
+  color: black;
+}
+
+
+.greenD  {
+  background-color: $green-darkcolor;
+  color: black;
+}
+
+.yellowD  {
+  background-color: $yellow-darkcolor;
+  color: black;
+}
+
+.orangeD  {
+  background-color: $orange-darkcolor;
+  color: black;
+}
+
+.roseD  {
+  background-color: $rose-darkcolor;
+  color: black;
+}
+
+.greyD  {
+  background-color: $grey-darkcolor;
+  color: black;
+}
 
   .v-grid-row-stripe > td {
     background-color: transparent;
@@ -96,32 +141,32 @@ color: red;
 
   // Colors for rows depending on bidType
   .v-grid-row.rowI {
-    background-color: rgb(255, 225, 150) !important;
+    background-color: $orange-color !important;
   }
 
   .v-grid-row.rowS {
     //	color: black;
-    background-color: rgb(255, 255, 150) !important;
+    background-color: $yellow-color !important;
   }
 
   .v-grid-row.rowF1 {
     //	color: black;
-    background-color: rgb(200, 255, 200) !important;
+    background-color: $green-color !important;
   }
 
   .v-grid-row.rowFD {
     //	color: black;
-    background-color: rgb(220, 255, 255) !important;
+    background-color: $blue-color !important;
   }
 
   .v-grid-row.rowNF {
     //	color: black;
-    background-color: rgb(230, 230, 230) !important;
+    background-color: $grey-color !important;
   }
 
   .v-grid-row.rowBL {
     //	color: black;
-    background-color: rgb(255, 230, 255) !important;
+    background-color: $rose-color !important;
   }
 
   .v-grid-row.rowR {
@@ -133,38 +178,38 @@ color: red;
 
   .v-grid-row.rowIR {
     color: red;
-    background-color: rgb(255, 200, 102) !important;
+    background-color: $orange-darkcolor !important;
   }
 
   .v-grid-row.rowSR {
     //	color: black;
     color: red;
     //  font-weight: bold;
-    background-color: rgb(255, 255, 102) !important;
+    background-color: $yellow-darkcolor !important;
   }
 
   .v-grid-row.rowF1R {
     //	color: black;
     color: red;
-    background-color: rgb(150, 255, 150) !important;
+    background-color: $green-darkcolor !important;
   }
 
   .v-grid-row.rowFDR {
     color: red;
     //	color: black;
 
-    background-color: rgb(200, 255, 255) !important;
+    background-color: $blue-darkcolor !important;
   }
 
   .v-grid-row.rowNFR {
     color: red;
     //	color: black;
-    background-color: rgb(200, 200, 200) !important;
+    background-color: $grey-darkcolor !important;
   }
   .v-grid-row.rowBLR {
     color: red;
     //	color: black;
-    background-color: rgb(255, 200, 255) !important;
+    background-color: $rose-darkcolor !important;
   }
 
   @media (max-width: 1100px) {
