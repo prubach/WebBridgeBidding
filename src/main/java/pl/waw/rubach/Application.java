@@ -41,6 +41,7 @@ public class Application {
 	 */
 	@Bean
 	public CommandLineRunner loadBidsFromXlsx(BidRepository bidRepo, BidSystemRepository bidSystemRepo) {
+
 		return (args) -> {
 			if (readBids) {
 				List<Bid> bids = XlsBridgeReader.readBridgeBidsFromXls();

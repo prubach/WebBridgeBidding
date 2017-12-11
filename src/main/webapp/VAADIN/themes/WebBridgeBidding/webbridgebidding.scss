@@ -9,14 +9,59 @@ $v-unit-size: 32px !default;
 @mixin webbridgebidding {
   @include valo;
 
+ .v-ui {
+    background: rgb(238, 255, 204);
+  }
 
 
-.firstmenu .v-menubar-menuitem-highlight {
-    background-color: #000040; /* Dark blue */
+/* All buttons have blue caption and some margin */
+  .v-button {
+    margin: 10px;
+
+    /* A nested selector to increase specificity */
+    .v-button-caption {
+      color: rgb(51, 153, 255);
+    }
+  }
+
+.v-label{
+color: rgb(51, 153, 255);}
+
+.v-menubar {
+  background:  rgb(238, 255, 204);
+  color: rgb(51, 153, 255);
+}
+
+.blue  {
+  background-color: rgb(220, 255, 255);
+  color: black;
 }
 
 
+.green  {
+  background-color: rgb(200, 255, 200);
+  color: black;
+}
 
+.yellow  {
+  background-color: rgb(255, 255, 150);
+  color: black;
+}
+
+.orange  {
+  background-color: rgb(255, 225, 150);
+  color: black;
+}
+
+.rose  {
+  background-color: rgb(255, 230, 255);
+  color: black;
+}
+
+.grey  {
+  background-color: rgb(230, 230, 230);
+  color: black;
+}
 
 
   .v-grid-row-stripe > td {

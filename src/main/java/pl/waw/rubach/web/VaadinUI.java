@@ -50,31 +50,58 @@ public class VaadinUI extends UI {
 
 	private MenuBar bidSystemMenuBar = new MenuBar();
 
-	private MenuBar legendMenuBar = new MenuBar();
+	private MenuBar optionMenuBar = new MenuBar();
+	private HorizontalLayout legendLabel = new HorizontalLayout();
 	private Label navigatorLabel = new Label("");
 	private Label curBidLabel = new Label("");
 
 	private HeaderCell leftHeaderCell;
 	private HeaderCell rightHeaderCell;
 
+	private void createLegendLabel() {
+	    Label legendTitle = new Label("Legenda: ");
+        Label legendLabelBlue =new Label("FD");
+        legendLabelBlue.addStyleName("blue");
+        Label legendLabelGreen =new Label("F1");
+        legendLabelGreen.addStyleName("green");
+        Label legendLabelYellow =new Label("SO");
+        legendLabelYellow.addStyleName("yellow");
+        Label legendLabelOrange =new Label("Inw.");
+        legendLabelOrange.addStyleName("orange");
+        Label legendLabelRose =new Label("BL");
+        legendLabelRose.addStyleName("rose");
+        Label legendLabelGrey =new Label("NF");
+        legendLabelGrey.addStyleName("grey");
+
+        legendLabel.addComponent(legendTitle);
+        legendLabel.addComponent(legendLabelBlue);
+        legendLabel.addComponent(legendLabelGreen);
+        legendLabel.addComponent(legendLabelYellow);
+        legendLabel.addComponent(legendLabelOrange);
+        legendLabel.addComponent(legendLabelRose);
+        legendLabel.addComponent(legendLabelGrey);
+
+	}
+
+
 
     private void createMenuBar() {
 
         // A top-level menu item that opens a submenu
-        MenuBar.MenuItem legendMenuItemsAuctionAssumption = legendMenuBar.addItem("Założenia licytacyjne", null, null);
-        legendMenuItemsAuctionAssumption.addItem("Obie przed partią", FontAwesome.QUESTION_CIRCLE,null);
-        legendMenuItemsAuctionAssumption.addItem("My przed, oni po",null,null);
-        legendMenuItemsAuctionAssumption.addItem("Oni przed, my po",null,null);
-        legendMenuItemsAuctionAssumption.addItem("Obie po partii",null,null);
+        MenuBar.MenuItem optionMenuItemsAuctionAssumption = optionMenuBar.addItem("Założenia licytacyjne", null, null);
+        optionMenuItemsAuctionAssumption.addItem("Obie przed partią", FontAwesome.QUESTION_CIRCLE,null);
+        optionMenuItemsAuctionAssumption.addItem("My przed, oni po",null,null);
+        optionMenuItemsAuctionAssumption.addItem("Oni przed, my po",null,null);
+        optionMenuItemsAuctionAssumption.addItem("Obie po partii",null,null);
 
         // Another top-level item
-        MenuBar.MenuItem legendMenuItemBidsTypes = legendMenuBar.addItem("Legenda: Typy odzywkek: ", null, null);
-        legendMenuItemBidsTypes.addItem("Niebieski - Forsuje do dogranej", null, null);
-        legendMenuItemBidsTypes.addItem("Zielony - Forsuje na jedną kolejkę", null, null);
-        legendMenuItemBidsTypes.addItem("Zółty -Sing off", null, null);
-        legendMenuItemBidsTypes.addItem("Pomarańczowy -Inwit",  null,  null);
-        legendMenuItemBidsTypes.addItem("Różowy - Blok", null, null);
-        legendMenuItemBidsTypes.addItem("Szary -Nie forsuje", null, null);
+        MenuBar.MenuItem legendMenuItemBidsTypes = optionMenuBar.addItem("Legenda: Typy odzywkek: ", null);
+        MenuBar.MenuItem blue = legendMenuItemBidsTypes.addItem("Niebieski - (FD) Forsuje do dogranej",  null);
+        MenuBar.MenuItem green =legendMenuItemBidsTypes.addItem("Zielony - (F1) Forsuje na jedną kolejkę", null);
+        MenuBar.MenuItem yellow =legendMenuItemBidsTypes.addItem("Zółty - (SO) Sing off", null);
+        MenuBar.MenuItem orange =legendMenuItemBidsTypes.addItem("Pomarańczowy - (I) Inwit",  null);
+        MenuBar.MenuItem red =legendMenuItemBidsTypes.addItem("Różowy - (BL) Blok",  null);
+        MenuBar.MenuItem grey =legendMenuItemBidsTypes.addItem("Szary - (NF) Nie forsuje", null);
 
         legendMenuItemBidsTypes.addSeparator();
         legendMenuItemBidsTypes.addItem("Silne - wytłuszczone (nie działa)",null,null);
@@ -82,13 +109,19 @@ public class VaadinUI extends UI {
 
 
         // Yet another top-level item
-        MenuBar.MenuItem legendMenuItemOthers = legendMenuBar.addItem("Inne: ", null, null);
-        legendMenuItemOthers.addItem("Car Service", null,null);
-        legendMenuItemOthers.addItem("Obliczanie punków za grę.", null,null);
+        MenuBar.MenuItem optionMenuItemOthers = optionMenuBar.addItem("Inne: ", null, null);
+        optionMenuItemOthers.addItem("Car Service", null,null);
+        optionMenuItemOthers.addItem("Obliczanie punków za grę.", null,null);
 
-       // legendMenuBar.setStyleName("firstmenu");
-        legendMenuBar.setStyleName(ValoTheme.MENUBAR_BORDERLESS);
-        }
+
+
+      //  optionMenuBar.setStyleGenerator( -> getRowColorAndStyle(ItemReference));
+
+        optionMenuBar.setStyleName(ValoTheme.MENUBAR_BORDERLESS);
+        optionMenuBar.addStyleName("firstmenu");
+
+
+    }
 
 	@Autowired
 	public VaadinUI(BidRepository bidRepository, BidSystemRepository bidSystemRepo) {
@@ -99,17 +132,24 @@ public class VaadinUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		// build layout
+
+
 		navigatorLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setContentMode(ContentMode.HTML);
 		curBidLabel.setWidth("100%");
+        createLegendLabel();
         createMenuBar();
-		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, legendMenuBar, bidSystemMenuBar);
-		topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_LEFT);
-        topRightLayout.setComponentAlignment(legendMenuBar,Alignment.MIDDLE_RIGHT);
+//		//HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
+        HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, legendLabel, optionMenuBar, bidSystemMenuBar);
+
+        topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_LEFT);
+        topRightLayout.setComponentAlignment(optionMenuBar,Alignment.MIDDLE_RIGHT);
+        topRightLayout.setComponentAlignment(legendLabel,Alignment.MIDDLE_RIGHT);
 		topRightLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);
 		topRightLayout.setExpandRatio(bidSystemMenuBar,1);
-        topRightLayout.setExpandRatio(legendMenuBar,1);
-		topRightLayout.setWidth("100%");
+        topRightLayout.setExpandRatio(optionMenuBar,1);
+        topRightLayout.setExpandRatio(legendLabel,1);
+			topRightLayout.setWidth("100%");
 		HorizontalLayout topLayout = new HorizontalLayout(backBtn, navigatorLabel);
 		topLayout.setComponentAlignment(navigatorLabel,Alignment.MIDDLE_LEFT);
 		VerticalLayout topVertLayout = new VerticalLayout(topRightLayout, topLayout);
