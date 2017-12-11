@@ -205,8 +205,8 @@ public class VaadinUI extends UI {
 		groupCell.setStyleName("header-grouped");
 		return groupCell;
 	}
-	
-	
+
+
 	/**
 	 * Load bids into the left side Grid
 	 * @param bid - bid to load as the currently displayed one
