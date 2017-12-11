@@ -45,7 +45,7 @@ public class VaadinUI extends UI {
 
 	private final Grid<Bid> bidGrid2nd = new Grid(Bid.class);
 
-	private final Button backBtn = new Button("Wróć", ARROW_CIRCLE_LEFT);
+	private final Button backBtn = new Button("AAA", ARROW_CIRCLE_LEFT);
 	private Label bidSystemLabel = new Label("");
 
 	private MenuBar bidSystemMenuBar = new MenuBar();
