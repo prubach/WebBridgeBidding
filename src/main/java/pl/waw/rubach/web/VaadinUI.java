@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.waw.rubach.model.Bid;
 import pl.waw.rubach.model.BidSystem;
+import pl.waw.rubach.pointsCounting.ResultsOfOneGame;
 import pl.waw.rubach.repo.BidRepository;
 import pl.waw.rubach.repo.BidSystemRepository;
 
@@ -45,7 +46,7 @@ public class VaadinUI extends UI {
 
 	private final Grid<Bid> bidGrid2nd = new Grid(Bid.class);
 
-	private final Button backBtn = new Button("AAA", ARROW_CIRCLE_LEFT);
+	private final Button backBtn = new Button("Wróć", ARROW_CIRCLE_LEFT);
 	private Label bidSystemLabel = new Label("");
 
 	private MenuBar bidSystemMenuBar = new MenuBar();
@@ -163,9 +164,47 @@ public class VaadinUI extends UI {
 		window.setWidth("100%");
 		final FormLayout content = new FormLayout();
 		content.setMargin(true);
-		content.addComponent(new Label("jeszcze nie gotowe :)"));
-		window.setContent(content);
+		content.addComponent(new Label("Wersja wstępna - podaj wszystkie parametry (potem może będzie je brało z innego miejsca) :)"));
 
+
+		TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu rękach:");
+    	content.addComponent(pointsInBothHands);
+
+		TextField pointsForContract = new TextField("Podaj liczbę punktów uzyskanych przy rozgrywaniu kontraktu:");
+		content.addComponent(pointsForContract);
+
+        CheckBox checkbox1 = new CheckBox("Czy jesteście po partii (domyślnie tak)? ");
+        CheckBox checkbox2 = new CheckBox("Czy starszy kolor sfitowany (domyślnie tak)? ");
+
+        checkbox1.setValue(true);
+        checkbox2.setValue(true);
+
+        content.addComponent(checkbox1);
+        content.addComponent(checkbox2);
+      //  checkbox1.addValueChangeListener(event ->
+       //         checkbox2.setValue(! checkbox1.getValue()));
+
+		Button sayHelloButton = new Button("Oblicz punkty! ", clickEvent -> {
+
+            int foo = Integer.parseInt(pointsInBothHands.getValue());
+            int foo2 = Integer.parseInt(pointsForContract.getValue());
+
+            ResultsOfOneGame example = new ResultsOfOneGame(20,50,true,true);
+
+            ResultsOfOneGame a = new ResultsOfOneGame(foo,foo2,checkbox1.getValue(),checkbox1.getValue());
+            int result = a.getResults();
+//            Notification.show("W tym rozdaniu w którym mieliście na obu rękach "+ a.getPointsInBothHands()+" i byliście po partii:"+ checkbox1.getValue()+" uzyskaliście " + result + " impów (punktów). ");
+
+
+            Notification.show("W tym rozdaniu uzyskaliście " + result + " impów (punktów). ", Notification.Type.ERROR_MESSAGE);
+
+            //Notification notif =new Notification("W tym rozdaniu uzyskaliście " + result + " impów (punktów). ");
+           // notif.show(Page.getCurrent());
+           // notif.setDelayMsec(-1);
+		});
+
+		content.addComponent(sayHelloButton);
+		window.setContent(content);
 		addWindow(window);
 
 

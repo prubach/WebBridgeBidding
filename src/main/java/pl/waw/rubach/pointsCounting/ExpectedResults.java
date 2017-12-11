@@ -12,12 +12,37 @@ class ExpectedResults {
 
     private int results;
 
-    ExpectedResults(int poinst){
-       int  results =0;
-        if (poinst<20) results=0;
-        else if (poinst<21) results =1;
+    /**
+     * Calculate expected result depending of
+     * @param poinst in both hand which have more or older fit (or if both spades fit)
+     * @param auctionAssumption which is true if is after game and false if before
+     * @param fitInOlderColor   which is true when older is fit and false if not
+     */
+    ExpectedResults(int poinst, boolean auctionAssumption, boolean fitInOlderColor){
 
-       this.results = results;
+        if (poinst==20 && !fitInOlderColor) results=0;
+        else if ((poinst==20 && fitInOlderColor) || poinst==21 && !fitInOlderColor)results =50;
+        else if ((poinst==21 && fitInOlderColor) || poinst==22 && !fitInOlderColor)results =70;
+        else if ((poinst==22 && fitInOlderColor) || poinst==23 && !fitInOlderColor)results =110;
+        else if ((poinst==23 && fitInOlderColor) || poinst==24 && !fitInOlderColor)results =130;
+        else if (poinst==25 && !fitInOlderColor)
+            { if(auctionAssumption) results=200; else  results =290;}
+        else if ((poinst==24 && fitInOlderColor) || poinst==26 && !fitInOlderColor)
+        { if(auctionAssumption) results=300; else  results =440;}
+        else if ((poinst==25 && fitInOlderColor) || poinst==27 && !fitInOlderColor)
+        { if(auctionAssumption) results=350; else  results =520;}
+        else if ((poinst==26 && fitInOlderColor) || poinst==28 && !fitInOlderColor)
+        { if(auctionAssumption) results=400; else  results =600;}
+        else if ((poinst==27 && fitInOlderColor) || poinst==29 && !fitInOlderColor)
+        { if(auctionAssumption) results=430; else  results =630;}
+        else if ((poinst==28 && fitInOlderColor) || poinst==30 && !fitInOlderColor)
+        { if(auctionAssumption) results=460; else  results =660;}
+        else if ((poinst==29 && fitInOlderColor) )
+        { if(auctionAssumption) results=490; else  results =690;}
+        else if ((poinst==30 && fitInOlderColor) )
+        { if(auctionAssumption) results=550; else  results =750;}
+        //TODo dokończyć
+        else results=0;
     }
 
 

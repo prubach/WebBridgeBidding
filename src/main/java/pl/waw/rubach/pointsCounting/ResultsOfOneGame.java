@@ -18,9 +18,9 @@ public class ResultsOfOneGame {
      * point achved by playng contract with some additiona or lacking triks (calculated from normal bridge notation)
      * (could be also calculated by program in future)
      */
-    private int pointsOfContract;
+    private int pointsForContract;
 
-    /**diference betwenn assumpted result from ExpectedResults table and point reach playng contract (pointsOfContract)
+    /**diference betwenn assumpted result from ExpectedResults table and point reach playng contract (pointsForContract)
      */
     private int pointDifferent;
 
@@ -30,12 +30,17 @@ public class ResultsOfOneGame {
     */
     private int results;
 
-    ResultsOfOneGame(int pointsInBothHands, int pointsOfContract){
+    public ResultsOfOneGame(int pointsInBothHands, int pointsForContract, boolean auctionAssumption, boolean fitInOlderColor){
         this.pointsInBothHands=pointsInBothHands;
-        this.pointsOfContract = pointsOfContract;
-        this.pointDifferent= pointsOfContract - new ExpectedResults(pointsInBothHands).getResults();
-        this.results = new ImpTable(pointDifferent).getResults();
+        this.pointsForContract = pointsForContract;
 
+        int expectedPoints = new ExpectedResults(pointsInBothHands,auctionAssumption,fitInOlderColor).getResults();
+        if(expectedPoints<=pointsForContract)  this.pointDifferent= pointsForContract - expectedPoints;
+        else this.pointDifferent=expectedPoints-pointsForContract;
+        int resutl = new ImpTable(pointDifferent).getResults();
+
+        if(expectedPoints<=pointsForContract)  this.results= resutl;
+        else this.results = -resutl;
     }
 
     public int getPointsInBothHands() {
@@ -54,12 +59,12 @@ public class ResultsOfOneGame {
         this.gameLevel = gameLevel;
     }
 
-    public int getPointsOfContract() {
-        return pointsOfContract;
+    public int getPointsForContract() {
+        return pointsForContract;
     }
 
-    public void setPointsOfContract(int pointsOfContract) {
-        this.pointsOfContract = pointsOfContract;
+    public void setPointsForContract(int pointsForContract) {
+        this.pointsForContract = pointsForContract;
     }
 
     public int getPointDifferent() {
