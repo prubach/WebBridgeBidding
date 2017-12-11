@@ -6,6 +6,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.server.SerializableComparator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.HeaderCell;
@@ -69,6 +70,7 @@ public class VaadinUI extends UI {
 		HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, bidSystemMenuBar);
 		topRightLayout.setComponentAlignment(bidSystemLabel,Alignment.MIDDLE_RIGHT);
 		topRightLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);
+		topRightLayout.setExpandRatio(bidSystemMenuBar,1);
 		topRightLayout.setWidth("100%");
 		HorizontalLayout topLayout = new HorizontalLayout(backBtn, navigatorLabel);
 		topLayout.setComponentAlignment(navigatorLabel,Alignment.MIDDLE_LEFT);
@@ -82,23 +84,23 @@ public class VaadinUI extends UI {
 		Responsive.makeResponsive(actions);
 
 		CssLayout cssLayout = new CssLayout(bidGrid, bidGrid2nd);
-		bidGrid.setHeightByRows(TABLE_SIZE);
-		//bidGrid.setCaption("Otwarcie");
-		bidGrid.setWidth("750px");
-		bidGrid2nd.setHeightByRows(TABLE_SIZE);
-		bidGrid2nd.setWidth("650px");
-		Responsive.makeResponsive(cssLayout);
+		cssLayout.setWidth("100%");
+		cssLayout.setHeight("100%");
+		bidGrid.setHeightMode(HeightMode.CSS);
+		bidGrid.setHeight("100%");
+		bidGrid.setWidth("50%");
+		bidGrid2nd.setHeightMode(HeightMode.CSS);
+		bidGrid2nd.setHeight("100%");
+		bidGrid2nd.setWidth("50%");
+		bidGrid.setResponsive(true);
+		bidGrid2nd.setResponsive(true);
+
+		cssLayout.setResponsive(true);
 
 		VerticalLayout mainLayout = new VerticalLayout(actions, cssLayout);
-		//mainLayout.setWidth("100%");
 		mainLayout.setSizeFull();
 		setContent(mainLayout);
 		mainLayout.setExpandRatio(cssLayout, 1);
-		//cssLayout.setExpandRatio(grid, 1);
-		//verticalLayout.setSizeFull();
-		// Configure layouts and components
-		//actions.setSpacing(true);
-		//mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 
 		List<BidSystem> bidSystemList = bidSystemRepo.findAll();
@@ -110,6 +112,7 @@ public class VaadinUI extends UI {
 		}
 		bidSystemLabel.setValue(curBidSystem.getName());
 		navigatorLabel.setValue("Wybierz odzywkę:");
+	//	bidingPersonLabel.setValue("Opening");
 
 		// Define Left Grid Columns
 		initializeGridLayout(bidGrid);
@@ -118,7 +121,7 @@ public class VaadinUI extends UI {
 		// Define Right Grid Columns
 		initializeGridLayout(bidGrid2nd);
 		rightHeaderCell = prependHeaderCell(bidGrid2nd);
-		bidGrid2nd.setStyleName("bidGrid2nd");
+		bidGrid2nd.setStyleName("bidGrid");
 
 		// Define what happens when user clicks on a bid in the left Grid
 		bidGrid.addSelectionListener(e -> {
@@ -220,7 +223,7 @@ public class VaadinUI extends UI {
 		else {
 			bidGrid.setDataProvider(new ListDataProvider<>(
 					bidRepo.findByBidSystemAndParentBid(curBidSystem, bid.getParentBid())));
-			logger.warn("Selecting bid in bidGrid: " + getBidLevelSuit(bid));
+			//logger.warn("Selecting bid in bidGrid: " + getBidLevelSuit(bid));
 			//TODO Selection doesn't work!!!
 			bidGrid.deselectAll();
 			bidGrid.asSingleSelect().setValue(bid);
