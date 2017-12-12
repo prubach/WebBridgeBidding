@@ -3,7 +3,9 @@ package pl.waw.rubach.pointsCounting;
 class ImpTable {
 
     private int results;
-    private static int[] table = new int[40];
+    private static int[] table = new int[25];
+    private static int[] tableMin = new int[25];
+    private static int[] tableMax = new int[25];
 
     ImpTable(int poinst) {
 
@@ -52,14 +54,25 @@ class ImpTable {
            // System.out.println(i);
             res2 = new ImpTable(i).getResults();
             if (res1 < res2) {
-                table[j] = res2;
+                table[j] = i;
+                tableMax[j]= i;
 
-                System.out.println("Wynik "+table[j]+ "jest dla punków poniżej "+i+".");
+               // System.out.println("Wynik "+j+ " jest dla punktów poniżej "+i+".");
                 j++;
                 res1=res2;
             }
         }
+        tableMin[0]=0;
+        tableMin[1]=20;
+        for(int k=2;k<25;k++) tableMin[k]=tableMax[k-1]+10;
 
+        //System.out.println(0 + " imp  dla <"+ table[0]);
+        //System.out.println((1) + " imp dla "+ table[0]+ "-"+ table[1]);
+        //for(int k=1; k<23;k++) System.out.println((k+1) + " imp "+ (table[k]+10)+ "-"+ table[k+1]);
+        //System.out.println(24 + " imp  dla >"+ (table[23]+10));
+
+
+        for(int k=0; k<25;k++) System.out.println(k + " imp "+ tableMin[k]+ "-"+ tableMax[k]);
 
     }
 
