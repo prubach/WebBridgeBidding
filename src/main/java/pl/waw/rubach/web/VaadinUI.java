@@ -456,7 +456,7 @@ public class VaadinUI extends UI {
      *
      * @param newbidSystem - the BidSystem to which to switch
      */
-    private void switchBidSystem(BidSystem newbidSystem) {
+    void switchBidSystem(BidSystem newbidSystem) {
         if (!curBidSystem.getName().equals(newbidSystem.getName())) {
             curBidSystem = newbidSystem;
             bidSystemLabel.setValue(curBidSystem.getName());
