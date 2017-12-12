@@ -13,6 +13,10 @@ class ExpectedResults {
     private int results;
 
     /**
+     * todo function to print tabel with points
+     */
+    public void printTable(){}
+    /**
      * Calculate expected result depending of
      * @param poinst in both hand which have more or older fit (or if both spades fit)
      * @param auctionAssumption1 which is true if is after game and false if before

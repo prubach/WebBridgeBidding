@@ -6,5 +6,7 @@ public class TestCountingPoints {
 
         ResultsOfOneGame a = new ResultsOfOneGame(24,100,true,true);
         System.out.println(a.getResults());
+
+        ImpTable.printTable();
     }
 }
