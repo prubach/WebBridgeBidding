@@ -15,11 +15,12 @@ class ExpectedResults {
     /**
      * Calculate expected result depending of
      * @param poinst in both hand which have more or older fit (or if both spades fit)
-     * @param auctionAssumption which is true if is after game and false if before
+     * @param auctionAssumption1 which is true if is after game and false if before
      * @param fitInOlderColor   which is true when older is fit and false if not
      */
-    ExpectedResults(int poinst, boolean auctionAssumption, boolean fitInOlderColor){
+    ExpectedResults(int poinst, boolean auctionAssumption1, boolean fitInOlderColor){
 
+        boolean auctionAssumption = !auctionAssumption1;
         if (poinst==20 && !fitInOlderColor) results=0;
         else if ((poinst==20 && fitInOlderColor) || poinst==21 && !fitInOlderColor)results =50;
         else if ((poinst==21 && fitInOlderColor) || poinst==22 && !fitInOlderColor)results =70;
