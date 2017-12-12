@@ -32,6 +32,8 @@ public class Bid {
 
     private String description;
 
+    private Integer assumption;
+
     @ManyToOne
     private Bid parentBid;
 
@@ -41,7 +43,7 @@ public class Bid {
     public Bid() {
     }
 
-    public Bid(Integer bidLevel, Integer level, String suit, Integer pointsMin, Integer pointsMax, String suitLength, String bidType, String bidClass, boolean afterInterven, String shortDesc, String description, Bid parentBid) {
+    public Bid(Integer bidLevel, Integer level, String suit, Integer pointsMin, Integer pointsMax, String suitLength, String bidType, String bidClass, boolean afterInterven, String shortDesc, String description, Integer assumption, Bid parentBid, BidSystem bidSystem) {
         this.bidLevel = bidLevel;
         this.level = level;
         this.suit = suit;
@@ -53,7 +55,9 @@ public class Bid {
         this.afterInterven = afterInterven;
         this.shortDesc = shortDesc;
         this.description = description;
+        this.assumption = assumption;
         this.parentBid = parentBid;
+        this.bidSystem = bidSystem;
     }
 
     //**********************Function to change bid to different auction type - to have only one in table? *************
@@ -188,12 +192,20 @@ public class Bid {
         this.bidSystem = bidSystem;
     }
 
+    public Integer getAssumption() {
+        return assumption;
+    }
+
+    public void setAssumption(Integer assumption) {
+        this.assumption = assumption;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bid bid = (Bid) o;
-        return afterInterven == bid.afterInterven &&  //pyt: dlaczego tutaj jest == a nie equals jak wszędzie niżej?
+        return afterInterven == bid.afterInterven &&
                 Objects.equals(bidID, bid.bidID) &&
                 Objects.equals(bidLevel, bid.bidLevel) &&
                 Objects.equals(level, bid.level) &&
@@ -205,6 +217,7 @@ public class Bid {
                 Objects.equals(bidClass, bid.bidClass) &&
                 Objects.equals(shortDesc, bid.shortDesc) &&
                 Objects.equals(description, bid.description) &&
+                Objects.equals(assumption, bid.assumption) &&
                 Objects.equals(parentBid, bid.parentBid) &&
                 Objects.equals(bidSystem, bid.bidSystem);
     }
@@ -212,7 +225,7 @@ public class Bid {
     @Override
     public int hashCode() {
 
-        return Objects.hash(bidID, bidLevel, level, suit, pointsMin, pointsMax, suitLength, bidType, bidClass, afterInterven, shortDesc, description, parentBid, bidSystem);
+        return Objects.hash(bidID, bidLevel, level, suit, pointsMin, pointsMax, suitLength, bidType, bidClass, afterInterven, shortDesc, description, assumption, parentBid, bidSystem);
     }
 
     @Override
@@ -230,6 +243,7 @@ public class Bid {
                 ", afterInterven=" + afterInterven +
                 ", shortDesc='" + shortDesc + '\'' +
                 ", description='" + description + '\'' +
+                ", assumption=" + assumption +
                 ", parentBid=" + parentBid +
                 ", bidSystem=" + bidSystem +
                 '}';

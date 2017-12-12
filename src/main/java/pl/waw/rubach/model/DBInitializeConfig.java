@@ -44,6 +44,7 @@ public class DBInitializeConfig {
 								+ "BID_TYPE VARCHAR(30),"
 								+ "BID_CLASS VARCHAR(30),"
 								+ "AFTER_INTERVEN BOOLEAN,"
+								+ "ASSUMPTION INTEGER,"
 								+ "SHORT_DESC VARCHAR(100),"
 								+ "DESCRIPTION VARCHAR(1000),"
 								+ "PARENT_BID_BIDID INTEGER,"

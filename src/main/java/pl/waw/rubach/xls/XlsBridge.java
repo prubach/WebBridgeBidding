@@ -15,7 +15,7 @@ public abstract class XlsBridge {
     protected static final String FILE_NAME_OUT = "bridgeOut.xlsx";
 
     protected static final String[] header = new String[] { "bidId", "parentBid", "bidLevel","level", "suit","pointsMin", "pointsMax", "suitLength",
-            "afterInterven", "shortDesc", "description", "bidType", "bidClass" };
+            "assumption", "shortDesc", "description", "bidType", "bidClass", "afterInterven"};
 
     /**
      * Read a given cell into a field of the new Bid
@@ -46,7 +46,8 @@ public abstract class XlsBridge {
             case 7:
                 newBid.setSuitLength(getStr(currentCell)); break;
             case 8:
-                newBid.setAfterInterven(getBool(currentCell)); break;
+                newBid.setAssumption(getInt(currentCell));
+                break;
             case 9:
                 newBid.setShortDesc(getStr(currentCell)); break;
             case 10:
@@ -55,6 +56,9 @@ public abstract class XlsBridge {
                 newBid.setBidType(getStr(currentCell)); break;
             case 12:
                 newBid.setBidClass(getStr(currentCell)); break;
+            case 13:
+                newBid.setAfterInterven(getBool(currentCell));
+                break;
         }
         return newBid;
     }
@@ -74,11 +78,12 @@ public abstract class XlsBridge {
                 bid.getPointsMin(),
                 bid.getPointsMax(),
                 bid.getSuitLength(),
-                bid.isAfterInterven() ? new Integer(1) : new Integer(0),
+                bid.getAssumption(),
                 bid.getShortDesc(),
                 bid.getDescription(),
                 bid.getBidType(),
-                bid.getBidClass()
+                bid.getBidClass(),
+                bid.isAfterInterven() ? new Integer(1) : new Integer(0)
         };
     }
 
@@ -97,7 +102,8 @@ public abstract class XlsBridge {
         while (cellIterator.hasNext()) {
             Cell cell = cellIterator.next();
             if (!header[i].equalsIgnoreCase(cell.getStringCellValue())) {
-                throw new XlsReaderException("Problem reading Xls File Header at Cell: " + cell.getAddress());
+                throw new XlsReaderException("Problem reading Xls File Header at Cell: " + cell.getAddress() +
+                        "\nshould be: \"" + header[i] + "\" found: \"" + cell.getStringCellValue() + "\"");
             }
             i++;
         }
