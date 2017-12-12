@@ -18,7 +18,8 @@ $rose-darkcolor: rgb(255, 200, 255);
 $grey-darkcolor: rgb(200, 200, 200);
 
 $back-color: rgb(238, 255, 204);
-$f-color: rgb(51, 153, 255);
+//$f-color: rgb(51, 153, 255);
+$f-color:  rgb(0, 50, 200);
 
 
 @import "../valo/valo.scss";
@@ -197,44 +198,44 @@ background:   $back-color;
   }
 
   .v-grid-row.rowR {
-    color: red;
+    color: $f-color;
     font-weight: bold;
     font-weight: 900 !important;
     font-family: cursive;
   }
 
   .v-grid-row.rowIR {
-    color: red;
+   color: $f-color;
     background-color: $orange-darkcolor !important;
   }
 
   .v-grid-row.rowSR {
     //	color: black;
-    color: red;
+   color: $f-color;
     //  font-weight: bold;
     background-color: $yellow-darkcolor !important;
   }
 
   .v-grid-row.rowF1R {
     //	color: black;
-    color: red;
+   color: $f-color;
     background-color: $green-darkcolor !important;
   }
 
   .v-grid-row.rowFDR {
-    color: red;
+  color: $f-color;
     //	color: black;
 
     background-color: $blue-darkcolor !important;
   }
 
   .v-grid-row.rowNFR {
-    color: red;
+   color: $f-color;
     //	color: black;
     background-color: $grey-darkcolor !important;
   }
   .v-grid-row.rowBLR {
-    color: red;
+    color: $f-color;
     //	color: black;
     background-color: $rose-darkcolor !important;
   }

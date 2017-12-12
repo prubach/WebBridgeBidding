@@ -63,7 +63,7 @@ class OptionMenu extends MenuBar {
 
 
         //	Label silne = new Label("<b> Silne - wytłuszczone (nie działa)</b>", ContentMode.HTML);
-        Label sztuczne = new Label("<font color = red> Sztuczne - czerwona czcionka, mocniejszy kolor tła (patrz powyżej) </font >", ContentMode.HTML);
+        Label sztuczne = new Label("<font color = #0000A0 > Sztuczne - granatowa czcionka, mocniejszy kolor tła (patrz powyżej) </font >", ContentMode.HTML);
 
         //legendDescription.addComponent(silne);
         legendDescription.addComponent(sztuczne);
