@@ -13,7 +13,7 @@ public class ImpTable {
     private NavigableSet<Integer> ptsSet;
 
     private ImpTable() {
-        ptsMap.put(20, 0);
+        ptsMap.put(10, 0);
         ptsMap.put(40, 1);
         ptsMap.put(80, 2);
         ptsMap.put(120, 3);
@@ -54,7 +54,7 @@ public class ImpTable {
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
         int prev = 0;
         for (Integer key : ptsMapSet) {
-            System.out.println(map.get(key)+ " imp " + prev + "-" + key);
+            System.out.println(map.get(key)+ " imp " + (prev > 0 ? prev + 10 : 0)  + "-" + key);
             prev = key;
         }
     }
