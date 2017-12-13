@@ -1,4 +1,4 @@
-package pl.waw.rubach.pointsCounting;
+package pl.waw.rubach.points;
 
 public class ResultsOfOneGame {
 
@@ -37,7 +37,7 @@ public class ResultsOfOneGame {
         int expectedPoints = new ExpectedResults(pointsInBothHands,auctionAssumption,fitInOlderColor).getResults();
         if(expectedPoints<=pointsForContract)  this.pointDifferent= pointsForContract - expectedPoints;
         else this.pointDifferent=expectedPoints-pointsForContract;
-        int resutl = new ImpTable(pointDifferent).getResults();
+        int resutl = ImpTable.getInstance().getImpPoints(pointDifferent);
 
         if(expectedPoints<=pointsForContract)  this.results= resutl;
         else this.results = -resutl;
