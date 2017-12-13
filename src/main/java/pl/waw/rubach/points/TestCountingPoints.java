@@ -12,5 +12,7 @@ public class TestCountingPoints {
             System.out.println("Dla " + p + " pkt: " + ImpTable.getInstance().getImpPoints(p));
         }
         ImpTable.printTable();
+
+        ImpTable.printMyTable();
     }
 }
