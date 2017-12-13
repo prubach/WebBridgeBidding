@@ -1,6 +1,6 @@
-package pl.waw.rubach.pointsCounting;
+package pl.waw.rubach.points;
 
-class ExpectedResults {
+public class ExpectedResults {
 
     int getResults() {
         return results;
@@ -22,7 +22,7 @@ class ExpectedResults {
      * @param auctionAssumption1 which is true if is after game and false if before
      * @param fitInOlderColor   which is true when older is fit and false if not
      */
-    ExpectedResults(int poinst, boolean auctionAssumption1, boolean fitInOlderColor){
+    public ExpectedResults(int poinst, boolean auctionAssumption1, boolean fitInOlderColor) {
 
         boolean auctionAssumption = !auctionAssumption1;
         if (poinst==20 && !fitInOlderColor) results=0;

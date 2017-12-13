@@ -5,7 +5,7 @@ import com.vaadin.server.Page;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import pl.waw.rubach.pointsCounting.ResultsOfOneGame;
+import pl.waw.rubach.points.ResultsOfOneGame;
 
 class OptionMenu extends MenuBar {
 
