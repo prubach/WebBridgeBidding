@@ -13,6 +13,6 @@ public class TestCountingPoints {
         }
         ImpTable.printTable();
 
-        ImpTable.printMyTable();
+        //ImpTable.printMyTable();
     }
 }

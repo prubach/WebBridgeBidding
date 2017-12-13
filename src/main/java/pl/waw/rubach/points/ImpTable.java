@@ -6,8 +6,6 @@ public class ImpTable {
 
     private static ImpTable instance;
 
-    private int results;
-
     private Map<Integer, Integer> ptsMap = new HashMap<>();
 
     private NavigableSet<Integer> ptsSet;
@@ -71,38 +69,4 @@ public class ImpTable {
 
 
 
-
-
-
-
-
-    private static int[] tableMin = new int[25];
-    private static int[] tableMax = new int[25];
-
-    public static void printMyTable() {
-        int res1 = 0, res2, j = 0;
-        for (int i = 0; i < 4000; i = i + 10) {
-            // System.out.println(i);
-            res2 = ImpTable.getInstance().getImpPoints(i);
-            if (res1 < res2) {
-               tableMax[j]= i;
-
-                // System.out.println("Wynik "+j+ " jest dla punktów poniżej "+i+".");
-                j++;
-                res1=res2;
-            }
-        }
-        tableMin[0]=0;
-        tableMin[1]=20;
-        for(int k=2;k<25;k++) tableMin[k]=tableMax[k-1]+10;
-
-       // System.out.println(0 + " imp  dla <"+ tableMax[0]);
-       // System.out.println((1) + " imp dla "+ tableMax[0]+ "-"+ tableMax[1]);
-       // for(int k=1; k<23;k++) System.out.println((k+1) + " imp "+ (tableMax[k]+10)+ "-"+ tableMax[k+1]);
-       // System.out.println(24 + " imp  dla >"+ (tableMax[23]+10));
-
-
-        for(int k=0; k<25;k++) System.out.println(k + " imp "+ tableMin[k]+ "-"+ tableMax[k]);
-
-    }
 }
