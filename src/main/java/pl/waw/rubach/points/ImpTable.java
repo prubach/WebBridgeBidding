@@ -52,8 +52,10 @@ public class ImpTable {
     public static void printTable() {
         Map<Integer, Integer> map = ImpTable.getInstance().getPtsMap();
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
+        int prev = 0;
         for (Integer key : ptsMapSet) {
-            System.out.println("Wynik " + map.get(key) + " jest dla punków poniżej " + key + ".");
+            System.out.println(map.get(key)+ " imp " + prev + "-" + key);
+            prev = key;
         }
     }
 
@@ -65,6 +67,9 @@ public class ImpTable {
     public Map<Integer, Integer> getPtsMap() {
         return ptsMap;
     }
+
+
+
 
 
 
