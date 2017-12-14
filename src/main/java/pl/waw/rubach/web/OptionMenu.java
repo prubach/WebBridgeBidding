@@ -163,13 +163,12 @@ class OptionMenu extends MenuBar {
         optionMenuItemsAuctionAssumption.addItem("Obie po partii", null, comandToSetAssumptionYes);
 
         // Another top-level item
-        MenuBar.MenuItem legendMenuItemBidsTypes = this.addItem("Legenda: ", null);
-        legendMenuItemBidsTypes.addItem("Opis typów odzywek w okienku - kliknij jak chcesz otworzyć. ", commandToOpenLegend);
+        MenuBar.MenuItem instructionMenuItemBidsTypes = this.addItem("Legenda: ", null);
+        instructionMenuItemBidsTypes.addItem("Opis typów odzywek w okienku - kliknij jak chcesz otworzyć. ", commandToOpenLegend);
+        instructionMenuItemBidsTypes.addItem("Zasady obliczania punktów (nie wgrane)", null, null);
 
         // Yet another top-level item
-        MenuBar.MenuItem optionMenuItemOthers = this.addItem("Punkty: ", null, null);
-        optionMenuItemOthers.addItem("Zasady obliczania punktów (nie wgrane)", null, null);
-        optionMenuItemOthers.addItem("Obliczanie punków za grę w nowym okienku.", null, commandToCalculatePoints);
+        MenuBar.MenuItem optionMenuItemOthers = this.addItem("Oblicz punkty: ", null, commandToCalculatePoints);
 
         // Yet another top-level item with biding system (moved from other menu moved to Vaadin because is to difficult ?)
         //MenuBar.MenuItem otherBidingSystemMenuItem = this.addItem("Inne systemy licytacyjne: ", null, null);
