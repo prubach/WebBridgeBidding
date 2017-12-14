@@ -34,10 +34,11 @@ public class ResultsOfOneGame {
         this.pointsInBothHands=pointsInBothHands;
         this.pointsForContract = pointsForContract;
 
-        int expectedPoints = new ExpectedResults(pointsInBothHands,auctionAssumption,fitInOlderColor).getResults();
+       // int expectedPoints = new ExpectedResults(pointsInBothHands,auctionAssumption,fitInOlderColor).getResults();
+        int expectedPoints = ExpectedResultsTable.getInstance(fitInOlderColor,auctionAssumption).getPoints(pointsInBothHands);
         if(expectedPoints<=pointsForContract)  this.pointDifferent= pointsForContract - expectedPoints;
         else this.pointDifferent=expectedPoints-pointsForContract;
-        int resutl = ImpTable.getInstance().getImpPoints(pointDifferent);
+        int resutl = ImpTable.getInstance().getPoints(pointDifferent);
 
         if(expectedPoints<=pointsForContract)  this.results= resutl;
         else this.results = -resutl;

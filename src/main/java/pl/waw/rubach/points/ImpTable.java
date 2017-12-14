@@ -2,22 +2,14 @@ package pl.waw.rubach.points;
 
 import java.util.*;
 
-public class ImpTable {
+public class ImpTable extends AbstractTable{
 
     /**
      * one instance of ImpTable (as Singleton)??
      */
     private static ImpTable instance;
 
-    /**
-     * Map of points (as key) and  result imp as ???
-     */
-    private Map<Integer, Integer> ptsMap = new HashMap<>();
 
-    /**
-     * set of key (so points borders?
-     */
-    private NavigableSet<Integer> ptsSet;
 
     /**
      * private constructor because user cant use it only could call and then it is checkt it it exist..
@@ -65,6 +57,8 @@ public class ImpTable {
      * Function to print table :) with
      */
     public static void printTable() {
+        System.out.println("*** Tabela impów ***");
+
         Map<Integer, Integer> map = ImpTable.getInstance().getPtsMap();
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
         int prev = 0;
@@ -74,24 +68,7 @@ public class ImpTable {
         }
     }
 
-    //Getters ? (no setters because is not possible to change sth here ?
-    /**
-     * Function to give imps form points (map value from key?)
-     * @param points difference between expected and wined poinst in game
-     * @return imp points
-     */
-    public int getImpPoints(int points) {
-        Integer key = ptsSet.ceiling(points);
-        return ptsMap.get(key);
-    }
 
-    /**
-     * Function to get the whole map (poinst as key and imp as value)
-     * @return ImpTable value for all possibilitis
-     */
-    public Map<Integer, Integer> getPtsMap() {
-        return ptsMap;
-    }
 
 
 

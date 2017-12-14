@@ -1,28 +1,25 @@
-package pl.waw.rubach.points;
+/* package pl.waw.rubach.points;
 
 public class ExpectedResults {
 
-    int getResults() {
-        return results;
-    }
+ int getResults() {
+       return results;
+   }
 
-    void setResults(int results) {
-        this.results = results;
-    }
+   void setResults(int results) {
+       this.results = results;
+   }
 
-    private int results;
+   private int results;
 
-    /**
-     * todo function to print tabel with points
-     */
-    public void printTable(){}
-    /**
-     * Calculate expected result depending of
-     * @param poinst in both hand which have more or older fit (or if both spades fit)
-     * @param auctionAssumption1 which is true if is after game and false if before
-     * @param fitInOlderColor   which is true when older is fit and false if not
-     */
-    public ExpectedResults(int poinst, boolean auctionAssumption1, boolean fitInOlderColor) {
+
+   /**
+    * Calculate expected result depending of
+    * @param poinst in both hand which have more or older fit (or if both spades fit)
+    * @param auctionAssumption1 which is true if is after game and false if before
+    * @param fitInOlderColor   which is true when older is fit and false if not
+    */
+  /*  public ExpectedResults(int poinst, boolean auctionAssumption1, boolean fitInOlderColor) {
 
         boolean auctionAssumption = !auctionAssumption1;
         if (poinst==20 && !fitInOlderColor) results=0;
@@ -69,5 +66,8 @@ public class ExpectedResults {
         //find what to do if there is half point (calculate two and divide etc? not in table?
     }
 
-
-}
+ /**
+     * todo function to print tabel with points
+     */
+  //  public static void printTable(){}
+//}
