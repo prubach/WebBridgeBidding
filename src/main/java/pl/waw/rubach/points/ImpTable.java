@@ -81,7 +81,7 @@ public class ImpTable {
      * @return imp points
      */
     public int getImpPoints(int points) {
-        Integer key = ptsSet.higher(points);
+        Integer key = ptsSet.ceiling(points);
         return ptsMap.get(key);
     }
 
