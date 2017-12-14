@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 7000
 spring:
   datasource:
     url: jdbc:sqlite:bridge.db
@@ -25,10 +25,8 @@ logging:
           boot:
             internal: WARN
 webbridge:
-# Set to 'true' to remove data from the database at startup
-  cleardatabase: false
-# Set to 'true' to enable loading data from XLSX file at startup
-  loadBidsFromXlsx: false
+  cleardatabase: true
+  loadBidsFromXlsx: true
   writeBidsToXlsx: false
 vaadin:
   servlet:
@@ -40,7 +38,7 @@ spring:
 server:
   port: 9000
   ssl:
-    key-store: classpath:bridge.jks
+    key-store: classpath:bridge.p12
     key-store-password: haselkobridge
     ssl.key-password: haselkobridge
 vaadin:
