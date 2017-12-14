@@ -1,6 +1,8 @@
 package pl.waw.rubach.points;
 
-import java.util.*;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class ExpectedResultsTable extends AbstractTable {
 
@@ -11,10 +13,13 @@ public class ExpectedResultsTable extends AbstractTable {
     private static ExpectedResultsTable instance;
 
 
-
+    private boolean fitInOlderColor;
+    private boolean auctionAssumption;
 
 
     private ExpectedResultsTable(boolean fitInOlderColor, boolean auctionAssumption) {
+        this.fitInOlderColor = fitInOlderColor;
+        this.auctionAssumption = auctionAssumption;
 
         //TODO find what to do if there is half point (calculate two and divide etc? not in table?
         // it shoud be in the middle betwen two next to it
@@ -37,7 +42,7 @@ public class ExpectedResultsTable extends AbstractTable {
         ptsMap.put(35, (fitInOlderColor ? (auctionAssumption ? 1650 : 1100) : (auctionAssumption ? 1500 : 1100)));
         ptsMap.put(36, (fitInOlderColor ? (auctionAssumption ? 1800 : 1200) : (auctionAssumption ? 1650 : 1200)));
         ptsMap.put(37, (fitInOlderColor ? (auctionAssumption ? 2100 : 1400) : (auctionAssumption ? 1800 : 1400)));
-        ptsMap.put(38, (fitInOlderColor ? (auctionAssumption ? 2100 : 1400) : (auctionAssumption ? 2100 : 1400)));
+        ptsMap.put(38, (fitInOlderColor ? (auctionAssumption ? 2200 : 1500) : (auctionAssumption ? 2100 : 1400)));
 
         ptsSet = new TreeSet<>(ptsMap.keySet());
 
@@ -51,7 +56,8 @@ public class ExpectedResultsTable extends AbstractTable {
      * @return instance of ImpTable
      */
     public static ExpectedResultsTable getInstance(boolean fitInOlderColor, boolean auctionAssumption) {
-        if (instance == null) instance = new ExpectedResultsTable(fitInOlderColor, auctionAssumption);
+        if (instance == null || (instance.fitInOlderColor != fitInOlderColor || instance.auctionAssumption != auctionAssumption))
+            instance = new ExpectedResultsTable(fitInOlderColor, auctionAssumption);
         return instance;
     }
 
@@ -59,7 +65,7 @@ public class ExpectedResultsTable extends AbstractTable {
      * Function to print table :) with
      */
     public static void printTable(boolean fitInOlderColor, boolean auctionAssumption) {
-        System.out.println("*** Oczekiwane  punkty dla koloru " + (fitInOlderColor ? "sfitowanego" : "niesfitowanego") + " i " + (auctionAssumption ? "po partii" : "przed partią"+".***"));
+        System.out.println("*** Oczekiwane  punkty dla koloru " + (fitInOlderColor ? "sfitowanego" : "niesfitowanego") + " i " + (auctionAssumption ? "po partii" : "przed partią" + ".***"));
         Map<Integer, Integer> map = ExpectedResultsTable.getInstance(fitInOlderColor, auctionAssumption).getPtsMap();
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
 
@@ -70,5 +76,17 @@ public class ExpectedResultsTable extends AbstractTable {
     }
 
 
+    public static String giveTable(boolean fitInOlderColor, boolean auctionAssumption) {
+        String s = ("*** Oczekiwane  punkty dla koloru " + (fitInOlderColor ? "sfitowanego" : "niesfitowanego") + " i " + (auctionAssumption ? "po partii" : "przed partią" + ".***" + "\n"));
+
+        Map<Integer, Integer> map = ExpectedResultsTable.getInstance(fitInOlderColor, auctionAssumption).getPtsMap();
+        SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
+
+        for (Integer key : ptsMapSet) {
+            s = s + "\n" + "dla " + key + " PC oczekiwane " + map.get(key) + " punktów";
+
+        }
+        return s;
+    }
 
 }

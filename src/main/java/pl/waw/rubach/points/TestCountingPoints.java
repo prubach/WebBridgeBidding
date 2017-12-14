@@ -22,9 +22,9 @@ public class TestCountingPoints {
         for (int p : testPoints1) {
             System.out.println("Dla " + p + " pkt: " + ExpectedResultsTable.getInstance(true,true).getPoints(p)+" oczekiwane.");
         }
-       ImpTable.printTable();
+     //  ImpTable.printTable();
 
-       ExpectedResultsTable.printTable(true, false);
+       ExpectedResultsTable.printTable(false, false);
 
 
     }
