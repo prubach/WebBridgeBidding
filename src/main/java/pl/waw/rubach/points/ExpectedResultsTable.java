@@ -102,16 +102,16 @@ public class ExpectedResultsTable {
      * @return description of bonus points table
      */
     public static String getTableAsString(boolean fitInOlderColor, boolean auctionAssumption) {
-        String s = ("*** Oczekiwane  punkty dla koloru " + (fitInOlderColor ? "sfitowanego" : "niesfitowanego") + " i " + (auctionAssumption ? "po partii" : "przed partią" + ".***" + "\n"));
+        StringBuilder s = new StringBuilder(("*** Oczekiwane  punkty dla koloru " + (fitInOlderColor ? "sfitowanego" : "niesfitowanego") + " i " + (auctionAssumption ? "po partii" : "przed partią" + ".***" + "\n")));
 
         Map<Integer, Integer> map = ExpectedResultsTable.getInstance().getPtsMap(fitInOlderColor, auctionAssumption);
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
 
         for (Integer key : ptsMapSet) {
-            s = s + "\n" + "dla " + key + " PC oczekiwane " + map.get(key) + " punktów";
+            s.append("\n dla ").append(key).append(" PC oczekiwane ").append(map.get(key)).append(" punktów");
 
         }
-        return s;
+        return s.toString();
     }
 
 }
