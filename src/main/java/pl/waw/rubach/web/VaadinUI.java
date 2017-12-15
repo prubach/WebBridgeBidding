@@ -86,7 +86,7 @@ public class VaadinUI extends UI {
             case "FD":
                 style = "rowFD";
                 break;
-            case "S":
+            case "SO":
                 style = "rowS";
                 break;
             case "F1":
