@@ -1,14 +1,10 @@
 package pl.waw.rubach.web;
 
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import pl.waw.rubach.points.ExpectedResultsTable;
-import pl.waw.rubach.points.ImpTable;
-import pl.waw.rubach.points.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.ResultsOfOneGame;
+import pl.waw.rubach.points.*;
 
 class OptionMenu extends MenuBar {
 
@@ -158,7 +154,7 @@ class OptionMenu extends MenuBar {
 
         content.addComponent(checkbox1);
         content.addComponent(checkbox2);
-        content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy dowolny kolor jest sfitowany, jeżeli mniej to tylko starszy."));
+        content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze."));
         Label resultsLabel = new Label("");
         resultsLabel.setContentMode(ContentMode.HTML);
         pointsInBothHands.addValueChangeListener( event -> resultsLabel.setValue(""));
@@ -172,10 +168,13 @@ class OptionMenu extends MenuBar {
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 int foo2 = Integer.parseInt(pointsForContract.getValue());
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1.getValue(), checkbox2.getValue());
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów). </B>");
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
             } catch (NumberFormatException | InvalidNumberOfPointsException e) {
                 String message = (e instanceof NumberFormatException) ?
-                        "Nieprawidłowo podana liczba punktów spróbój jeszcze raz!" : e.getMessage();
+                        "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>"+message +"</font>");
+            } catch ( PointsDiferentLessThenZeroException ea) {
+                String message = ea.getMessage();
                 resultsLabel.setValue("<font color=red>"+message +"</font>");
             }
 

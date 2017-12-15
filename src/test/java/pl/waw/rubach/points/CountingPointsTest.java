@@ -54,7 +54,7 @@ public class CountingPointsTest {
     }
 
     @Test
-    public void testExpRes() {
+    public void testExpRes() throws InvalidNumberOfPointsException{
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
             Integer res = ExpectedResultsTable.getInstance().getPoints(p, true,false);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Fit");
@@ -67,12 +67,19 @@ public class CountingPointsTest {
         }
     }
 
-    @Test
-    public void testCountingPoints() {
-        ResultsOfOneGame a = new ResultsOfOneGame(24,100,true,true);
-        System.out.println(a.getResults());
-        System.out.println(ExpectedResultsTable.getInstance().getPoints(30,true,true));
 
+
+    @Test
+    public void printExpResTables() {
+        logger.info(ExpectedResultsTable.getTableAsString(false, false));
+        logger.info(ExpectedResultsTable.getTableAsString(false, true));
+        logger.info(ExpectedResultsTable.getTableAsString(true, false));
+        logger.info(ExpectedResultsTable.getTableAsString(true, true));
+    }
+
+
+    @Test
+    public void testingTable() throws InvalidNumberOfPointsException{
         int[] testPoints = new int[]{50, 120, 450, 1090, 1200};
         for (int p : testPoints) {
             System.out.println("Dla " + p + " pkt: " + ImpTable.getInstance().getPoints(p)+ "impów.");
@@ -82,13 +89,36 @@ public class CountingPointsTest {
         for (int p : testPoints1) {
             System.out.println("Dla " + p + " pkt: " + ExpectedResultsTable.getInstance().getPoints(p, true,true)+" oczekiwane.");
         }
+
     }
 
     @Test
-    public void printExpResTables() {
-        logger.info(ExpectedResultsTable.getTableAsString(false, false));
-        logger.info(ExpectedResultsTable.getTableAsString(false, true));
-        logger.info(ExpectedResultsTable.getTableAsString(true, false));
-        logger.info(ExpectedResultsTable.getTableAsString(true, true));
+    public void testCountingPoints() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+        System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, true) + " oczekiwane.");
+
+        ResultsOfOneGame a = new ResultsOfOneGame(24, 500, true, true);
+        System.out.println("Wynik gry dla 24PC i ugranych 500 pkt przy założeniach po i Fit jest: " + a.getResults());
+        Assert.assertEquals(2, a.getResults());
+
+        ResultsOfOneGame b = new ResultsOfOneGame(24, 300, true, true);
+        System.out.println("Wynik gry dla 24PC i ugranych 300 pkt przy założeniach po i Fit jest: " + b.getResults());
+        Assert.assertEquals(-4, b.getResults());
+
+        ResultsOfOneGame c = new ResultsOfOneGame(24, 100, true, true);
+        System.out.println("Wynik gry dla 24PC i ugranych +100 pkt przy założeniach po i Fit jest: " + c.getResults());
+        Assert.assertEquals(-8,c.getResults() );
+
+        ResultsOfOneGame d = new ResultsOfOneGame(24, -100, true, true);
+        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + d.getResults());
+        Assert.assertEquals(-11, d.getResults() );
+
+        ResultsOfOneGame e = new ResultsOfOneGame(24, -500, true, true);
+        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + e.getResults());
+        Assert.assertEquals(-14, e.getResults() );
+
+
     }
+
+
+
 }
