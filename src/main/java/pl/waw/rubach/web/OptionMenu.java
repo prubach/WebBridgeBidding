@@ -75,6 +75,36 @@ class OptionMenu extends MenuBar {
         return legendDescription;
     }
 
+    private VerticalLayout  createDesciption(){
+        VerticalLayout description = new VerticalLayout();
+
+        String s ="\n" +
+                "Wzięcie lewy w kolorze młodszym (kara itrefle)po 20\n" +
+                "Wzięcie lewy w kolorze starszym (kiery i piki) po 30\n" +
+                "Wzięcie lewy w grze bez atu pierwsza 40, druga i każda następna po 30\n" +
+                "Nadróbki (bez kontry) każda nadróbka jest punktowana jak lewa kontraktowa (20 lub 30)\n" +
+                "Nadróbki z kontrą  \tpo 100 przed partią — niezależnie od koloru,  po 200 po partii\n" +
+                "Premia za nieudaną kontrę przeciwników 50\n" +
+                "Premia za partię Uwzględniane TYLKO w brydżu sportowym 300 przed partią, 500 po partii\n" +
+                "Premia za szlemika (wylicytowanie i wzięcie 12 lew) 500 przed partią, 750 po partii\n" +
+                "Premia za szlema (wylicytowanie i wzięcie 13 lew) 1000 przed partią, 1500 po partii\n" +
+                "Skontrowanie przeciwników  Podwojenie zapisu za ugrane lewy, modyfikacja zapisu za wpadki oraz nadróbki \n" +
+                "Wpadki bez kontry przed partią (bez względu na kolor atutowy) po 50 za każdą lewę wpadkową\n" +
+                "Wpadki bez kontry po partii  po 100 za każdą lewę wpadkową\n" +
+                "Wpadka z kontrą przed partią (bez względu na kolor atutowy)  100 za pierwszą,  po 200 za drugą i trzecią,  po 300 za czwartą i każdą następną\n" +
+                "Wpadka z kontrą po partii (bez względu na kolor atutowy) 200 za pierwszą,  po 300 za każdą następną\n" +
+                "Rekontra Podwojenie zapisu (z kontrą) za ugrane lewy oraz nadróbki, podwojenie zapisu (z kontrą) za wpadki i za nieudaną kontrę";
+
+        TextArea text = new TextArea("Punktacja w systemie międzynarodowym");
+        text.setStyleName("description");
+        text.setValue(s);
+        text.setWidth("100%");
+        text.setHeight("400px");
+        description.addComponent(text);
+
+    return description;
+    }
+
     private void actionOpenWindowWithLegend(VaadinUI ui) {
         final Window window = new Window("Legenda - opis typów odzywek");
         window.setWidth("100%");
@@ -91,7 +121,23 @@ class OptionMenu extends MenuBar {
         // sample.getUI().getUI().addWindow(window);
     }
 
-    private void actionCalculatePoints(VaadinUI ui) {
+    private void actionOpenWindowWithDescription(VaadinUI ui) {
+        final Window window = new Window("Jak liczyć punkty? ");
+        window.setWidth("100%");
+        //window.addStyleName("window");
+        final FormLayout content = new FormLayout();
+        content.setMargin(true);
+        content.addComponent(createDesciption());
+        content.addStyleName("window");
+        window.setContent(content);
+
+        ui.addWindow(window);
+
+
+        // sample.getUI().getUI().addWindow(window);
+    }
+
+    private void actionCalculetePoints(VaadinUI ui) {
         final Window window = new Window("Okienko do liczenia punktów.");
         window.setWidth("100%");
         window.addStyleName("window");
@@ -188,7 +234,9 @@ class OptionMenu extends MenuBar {
         else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend(ui);
-    private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculatePoints(ui);
+
+    private MenuBar.Command commandToOpenDescription = (MenuBar.Command) selectedItem -> actionOpenWindowWithDescription(ui);
+    private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints(ui);
 
     private MenuBar.Command commandToDisplanyPointsTable = (MenuBar.Command) selectedItem -> actionDisplayPoints(ui);
 
@@ -207,7 +255,8 @@ class OptionMenu extends MenuBar {
         // Another top-level item
         MenuBar.MenuItem instructionMenuItemBidsTypes = this.addItem("Legenda: ", null);
         instructionMenuItemBidsTypes.addItem("Opis typów odzywek w okienku - kliknij jak chcesz otworzyć. ", commandToOpenLegend);
-        instructionMenuItemBidsTypes.addItem("Zasady obliczania punktów - tabelki na razie", null, commandToDisplanyPointsTable);
+        instructionMenuItemBidsTypes.addItem("Tabelki  do obliczania punktów.", null, commandToDisplanyPointsTable);
+        instructionMenuItemBidsTypes.addItem("Zasady obliczania punktów", null, commandToOpenDescription);
 
         // Yet another top-level item
         MenuBar.MenuItem optionMenuItemOthers = this.addItem("Oblicz punkty: ", null, commandToCalculatePoints);
