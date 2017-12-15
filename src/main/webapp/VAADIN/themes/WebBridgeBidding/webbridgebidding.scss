@@ -7,6 +7,7 @@ $green-color:  rgb(200, 255, 200);
 $yellow-color:  rgb(255, 255, 150);
 $orange-color: rgb(255, 225, 150);
 $rose-color: rgb(255, 230, 255);
+$red-color:  rgb(255, 150, 150);
 $grey-color: rgb(230, 230, 230);
 
 
@@ -15,6 +16,7 @@ $green-darkcolor:  rgb(150, 255, 150);
 $yellow-darkcolor:  rgb(255, 255, 120);
 $orange-darkcolor: rgb(255, 200, 100);
 $rose-darkcolor: rgb(255, 200, 255);
+$red-darkcolor:  rgb(255, 150, 150);
 $grey-darkcolor: rgb(200, 200, 200);
 
 $back-color: rgb(238, 255, 204);
@@ -106,6 +108,11 @@ background:   $back-color;
   color: black;
 }
 
+.red  {
+  background-color: $red-color;
+  color: black;
+}
+
 .grey  {
   background-color: $grey-color;
   color: black;
@@ -129,6 +136,11 @@ background:   $back-color;
 
 .orangeD  {
   background-color: $orange-darkcolor;
+  color: black;
+}
+
+.redD  {
+  background-color: $red-darkcolor;
   color: black;
 }
 
@@ -172,7 +184,7 @@ background:   $back-color;
     background-color: $orange-color !important;
   }
 
-  .v-grid-row.rowS {
+  .v-grid-row.rowSO {
     //	color: black;
     background-color: $yellow-color !important;
   }
@@ -185,6 +197,10 @@ background:   $back-color;
   .v-grid-row.rowFD {
     //	color: black;
     background-color: $blue-color !important;
+  }
+   .v-grid-row.rowAU {
+    //	color: black;
+    background-color: $red-color !important;
   }
 
   .v-grid-row.rowNF {
@@ -209,7 +225,7 @@ background:   $back-color;
     background-color: $orange-darkcolor !important;
   }
 
-  .v-grid-row.rowSR {
+  .v-grid-row.rowSOR {
     //	color: black;
    color: $f-color;
     //  font-weight: bold;
@@ -234,6 +250,12 @@ background:   $back-color;
     //	color: black;
     background-color: $grey-darkcolor !important;
   }
+
+   .v-grid-row.rowAUR {
+      color: $f-color;
+      //	color: black;
+      background-color: $red-darkcolor !important;
+    }
   .v-grid-row.rowBLR {
     color: $f-color;
     //	color: black;

@@ -86,8 +86,11 @@ public class VaadinUI extends UI {
             case "FD":
                 style = "rowFD";
                 break;
+            case "AU":
+                style = "rowAU";
+                break;
             case "SO":
-                style = "rowS";
+                style = "rowSO";
                 break;
             case "F1":
                 style = "rowF1";
@@ -119,6 +122,8 @@ public class VaadinUI extends UI {
         legendLabelOrange.addStyleName("orange");
         Label legendLabelRose = new Label("BL");
         legendLabelRose.addStyleName("rose");
+        Label legendLabelRed = new Label("AU");
+        legendLabelRed.addStyleName("redD");
         Label legendLabelGrey = new Label("NF");
         legendLabelGrey.addStyleName("grey");
 
@@ -128,6 +133,7 @@ public class VaadinUI extends UI {
         legendLabel.addComponent(legendLabelYellow);
         legendLabel.addComponent(legendLabelOrange);
         legendLabel.addComponent(legendLabelRose);
+        legendLabel.addComponent(legendLabelRed);
         legendLabel.addComponent(legendLabelGrey);
 
     }

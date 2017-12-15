@@ -44,12 +44,16 @@ class OptionMenu extends MenuBar {
         legendLabelRoseDark.addStyleName("roseD");
         Label legendLabelGreyDark = new Label("- kolor  szary jest ciemniejszy jeżeli odzwyka jest sztuczna...");
         legendLabelGreyDark.addStyleName("greyD");
+        Label legendLabelRedDark = new Label("Czerwony - (AU) Blok - odzwyka sztuczna automatyczna");
+        legendLabelRedDark.addStyleName("redD");
+
 
         HorizontalLayout horlBlue = new HorizontalLayout(legendLabelBlue, legendLabelBlueDark);
         HorizontalLayout horlGreen = new HorizontalLayout(legendLabelGreen, legendLabelGreenDark);
         HorizontalLayout horlYellow = new HorizontalLayout(legendLabelYellow, legendLabelYellowDark);
         HorizontalLayout horlOrange = new HorizontalLayout(legendLabelOrange, legendLabelOrangeDark);
         HorizontalLayout horlRose = new HorizontalLayout(legendLabelRose, legendLabelRoseDark);
+        HorizontalLayout horlRed = new HorizontalLayout(legendLabelRedDark);
         HorizontalLayout horlGrey = new HorizontalLayout(legendLabelGrey, legendLabelGreyDark);
 
         legendDescription.addComponent(legendTitle);
@@ -58,6 +62,7 @@ class OptionMenu extends MenuBar {
         legendDescription.addComponent(horlYellow);
         legendDescription.addComponent(horlOrange);
         legendDescription.addComponent(horlRose);
+        legendDescription.addComponent(horlRed);
         legendDescription.addComponent(horlGrey);
 
 
@@ -225,12 +230,15 @@ class OptionMenu extends MenuBar {
     }
 
     private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {checkbox1.setValue(false);
-        if (checkbox1.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
-        else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
+        ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1.getValue() ?  "Po parti" :"Przed partią"));
+
+       // if (checkbox1.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
+       // else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> {checkbox1.setValue(true);
-        if (checkbox1.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
-        else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
+        ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1.getValue() ?  "Po parti" :"Przed partią"));
+    //  if (checkbox1.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
+    //  else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend(ui);
 
@@ -243,8 +251,12 @@ class OptionMenu extends MenuBar {
     OptionMenu(VaadinUI ui) {
         this.ui = ui;
         checkbox1.setValue(false);
+
+        // First left top-level item
+        this.addItem("Oblicz punkty", null, commandToCalculatePoints);
+
         // A top-level menu item that opens a submenu
-        MenuBar.MenuItem optionMenuItemsAuctionAssumption = this.addItem("Założenia licytacyjne", FontAwesome.QUESTION_CIRCLE, null);
+        MenuBar.MenuItem optionMenuItemsAuctionAssumption = this.addItem("Założenia licytacyjne:", FontAwesome.QUESTION_CIRCLE, null);
         //TODO find if it is importatn what oponents are (if yes could be added but dont't think so - should be radioButton or sth to show if it is or not?
         optionMenuItemsAuctionAssumption.addItem("Obie przed partią", null, comandToSetAssumptionNo);
         optionMenuItemsAuctionAssumption.addItem("My przed, oni po", null, comandToSetAssumptionNo);
@@ -257,11 +269,9 @@ class OptionMenu extends MenuBar {
         instructionMenuItemBidsTypes.addItem("Tabelki  do obliczania punktów.", null, commandToDisplanyPointsTable);
         instructionMenuItemBidsTypes.addItem("Zasady obliczania punktów", null, commandToOpenDescription);
 
-        // Yet another top-level item
-        MenuBar.MenuItem optionMenuItemOthers = this.addItem("Oblicz punkty: ", null, commandToCalculatePoints);
 
-        // Yet another top-level item with biding system (moved from other menu moved to Vaadin because is to difficult ?)
-        //MenuBar.MenuItem otherBidingSystemMenuItem = this.addItem("Inne systemy licytacyjne: ", null, null);
+        //  Yet another top-level item with biding system (moved from other menu moved to Vaadin because is to difficult ?)
+        //  MenuBar.MenuItem otherBidingSystemMenuItem = this.addItem("Inne systemy licytacyjne: ", null, null);
         //  optionMenuBar.setStyleGenerator( -> getRowColorAndStyle(ItemReference));
 
         this.setStyleName(ValoTheme.MENUBAR_BORDERLESS);
