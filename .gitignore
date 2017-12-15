@@ -30,3 +30,9 @@ build/
 accessingdataneo4j.db
 dependency-reduced-pom.xml
 README.html
+
+src/main/webapp/VAADIN/themes/WebBridgeBidding/addons.scss
+src/main/webapp/VAADIN/themes/WebBridgeBidding/styles.css
+src/main/webapp/VAADIN/themes/WebBridgeBidding/styles.css.gz
+src/main/webapp/VAADIN/themes/valo/
+
