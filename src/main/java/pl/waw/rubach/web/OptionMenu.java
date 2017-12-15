@@ -7,6 +7,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.ExpectedResultsTable;
 import pl.waw.rubach.points.ImpTable;
+import pl.waw.rubach.points.InvalidNumberOfPointsException;
 import pl.waw.rubach.points.ResultsOfOneGame;
 
 class OptionMenu extends MenuBar {
@@ -90,7 +91,7 @@ class OptionMenu extends MenuBar {
         // sample.getUI().getUI().addWindow(window);
     }
 
-    private void actionCalculetePoints(VaadinUI ui) {
+    private void actionCalculatePoints(VaadinUI ui) {
         final Window window = new Window("Okienko do liczenia punktów.");
         window.setWidth("100%");
         window.addStyleName("window");
@@ -106,39 +107,38 @@ class OptionMenu extends MenuBar {
         TextField pointsForContract = new TextField("Podaj liczbę punktów uzyskanych przy rozgrywaniu kontraktu:");
         content.addComponent(pointsForContract);
 
-
         //   checkbox1.setValue(true); //move to create menu?
         checkbox2.setValue(true);
 
         content.addComponent(checkbox1);
         content.addComponent(checkbox2);
         content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy dowolny kolor jest sfitowany, jeżeli mniej to tylko starszy."));
+        Label resultsLabel = new Label("");
+        resultsLabel.setContentMode(ContentMode.HTML);
+        pointsInBothHands.addValueChangeListener( event -> resultsLabel.setValue(""));
+        pointsForContract.addValueChangeListener( event -> resultsLabel.setValue(""));
+
         //  checkbox1.addValueChangeListener(event ->
         //         checkbox2.setValue(! checkbox1.getValue()));
 
         Button sayHelloButton = new Button("Oblicz punkty! ", clickEvent -> {
+            try {
+                float foo = Float.parseFloat(pointsInBothHands.getValue());
+                int foo2 = Integer.parseInt(pointsForContract.getValue());
+                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1.getValue(), checkbox2.getValue());
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów). </B>");
+            } catch (NumberFormatException | InvalidNumberOfPointsException e) {
+                String message = (e instanceof NumberFormatException) ?
+                        "Nieprawidłowo podana liczba punktów spróbój jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>"+message +"</font>");
+            }
 
-            float foo = Float.parseFloat(pointsInBothHands.getValue());
-            int foo2 = Integer.parseInt(pointsForContract.getValue());
-
-            ResultsOfOneGame example = new ResultsOfOneGame(20, 50, true, true);
-
-            ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1.getValue(), checkbox2.getValue());
-            int result = a.getResults();
-
-            // Notification.show("W tym rozdaniu w którym mieliście na obu rękach "+ a.getPointsInBothHands()+" i byliście po partii:"+ checkbox1.getValue()+" uzyskaliście " + result + " impów (punktów). ");
-            // Notification.show("W tym rozdaniu uzyskaliście " + result + " impów (punktów). ", Notification.Type.ERROR_MESSAGE);
-
-            Notification notif = new Notification("W tym rozdaniu uzyskaliście " + result + " impów (punktów). ");
-            notif.show(Page.getCurrent());
-            notif.setDelayMsec(-1);
         });
 
         content.addComponent(sayHelloButton);
+        content.addComponent(resultsLabel);
         window.setContent(content);
         ui.addWindow(window);
-
-        // sample.getUI().getUI().addWindow(window);
     }
 
     private void actionDisplayPoints(VaadinUI ui) {
@@ -151,9 +151,6 @@ class OptionMenu extends MenuBar {
 
         content.addStyleName("window");
 
-
-
-
         //   checkbox1.setValue(true); //move to create menu?
         checkbox2.setValue(true);
 
@@ -164,29 +161,22 @@ class OptionMenu extends MenuBar {
         //         checkbox2.setValue(! checkbox1.getValue()));
 
         Button displayExpectedResults = new Button("Wyświetl tabelkę  oczekiwanych punktów dla  danych założeń! ", clickEvent -> {
-
           TextArea a = new TextArea();
           a.setWidth("100%");
           a.setValue(ExpectedResultsTable.getTableAsString(checkbox2.getValue(), checkbox1.getValue()));
           content.addComponent(a);
-
         });
 
         Button displayImpTable = new Button("Wyświetl tabelkę impów! ", clickEvent -> {
-
             TextArea b = new TextArea();
             b.setWidth("100%");
             b.setValue(ImpTable.getTableAsString());
-
-       content.addComponent(b);
-
+            content.addComponent(b);
         });
         content.addComponent(displayImpTable);
         content.addComponent(displayExpectedResults);
         window.setContent(content);
         ui.addWindow(window);
-
-        // sample.getUI().getUI().addWindow(window);
     }
 
     private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {checkbox1.setValue(false);
@@ -198,7 +188,7 @@ class OptionMenu extends MenuBar {
         else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend(ui);
-    private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints(ui);
+    private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculatePoints(ui);
 
     private MenuBar.Command commandToDisplanyPointsTable = (MenuBar.Command) selectedItem -> actionDisplayPoints(ui);
 

@@ -30,7 +30,8 @@ public class ResultsOfOneGame {
     */
     private int results;
 
-    public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumption, boolean fitInOlderColor){
+    public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumption, boolean fitInOlderColor)
+            throws InvalidNumberOfPointsException {
         this.pointsInBothHands = pointsInBothHands;
         this.pointsForContract = pointsForContract;
 

@@ -33,6 +33,13 @@ public class ExpectedResultsTable {
         pointsMap.put(false,true,fillMap(AFTER_NOFIT));
     }
 
+    /**
+     * Fill the map of bonus points with data from an array of ints and return it.
+     * Points in hand start at 20 and finish at 37 or 38
+     *
+     * @param pointsTab - array of ints with bonus points for subsequent points in hand
+     * @return map of points in hand to bonus points
+     */
     private Map<Integer, Integer> fillMap(int[] pointsTab) {
         Map<Integer,Integer> map = new HashMap<>();
         for (int i=0;i<pointsTab.length;i++) {
@@ -41,7 +48,18 @@ public class ExpectedResultsTable {
         return map;
     }
 
-    public int getPoints(float points, boolean fitInOlderColor, boolean auctionAssumption) {
+    /**
+     * Calculate the bonus points for a certain contract
+     *
+     * @param points - points in hand
+     * @param fitInOlderColor - if fit in older color (beginning with 30 points any color)
+     * @param auctionAssumption - assumption After (true) or Before (false)
+     * @return bonus points
+     */
+    public int getPoints(float points, boolean fitInOlderColor, boolean auctionAssumption)
+            throws InvalidNumberOfPointsException {
+        if (points<20 || points > 38) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
+                "mieścić się w przedziale od 20 do 38");
         Map<Integer,Integer> map = getPtsMap(fitInOlderColor, auctionAssumption);
         int pointsInt = Math.round(points*2);
         if (pointsInt % 2==0) {
@@ -53,6 +71,12 @@ public class ExpectedResultsTable {
         }
     }
 
+    /**
+     * Helper method to enable printing the bonus points table as a string
+     * @param fitInOlderColor - if fit in older color (beginning with 30 points any color)
+     * @param auctionAssumption - assumption After (true) or Before (false)
+     * @return map of points in hand to bonus points
+     */
     public Map<Integer, Integer> getPtsMap(boolean fitInOlderColor, boolean auctionAssumption) {
         return pointsMap.get(fitInOlderColor, auctionAssumption);
     }
@@ -60,6 +84,7 @@ public class ExpectedResultsTable {
     /**
      * magic function to check if it is instance of ExpectedTable and create it if it is not
      * (problem which I found somewhere is that two person cant use it in the same time?
+     * (PR: that was due to an incorrect implementation. Shouldn't be the case anymore)
      *
      * @return instance of ImpTable
      */
@@ -69,6 +94,13 @@ public class ExpectedResultsTable {
         return instance;
     }
 
+    /**
+     * Prepare a string description of a table of bonus points
+     *
+     * @param fitInOlderColor - if fit in older color (beginning with 30 points any color)
+     * @param auctionAssumption - assumption After (true) or Before (false)
+     * @return description of bonus points table
+     */
     public static String getTableAsString(boolean fitInOlderColor, boolean auctionAssumption) {
         String s = ("*** Oczekiwane  punkty dla koloru " + (fitInOlderColor ? "sfitowanego" : "niesfitowanego") + " i " + (auctionAssumption ? "po partii" : "przed partią" + ".***" + "\n"));
 

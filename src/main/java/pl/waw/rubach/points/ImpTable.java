@@ -10,7 +10,6 @@ public class ImpTable extends AbstractTable{
     private static ImpTable instance;
 
 
-
     /**
      * private constructor because user cant use it only could call and then it is checkt it it exist..
      */
