@@ -53,22 +53,7 @@ public class ImpTable extends AbstractTable{
         return instance;
     }
 
-    /**
-     * Function to print table :) with
-     */
-    public static void printTable() {
-        System.out.println("*** Tabela impów ***");
-
-        Map<Integer, Integer> map = ImpTable.getInstance().getPtsMap();
-        SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
-        int prev = 0;
-        for (Integer key : ptsMapSet) {
-            System.out.println(map.get(key)+ " imp " + (prev > 0 ? prev + 10 : 0)  + "-" + key);
-            prev = key;
-        }
-    }
-
-    public static String  giveTable() {
+    public static String getTableAsString() {
         String s=("*** Tabela impów *** \n");
 
         Map<Integer, Integer> map = ImpTable.getInstance().getPtsMap();
@@ -80,8 +65,4 @@ public class ImpTable extends AbstractTable{
         }
         return s;
     }
-
-
-
-
 }

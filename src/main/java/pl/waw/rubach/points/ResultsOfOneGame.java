@@ -6,7 +6,7 @@ public class ResultsOfOneGame {
      *  user had to imput
      *  (in future could be astimatet from biding part not exactly)
      */
-    private int pointsInBothHands;
+    private float pointsInBothHands;
 
 
     /**biding height (you shoud take 6+ this triks to win game
@@ -30,21 +30,21 @@ public class ResultsOfOneGame {
     */
     private int results;
 
-    public ResultsOfOneGame(int pointsInBothHands, int pointsForContract, boolean auctionAssumption, boolean fitInOlderColor){
-        this.pointsInBothHands=pointsInBothHands;
+    public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumption, boolean fitInOlderColor){
+        this.pointsInBothHands = pointsInBothHands;
         this.pointsForContract = pointsForContract;
 
        // int expectedPoints = new ExpectedResults(pointsInBothHands,auctionAssumption,fitInOlderColor).getResults();
-        int expectedPoints = ExpectedResultsTable.getInstance(fitInOlderColor,auctionAssumption).getPoints(pointsInBothHands);
-        if(expectedPoints<=pointsForContract)  this.pointDifferent= pointsForContract - expectedPoints;
-        else this.pointDifferent=expectedPoints-pointsForContract;
+        int expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColor, auctionAssumption);
+        if (expectedPoints<=pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
+        else this.pointDifferent = expectedPoints - pointsForContract;
         int resutl = ImpTable.getInstance().getPoints(pointDifferent);
 
-        if(expectedPoints<=pointsForContract)  this.results= resutl;
+        if (expectedPoints<=pointsForContract) this.results = resutl;
         else this.results = -resutl;
     }
 
-    public int getPointsInBothHands() {
+    public float getPointsInBothHands() {
         return pointsInBothHands;
     }
 

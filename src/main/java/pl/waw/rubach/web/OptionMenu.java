@@ -118,7 +118,7 @@ class OptionMenu extends MenuBar {
 
         Button sayHelloButton = new Button("Oblicz punkty! ", clickEvent -> {
 
-            int foo = Integer.parseInt(pointsInBothHands.getValue());
+            float foo = Float.parseFloat(pointsInBothHands.getValue());
             int foo2 = Integer.parseInt(pointsForContract.getValue());
 
             ResultsOfOneGame example = new ResultsOfOneGame(20, 50, true, true);
@@ -167,7 +167,7 @@ class OptionMenu extends MenuBar {
 
           TextArea a = new TextArea();
           a.setWidth("100%");
-          a.setValue(ExpectedResultsTable.giveTable(checkbox2.getValue(), checkbox1.getValue()));
+          a.setValue(ExpectedResultsTable.getTableAsString(checkbox2.getValue(), checkbox1.getValue()));
           content.addComponent(a);
 
         });
@@ -176,7 +176,7 @@ class OptionMenu extends MenuBar {
 
             TextArea b = new TextArea();
             b.setWidth("100%");
-            b.setValue(ImpTable.giveTable());
+            b.setValue(ImpTable.getTableAsString());
 
        content.addComponent(b);
 
