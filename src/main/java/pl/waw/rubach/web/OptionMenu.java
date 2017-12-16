@@ -1,10 +1,11 @@
 package pl.waw.rubach.web;
 
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.*;
+
+import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 
 class OptionMenu extends MenuBar {
 
@@ -227,12 +228,15 @@ class OptionMenu extends MenuBar {
 
     private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {checkbox1.setValue(false);
         ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1.getValue() ?  "Po parti" :"Przed partią"));
-
+        ui.setAssumption(false);
+        ui.refreshBidGrids();
        // if (checkbox1.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
        // else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> {checkbox1.setValue(true);
         ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1.getValue() ?  "Po parti" :"Przed partią"));
+        ui.setAssumption(true);
+        ui.refreshBidGrids();
     //  if (checkbox1.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
     //  else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
@@ -251,8 +255,10 @@ class OptionMenu extends MenuBar {
         // First left top-level item
         this.addItem("Oblicz punkty", null, commandToCalculatePoints);
 
+
+
         // A top-level menu item that opens a submenu
-        MenuBar.MenuItem optionMenuItemsAuctionAssumption = this.addItem("Założenia licytacyjne:", FontAwesome.QUESTION_CIRCLE, null);
+        MenuBar.MenuItem optionMenuItemsAuctionAssumption = this.addItem("Założenia licytacyjne:", QUESTION_CIRCLE, null);
         //TODO find if it is importatn what oponents are (if yes could be added but dont't think so - should be radioButton or sth to show if it is or not?
         optionMenuItemsAuctionAssumption.addItem("Obie przed partią", null, comandToSetAssumptionNo);
         optionMenuItemsAuctionAssumption.addItem("My przed, oni po", null, comandToSetAssumptionNo);
