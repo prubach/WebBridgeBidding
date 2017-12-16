@@ -21,9 +21,11 @@ import pl.waw.rubach.repo.BidRepository;
 import pl.waw.rubach.repo.BidSystemRepository;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_LEFT;
+import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_RIGHT;
 
 @SpringUI
 @Theme("WebBridgeBidding")
@@ -35,6 +37,7 @@ public class VaadinUI extends UI {
     private final Grid<Bid> bidGrid = new Grid(Bid.class);
     private final Grid<Bid> bidGrid2nd = new Grid(Bid.class);
     private final Button backBtn = new Button("Wróć", ARROW_CIRCLE_LEFT);
+    private final Button fwdBtn = new Button("Przód", ARROW_CIRCLE_RIGHT);
     private Bid curBid = null;
     private BidSystem curBidSystem = null;
     private Label bidSystemLabel = new Label("");
@@ -50,9 +53,6 @@ public class VaadinUI extends UI {
 
     private Label auctionAssumptionLabel = new Label("Założenia: Przed partią");
 
-
-
-
     private MenuBar optionMenuBar = new MenuBar();
     private HorizontalLayout legendLabel = new HorizontalLayout();
     private Label navigatorLabel = new Label("");
@@ -60,11 +60,11 @@ public class VaadinUI extends UI {
 
     private HeaderCell leftHeaderCell;
     private HeaderCell rightHeaderCell;
+    private LinkedList<Bid> bidNaviList = new LinkedList<>();
 
 
     @Autowired
     public VaadinUI(BidRepository bidRepository, BidSystemRepository bidSystemRepo) {
-
         this.bidRepo = bidRepository;
         this.bidSystemRepo = bidSystemRepo;
     }
@@ -79,6 +79,7 @@ public class VaadinUI extends UI {
     private static String getRowColorAndStyle(Bid bid) {
 
         String style;
+
         switch (bid.getBidType()) {
             case "I":
                 style = "rowI";
@@ -135,7 +136,6 @@ public class VaadinUI extends UI {
         legendLabel.addComponent(legendLabelRose);
         legendLabel.addComponent(legendLabelRed);
         legendLabel.addComponent(legendLabelGrey);
-
     }
 
 
@@ -144,8 +144,6 @@ public class VaadinUI extends UI {
     protected void init(VaadinRequest request) {
 
         // build layout
-
-
         navigatorLabel.setContentMode(ContentMode.HTML);
         curBidLabel.setContentMode(ContentMode.HTML);
         curBidLabel.setWidth("100%");
@@ -168,7 +166,8 @@ public class VaadinUI extends UI {
         topRightLayout.setExpandRatio(legendLabel, 1);
         topRightLayout.setExpandRatio(auctionAssumptionLabel, 1);
         topRightLayout.setWidth("100%");
-        HorizontalLayout topLayout = new HorizontalLayout(backBtn, navigatorLabel);
+        fwdBtn.setEnabled(false);
+        HorizontalLayout topLayout = new HorizontalLayout(backBtn, fwdBtn, navigatorLabel);
         topLayout.setComponentAlignment(navigatorLabel, Alignment.MIDDLE_LEFT);
         VerticalLayout topVertLayout = new VerticalLayout(topRightLayout, topLayout);
         //topVertLayout.setComponentAlignment(bidingPersonLabel,Alignment.BOTTOM_CENTER);
@@ -209,7 +208,6 @@ public class VaadinUI extends UI {
 
         }
 
-
         bidSystemLabel.setValue(curBidSystem.getName());
         bidSystemLabel.addStyleName("title");
         navigatorLabel.setValue("Wybierz odzywkę:");
@@ -227,6 +225,7 @@ public class VaadinUI extends UI {
         bidGrid.addSelectionListener(e -> {
             if (!e.getAllSelectedItems().isEmpty()) {
                 Bid selBid = new ArrayList<>(bidGrid.getSelectedItems()).get(0);
+                bidNaviList.addLast(selBid);
                 setCurrentBid(selBid);
                 listBids2nd(selBid);
             }
@@ -237,6 +236,7 @@ public class VaadinUI extends UI {
             if (!e.getAllSelectedItems().isEmpty()) {
                 Bid selBid = new ArrayList<>(bidGrid2nd.getSelectedItems()).get(0);
                 if (!bidRepo.findByBidSystemAndParentBid(curBidSystem, selBid).isEmpty()) {
+                    bidNaviList.addLast(selBid);
                     listBids(selBid);
                     listBids2nd(selBid);
                 } else {
@@ -249,6 +249,21 @@ public class VaadinUI extends UI {
         backBtn.addClickListener(e -> {
             listBids(curBid != null && curBid.getParentBid() != null ? curBid.getParentBid() : null);
             listBids2nd(null);
+            fwdBtn.setEnabled(true);
+        });
+
+        fwdBtn.addClickListener(e -> {
+            logger.warn(bidNaviList.toString());
+            int curPos = bidNaviList.lastIndexOf(curBid);
+            logger.warn("current Bid pos: " + curPos);
+            if (curPos>0 && curPos<bidNaviList.size()-1) {
+                logger.warn("switching to next bid");
+                listBids(bidNaviList.get(curPos+1));
+                //listBids(bidNaviList.get(curPos+1));
+                //listBids2nd(null);
+            }
+            //listBids(curBid != null && curBid.getParentBid() != null ? curBid.getParentBid() : null);
+            //listBids2nd(null);
         });
 
         // Initialize upon startup

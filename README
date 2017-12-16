@@ -2,7 +2,7 @@ To compile WebBridgeBidding and run this project use gradle
 
 gradle bootRun
 
-In Browser navigate to: http://localhost:8080
+In Browser navigate to: http://localhost:7000
 
 ======================
 

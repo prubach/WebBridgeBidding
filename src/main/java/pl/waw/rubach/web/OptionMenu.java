@@ -174,15 +174,11 @@ class OptionMenu extends MenuBar {
                 int foo2 = Integer.parseInt(pointsForContract.getValue());
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1.getValue(), checkbox2.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
-            } catch (NumberFormatException | InvalidNumberOfPointsException e) {
+            } catch (NumberFormatException | InvalidNumberOfPointsException | PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
                 resultsLabel.setValue("<font color=red>"+message +"</font>");
-            } catch ( PointsDiferentLessThenZeroException ea) {
-                String message = ea.getMessage();
-                resultsLabel.setValue("<font color=red>"+message +"</font>");
             }
-
         });
 
         content.addComponent(sayHelloButton);
