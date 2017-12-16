@@ -26,6 +26,7 @@ import java.util.List;
 
 import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_LEFT;
 import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_RIGHT;
+import static com.vaadin.icons.VaadinIcons.HOME;
 
 @SpringUI
 @Theme("WebBridgeBidding")
@@ -37,6 +38,7 @@ public class VaadinUI extends UI {
     private final Grid<Bid> bidGrid = new Grid(Bid.class);
     private final Grid<Bid> bidGrid2nd = new Grid(Bid.class);
     private final Button backBtn = new Button("Wróć", ARROW_CIRCLE_LEFT);
+    private final Button homeBtn = new Button("Start", HOME);
     private final Button fwdBtn = new Button("Przód", ARROW_CIRCLE_RIGHT);
     private Bid curBid = null;
     private BidSystem curBidSystem = null;
@@ -51,7 +53,8 @@ public class VaadinUI extends UI {
 
     private HeaderCell leftHeaderCell;
     private HeaderCell rightHeaderCell;
-    private LinkedList<Bid> bidNaviList = new LinkedList<>();
+    private List<Bid> bidNaviList = new ArrayList<>();
+    private boolean isNaviBack = false;
 
 
     @Autowired
@@ -158,7 +161,7 @@ public class VaadinUI extends UI {
         topRightLayout.setExpandRatio(auctionAssumptionLabel, 1);
         topRightLayout.setWidth("100%");
         fwdBtn.setEnabled(false);
-        HorizontalLayout topLayout = new HorizontalLayout(backBtn, fwdBtn, navigatorLabel);
+        HorizontalLayout topLayout = new HorizontalLayout(backBtn, homeBtn, fwdBtn, navigatorLabel);
         topLayout.setComponentAlignment(navigatorLabel, Alignment.MIDDLE_LEFT);
         VerticalLayout topVertLayout = new VerticalLayout(topRightLayout, topLayout);
         //topVertLayout.setComponentAlignment(bidingPersonLabel,Alignment.BOTTOM_CENTER);
@@ -216,7 +219,7 @@ public class VaadinUI extends UI {
         bidGrid.addSelectionListener(e -> {
             if (!e.getAllSelectedItems().isEmpty()) {
                 Bid selBid = new ArrayList<>(bidGrid.getSelectedItems()).get(0);
-                bidNaviList.addLast(selBid);
+                addToBidNaviList(selBid);
                 setCurrentBid(selBid);
                 listBids2nd(selBid);
             }
@@ -227,7 +230,7 @@ public class VaadinUI extends UI {
             if (!e.getAllSelectedItems().isEmpty()) {
                 Bid selBid = new ArrayList<>(bidGrid2nd.getSelectedItems()).get(0);
                 //if (!bidRepo.findByBidSystemAndParentBid(curBidSystem, selBid).isEmpty()) {
-                bidNaviList.addLast(selBid);
+                addToBidNaviList(selBid);
                 listBids(selBid);
                 listBids2nd(selBid);
                 /*} else {
@@ -238,23 +241,33 @@ public class VaadinUI extends UI {
 
         // Define behaviour of the Back Button
         backBtn.addClickListener(e -> {
+            isNaviBack = true;
             listBids(curBid != null && curBid.getParentBid() != null ? curBid.getParentBid() : null);
             listBids2nd(null);
-            fwdBtn.setEnabled(true);
+            isNaviBack = false;
+            if (!bidNaviList.isEmpty()) fwdBtn.setEnabled(true);
         });
 
         fwdBtn.addClickListener(e -> {
-            logger.warn(bidNaviList.toString());
-            int curPos = bidNaviList.lastIndexOf(curBid);
-            logger.warn("current Bid pos: " + curPos);
-            if (curPos>0 && curPos<bidNaviList.size()-1) {
-                logger.warn("switching to next bid");
-                listBids(bidNaviList.get(curPos+1));
-                //listBids(bidNaviList.get(curPos+1));
-                //listBids2nd(null);
+            isNaviBack = true;
+            logger.debug(bidNaviList.toString());
+            int curPos = bidNaviList.indexOf(curBid);
+            if (!bidNaviList.isEmpty() && (curBid==null || (curPos>=0 && curPos<bidNaviList.size()-1))) {
+                if (curBid==null && !bidNaviList.isEmpty())
+                    listBids(bidNaviList.get(0));
+                else {
+                    logger.debug("SETTING: " + bidNaviList.get(curPos+1));
+                    listBids(bidNaviList.get(curPos + 1));
+                }
             }
-            //listBids(curBid != null && curBid.getParentBid() != null ? curBid.getParentBid() : null);
-            //listBids2nd(null);
+            isNaviBack = false;
+        });
+
+        homeBtn.addClickListener(e -> {
+            fwdBtn.setEnabled(false);
+            bidNaviList.clear();
+            listBids(null);
+            listBids2nd(null);
         });
 
         // Initialize upon startup
@@ -495,6 +508,13 @@ public class VaadinUI extends UI {
         }
     }
 
+    private void addToBidNaviList(Bid bid) {
+        if (isNaviBack==false && (bidNaviList.isEmpty() || !bid.equals(bidNaviList.get(bidNaviList.size()-1)))) {
+            bidNaviList.add(bid);
+            logger.debug("adding to naviList: " + bid + "\n" + bidNaviList.toString());
+        }
+    }
+
     public Label getAuctionAssumptionLabel() {
         return auctionAssumptionLabel;
     }
@@ -510,4 +530,5 @@ public class VaadinUI extends UI {
     public void setAssumption(boolean assumption) {
         this.assumption = assumption;
     }
+
 }

@@ -238,7 +238,8 @@ public class Bid {
                 "}\n";
     }
 
-/*    @Override
+/*
+    @Override
     public String toString() {
         return "Bid{" +
                 "bidID=" + bidID +
@@ -252,12 +253,14 @@ public class Bid {
                 ", bidClass='" + bidClass + '\'' +
                 ", afterInterven=" + afterInterven +
                 ", shortDesc='" + shortDesc + '\'' +
-                ", description='" + description + '\'' +
+                //", description='" + description + '\'' +
                 ", assumption=" + assumption +
-                ", parentBid=" + parentBid +
+                ", parent=" + (parentBid!=null ? parentBid.getLevel() + parentBid.getSuit() + " " + parentBid.getBidID() : "") +
+                //", parentBid=" + parentBid +
                 ", bidSystem=" + bidSystem +
                 '}';
-    }*/
+    }
+*/
 
 
 }
