@@ -38,21 +38,8 @@ public class VaadinUI extends UI {
     private Bid curBid = null;
     private BidSystem curBidSystem = null;
     private Label bidSystemLabel = new Label("");
-
-
-    public Label getAuctionAssumptionLabel() {
-        return auctionAssumptionLabel;
-    }
-
-    public void setAuctionAssumptionLabel(Label auctionAssumptionLabel) {
-        this.auctionAssumptionLabel = auctionAssumptionLabel;
-    }
-
+    private boolean assumption = false;
     private Label auctionAssumptionLabel = new Label("Założenia: Przed partią");
-
-
-
-
     private MenuBar optionMenuBar = new MenuBar();
     private HorizontalLayout legendLabel = new HorizontalLayout();
     private Label navigatorLabel = new Label("");
@@ -144,8 +131,6 @@ public class VaadinUI extends UI {
     protected void init(VaadinRequest request) {
 
         // build layout
-
-
         navigatorLabel.setContentMode(ContentMode.HTML);
         curBidLabel.setContentMode(ContentMode.HTML);
         curBidLabel.setWidth("100%");
@@ -236,12 +221,12 @@ public class VaadinUI extends UI {
         bidGrid2nd.addSelectionListener(e -> {
             if (!e.getAllSelectedItems().isEmpty()) {
                 Bid selBid = new ArrayList<>(bidGrid2nd.getSelectedItems()).get(0);
-                if (!bidRepo.findByBidSystemAndParentBid(curBidSystem, selBid).isEmpty()) {
+                //if (!bidRepo.findByBidSystemAndParentBid(curBidSystem, selBid).isEmpty()) {
                     listBids(selBid);
                     listBids2nd(selBid);
-                } else {
+                /*} else {
                     setCurrentBid(selBid);
-                }
+                }*/
             }
         });
 
@@ -318,10 +303,15 @@ public class VaadinUI extends UI {
         setCurrentBid(bid);
         if (bid == null) {
             bidGrid.setDataProvider(
-                    new ListDataProvider<>(bidRepo.findByBidSystemAndBidLevel(curBidSystem, 0)));
+                    new ListDataProvider<>(assumption ?
+                            bidRepo.findByBidSystemAndBidLevelAndAssumptionGreaterThanEqual(curBidSystem, 0, 0)
+                            :
+                            bidRepo.findByBidSystemAndBidLevelAndAssumptionLessThanEqual(curBidSystem, 0, 0)));
         } else {
-            bidGrid.setDataProvider(new ListDataProvider<>(
-                    bidRepo.findByBidSystemAndParentBid(curBidSystem, bid.getParentBid())));
+            bidGrid.setDataProvider(new ListDataProvider<>(assumption ?
+                    bidRepo.findByBidSystemAndParentBidAndAssumptionGreaterThanEqual(curBidSystem, bid.getParentBid(),0)
+                    :
+                    bidRepo.findByBidSystemAndParentBidAndAssumptionLessThanEqual(curBidSystem, bid.getParentBid(),0)));
             //logger.warn("Selecting bid in bidGrid: " + getBidLevelSuit(bid));
             //TODO Selection doesn't work!!!
             bidGrid.deselectAll();
@@ -342,11 +332,23 @@ public class VaadinUI extends UI {
         if (parentBid == null) {
             // Load an empty list of bids to the right Grid
             bidGrid2nd.setDataProvider(
-                    new ListDataProvider<>(bidRepo.findByBidSystemAndBidLevel(curBidSystem, 999)));
+                    new ListDataProvider<>(assumption ?
+                            bidRepo.findByBidSystemAndBidLevelAndAssumptionGreaterThanEqual(curBidSystem, 999, 0)
+                            :
+                            bidRepo.findByBidSystemAndBidLevelAndAssumptionLessThanEqual(curBidSystem, 999, 0)
+                    ));
         } else {
-            bidGrid2nd.setDataProvider(new ListDataProvider<>(
-                    bidRepo.findByBidSystemAndParentBid(curBidSystem, parentBid)));
+            bidGrid2nd.setDataProvider(
+                    new ListDataProvider<>(assumption ?
+                            bidRepo.findByBidSystemAndParentBidAndAssumptionGreaterThanEqual(curBidSystem, parentBid,0)
+                            :
+                            bidRepo.findByBidSystemAndParentBidAndAssumptionLessThanEqual(curBidSystem, parentBid,0)));
         }
+    }
+
+    public void refreshBidGrids() {
+        listBids(curBid);
+        listBids2nd(curBid);
     }
 
     /**
@@ -462,7 +464,7 @@ public class VaadinUI extends UI {
      *
      * @param newbidSystem - the BidSystem to which to switch
      */
-    void switchBidSystem(BidSystem newbidSystem) {
+    private void switchBidSystem(BidSystem newbidSystem) {
         if (!curBidSystem.getName().equals(newbidSystem.getName())) {
             curBidSystem = newbidSystem;
             bidSystemLabel.setValue(curBidSystem.getName());
@@ -472,4 +474,19 @@ public class VaadinUI extends UI {
         }
     }
 
+    public Label getAuctionAssumptionLabel() {
+        return auctionAssumptionLabel;
+    }
+
+    public void setAuctionAssumptionLabel(Label auctionAssumptionLabel) {
+        this.auctionAssumptionLabel = auctionAssumptionLabel;
+    }
+
+    public boolean isAssumption() {
+        return assumption;
+    }
+
+    public void setAssumption(boolean assumption) {
+        this.assumption = assumption;
+    }
 }

@@ -232,12 +232,15 @@ class OptionMenu extends MenuBar {
 
     private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {checkbox1.setValue(false);
         ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1.getValue() ?  "Po parti" :"Przed partią"));
-
+        ui.setAssumption(false);
+        ui.refreshBidGrids();
        // if (checkbox1.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
        // else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> {checkbox1.setValue(true);
         ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1.getValue() ?  "Po parti" :"Przed partią"));
+        ui.setAssumption(true);
+        ui.refreshBidGrids();
     //  if (checkbox1.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
     //  else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
