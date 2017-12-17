@@ -22,7 +22,7 @@ public class Application {
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	@Value("${webbridge.loadBidsFromXlsx}")
-	private Boolean readBids = false;
+	private Boolean readBids = true;
 
 	@Value("${webbridge.writeBidsToXlsx}")
 	private Boolean writeBids = false;
