@@ -1,13 +1,18 @@
 buildscript {
     repositories {
-        mavenCentral()
-        maven { setUrl("https://plugins.gradle.org/m2/") }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
         classpath "io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE"
         classpath "com.devsoap.plugin:gradle-vaadin-plugin:1.2.6"
     }
+}
+
+plugins {
+    id 'com.devsoap.plugin.vaadin' version '1.2.6'
 }
 
 apply plugin: "io.spring.dependency-management"
@@ -44,12 +49,11 @@ bootRun {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("com.vaadin:vaadin-spring-boot-starter:2.0.1")
-    compile 'org.xerial:sqlite-jdbc:3.21.0'
-    compile 'com.zsoltfabok:sqlite-dialect:1.0'
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "com.vaadin:vaadin-spring-boot-starter:2.0.1"
+    compile "org.xerial:sqlite-jdbc:3.21.0"
+    compile "com.zsoltfabok:sqlite-dialect:1.0"
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
     testCompile("junit:junit")
 }
-
