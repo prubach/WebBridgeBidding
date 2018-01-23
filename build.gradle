@@ -50,6 +50,7 @@ bootRun {
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "javax.xml.bind:jaxb-api:2.2.11"
     compile "com.vaadin:vaadin-spring-boot-starter:2.0.1"
     compile "org.xerial:sqlite-jdbc:3.21.0"
     compile "com.zsoltfabok:sqlite-dialect:1.0"
