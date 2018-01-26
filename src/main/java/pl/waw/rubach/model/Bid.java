@@ -26,7 +26,7 @@ public class Bid {
 
     private String bidClass;
 
-    private boolean afterInterven;
+    private Integer afterInterven;
 
     private String shortDesc;
 
@@ -43,7 +43,7 @@ public class Bid {
     public Bid() {
     }
 
-    public Bid(Integer bidLevel, Integer level, String suit, Integer pointsMin, Integer pointsMax, String suitLength, String bidType, String bidClass, boolean afterInterven, String shortDesc, String description, Integer assumption, Bid parentBid, BidSystem bidSystem) {
+    public Bid(Integer bidLevel, Integer level, String suit, Integer pointsMin, Integer pointsMax, String suitLength, String bidType, String bidClass, Integer afterInterven, String shortDesc, String description, Integer assumption, Bid parentBid, BidSystem bidSystem) {
         this.bidLevel = bidLevel;
         this.level = level;
         this.suit = suit;
@@ -152,11 +152,11 @@ public class Bid {
         this.bidClass = bidClass;
     }
 
-    public boolean isAfterInterven() {
+    public Integer getAfterInterven() {
         return afterInterven;
     }
 
-    public void setAfterInterven(boolean afterInterven) {
+    public void setAfterInterven(Integer afterInterven) {
         this.afterInterven = afterInterven;
     }
 

@@ -57,7 +57,7 @@ public abstract class XlsBridge {
             case 12:
                 newBid.setBidClass(getStr(currentCell)); break;
             case 13:
-                newBid.setAfterInterven(getBool(currentCell));
+                newBid.setAfterInterven(getInt(currentCell));
                 break;
         }
         return newBid;
@@ -83,7 +83,7 @@ public abstract class XlsBridge {
                 bid.getDescription(),
                 bid.getBidType(),
                 bid.getBidClass(),
-                bid.isAfterInterven() ? new Integer(1) : new Integer(0)
+                bid.getAfterInterven()
         };
     }
 

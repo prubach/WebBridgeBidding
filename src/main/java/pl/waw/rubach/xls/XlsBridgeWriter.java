@@ -72,10 +72,10 @@ public class XlsBridgeWriter extends XlsBridge {
     // Test the procedure
     public static void main(String[] args) {
         Bid bid1C = new Bid(0, 1, "C", 12, 37, "5+", "F",
-                "", false, "Wieloznaczny trefl", "3 znaczenia", 0, null, null);
-        Bid bid1D = new Bid(0, 1, "D", 12, 18, "5", "S", "", false, "Słabe 1 karo", "Słabe 1 karo", 0, null, null);
-        Bid bid1C1D = new Bid(1, 1, "D", 0, 37, "0+", "S", "", false, "Negat na 1 trefl", "Negat na 1 trefl", 0, bid1C, null);
-        Bid bid1C1D1H = new Bid(2, 1, "H", 12, 18, "4+", "S", "", false, "Zgłoszenie 4ki kier", "Zgłoszenie 4ki kier", 0, bid1C1D, null);
+                "", 0, "Wieloznaczny trefl", "3 znaczenia", 0, null, null);
+        Bid bid1D = new Bid(0, 1, "D", 12, 18, "5", "S", "", 0, "Słabe 1 karo", "Słabe 1 karo", 0, null, null);
+        Bid bid1C1D = new Bid(1, 1, "D", 0, 37, "0+", "S", "", 0, "Negat na 1 trefl", "Negat na 1 trefl", 0, bid1C, null);
+        Bid bid1C1D1H = new Bid(2, 1, "H", 12, 18, "4+", "S", "", 0, "Zgłoszenie 4ki kier", "Zgłoszenie 4ki kier", 0, bid1C1D, null);
         List<Bid> list = Arrays.asList(bid1C,bid1D, bid1C1D, bid1C1D1H);
         //writeBridgeBidsToXlsx(new BidSystem("W-J"),list);
     }

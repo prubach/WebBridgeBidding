@@ -2,8 +2,8 @@ server:
   port: 7000
 spring:
   datasource:
-    #url: jdbc:sqlite:bridge.db
-    url: "jdbc:sqlite::memory:"
+    url: jdbc:sqlite:bridge.db
+    #url: "jdbc:sqlite::memory:"
     driver-class-name: org.sqlite.JDBC
   jpa:
     show_sql: false

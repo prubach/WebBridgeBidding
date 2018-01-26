@@ -32,6 +32,31 @@ public class DBInitializeConfig {
 				Statement statement = connection.createStatement();
 				statement.execute("DROP TABLE IF EXISTS BID");
 				statement.execute("DROP TABLE IF EXISTS BID_SYSTEM");
+			/*	statement.executeUpdate(
+						"CREATE TABLE `Bid` (" +
+								"`bidID` INTEGER, " +
+								"`bidLevel` INTEGER, " +
+								"`level` INTEGER, " +
+								"`suit` TEXT, " +
+								"`pointsMin` INTEGER, " +
+								"`pointsMax` INTEGER, " +
+								"`suitLength` TEXT, " +
+								"`bidType` TEXT, " +
+								"`bidClass` TEXT, " +
+								"`afterInterven` INTEGER NOT NULL, " +
+								"`shortDesc` TEXT, " +
+								"`description` TEXT, " +
+								"`assumption` INTEGER, " +
+								"`parentBidBidId` INTEGER, " +
+								"`bidSystemBidSystemId` INTEGER, " +
+								"PRIMARY KEY(`bidID`)" +
+								")");
+				statement.executeUpdate(
+						"CREATE TABLE `BidSystem` (" +
+								"`bidSystemID` INTEGER, " +
+								"`name` TEXT, " +
+								"PRIMARY KEY(`bidSystemID`))");
+*/
 				statement.executeUpdate(
 						"create table BID ( "
 								+ "BIDID INTEGER PRIMARY KEY, "
@@ -43,7 +68,7 @@ public class DBInitializeConfig {
 								+ "SUIT_LENGTH VARCHAR(4),"				//pyt mogę wpisać wiecej niz 4 znaki czyli to znaczy co innego?
 								+ "BID_TYPE VARCHAR(30),"
 								+ "BID_CLASS VARCHAR(30),"
-								+ "AFTER_INTERVEN BOOLEAN,"
+								+ "AFTER_INTERVEN INTEGER,"
 								+ "ASSUMPTION INTEGER,"
 								+ "SHORT_DESC VARCHAR(100),"
 								+ "DESCRIPTION VARCHAR(1000),"
