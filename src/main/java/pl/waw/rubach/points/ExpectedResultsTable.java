@@ -53,21 +53,31 @@ public class ExpectedResultsTable {
      *
      * @param points - points in hand
      * @param fitInOlderColor - if fit in older color (beginning with 30 points any color)
-     * @param auctionAssumption - assumption After (true) or Before (false)
+     * @param auctionAssumptionWe - assumption After (true) or Before (false)
      * @return bonus points
      */
-    public int getPoints(float points, boolean fitInOlderColor, boolean auctionAssumption)
+    public int getPoints(float points, boolean fitInOlderColor, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
             throws InvalidNumberOfPointsException {
-        if (points<20 || points > 38) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
-                "mieścić się w przedziale od 20 do 38");
+        int aa =1;
+        boolean auctionAssumption = auctionAssumptionWe;
+        if (points > 38) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
+                "być mniejsza od 38");
+        if (points<20 ) {
+            points = (40 - points);
+            aa = -1;
+            auctionAssumption = auctionAssumptionThey;
+          //  throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów jest " +
+            //        "mniejsza od 20 czyli punkty przeciwników to" +(40- points));
+        }
+
         Map<Integer,Integer> map = getPtsMap(fitInOlderColor, auctionAssumption);
         int pointsInt = Math.round(points*2);
         if (pointsInt % 2==0) {
-            return map.get(pointsInt / 2);
+            return aa*map.get(pointsInt / 2);
         } else {
             int up = Math.round((pointsInt/2)+0.5f);
             int down = Math.round((pointsInt/2)-0.5f);
-            return (map.get(up) + map.get(down))/2;
+            return aa*(map.get(up) + map.get(down))/2;
         }
     }
 

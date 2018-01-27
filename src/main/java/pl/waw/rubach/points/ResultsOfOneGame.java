@@ -33,12 +33,12 @@ public class ResultsOfOneGame {
      */
     private int results;
 
-    public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumption, boolean fitInOlderColor)
+    public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColor)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         this.pointsInBothHands = pointsInBothHands;
         this.pointsForContract = pointsForContract;
 
-        int expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColor, auctionAssumption);
+        int expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColor, auctionAssumptionWe, auctionAssumptionThey);
 
         if (expectedPoints<=pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
         else this.pointDifferent = expectedPoints - pointsForContract;
