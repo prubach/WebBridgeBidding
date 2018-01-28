@@ -18,13 +18,13 @@ public class ExpectedResultsTable {
     private MultiKeyMap<Boolean,Map> pointsMap = new MultiKeyMap<>();
 
     private final int[] BEFORE_FIT = new int[] {50, 70, 110, 130, 300, 350, 400, 430, 460, 490, 550, 600, 700, 900,
-            1000, 1100, 1200, 1400};
+            1000, 1100, 1200, 1400,1400, 1400,1400};
     private final int[] AFTER_FIT = new int[] {50, 70, 110, 130, 440, 520, 600, 630, 660, 690, 750, 800, 1050, 1350,
-            1500, 1650, 1800, 2100};
+            1500, 1650, 1800, 2100,2100, 2100,2100};
     private final int[] BEFORE_NOFIT = new int[] {0, 50, 70, 110, 130, 200, 300, 350, 400, 430, 460, 520, 600, 700,
-            900, 1000, 1100, 1200, 1400 };
+            900, 1000, 1100, 1200, 1400,1400, 1400,1400 };
     private final int[] AFTER_NOFIT = new int[] {0, 50, 70, 110, 130, 290, 440, 520, 600, 630, 660, 720, 800, 1050,
-            1350, 1500, 1650, 1800, 2100 };
+            1350, 1500, 1650, 1800, 2100,2100,2100,2100 };
 
     private ExpectedResultsTable() {
         pointsMap.put(true,false,fillMap(BEFORE_FIT));
@@ -53,21 +53,31 @@ public class ExpectedResultsTable {
      *
      * @param points - points in hand
      * @param fitInOlderColor - if fit in older color (beginning with 30 points any color)
-     * @param auctionAssumption - assumption After (true) or Before (false)
+     * @param auctionAssumptionWe - assumption After (true) or Before (false)
      * @return bonus points
      */
-    public int getPoints(float points, boolean fitInOlderColor, boolean auctionAssumption)
+    public int getPoints(float points, boolean fitInOlderColor, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
             throws InvalidNumberOfPointsException {
-        if (points<20 || points > 38) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
-                "mieścić się w przedziale od 20 do 38");
+        int aa =1;
+        boolean auctionAssumption = auctionAssumptionWe;
+        if (points > 40) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
+                "być mniejsza od 38");
+        if (points<20 ) {
+            points = (40 - points);
+            aa = -1;
+            auctionAssumption = auctionAssumptionThey;
+          //  throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów jest " +
+            //        "mniejsza od 20 czyli punkty przeciwników to" +(40- points));
+        }
+
         Map<Integer,Integer> map = getPtsMap(fitInOlderColor, auctionAssumption);
         int pointsInt = Math.round(points*2);
         if (pointsInt % 2==0) {
-            return map.get(pointsInt / 2);
+            return aa*map.get(pointsInt / 2);
         } else {
             int up = Math.round((pointsInt/2)+0.5f);
             int down = Math.round((pointsInt/2)-0.5f);
-            return (map.get(up) + map.get(down))/2;
+            return aa*(map.get(up) + map.get(down))/2;
         }
     }
 
