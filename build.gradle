@@ -18,9 +18,13 @@ plugins {
 allprojects {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
+    apply plugin: 'maven'
     apply plugin: 'java'
     group = 'pl.waw.rubach'
     version = '0.5'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     repositories {
         mavenCentral()
@@ -39,9 +43,6 @@ jar {
     baseName = 'webbridgebidding'
 }
 
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 dependencyManagement {
     imports {
