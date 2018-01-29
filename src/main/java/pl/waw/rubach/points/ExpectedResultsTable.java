@@ -10,7 +10,7 @@ import java.util.TreeSet;
 public class ExpectedResultsTable {
 
     /**
-     * one instance of ImpTable (as Singleton)??
+     * one instance of ExpectedResultsTable (as Singleton)
      */
     private static ExpectedResultsTable instance;
 
@@ -18,13 +18,13 @@ public class ExpectedResultsTable {
     private MultiKeyMap<Boolean,Map> pointsMap = new MultiKeyMap<>();
 
     private final int[] BEFORE_FIT = new int[] {50, 70, 110, 130, 300, 350, 400, 430, 460, 490, 550, 600, 700, 900,
-            1000, 1100, 1200, 1400,1400, 1400,1400};
+            1000, 1100, 1200, 1400,1400, 1400, 1400};
     private final int[] AFTER_FIT = new int[] {50, 70, 110, 130, 440, 520, 600, 630, 660, 690, 750, 800, 1050, 1350,
-            1500, 1650, 1800, 2100,2100, 2100,2100};
+            1500, 1650, 1800, 2100,2100, 2100, 2100};
     private final int[] BEFORE_NOFIT = new int[] {0, 50, 70, 110, 130, 200, 300, 350, 400, 430, 460, 520, 600, 700,
-            900, 1000, 1100, 1200, 1400,1400, 1400,1400 };
+            900, 1000, 1100, 1200, 1400, 1400, 1400 };
     private final int[] AFTER_NOFIT = new int[] {0, 50, 70, 110, 130, 290, 440, 520, 600, 630, 660, 720, 800, 1050,
-            1350, 1500, 1650, 1800, 2100,2100,2100,2100 };
+            1350, 1500, 1650, 1800, 2100, 2100, 2100 };
 
     private ExpectedResultsTable() {
         pointsMap.put(true,false,fillMap(BEFORE_FIT));
@@ -35,7 +35,7 @@ public class ExpectedResultsTable {
 
     /**
      * Fill the map of bonus points with data from an array of ints and return it.
-     * Points in hand start at 20 and finish at 37 or 38
+     * Points in hand start at 20 and finish at 40 (for all cases!)
      *
      * @param pointsTab - array of ints with bonus points for subsequent points in hand
      * @return map of points in hand to bonus points
@@ -60,8 +60,8 @@ public class ExpectedResultsTable {
             throws InvalidNumberOfPointsException {
         int aa =1;
         boolean auctionAssumption = auctionAssumptionWe;
-        if (points > 40) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
-                "być mniejsza od 38");
+        if (points <= 0 || points > 40) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
+                "być dodatnia i  mniejsza od 40");
         if (points<20 ) {
             points = (40 - points);
             aa = -1;

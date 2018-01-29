@@ -27,9 +27,9 @@ logging:
             internal: WARN
 webbridge:
 # Set to 'true' to remove data from the database at startup
-  cleardatabase: true
+  cleardatabase: false
 # Set to 'true' to enable loading data from XLSX file at startup
-  loadBidsFromXlsx: true
+  loadBidsFromXlsx: false
   writeBidsToXlsx: false
 vaadin:
   servlet:
