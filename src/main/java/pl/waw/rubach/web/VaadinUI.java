@@ -15,6 +15,7 @@ import com.vaadin.ui.renderers.HtmlRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import pl.waw.rubach.BidHelper;
 import pl.waw.rubach.model.Bid;
 import pl.waw.rubach.model.BidSystem;
 import pl.waw.rubach.repo.BidRepository;
@@ -281,7 +282,7 @@ public class VaadinUI extends UI {
      */
     private void initializeGridLayout(Grid<Bid> grid) {
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
-        Grid.Column<Bid, String> suitLength = grid.addColumn(bid -> replaceSuitsInDesc(bid.getSuitLength()), new HtmlRenderer());
+        Grid.Column<Bid, String> suitLength = grid.addColumn(bid -> BidHelper.replaceSuitsInDesc(bid.getSuitLength()), new HtmlRenderer());
         suitLength.setCaption("Układ");
         suitLength.setId("suits");
 
@@ -305,7 +306,7 @@ public class VaadinUI extends UI {
         Grid.Column<Bid, String> points = grid.addColumn(bid -> getPointsForBid(bid));
         points.setCaption("Punkty");
         points.setId("points");
-        Grid.Column<Bid, String> shortDesc = grid.addColumn(bid -> replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
+        Grid.Column<Bid, String> shortDesc = grid.addColumn(bid -> BidHelper.replaceSuitsInDesc(bid.getShortDesc()), new HtmlRenderer());
         shortDesc.setCaption("Opis");
         shortDesc.setId("shortDsc");
         grid.setColumns("name", "points", "suits", "shortDsc"/* "bidLevel"*/);
@@ -385,33 +386,6 @@ public class VaadinUI extends UI {
         listBids2nd(curBid);
     }
 
-    /**
-     * Automatically replace the text that means Suits in the descriptions with Suit symbols and color them
-     *
-     * @param desc
-     * @return
-     */
-    private String replaceSuitsInDesc(String desc) {
-        if (desc == null) return null;
-        desc = desc.replaceAll("kier", " <font color=\"red\">\u2665</font color> ");
-        desc = desc.replaceAll("karo", " <font color=\"red\">\u2666</font color> ");
-        desc = desc.replaceAll("trefl", " <font color=\"black\">\u2663</font color> ");
-        desc = desc.replaceAll("pik", " <font color=\"black\">\u2660</font color> ");
-
-        desc = desc.replaceAll("kiery", " <font color=\"red\">\u2665</font color> ");
-        desc = desc.replaceAll("kara", " <font color=\"red\">\u2666</font color> ");
-        desc = desc.replaceAll("trefle", " <font color=\"black\">\u2663</font color> ");
-        desc = desc.replaceAll("piki", " <font color=\"black\">\u2660</font color> ");
-
-        desc = desc.replaceAll("kierów", " <font color=\"red\">\u2665</font color> ");
-        //  desc = desc.replaceAll("kar", " <font color=\"red\">\u2666</font color> ");
-        desc = desc.replaceAll("trefli", " <font color=\"black\">\u2663</font color> ");
-        desc = desc.replaceAll("pików", " <font color=\"black\">\u2660</font color> ");
-
-        //desc = desc.replaceAll("SK", "<font color=\"black\">\u2660</font color>");
-
-        return desc;
-    }
 
     /**
      * Use the Suit symbols instead of letters, add red color to hearts and diamonds
@@ -421,19 +395,7 @@ public class VaadinUI extends UI {
      */
     private String getBidSuit(Bid bid) {
         if (bid == null) return "";
-        switch (bid.getSuit()) {
-            case "C":
-                return "<font color=\"black\">\u2663</font color>";
-            case "D":
-                return "<font color=\"red\">\u2666</font color>";
-            case "H":
-                return "<font color=\"red\">\u2665</font color>";
-            case "S":
-                return "<font color=\"black\">\u2660</font color>";
-            case "NT":
-                return "BA";
-        }
-        return "";
+        return BidHelper.getBidSuit(bid.getSuit());
     }
 
     /**
@@ -486,7 +448,7 @@ public class VaadinUI extends UI {
                 rightHeaderCell.setText("Gracz S (ten który otworzył licytację) :");
             }
             navigatorLabel.setValue(desc + getBidLevelSuit(curBid));
-            curBidLabel.setValue(replaceSuitsInDesc(curBid.getDescription()));
+            curBidLabel.setValue(BidHelper.replaceSuitsInDesc(curBid.getDescription()));
 
 
         }

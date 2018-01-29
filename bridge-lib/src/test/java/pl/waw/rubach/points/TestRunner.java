@@ -9,7 +9,7 @@ public class TestRunner {
     public static void main(String[] args) {
 
 //=================================Points counting  Package Test
-        Result resultCountingPointsTest = JUnitCore.runClasses(CountingPointsTest.class);
+        Result resultCountingPointsTest = JUnitCore.runClasses(pl.waw.rubach.points.CountingPointsTest.class);
         for (Failure failureGameModelCards : resultCountingPointsTest.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }

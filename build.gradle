@@ -15,28 +15,34 @@ plugins {
     id 'com.devsoap.plugin.vaadin' version '1.2.6'
 }
 
+allprojects {
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'java'
+    group = 'pl.waw.rubach'
+    version = '0.5'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+        maven { url "http://oss.sonatype.org/content/repositories/vaadin-snapshots/" }
+    }
+}
+
 apply plugin: "io.spring.dependency-management"
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 ext['hibernate.version'] = '5.1.0.Final'
 
 jar {
     baseName = 'webbridgebidding'
-    version =  '0.1.1'
 }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
-    maven { url "http://oss.sonatype.org/content/repositories/vaadin-snapshots/" }
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 dependencyManagement {
     imports {
@@ -49,6 +55,7 @@ bootRun {
 }
 
 dependencies {
+    compile project(':bridge-lib')
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "javax.xml.bind:jaxb-api:2.2.11"
     compile "com.vaadin:vaadin-spring-boot-starter:2.0.1"
@@ -56,6 +63,5 @@ dependencies {
     compile "com.zsoltfabok:sqlite-dialect:1.0"
     //compile 'org.hibernate.dialect:sqlite-dialect:0.1.0'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
     testCompile("junit:junit")
 }
