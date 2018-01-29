@@ -40,8 +40,6 @@ public class CountingPointsTest {
         testImpPointsMap.put(1200, 15);
         testImpPointsMap.put(2000, 19);
 
-        //TODO add case of 20 Points on hand (fit in older etc...
-        // testExpResBeforeFitMap.put(20f, -50);
         testExpResBeforeFitMap.put(19.5f, -60);
         testExpResBeforeFitMap.put(15f, -350);
         testExpResBeforeFitMap.put(16.5f, -215);
@@ -99,7 +97,9 @@ public class CountingPointsTest {
         testCountingPointsBothAfterFitMap.put(20f, 0f, -2);
         testCountingPointsBothAfterNoFitMap.put(20f, 0f, 2);
 
-
+        testCountingPointsBothAfterNoFitMap.put(10f, -660f, 0);
+        testCountingPointsBothAfterNoFitMap.put(10f, -100f, 11);
+        testCountingPointsBothAfterFitMap.put(10f, -100f, 12);
     }
 
     @Test
@@ -173,7 +173,7 @@ public class CountingPointsTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, false, true, false).getResults();
+            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, true, false).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. My po, Fit");
             Assert.assertEquals(testCountingPointsBothAfterFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -184,11 +184,14 @@ public class CountingPointsTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, false, false, true).getResults();
+            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, false, true).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. My po, Fit");
             Assert.assertEquals(testCountingPointsBothAfterNoFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
+
+
+
 
 
     }
@@ -228,7 +231,12 @@ public class CountingPointsTest {
         Assert.assertEquals(2, g.getResults());
 
 
-    }
-*/
+        ResultsOfOneGame h = new ResultsOfOneGame(10, -660, true, true, false, false);
+        System.out.println("Wynik gry dla 10PC i ugranych -660 pkt przy założeniach po i oni bez fit jest: " + h.getResults());
+        Assert.assertEquals(0, h.getResults());
 
+
+    }
+
+*/
 }
