@@ -58,26 +58,29 @@ public class ExpectedResultsTable {
      */
     public int getPoints(float points, boolean fitInOlderColor, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
             throws InvalidNumberOfPointsException {
-        int aa =1;
-        boolean auctionAssumption = auctionAssumptionWe;
-        if (points <= 0 || points > 40) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
+
+        //test if points value is correct if not print Exeption
+        if (points < 0 || points > 40) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
                 "być dodatnia i  mniejsza od 40");
+
+        //if 1 we  so points are for us, if -1 they and points for us is minus that for they
+        int howShoudPlayIndicator =1;
+        boolean auctionAssumption = auctionAssumptionWe;
         if (points<20 ) {
             points = (40 - points);
-            aa = -1;
+            howShoudPlayIndicator = -1;
             auctionAssumption = auctionAssumptionThey;
-          //  throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów jest " +
-            //        "mniejsza od 20 czyli punkty przeciwników to" +(40- points));
+
         }
 
         Map<Integer,Integer> map = getPtsMap(fitInOlderColor, auctionAssumption);
         int pointsInt = Math.round(points*2);
         if (pointsInt % 2==0) {
-            return aa*map.get(pointsInt / 2);
+            return howShoudPlayIndicator*map.get(pointsInt / 2);
         } else {
             int up = Math.round((pointsInt/2)+0.5f);
             int down = Math.round((pointsInt/2)-0.5f);
-            return aa*(map.get(up) + map.get(down))/2;
+            return howShoudPlayIndicator*((map.get(up) + map.get(down))/2);
         }
     }
 
