@@ -38,7 +38,7 @@ public class CountingPointsTest {
         testImpPointsMap.put(2000, 19);
 
         //TODO add case of 20 Points on hand (fit in older etc...
-       // testExpResBeforeFitMap.put(20f, 50);
+       // testExpResBeforeFitMap.put(20f, -50);
         testExpResBeforeFitMap.put(19.5f, -60);
         testExpResBeforeFitMap.put(15f, -350);
         testExpResBeforeFitMap.put(16.5f, -215);
@@ -157,7 +157,7 @@ public class CountingPointsTest {
 
     @Test
     public void testCountingPointsRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-        //for (float p : new TreeSet<Float>(testCountingPointsBothBeforeFitMap.getKey())) {
+        //for (float p : new TreeSet<Float>(testCountingPointsBothBeforeFitMap.keySet())) {
         {
 
        //   MultiKey kk = testCountingPointsBothBeforeFitMap.mapIterator().getKey();
@@ -177,25 +177,34 @@ public class CountingPointsTest {
     public void testCountingPoints() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, false,true) + " oczekiwane.");
 
-        ResultsOfOneGame a = new ResultsOfOneGame(24, 500, true, false,true);
+        ResultsOfOneGame a = new ResultsOfOneGame(24, 500, true, false,true, false);
         System.out.println("Wynik gry dla 24PC i ugranych 500 pkt przy założeniach po i Fit jest: " + a.getResults());
         Assert.assertEquals(2, a.getResults());
 
-        ResultsOfOneGame b = new ResultsOfOneGame(24, 300, true, false,true);
+        ResultsOfOneGame b = new ResultsOfOneGame(24, 300, true, false,true, false);
         System.out.println("Wynik gry dla 24PC i ugranych 300 pkt przy założeniach po i Fit jest: " + b.getResults());
         Assert.assertEquals(-4, b.getResults());
 
-        ResultsOfOneGame c = new ResultsOfOneGame(24, 100, true,false, true);
+        ResultsOfOneGame c = new ResultsOfOneGame(24, 100, true,false, true, false);
         System.out.println("Wynik gry dla 24PC i ugranych +100 pkt przy założeniach po i Fit jest: " + c.getResults());
         Assert.assertEquals(-8,c.getResults() );
 
-        ResultsOfOneGame d = new ResultsOfOneGame(24, -100, true,false, true);
+        ResultsOfOneGame d = new ResultsOfOneGame(24, -100, true,false, true, false);
         System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + d.getResults());
         Assert.assertEquals(-11, d.getResults() );
 
-        ResultsOfOneGame e = new ResultsOfOneGame(24, -500, true, false,true);
+        ResultsOfOneGame e = new ResultsOfOneGame(24, -500, true, false,true,false);
         System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + e.getResults());
         Assert.assertEquals(-14, e.getResults() );
+
+
+        ResultsOfOneGame f = new ResultsOfOneGame(20, 0, true, true,true,false);
+        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i my Fit jest: " + f.getResults());
+        Assert.assertEquals(-2, f.getResults() );
+
+        ResultsOfOneGame g = new ResultsOfOneGame(20, 0, true, true,false,true);
+        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i oni Fit jest: " + g.getResults());
+        Assert.assertEquals(2, g.getResults() );
 
 
     }

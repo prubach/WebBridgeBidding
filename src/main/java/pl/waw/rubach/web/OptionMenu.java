@@ -12,10 +12,11 @@ class OptionMenu extends MenuBar {
 
     private VaadinUI ui;
 
-    private CheckBox checkbox1We = new CheckBox("Czy jesteście po partii (ustawiane w głównej aplikacji albo tutaj)? ");
-    private CheckBox checkbox1They = new CheckBox("Czy przeciwnicy są  po partii (ustawiane w głównej aplikacji albo tutaj)? ");
+    private CheckBox checkbox1AssumptionWe = new CheckBox("Czy jesteście po partii (ustawiane w głównej aplikacji albo tutaj)? ");
+    private CheckBox checkbox1AssumptionThey = new CheckBox("Czy przeciwnicy są  po partii (ustawiane w głównej aplikacji albo tutaj)? ");
 
-    private CheckBox checkbox2 = new CheckBox("Czy  jest fit u tej pary która ma wiecej PC(domyślnie tak - ustawiane tutaj)?");
+    private CheckBox checkboxFitWe = new CheckBox("Czy  macie fit (domyślnie tak - ustawiane tutaj)?");
+    private CheckBox checkboxFitThey = new CheckBox("Czy  jest fit u przeciwników (domyślnie nie - ustawiane tutaj)?");
 
 
     private VerticalLayout createLegendDescription() {
@@ -151,14 +152,17 @@ class OptionMenu extends MenuBar {
 
         content.addStyleName("window");
 
-        content.addComponent(checkbox1We);
-        content.addComponent(checkbox1They);
+        content.addComponent(checkbox1AssumptionWe);
+        content.addComponent(checkbox1AssumptionThey);
         TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu rękach (wraz z punktami układowymi):");
         content.addComponent(pointsInBothHands);
 
-        //   checkbox1We.setValue(true); //move to create menu?
-        checkbox2.setValue(true);
-        content.addComponent(checkbox2);
+        //   checkbox1AssumptionWe.setValue(true); //move to create menu?
+        checkboxFitWe.setValue(true);
+        content.addComponent(checkboxFitWe);
+
+        checkboxFitThey.setValue(false);
+        content.addComponent(checkboxFitThey);
         content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze."));
 
 
@@ -174,14 +178,14 @@ class OptionMenu extends MenuBar {
         pointsInBothHands.addValueChangeListener( event -> resultsLabel.setValue(""));
         pointsForContract.addValueChangeListener( event -> resultsLabel.setValue(""));
 
-        //  checkbox1We.addValueChangeListener(event ->
-        //         checkbox2.setValue(! checkbox1We.getValue()));
+        //  checkbox1AssumptionWe.addValueChangeListener(event ->
+        //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
 
         Button sayHelloButton = new Button("Oblicz punkty! ", clickEvent -> {
             try {
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 int foo2 = Integer.parseInt(pointsForContract.getValue());
-                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1We.getValue(),checkbox1They.getValue(), checkbox2.getValue());
+                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
             } catch (NumberFormatException | InvalidNumberOfPointsException | PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?
@@ -196,7 +200,7 @@ class OptionMenu extends MenuBar {
         ui.addWindow(window);
     }
 
-    private void actionDisplayPoints(VaadinUI ui) {
+    private void actionDisplayPointsTable(VaadinUI ui) {
         final Window window = new Window("Okienko z tabelkami do liczenia punktów.");
         window.setWidth("100%");
         window.addStyleName("window");
@@ -206,19 +210,19 @@ class OptionMenu extends MenuBar {
 
         content.addStyleName("window");
 
-        //   checkbox1We.setValue(true); //move to create menu?
-        checkbox2.setValue(true);
+        //   checkbox1AssumptionWe.setValue(true); //move to create menu?
+        checkboxFitWe.setValue(true);
 
-        content.addComponent(checkbox1We);
-        content.addComponent(checkbox2);
+        content.addComponent(checkbox1AssumptionWe);
+        content.addComponent(checkboxFitWe);
         content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy dowolny kolor jest sfitowany, jeżeli mniej to tylko starszy."));
-        //  checkbox1We.addValueChangeListener(event ->
-        //         checkbox2.setValue(! checkbox1We.getValue()));
+        //  checkbox1AssumptionWe.addValueChangeListener(event ->
+        //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
 
         Button displayExpectedResults = new Button("Wyświetl tabelkę  oczekiwanych punktów dla  danych założeń! ", clickEvent -> {
           TextArea a = new TextArea();
           a.setWidth("100%");
-          a.setValue(ExpectedResultsTable.getTableAsString(checkbox2.getValue(), checkbox1We.getValue()));
+          a.setValue(ExpectedResultsTable.getTableAsString(checkboxFitWe.getValue(), checkbox1AssumptionWe.getValue()));
           content.addComponent(a);
         });
 
@@ -235,19 +239,19 @@ class OptionMenu extends MenuBar {
     }
 
     private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {
-        checkbox1We.setValue(false);
-        ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1We.getValue() ?  "Po parti" :"Przed partią"));
+        checkbox1AssumptionWe.setValue(false);
+        ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1AssumptionWe.getValue() ?  "Po parti" :"Przed partią"));
         ui.setAssumption(false);
         ui.refreshBidGrids();
-       // if (checkbox1We.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
+       // if (checkbox1AssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
        // else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> {
-        checkbox1We.setValue(true);
-        ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1We.getValue() ?  "Po parti" :"Przed partią"));
+        checkbox1AssumptionWe.setValue(true);
+        ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1AssumptionWe.getValue() ?  "Po parti" :"Przed partią"));
         ui.setAssumption(true);
         ui.refreshBidGrids();
-    //  if (checkbox1We.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
+    //  if (checkbox1AssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
     //  else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend(ui);
@@ -255,12 +259,12 @@ class OptionMenu extends MenuBar {
     private MenuBar.Command commandToOpenDescription = (MenuBar.Command) selectedItem -> actionOpenWindowWithDescription(ui);
     private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints(ui);
 
-    private MenuBar.Command commandToDisplanyPointsTable = (MenuBar.Command) selectedItem -> actionDisplayPoints(ui);
+    private MenuBar.Command commandToDisplanyPointsTable = (MenuBar.Command) selectedItem -> actionDisplayPointsTable(ui);
 
 
     OptionMenu(VaadinUI ui) {
         this.ui = ui;
-        checkbox1We.setValue(false);
+        checkbox1AssumptionWe.setValue(false);
 
         // First left top-level item
         this.addItem("Oblicz punkty", null, commandToCalculatePoints);
