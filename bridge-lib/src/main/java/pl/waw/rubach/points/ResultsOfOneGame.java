@@ -17,7 +17,7 @@ public class ResultsOfOneGame {
     private int gameLevel;
 
     /**
-     * point achved by playng contract with some additiona or lacking triks (calculated from normal bridge notation)
+     * point achved by playng contract with some additiona or lacking triks (calculated from normal bridge scoring)
      * (could be also calculated by program in future)
      */
     private int pointsForContract;
