@@ -4,7 +4,9 @@ import pl.waw.rubach.points.InvalidNumberOfPointsException;
 import pl.waw.rubach.points.PointsDiferentLessThenZeroException;
 import pl.waw.rubach.points.ResultsOfOneGame;
 
-public class Scoring {
+import java.util.Map;
+
+public abstract class Scoring implements Map {
 
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
@@ -83,7 +85,7 @@ public class Scoring {
     }
 
 
-    public static void main(String [ ] args)
+    /* public static void main(String [ ] args)
     {
         int pointinHand = 10;
         int pointOfContract = 0;
@@ -91,8 +93,8 @@ public class Scoring {
         boolean fitThey =false;
 
         try {
-           Scoring a = new Scoring(1,pointinHand,pointOfContract,fitWe,fitThey);
-        System.out.print("Numer kontraktu jest: "+a.contractNumber+" a wynik jest: "+ a.results.getResults()+" impów.");
+            Scoring a = new Scoring(1,pointinHand,pointOfContract,fitWe,fitThey);
+            System.out.print("Numer kontraktu jest: "+a.contractNumber+" a wynik jest: "+ a.results.getResults()+" impów.");
 
 
             Scoring b = new Scoring(2,pointinHand,pointOfContract,fitWe,fitThey);
@@ -112,5 +114,7 @@ public class Scoring {
 
 
     }
+
+}*/
 
 }
