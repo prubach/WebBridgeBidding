@@ -52,4 +52,21 @@ public class BidHelper {
         }
         return "";
     }
+
+    /**
+     * Use the Suit symbols instead of letters, add red color to hearts and diamonds
+     *
+     * @param bidSuit
+     * @return
+     */
+    public static String getBidSuitAndroid(String bidSuit) {
+        switch (bidSuit) {
+            case "D":
+                return "<font color=\"#FF0000\">\u2662</font>";
+            case "H":
+                return "<font color=\"#FF0000\">\u2661</font>";
+            default:
+                return getBidSuit(bidSuit);
+        }
+    }
 }
