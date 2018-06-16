@@ -30,7 +30,7 @@ webbridge:
   cleardatabase: true
 # Set to 'true' to enable loading data from XLSX file at startup
   loadBidsFromXlsx: true
-  writeBidsToXlsx: false
+  writeBidsToXlsx: true
 vaadin:
   servlet:
     productionMode: false
