@@ -25,7 +25,7 @@ public class Application {
 	private Boolean readBids = true;
 
 	@Value("${webbridge.writeBidsToXlsx}")
-	private Boolean writeBids = false;
+	private Boolean writeBids = true;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
