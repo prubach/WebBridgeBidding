@@ -46,8 +46,11 @@ public class ResultsOfOneGame {
         } else expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false, auctionAssumptionWe, auctionAssumptionThey);
 
         }
+        else if(pointsInBothHands<20){
+            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey);
+        }
         else {
-            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe, auctionAssumptionThey);
+            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands,fitInOlderColorWe,auctionAssumptionWe,auctionAssumptionThey);
         }
         if (expectedPoints<=pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
         else this.pointDifferent = expectedPoints - pointsForContract;

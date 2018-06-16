@@ -22,9 +22,11 @@ public class CountingPointsTest {
     private Map<Float, Integer> testExpResBeforeNoFitMap = new HashMap<>();
     private Map<Float, Integer> testExpResAfterNoFitMap = new HashMap<>();
 
-    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitMap = new MultiKeyMap<>();
+    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
+    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitTheyMap = new MultiKeyMap<>();
 
-    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterNoFitMap = new MultiKeyMap<>();
+    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterNoFitWeMap = new MultiKeyMap<>();
+    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterNoFitTheyMap = new MultiKeyMap<>();
 
 
     private Map<Integer, Integer> testImpPointsMap = new HashMap<>();
@@ -88,18 +90,20 @@ public class CountingPointsTest {
         testExpResAfterNoFitMap.put(40f, 2100);
 
 
-        testCountingPointsBothAfterFitMap.put(24f, 500f, 2);
-        testCountingPointsBothAfterFitMap.put(24f, 300f, -4);
-        testCountingPointsBothAfterFitMap.put(24f, 100f, -8);
-        testCountingPointsBothAfterFitMap.put(24f, -100f, -11);
-        testCountingPointsBothAfterFitMap.put(24f, -500f, -14);
+        testCountingPointsBothAfterFitWeMap.put(24f, 500f, 2);
+        testCountingPointsBothAfterFitWeMap.put(24f, 300f, -4);
+        testCountingPointsBothAfterFitWeMap.put(24f, 100f, -8);
+        testCountingPointsBothAfterFitWeMap.put(24f, -100f, -11);
+        testCountingPointsBothAfterFitWeMap.put(24f, -500f, -14);
 
-        testCountingPointsBothAfterFitMap.put(20f, 0f, -2);
-        testCountingPointsBothAfterNoFitMap.put(20f, 0f, 2);
+        testCountingPointsBothAfterFitWeMap.put(20f, 0f, -2);
+        testCountingPointsBothAfterNoFitWeMap.put(20f, 0f, 2);
+        testCountingPointsBothAfterFitTheyMap.put(20f, 0f, 2);
+        testCountingPointsBothAfterNoFitTheyMap.put(20f, 0f, -2);
 
-        testCountingPointsBothAfterNoFitMap.put(10f, -660f, 0);
-        testCountingPointsBothAfterNoFitMap.put(10f, -100f, 11);
-        testCountingPointsBothAfterFitMap.put(10f, -100f, 12);
+        testCountingPointsBothAfterNoFitTheyMap.put(10f, -660f, 0);
+        testCountingPointsBothAfterNoFitTheyMap.put(10f, -100f, 11);
+        testCountingPointsBothAfterFitTheyMap.put(10f, -100f, 12);
     }
 
     @Test
@@ -168,25 +172,47 @@ public class CountingPointsTest {
     public void testCountingPointsRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
 
-        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitMap.entrySet()) {
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitWeMap.entrySet()) {
 
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
             Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, true, false).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. My po, Fit");
-            Assert.assertEquals(testCountingPointsBothAfterFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
+            Assert.assertEquals(testCountingPointsBothAfterFitWeMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
 
-        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterNoFitMap.entrySet()) {
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitTheyMap.entrySet()) {
 
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
             Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, false, true).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. My po, Fit");
-            Assert.assertEquals(testCountingPointsBothAfterNoFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
+            Assert.assertEquals(testCountingPointsBothAfterFitTheyMap.get(pointsInBothHands, pointsOfContractFloat), res);
+
+        }
+
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterNoFitWeMap.entrySet()) {
+
+            float pointsInBothHands = entry.getKey().getKey(0);
+            float pointsOfContractFloat = entry.getKey().getKey(1);
+            int pointsOfContract = Math.round(pointsOfContractFloat);
+            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, false, true).getResults();
+            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. My po, Fit");
+            Assert.assertEquals(testCountingPointsBothAfterNoFitWeMap.get(pointsInBothHands, pointsOfContractFloat), res);
+
+        }
+
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterNoFitTheyMap.entrySet()) {
+
+            float pointsInBothHands = entry.getKey().getKey(0);
+            float pointsOfContractFloat = entry.getKey().getKey(1);
+            int pointsOfContract = Math.round(pointsOfContractFloat);
+            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, true, false).getResults();
+            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. My po, Fit");
+            Assert.assertEquals(testCountingPointsBothAfterNoFitTheyMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
 
