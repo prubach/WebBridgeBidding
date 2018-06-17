@@ -42,64 +42,70 @@ public class CountingPointsForGameTestBefore {
     @Before
     public void fillTestPointsMap() {
         //testPointsMap.put()
-        testPointsForMajorContract.put(1, 30);
-        testPointsForMajorContract.put(2, 60);
-        testPointsForMajorContract.put(3, 90);
-        testPointsForMajorContract.put(4, 120 +300);
-        testPointsForMajorContract.put(5, 150 +300);
-        testPointsForMajorContract.put(6, 180 +300 +500);
-        testPointsForMajorContract.put(7, 210+ 300 +1000);
+        int karaZaKontre = 50;
+        int premiaZaCzesciowke = 50;
+        int premiaZaKoncowke = 300;
+        int premiaZaSzlemika = 500;
+        int premiaZaSzlema = 1000;
 
-        testPointsForMinorContract.put(1, 20);
-        testPointsForMinorContract.put(2, 40);
-        testPointsForMinorContract.put(3, 60);
-        testPointsForMinorContract.put(4, 80);
-        testPointsForMinorContract.put(5, 100 +300);
-        testPointsForMinorContract.put(6, 120 +300 +500);
-        testPointsForMinorContract.put(7, 140 +300 +1000);
+        testPointsForMajorContract.put(1, 30+premiaZaCzesciowke);
+        testPointsForMajorContract.put(2, 60 +premiaZaCzesciowke);
+        testPointsForMajorContract.put(3, 90 +premiaZaCzesciowke);
+        testPointsForMajorContract.put(4, 120 +premiaZaKoncowke);
+        testPointsForMajorContract.put(5, 150 +premiaZaKoncowke);
+        testPointsForMajorContract.put(6, 180 +premiaZaKoncowke +premiaZaSzlemika);
+        testPointsForMajorContract.put(7, 210+ premiaZaKoncowke +premiaZaSzlema);
 
-        testPointsForNoTrumphContract.put(1, 40);
-        testPointsForNoTrumphContract.put(2, 70);
-        testPointsForNoTrumphContract.put(3, 100 +300);
-        testPointsForNoTrumphContract.put(4, 130 +300);
-        testPointsForNoTrumphContract.put(5, 160 +300);
-        testPointsForNoTrumphContract.put(6, 190 +300 +500);
-        testPointsForNoTrumphContract.put(7, 220 +300 +1000);
+        testPointsForMinorContract.put(1, 20 + premiaZaCzesciowke);
+        testPointsForMinorContract.put(2, 40 + premiaZaCzesciowke);
+        testPointsForMinorContract.put(3, 60 + premiaZaCzesciowke);
+        testPointsForMinorContract.put(4, 80 + premiaZaCzesciowke);
+        testPointsForMinorContract.put(5, 100 +premiaZaKoncowke);
+        testPointsForMinorContract.put(6, 120 +premiaZaKoncowke + premiaZaSzlemika);
+        testPointsForMinorContract.put(7, 140 +premiaZaKoncowke +premiaZaSzlema);
+
+        testPointsForNoTrumphContract.put(1, 40 + premiaZaCzesciowke);
+        testPointsForNoTrumphContract.put(2, 70 + premiaZaCzesciowke);
+        testPointsForNoTrumphContract.put(3, 100 + premiaZaKoncowke);
+        testPointsForNoTrumphContract.put(4, 130 + premiaZaKoncowke);
+        testPointsForNoTrumphContract.put(5, 160 + premiaZaKoncowke);
+        testPointsForNoTrumphContract.put(6, 190 + premiaZaKoncowke +premiaZaSzlemika);
+        testPointsForNoTrumphContract.put(7, 220 + premiaZaKoncowke +premiaZaSzlema);
 
         //example of double contract
 
-        testPointsForMajorDoubleContract.put(1, 60);
-        testPointsForMajorDoubleContract.put(2, 120 +300);
-        testPointsForMinorDoubleContract.put(1, 40);
-        testPointsForMinorDoubleContract.put(2, 80);
-        testPointsForNoTrumphDoubleContract.put(1, 80);
-        testPointsForNoTrumphDoubleContract.put(2, 140 +300);
+        testPointsForMajorDoubleContract.put(1, 60+karaZaKontre  +premiaZaCzesciowke);
+       // testPointsForMajorDoubleContract.put(2, 120 +300+50 +50);
+        testPointsForMinorDoubleContract.put(1, 40+karaZaKontre  +premiaZaCzesciowke);
+        testPointsForMinorDoubleContract.put(2, 80+karaZaKontre  +premiaZaCzesciowke);
+        testPointsForNoTrumphDoubleContract.put(1, 80+karaZaKontre  +premiaZaCzesciowke);
+        testPointsForNoTrumphDoubleContract.put(2, 140 +premiaZaKoncowke +karaZaKontre );
 
         //example of redouble contract
 
-        testPointsForMajorReDoubleContract.put(1, 120 +300);
-        testPointsForMajorReDoubleContract.put(2, 240 +300);
-        testPointsForMinorReDoubleContract.put(1, 80);
-        testPointsForMinorReDoubleContract.put(2, 160+300);
-        testPointsForNoTrumphReDoubleContract.put(1, 160 +300);
-        testPointsForNoTrumphReDoubleContract.put(2, 280 +300);
+        testPointsForMajorReDoubleContract.put(1, 120 + premiaZaKoncowke + karaZaKontre );
+        testPointsForMajorReDoubleContract.put(2, 240 + premiaZaKoncowke + karaZaKontre );
+        testPointsForMinorReDoubleContract.put(1, 80  + premiaZaCzesciowke  +karaZaKontre );
+        testPointsForMinorReDoubleContract.put(2, 160+ premiaZaKoncowke + karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(1, 160 + premiaZaKoncowke +karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(2, 280 + premiaZaKoncowke +karaZaKontre );
 
 
-        testPointsForMajorContractOneMore.put(1, 60);
-        testPointsForMajorContractOneMore.put(2, 90);
-        testPointsForMajorContractOneMore.put(3, 120 +300);
-        testPointsForMajorContractOneMore.put(4, 150 +300);
-        testPointsForMajorContractOneMore.put(5, 180 +300);
-        testPointsForMajorContractOneMore.put(6, 210 +300 +500);
+        testPointsForMajorContractOneMore.put(1, 60 +premiaZaCzesciowke);
+        testPointsForMajorContractOneMore.put(2, 90 +premiaZaCzesciowke);
+        testPointsForMajorContractOneMore.put(3, 120 + premiaZaKoncowke);
+        testPointsForMajorContractOneMore.put(4, 150 + premiaZaKoncowke);
+        testPointsForMajorContractOneMore.put(5, 180 + premiaZaKoncowke);
+        testPointsForMajorContractOneMore.put(6, 210 + premiaZaKoncowke +premiaZaSzlemika);
       //  testPointsForMajorContractOneMore.put(7, 240 +300); nie ma sensu - nie może być 7 i jedna lepiej!!!
 
 
-        testPointsForMinorContractOneMoreDouble.put(1, 120+50 +300); //kontrakt np 1karo + 1 lewa z kontrą (20)*2 +100 za nadróbkę + 50 nieudaną kontrę + 300 premi za końcówkę
-        testPointsForMinorContractOneMoreDouble.put(2, 140+50+300);
-        testPointsForMinorContractOneMoreDouble.put(3, 160+50+300);
-        testPointsForMinorContractOneMoreDouble.put(4, 180+50+300);
-        testPointsForMinorContractOneMoreDouble.put(5, 200+50+300);
-        testPointsForMinorContractOneMoreDouble.put(6, 220+50+300 +500);
+        testPointsForMinorContractOneMoreDouble.put(1, 120+karaZaKontre + premiaZaKoncowke); //kontrakt np 1karo + 1 lewa z kontrą (20)*2 +100 za nadróbkę + 50 nieudaną kontrę + 300 premi za końcówkę
+        testPointsForMinorContractOneMoreDouble.put(2, 140+karaZaKontre + premiaZaKoncowke);
+        testPointsForMinorContractOneMoreDouble.put(3, 160+karaZaKontre + premiaZaKoncowke);
+        testPointsForMinorContractOneMoreDouble.put(4, 180+karaZaKontre + premiaZaKoncowke);
+        testPointsForMinorContractOneMoreDouble.put(5, 200+karaZaKontre + premiaZaKoncowke);
+        testPointsForMinorContractOneMoreDouble.put(6, 220+karaZaKontre + premiaZaKoncowke +premiaZaSzlemika);
        // testPointsForMinorContractOneMoreDouble.put(7, 240+50+300); nie ma sensu - nie może być 7 i jedna lepiej!!!
 
         testPointsForMajorContractMinusOne.put(1, -50);

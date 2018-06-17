@@ -9,7 +9,7 @@ public class TestRunner2 {
     public static void main(String[] args) {
 
 //=================================Points counting not  Vulnerable Package Test
-        Result resultCountingPointsTestBefore = JUnitCore.runClasses(CountingPointsForGameTestBefore.class);
+      Result resultCountingPointsTestBefore = JUnitCore.runClasses(CountingPointsForGameTestBefore.class);
         for (Failure failureGameModelCards : resultCountingPointsTestBefore.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
@@ -18,7 +18,7 @@ public class TestRunner2 {
 
 
 //=================================Points counting Vulnerable Package Test
-       Result resultCountingPointsTestAfter = JUnitCore.runClasses(CountingPointsForGameTestAfter.class);
+     Result resultCountingPointsTestAfter = JUnitCore.runClasses(CountingPointsForGameTestAfter.class);
         for (Failure failureGameModelCards : resultCountingPointsTestAfter.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }

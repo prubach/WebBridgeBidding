@@ -175,11 +175,6 @@ class OptionMenu extends MenuBar {
         content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze."));
 
 
-        checkboxDouble.setValue(false);
-        content.addComponent(checkboxDouble);
-
-        checkboxReDouble.setValue(false);
-        content.addComponent(checkboxReDouble);
 
         TextField levelOfContract = new TextField("Podaj wysokość granego kontraktu:");
         content.addComponent(levelOfContract);
@@ -192,6 +187,13 @@ class OptionMenu extends MenuBar {
 
         checkboxMinorColor.setValue(false);
         content.addComponent(checkboxMinorColor);
+
+
+        checkboxDouble.setValue(false);
+        content.addComponent(checkboxDouble);
+
+        checkboxReDouble.setValue(false);
+        content.addComponent(checkboxReDouble);
 
         TextField numberOfTricks = new TextField("Podaj liczbę zebranych lew:");
         content.addComponent(numberOfTricks);

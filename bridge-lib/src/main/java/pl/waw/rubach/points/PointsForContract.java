@@ -24,51 +24,53 @@ public class PointsForContract {
         this.calculatedPointsForContract = 0;
         this.aditionalTricsPoints = 0;
 
-
         calculatedPointsForContract = getMainPoints(levelOfGame, gameColor);
 
-
-
-        if (numberOfTricksTaken == levelOfGame) {
+        if (numberOfTricksTaken == levelOfGame) { //dokładnie swoje
 
 
             if (doubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
             if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 4;
 
-        } else if (numberOfTricksTaken > levelOfGame) {
+
+        } else if (numberOfTricksTaken > levelOfGame) {  // nadróbki
+            if (!doubleGame && !redoubleGame)  //bez kontry i rekontry - tak samo jak lewa
+                calculatedPointsForContract = calculatedPointsForContract + getNadrobkiPoints(levelOfGame, gameColor, numberOfTricksTaken);
+            if (doubleGame && !asumption)       //z kontrą przed partią - za 100
+                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 100;
+            if (doubleGame && asumption)        // z kontrą po partii za 200
+                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 200;
+/*
+            if (redoubleGame && !asumption)     // z rekontrą przed partią za 200
+                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 200;
+            if (redoubleGame && asumption)      //z rekontrą po partii za 400
+                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 400;
+*/
+        if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract*2;
 
 
-            if (!doubleGame && !redoubleGame)
-                calculatedPointsForContract = calculatedPointsForContract + getNadrobkiPoints(levelOfGame, gameColor, numberOfTrickTaken);
-            if (doubleGame && !asumption)
-                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 100 + 50;
-            if (doubleGame && asumption)
-                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 200 + 50;
 
-            if (redoubleGame && !asumption)
-                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 200 + 50;
-            if (redoubleGame && asumption)
-                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 400 + 50;
-
-
-
-
-        } else if (numberOfTricksTaken < levelOfGame) {
+        } else if (numberOfTricksTaken < levelOfGame) {   //wpadki - mniej lew niż zalicytowano - nie ma wpadek z rekontrą bo nie wiem jak się liczą????
             int wpadki = levelOfGame - numberOfTricksTaken;
 
-            if (!asumption && !doubleGame) calculatedPointsForContract = -wpadki * 50;
-            if (!asumption && doubleGame && wpadki == 1) calculatedPointsForContract = -wpadki * 100;
-            else if (!asumption && doubleGame && wpadki == 2) calculatedPointsForContract = -wpadki * 200 + 100;
+            if (!asumption && !doubleGame) calculatedPointsForContract = -wpadki * 50;   //bez kontry przed partią 50
+            if (!asumption && doubleGame && wpadki == 1) calculatedPointsForContract = -wpadki * 100;  //z kontrą przed partią pierwsza za 100
+            else if (!asumption && doubleGame && wpadki == 2) calculatedPointsForContract = -wpadki * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
             else if (!asumption && doubleGame && wpadki == 3) calculatedPointsForContract = -wpadki * 200 + 100;
-            else if (!asumption && doubleGame && wpadki >= 4) calculatedPointsForContract = -wpadki * 300 + 400;
+            else if (!asumption && doubleGame && wpadki >= 4) calculatedPointsForContract = -wpadki * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
 
-            if (asumption && !doubleGame) calculatedPointsForContract = -wpadki * 100;
-            if (asumption && doubleGame && wpadki == 1) calculatedPointsForContract = -wpadki * 200;
-            else if (asumption && doubleGame && wpadki >= 2) calculatedPointsForContract = -wpadki * 300 + 100;
+            if (asumption && !doubleGame) calculatedPointsForContract = -wpadki * 100;  //bez kontry po partii 100
+            if (asumption && doubleGame && wpadki == 1) calculatedPointsForContract = -wpadki * 200;  // z kontrą po partii pierwsza za 200
+            else if (asumption && doubleGame && wpadki >= 2) calculatedPointsForContract = -wpadki * 300 + 100;  //z kontrą po partii kolejne za 300
 
+            if(redoubleGame) calculatedPointsForContract = calculatedPointsForContract*2;
         }
 
-        calculatedPointsForContract = calculatedPointsForContract + getVunerablePoints(calculatedPointsForContract, levelOfGame, numberOfTricksTaken, asumption) + getSlamPremiaPoints(levelOfGame, numberOfTricksTaken, asumption);
+        calculatedPointsForContract = calculatedPointsForContract + getKaraZaNieudanaKontre(levelOfGame,numberOfTricksTaken,doubleGame, redoubleGame)+getVunerablePoints(calculatedPointsForContract, levelOfGame, numberOfTricksTaken, asumption) + getSlamPremiaPoints(levelOfGame, numberOfTricksTaken, asumption);
+    }
+    private int getKaraZaNieudanaKontre(int levelOfGame, int numberOfTrickTaken, boolean doubleGame, boolean redoubleGame){
+        if ((doubleGame || redoubleGame) && levelOfGame <=numberOfTrickTaken) return 50;
+        else return 0;
     }
 
     private int getMainPoints(int levelOfGame, String gameColor) throws InvalidContractLevelException {
@@ -131,7 +133,8 @@ public class PointsForContract {
 
         if (calculatedPointsForContract >= 100 && numberOfTrickTaken >= levelOfGame) {
             return (assumption) ? 500 : 300;
-        } else return 0;
+        } else if(calculatedPointsForContract >0) return  50;
+        else return 0;  //premia za częsciówkę?
     }
 
     private int getSlamPremiaPoints(int levelOfGame, int numberOfTrickTaken, boolean assumption) {
