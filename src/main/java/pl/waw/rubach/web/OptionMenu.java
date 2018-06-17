@@ -22,6 +22,11 @@ class OptionMenu extends MenuBar {
     private CheckBox checkboxReDouble = new CheckBox("Czy  była rekontra (domyślnie nie - ustawiane tutaj)?");
 
 
+    private CheckBox checkboxMinorColor = new CheckBox(" kara / trefle");
+    private CheckBox checkboxMajorColor = new CheckBox(" kiery / piki");
+    private CheckBox checkboxNtColor = new CheckBox(" bez atu");
+
+
 
     private VerticalLayout createLegendDescription() {
         VerticalLayout legendDescription = new VerticalLayout();
@@ -152,13 +157,13 @@ class OptionMenu extends MenuBar {
         window.addStyleName("window");
         final FormLayout content = new FormLayout();
         content.setMargin(true);
-        content.addComponent(new Label("Wersja 1.0 - podaj jaki był kontrakt i co ugraliście - działa tylko dla kolorów starszych i bez rekontry :)"));
+        content.addComponent(new Label("Wersja 1.1 - podaj jaki był kontrakt i co ugraliście:)"));
 
         content.addStyleName("window");
 
         content.addComponent(checkbox1AssumptionWe);
         content.addComponent(checkbox1AssumptionThey);
-        TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu rękach (wraz z punktami układowymi):");
+        TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu swoich rękach (wraz z punktami układowymi):");
         content.addComponent(pointsInBothHands);
 
         //   checkbox1AssumptionWe.setValue(true); //move to create menu?
@@ -176,11 +181,22 @@ class OptionMenu extends MenuBar {
         checkboxReDouble.setValue(false);
         content.addComponent(checkboxReDouble);
 
+        TextField levelOfContract = new TextField("Podaj wysokość granego kontraktu:");
+        content.addComponent(levelOfContract);
+
+        TextField colorOfContract = new TextField("Wybierz kolor granego kontraktu:");
+        //content.addComponent(colorOfContract);
+
+        checkboxMajorColor.setValue(false);
+        content.addComponent(checkboxMajorColor);
+
+        checkboxMinorColor.setValue(false);
+        content.addComponent(checkboxMinorColor);
+
         TextField numberOfTricks = new TextField("Podaj liczbę zebranych lew:");
         content.addComponent(numberOfTricks);
 
-        TextField levelOfContract = new TextField("Podaj wysokość granego kontraktu:");
-        content.addComponent(levelOfContract);
+
 
 
 
@@ -193,22 +209,26 @@ class OptionMenu extends MenuBar {
         //  checkbox1AssumptionWe.addValueChangeListener(event ->
         //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
 
-        Button sayHelloButton = new Button("Oblicz punkty i impy! ", clickEvent -> {
+        Button calculateImpPoints = new Button("Oblicz punkty i impy! ", clickEvent -> {
             try {
+
+                String color = "n";
+                if (checkboxMajorColor.getValue()) color ="s";
+                else if (checkboxMinorColor.getValue()) color = "d";
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
 
-                int foo2= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), Integer.parseInt(numberOfTricks.getValue())-6, "s", checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+                int foo2= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), Integer.parseInt(numberOfTricks.getValue())-6, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
 
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście "+  foo2 +" punktów za kontrakt  i "+  a.getResults() + " impów.  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
-            } catch (NumberFormatException | InvalidNumberOfPointsException | PointsDiferentLessThenZeroException e) {
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście "+  foo2 +" punktów za kontrakt, czyli "+  a.getResults() + " impów.  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
+            } catch (NumberFormatException | InvalidNumberOfPointsException |InvalidContractLevelException| PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
                 resultsLabel.setValue("<font color=red>"+message +"</font>");
             }
         });
 
-        content.addComponent(sayHelloButton);
+        content.addComponent(calculateImpPoints);
         content.addComponent(resultsLabel);
         window.setContent(content);
         ui.addWindow(window);
@@ -226,7 +246,7 @@ class OptionMenu extends MenuBar {
 
         content.addComponent(checkbox1AssumptionWe);
         content.addComponent(checkbox1AssumptionThey);
-        TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu rękach (wraz z punktami układowymi):");
+        TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu swoich rękach (wraz z punktami układowymi):");
         content.addComponent(pointsInBothHands);
 
         //   checkbox1AssumptionWe.setValue(true); //move to create menu?
@@ -253,7 +273,7 @@ class OptionMenu extends MenuBar {
         //  checkbox1AssumptionWe.addValueChangeListener(event ->
         //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
 
-        Button sayHelloButton = new Button("Oblicz punkty! ", clickEvent -> {
+        Button calculateImp = new Button("Oblicz punkty! ", clickEvent -> {
             try {
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 int foo2 = Integer.parseInt(pointsForContract.getValue());
@@ -266,7 +286,7 @@ class OptionMenu extends MenuBar {
             }
         });
 
-        content.addComponent(sayHelloButton);
+        content.addComponent(calculateImp);
         content.addComponent(resultsLabel);
         window.setContent(content);
         ui.addWindow(window);
