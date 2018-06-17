@@ -8,15 +8,22 @@ import org.junit.runner.notification.Failure;
 public class TestRunner2 {
     public static void main(String[] args) {
 
-//=================================Points counting  Package Test
-        Result resultCountingPointsTest = JUnitCore.runClasses(CountingPointsForGameTest.class);
-        for (Failure failureGameModelCards : resultCountingPointsTest.getFailures()) {
+//=================================Points counting not  Vulnerable Package Test
+        Result resultCountingPointsTestBefore = JUnitCore.runClasses(CountingPointsForGameTestBefore.class);
+        for (Failure failureGameModelCards : resultCountingPointsTestBefore.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
-        System.out.println("CountingPointsForGameTest test: " + resultCountingPointsTest.wasSuccessful());
+        System.out.println("CountingPointsForGameTestBefore test: " + resultCountingPointsTestBefore.wasSuccessful());
 //=======================================Basic
 
 
+//=================================Points counting Vulnerable Package Test
+       Result resultCountingPointsTestAfter = JUnitCore.runClasses(CountingPointsForGameTestAfter.class);
+        for (Failure failureGameModelCards : resultCountingPointsTestAfter.getFailures()) {
+            System.out.println(failureGameModelCards.toString());
+        }
+        System.out.println("CountingPointsForGameTestAfter test: " + resultCountingPointsTestAfter.wasSuccessful());
+//=======================================Basic
 
 
 

@@ -18,6 +18,10 @@ class OptionMenu extends MenuBar {
     private CheckBox checkboxFitWe = new CheckBox("Czy  macie fit (domyślnie tak - ustawiane tutaj)?");
     private CheckBox checkboxFitThey = new CheckBox("Czy  jest fit u przeciwników (domyślnie nie - ustawiane tutaj)?");
 
+    private CheckBox checkboxDouble = new CheckBox("Czy  była kontra (domyślnie nie - ustawiane tutaj)?");
+    private CheckBox checkboxReDouble = new CheckBox("Czy  była rekontra (domyślnie nie - ustawiane tutaj)?");
+
+
 
     private VerticalLayout createLegendDescription() {
         VerticalLayout legendDescription = new VerticalLayout();
@@ -148,6 +152,73 @@ class OptionMenu extends MenuBar {
         window.addStyleName("window");
         final FormLayout content = new FormLayout();
         content.setMargin(true);
+        content.addComponent(new Label("Wersja 1.0 - podaj jaki był kontrakt i co ugraliście - działa tylko dla kolorów starszych :)"));
+
+        content.addStyleName("window");
+
+        content.addComponent(checkbox1AssumptionWe);
+        content.addComponent(checkbox1AssumptionThey);
+        TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu rękach (wraz z punktami układowymi):");
+        content.addComponent(pointsInBothHands);
+
+        //   checkbox1AssumptionWe.setValue(true); //move to create menu?
+        checkboxFitWe.setValue(true);
+        content.addComponent(checkboxFitWe);
+
+        checkboxFitThey.setValue(false);
+        content.addComponent(checkboxFitThey);
+        content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze."));
+
+
+        checkboxDouble.setValue(false);
+        content.addComponent(checkboxDouble);
+
+        checkboxReDouble.setValue(false);
+        content.addComponent(checkboxReDouble);
+
+        TextField pointsForContract = new TextField("Podaj liczbę zebranych lew:");
+        content.addComponent(pointsForContract);
+
+        TextField levelOfContract = new TextField("Podaj wysokość granego kontraktu:");
+        content.addComponent(levelOfContract);
+
+
+
+        Label resultsLabel = new Label("");
+        resultsLabel.setContentMode(ContentMode.HTML);
+        pointsInBothHands.addValueChangeListener( event -> resultsLabel.setValue(""));
+        pointsForContract.addValueChangeListener( event -> resultsLabel.setValue(""));
+
+        //  checkbox1AssumptionWe.addValueChangeListener(event ->
+        //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
+
+        Button sayHelloButton = new Button("Oblicz punkty i impy! ", clickEvent -> {
+            try {
+                float foo = Float.parseFloat(pointsInBothHands.getValue());
+
+                int foo2= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), Integer.parseInt(pointsForContract.getValue()), "s", checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+
+                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście "+  foo2 +" punktów za kontrakt  i "+  a.getResults() + " impów.  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
+            } catch (NumberFormatException | InvalidNumberOfPointsException | PointsDiferentLessThenZeroException e) {
+                String message = (e instanceof NumberFormatException) ?
+                        "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>"+message +"</font>");
+            }
+        });
+
+        content.addComponent(sayHelloButton);
+        content.addComponent(resultsLabel);
+        window.setContent(content);
+        ui.addWindow(window);
+    }
+
+    private void actionManualCalculetePoints(VaadinUI ui) {
+        final Window window = new Window("Okienko do ręcznego liczenia punktów.");
+        window.setWidth("100%");
+        window.addStyleName("window");
+        final FormLayout content = new FormLayout();
+        content.setMargin(true);
         content.addComponent(new Label("Wersja wstępna - podaj wszystkie parametry (potem może będzie je brało z innego miejsca) :)"));
 
         content.addStyleName("window");
@@ -199,6 +270,7 @@ class OptionMenu extends MenuBar {
         window.setContent(content);
         ui.addWindow(window);
     }
+
 
     private void actionDisplayPointsTable(VaadinUI ui) {
         final Window window = new Window("Okienko z tabelkami do liczenia punktów.");
@@ -258,6 +330,7 @@ class OptionMenu extends MenuBar {
 
     private MenuBar.Command commandToOpenDescription = (MenuBar.Command) selectedItem -> actionOpenWindowWithDescription(ui);
     private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints(ui);
+    private MenuBar.Command commandToManualCalculatePoints = (MenuBar.Command) selectedItem -> actionManualCalculetePoints(ui);
 
     private MenuBar.Command commandToDisplanyPointsTable = (MenuBar.Command) selectedItem -> actionDisplayPointsTable(ui);
 
@@ -268,6 +341,8 @@ class OptionMenu extends MenuBar {
 
         // First left top-level item
         this.addItem("Oblicz punkty", null, commandToCalculatePoints);
+
+        this.addItem("Oblicz punkty ręcznie", null, commandToManualCalculatePoints);
 
 
 
