@@ -152,7 +152,7 @@ class OptionMenu extends MenuBar {
         window.addStyleName("window");
         final FormLayout content = new FormLayout();
         content.setMargin(true);
-        content.addComponent(new Label("Wersja 1.0 - podaj jaki był kontrakt i co ugraliście - działa tylko dla kolorów starszych :)"));
+        content.addComponent(new Label("Wersja 1.0 - podaj jaki był kontrakt i co ugraliście - działa tylko dla kolorów starszych i bez rekontry :)"));
 
         content.addStyleName("window");
 
@@ -176,8 +176,8 @@ class OptionMenu extends MenuBar {
         checkboxReDouble.setValue(false);
         content.addComponent(checkboxReDouble);
 
-        TextField pointsForContract = new TextField("Podaj liczbę zebranych lew:");
-        content.addComponent(pointsForContract);
+        TextField numberOfTricks = new TextField("Podaj liczbę zebranych lew:");
+        content.addComponent(numberOfTricks);
 
         TextField levelOfContract = new TextField("Podaj wysokość granego kontraktu:");
         content.addComponent(levelOfContract);
@@ -187,7 +187,8 @@ class OptionMenu extends MenuBar {
         Label resultsLabel = new Label("");
         resultsLabel.setContentMode(ContentMode.HTML);
         pointsInBothHands.addValueChangeListener( event -> resultsLabel.setValue(""));
-        pointsForContract.addValueChangeListener( event -> resultsLabel.setValue(""));
+        numberOfTricks.addValueChangeListener( event -> resultsLabel.setValue(""));
+        levelOfContract.addValueChangeListener( event -> resultsLabel.setValue(""));
 
         //  checkbox1AssumptionWe.addValueChangeListener(event ->
         //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
@@ -196,7 +197,7 @@ class OptionMenu extends MenuBar {
             try {
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
 
-                int foo2= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), Integer.parseInt(pointsForContract.getValue()), "s", checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+                int foo2= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), Integer.parseInt(numberOfTricks.getValue())-6, "s", checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
 
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście "+  foo2 +" punktów za kontrakt  i "+  a.getResults() + " impów.  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
