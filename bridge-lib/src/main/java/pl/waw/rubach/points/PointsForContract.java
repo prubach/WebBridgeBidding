@@ -40,13 +40,13 @@ public class PointsForContract {
                 calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 100;
             if (doubleGame && asumption)        // z kontrą po partii za 200
                 calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 200;
-/*
+
             if (redoubleGame && !asumption)     // z rekontrą przed partią za 200
                 calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 200;
             if (redoubleGame && asumption)      //z rekontrą po partii za 400
                 calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 400;
-*/
-        if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract*2;
+
+    //    if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract*2;
 
 
 
@@ -133,8 +133,8 @@ public class PointsForContract {
 
         if (calculatedPointsForContract >= 100 && numberOfTrickTaken >= levelOfGame) {
             return (assumption) ? 500 : 300;
-        } else if(calculatedPointsForContract >0) return  50;
-        else return 0;  //premia za częsciówkę?
+        } else if(calculatedPointsForContract >0) return  50; //premia za częsciówkę o ile ugrane?
+        else return 0;
     }
 
     private int getSlamPremiaPoints(int levelOfGame, int numberOfTrickTaken, boolean assumption) {

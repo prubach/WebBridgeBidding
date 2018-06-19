@@ -27,6 +27,9 @@ class OptionMenu extends MenuBar {
     private CheckBox checkboxNtColor = new CheckBox(" bez atu");
 
 
+    private CheckBox checkboxWe = new CheckBox(" My rozgrywamy - domyślnie");
+    private CheckBox checkboxThey = new CheckBox(" Oni rozgrywaja - zmień! ");
+
 
     private VerticalLayout createLegendDescription() {
         VerticalLayout legendDescription = new VerticalLayout();
@@ -182,6 +185,9 @@ class OptionMenu extends MenuBar {
         TextField colorOfContract = new TextField("Wybierz kolor granego kontraktu:");
         //content.addComponent(colorOfContract);
 
+     //   checkboxNtColor.setValue(false);
+     //   content.addComponent(checkboxNtColor);
+
         checkboxMajorColor.setValue(false);
         content.addComponent(checkboxMajorColor);
 
@@ -199,6 +205,18 @@ class OptionMenu extends MenuBar {
         content.addComponent(numberOfTricks);
 
 
+        checkboxWe.setValue(true);
+        content.addComponent(checkboxWe);
+        checkboxThey.setValue(false);
+        content.addComponent(checkboxThey);
+
+
+        checkboxWe.addValueChangeListener(event ->
+                checkboxThey.setValue(! checkboxWe.getValue()) );
+
+
+        checkboxThey.addValueChangeListener(event ->
+                checkboxWe.setValue(! checkboxThey.getValue()));
 
 
 
@@ -211,15 +229,39 @@ class OptionMenu extends MenuBar {
         //  checkbox1AssumptionWe.addValueChangeListener(event ->
         //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
 
+        checkboxMajorColor.addValueChangeListener(event ->
+                // checkboxMinorColor.setValue(! checkboxMajorColor.getValue()) );
+                checkboxMinorColor.setValue(false) );
+
+        checkboxMinorColor.addValueChangeListener(event ->
+               // checkboxMajorColor.setValue(! checkboxMinorColor.getValue()));
+                checkboxMajorColor.setValue(false));
+
+
+        checkboxDouble.addValueChangeListener(event ->
+                checkboxReDouble.setValue(!checkboxDouble.getValue()));
+
+        checkboxReDouble.addValueChangeListener(event ->
+                checkboxDouble.setValue(! checkboxReDouble.getValue()));
+
+
         Button calculateImpPoints = new Button("Oblicz punkty i impy! ", clickEvent -> {
             try {
+
+
 
                 String color = "n";
                 if (checkboxMajorColor.getValue()) color ="s";
                 else if (checkboxMinorColor.getValue()) color = "d";
-                float foo = Float.parseFloat(pointsInBothHands.getValue());
 
-                int foo2= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), Integer.parseInt(numberOfTricks.getValue())-6, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+                int foo3 = Integer.parseInt(numberOfTricks.getValue())-6;
+                float foo = Float.parseFloat(pointsInBothHands.getValue());
+                if(checkboxThey.getValue()) {foo = 40-foo;  foo3= 13 - foo3;
+                }
+
+
+                    int foo2= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+
 
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście "+  foo2 +" punktów za kontrakt, czyli "+  a.getResults() + " impów.  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
