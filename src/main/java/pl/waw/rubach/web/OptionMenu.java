@@ -29,7 +29,62 @@ class OptionMenu extends MenuBar {
 
     private CheckBox checkboxWe = new CheckBox(" My rozgrywamy - domyślnie");
     private CheckBox checkboxThey = new CheckBox(" Oni rozgrywaja - zmień! ");
+    private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {
+        checkbox1AssumptionWe.setValue(false);
+        ui.getAuctionAssumptionLabel().setValue("Założenia: " + (checkbox1AssumptionWe.getValue() ? "Po parti" : "Przed partią"));
+        ui.setAssumption(false);
+        ui.refreshBidGrids();
+        // if (checkbox1AssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
+        // else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
+    };
+    private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> {
+        checkbox1AssumptionWe.setValue(true);
+        ui.getAuctionAssumptionLabel().setValue("Założenia: " + (checkbox1AssumptionWe.getValue() ? "Po parti" : "Przed partią"));
+        ui.setAssumption(true);
+        ui.refreshBidGrids();
+        //  if (checkbox1AssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
+        //  else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
+    };
+    private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend(ui);
+    private MenuBar.Command commandToOpenDescription = (MenuBar.Command) selectedItem -> actionOpenWindowWithDescription(ui);
+    private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints(ui);
+    private MenuBar.Command commandToManualCalculatePoints = (MenuBar.Command) selectedItem -> actionManualCalculetePoints(ui);
+    private MenuBar.Command commandToDisplanyPointsTable = (MenuBar.Command) selectedItem -> actionDisplayPointsTable(ui);
 
+    OptionMenu(VaadinUI ui) {
+        this.ui = ui;
+        checkbox1AssumptionWe.setValue(false);
+
+        // First left top-level item
+        this.addItem("Oblicz punkty", null, commandToCalculatePoints);
+
+        this.addItem("Oblicz punkty ręcznie", null, commandToManualCalculatePoints);
+
+
+        // A top-level menu item that opens a submenu
+        MenuBar.MenuItem optionMenuItemsAuctionAssumption = this.addItem("Założenia licytacyjne:", QUESTION_CIRCLE, null);
+        //TODO find if it is importatn what oponents are (if yes could be added but dont't think so - should be radioButton or sth to show if it is or not?
+        optionMenuItemsAuctionAssumption.addItem("Obie przed partią", null, comandToSetAssumptionNo);
+        optionMenuItemsAuctionAssumption.addItem("My przed, oni po", null, comandToSetAssumptionNo);
+        optionMenuItemsAuctionAssumption.addItem("Oni przed, my po", null, comandToSetAssumptionYes);
+        optionMenuItemsAuctionAssumption.addItem("Obie po partii", null, comandToSetAssumptionYes);
+
+        // Another top-level item
+        MenuBar.MenuItem instructionMenuItemBidsTypes = this.addItem("Legenda: ", null);
+        instructionMenuItemBidsTypes.addItem("Opis typów odzywek w okienku - kliknij jak chcesz otworzyć. ", commandToOpenLegend);
+        instructionMenuItemBidsTypes.addItem("Tabelki  do obliczania punktów.", null, commandToDisplanyPointsTable);
+        instructionMenuItemBidsTypes.addItem("Zasady obliczania punktów", null, commandToOpenDescription);
+
+
+        //  Yet another top-level item with biding system (moved from other menu moved to Vaadin because is to difficult ?)
+        //  MenuBar.MenuItem otherBidingSystemMenuItem = this.addItem("Inne systemy licytacyjne: ", null, null);
+        //  optionMenuBar.setStyleGenerator( -> getRowColorAndStyle(ItemReference));
+
+        this.setStyleName(ValoTheme.MENUBAR_BORDERLESS);
+        this.addStyleName("firstmenu");
+
+
+    }
 
     private VerticalLayout createLegendDescription() {
         VerticalLayout legendDescription = new VerticalLayout();
@@ -92,10 +147,10 @@ class OptionMenu extends MenuBar {
         return legendDescription;
     }
 
-    private VerticalLayout  createDesciption(){
+    private VerticalLayout createDesciption() {
         VerticalLayout description = new VerticalLayout();
 
-        String s ="\n" +
+        String s = "\n" +
                 "Wzięcie lewy w kolorze młodszym (kara itrefle)po 20\n" +
                 "Wzięcie lewy w kolorze starszym (kiery i piki) po 30\n" +
                 "Wzięcie lewy w grze bez atu pierwsza 40, druga i każda następna po 30\n" +
@@ -119,7 +174,7 @@ class OptionMenu extends MenuBar {
         text.setHeight("400px");
         description.addComponent(text);
 
-    return description;
+        return description;
     }
 
     private void actionOpenWindowWithLegend(VaadinUI ui) {
@@ -178,15 +233,14 @@ class OptionMenu extends MenuBar {
         content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze."));
 
 
-
         TextField levelOfContract = new TextField("Podaj wysokość granego kontraktu:");
         content.addComponent(levelOfContract);
 
         TextField colorOfContract = new TextField("Wybierz kolor granego kontraktu:");
         //content.addComponent(colorOfContract);
 
-     //   checkboxNtColor.setValue(false);
-     //   content.addComponent(checkboxNtColor);
+        //   checkboxNtColor.setValue(false);
+        //   content.addComponent(checkboxNtColor);
 
         checkboxMajorColor.setValue(false);
         content.addComponent(checkboxMajorColor);
@@ -212,29 +266,28 @@ class OptionMenu extends MenuBar {
 
 
         checkboxWe.addValueChangeListener(event ->
-                checkboxThey.setValue(! checkboxWe.getValue()) );
+                checkboxThey.setValue(!checkboxWe.getValue()));
 
 
         checkboxThey.addValueChangeListener(event ->
-                checkboxWe.setValue(! checkboxThey.getValue()));
-
+                checkboxWe.setValue(!checkboxThey.getValue()));
 
 
         Label resultsLabel = new Label("");
         resultsLabel.setContentMode(ContentMode.HTML);
-        pointsInBothHands.addValueChangeListener( event -> resultsLabel.setValue(""));
-        numberOfTricks.addValueChangeListener( event -> resultsLabel.setValue(""));
-        levelOfContract.addValueChangeListener( event -> resultsLabel.setValue(""));
+        pointsInBothHands.addValueChangeListener(event -> resultsLabel.setValue(""));
+        numberOfTricks.addValueChangeListener(event -> resultsLabel.setValue(""));
+        levelOfContract.addValueChangeListener(event -> resultsLabel.setValue(""));
 
         //  checkbox1AssumptionWe.addValueChangeListener(event ->
         //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
 
         checkboxMajorColor.addValueChangeListener(event ->
                 // checkboxMinorColor.setValue(! checkboxMajorColor.getValue()) );
-                checkboxMinorColor.setValue(false) );
+                checkboxMinorColor.setValue(false));
 
         checkboxMinorColor.addValueChangeListener(event ->
-               // checkboxMajorColor.setValue(! checkboxMinorColor.getValue()));
+                // checkboxMajorColor.setValue(! checkboxMinorColor.getValue()));
                 checkboxMajorColor.setValue(false));
 
 
@@ -242,33 +295,30 @@ class OptionMenu extends MenuBar {
                 checkboxReDouble.setValue(!checkboxDouble.getValue()));
 
         checkboxReDouble.addValueChangeListener(event ->
-                checkboxDouble.setValue(! checkboxReDouble.getValue()));
+                checkboxDouble.setValue(!checkboxReDouble.getValue()));
 
 
         Button calculateImpPoints = new Button("Oblicz punkty i impy! ", clickEvent -> {
             try {
 
-
-
                 String color = "n";
-                if (checkboxMajorColor.getValue()) color ="s";
+                if (checkboxMajorColor.getValue()) color = "s";
                 else if (checkboxMinorColor.getValue()) color = "d";
 
-                int foo3 = Integer.parseInt(numberOfTricks.getValue())-6;
+                int foo3 = Integer.parseInt(numberOfTricks.getValue()) - 6;
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
-                if(checkboxThey.getValue()) {foo = 40-foo;  foo3= 13 - foo3;
+                if (checkboxThey.getValue()) {
+                    foo = 40 - foo;
+                    foo3 = 13 - foo3;
                 }
-
-
-                    int foo2= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
-
+                int foo2 = new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
 
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście "+  foo2 +" punktów za kontrakt, czyli "+  a.getResults() + " impów.  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
-            } catch (NumberFormatException | InvalidNumberOfPointsException |InvalidContractLevelException| PointsDiferentLessThenZeroException e) {
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, czyli " + a.getResults() + " impów.  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
+            } catch (NumberFormatException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
-                resultsLabel.setValue("<font color=red>"+message +"</font>");
+                resultsLabel.setValue("<font color=red>" + message + "</font>");
             }
         });
 
@@ -306,13 +356,10 @@ class OptionMenu extends MenuBar {
         content.addComponent(pointsForContract);
 
 
-
-
-
         Label resultsLabel = new Label("");
         resultsLabel.setContentMode(ContentMode.HTML);
-        pointsInBothHands.addValueChangeListener( event -> resultsLabel.setValue(""));
-        pointsForContract.addValueChangeListener( event -> resultsLabel.setValue(""));
+        pointsInBothHands.addValueChangeListener(event -> resultsLabel.setValue(""));
+        pointsForContract.addValueChangeListener(event -> resultsLabel.setValue(""));
 
         //  checkbox1AssumptionWe.addValueChangeListener(event ->
         //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
@@ -326,7 +373,7 @@ class OptionMenu extends MenuBar {
             } catch (NumberFormatException | InvalidNumberOfPointsException | PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
-                resultsLabel.setValue("<font color=red>"+message +"</font>");
+                resultsLabel.setValue("<font color=red>" + message + "</font>");
             }
         });
 
@@ -335,7 +382,6 @@ class OptionMenu extends MenuBar {
         window.setContent(content);
         ui.addWindow(window);
     }
-
 
     private void actionDisplayPointsTable(VaadinUI ui) {
         final Window window = new Window("Okienko z tabelkami do liczenia punktów.");
@@ -357,10 +403,10 @@ class OptionMenu extends MenuBar {
         //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
 
         Button displayExpectedResults = new Button("Wyświetl tabelkę  oczekiwanych punktów dla  danych założeń! ", clickEvent -> {
-          TextArea a = new TextArea();
-          a.setWidth("100%");
-          a.setValue(ExpectedResultsTable.getTableAsString(checkboxFitWe.getValue(), checkbox1AssumptionWe.getValue()));
-          content.addComponent(a);
+            TextArea a = new TextArea();
+            a.setWidth("100%");
+            a.setValue(ExpectedResultsTable.getTableAsString(checkboxFitWe.getValue(), checkbox1AssumptionWe.getValue()));
+            content.addComponent(a);
         });
 
         Button displayImpTable = new Button("Wyświetl tabelkę impów! ", clickEvent -> {
@@ -373,66 +419,5 @@ class OptionMenu extends MenuBar {
         content.addComponent(displayExpectedResults);
         window.setContent(content);
         ui.addWindow(window);
-    }
-
-    private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {
-        checkbox1AssumptionWe.setValue(false);
-        ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1AssumptionWe.getValue() ?  "Po parti" :"Przed partią"));
-        ui.setAssumption(false);
-        ui.refreshBidGrids();
-       // if (checkbox1AssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
-       // else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
-    };
-    private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> {
-        checkbox1AssumptionWe.setValue(true);
-        ui.getAuctionAssumptionLabel().setValue("Założenia: " +(checkbox1AssumptionWe.getValue() ?  "Po parti" :"Przed partią"));
-        ui.setAssumption(true);
-        ui.refreshBidGrids();
-    //  if (checkbox1AssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
-    //  else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
-    };
-    private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend(ui);
-
-    private MenuBar.Command commandToOpenDescription = (MenuBar.Command) selectedItem -> actionOpenWindowWithDescription(ui);
-    private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints(ui);
-    private MenuBar.Command commandToManualCalculatePoints = (MenuBar.Command) selectedItem -> actionManualCalculetePoints(ui);
-
-    private MenuBar.Command commandToDisplanyPointsTable = (MenuBar.Command) selectedItem -> actionDisplayPointsTable(ui);
-
-
-    OptionMenu(VaadinUI ui) {
-        this.ui = ui;
-        checkbox1AssumptionWe.setValue(false);
-
-        // First left top-level item
-        this.addItem("Oblicz punkty", null, commandToCalculatePoints);
-
-        this.addItem("Oblicz punkty ręcznie", null, commandToManualCalculatePoints);
-
-
-
-        // A top-level menu item that opens a submenu
-        MenuBar.MenuItem optionMenuItemsAuctionAssumption = this.addItem("Założenia licytacyjne:", QUESTION_CIRCLE, null);
-        //TODO find if it is importatn what oponents are (if yes could be added but dont't think so - should be radioButton or sth to show if it is or not?
-        optionMenuItemsAuctionAssumption.addItem("Obie przed partią", null, comandToSetAssumptionNo);
-        optionMenuItemsAuctionAssumption.addItem("My przed, oni po", null, comandToSetAssumptionNo);
-        optionMenuItemsAuctionAssumption.addItem("Oni przed, my po", null, comandToSetAssumptionYes);
-        optionMenuItemsAuctionAssumption.addItem("Obie po partii", null, comandToSetAssumptionYes);
-
-        // Another top-level item
-        MenuBar.MenuItem instructionMenuItemBidsTypes = this.addItem("Legenda: ", null);
-        instructionMenuItemBidsTypes.addItem("Opis typów odzywek w okienku - kliknij jak chcesz otworzyć. ", commandToOpenLegend);
-        instructionMenuItemBidsTypes.addItem("Tabelki  do obliczania punktów.", null, commandToDisplanyPointsTable);
-        instructionMenuItemBidsTypes.addItem("Zasady obliczania punktów", null, commandToOpenDescription);
-
-
-        //  Yet another top-level item with biding system (moved from other menu moved to Vaadin because is to difficult ?)
-        //  MenuBar.MenuItem otherBidingSystemMenuItem = this.addItem("Inne systemy licytacyjne: ", null, null);
-        //  optionMenuBar.setStyleGenerator( -> getRowColorAndStyle(ItemReference));
-
-        this.setStyleName(ValoTheme.MENUBAR_BORDERLESS);
-        this.addStyleName("firstmenu");
-
-
     }
 }

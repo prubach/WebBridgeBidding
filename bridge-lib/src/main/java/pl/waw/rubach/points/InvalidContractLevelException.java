@@ -4,4 +4,4 @@ public class InvalidContractLevelException extends Exception {
     public InvalidContractLevelException(String message) {
         super(message);
     }
-}
+    }
