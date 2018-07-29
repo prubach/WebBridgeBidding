@@ -4,6 +4,7 @@ import pl.waw.rubach.points.InvalidNumberOfPointsException;
 import pl.waw.rubach.points.PointsDiferentLessThenZeroException;
 import pl.waw.rubach.points.ResultsOfOneGame;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -18,13 +19,14 @@ public class RubberScoring {
      * photos etc ...
      * should be done automaticly? - gdzieś tak widziałam...
      */
-    private int gameID;
+    private int gameID =0;
 
-    private Map<Integer, ResultsOfOneGame> scorringForOneGame;
+    private Map<Integer, ResultsOfOneGame> scorringForOneGame = new HashMap<>();
 
 
 
-    private RubberScoring(int piH1, int piH2, int piH3, int piH4, int pfC1, int pfC2, int pfC3, int pfC4,
+
+ public RubberScoring(float piH1, float piH2, float piH3, float piH4, int pfC1, int pfC2, int pfC3, int pfC4,
                           boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
@@ -39,14 +41,11 @@ public class RubberScoring {
     }
 
 
-    private void fillMapRubberScorring(int contractNumber,int pointsInBothHands, int pointsForContract, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    private void fillMapRubberScorring(int contractNumber,float pointsInBothHands, int pointsForContract, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
         boolean auctionAssumptionWe = false;
         boolean auctionAssumptionThey = false;
-
-
-
         {
             if (contractNumber == 1) {
                 auctionAssumptionWe = false;
@@ -63,41 +62,62 @@ public class RubberScoring {
 
             }
         }
-        scorringForOneGame.put(contractNumber, new ResultsOfOneGame(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey));
 
-
+        scorringForOneGame.put(contractNumber,new ResultsOfOneGame(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey));
     }
+
+    public static int getSumm(RubberScoring ruberScoring )throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+
+        Map<Integer, ResultsOfOneGame> map = ruberScoring.scorringForOneGame;
+        SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
+        int s=0;
+        for (Integer key : ptsMapSet) {
+
+            if(map.get(key).getPointsInBothHands() !=0) s  = s+map.get(key).getResults();
+            System.out.println("Do tej pory  wynik jest: "+ s +" \n");
+        }
+        return s;
+    };
+
 
     public static String getRubberScoringAsString(int piH1,int piH2, int piH3, int piH4, int pfC1, int pfC2, int pfC3, int pfC4,
                                           boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-        StringBuilder s = new StringBuilder("*** Wyniki dla gry \n");
 
-        Map<Integer, ResultsOfOneGame> map = new RubberScoring(piH1,piH2,piH3,piH4,pfC1,pfC2,pfC3,pfC4,fW1,fW2,fW3,fW4,fT1,fT2,fT3,fT4).scorringForOneGame;
+        return getRubberScoringAsString(new RubberScoring(piH1,piH2,piH3,piH4,pfC1,pfC2,pfC3,pfC4,fW1,fW2,fW3,fW4,fT1,fT2,fT3,fT4));
+
+    }
+
+    public static String getRubberScoringAsString(RubberScoring ruberScoring) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+        StringBuilder s = new StringBuilder("***\n  Wyniki dla gry ****  \n");
+        Map<Integer, ResultsOfOneGame> map = ruberScoring.scorringForOneGame;
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
 
         for (Integer key : ptsMapSet) {
-            s.append("\n dla ").append(key).append(" Wyniki oczekiwane ").append(map.get(key)).append(" : jkjkjkj");
+            s.append("\n dla ").append(key).append(" gry jest ").append(map.get(key).getPointsForContract()).append(" punktów i wynik jest ").append(map.get(key).getResults()).append(" impów");
 
         }
         return s.toString();
-    }
-
+    };
 
       public static void main(String [ ] args)
     {
 
-
         try {
             RubberScoring a = new RubberScoring(20,21,22,23,110,110,110,110,false,false,false,false,false,false,false,false);
-            getRubberScoringAsString(20,21,22,23,110,110,110,110,false,false,false,false,false,false,false,false);
+
+            System.out.println(getRubberScoringAsString(a));
+            System.out.println("Końcowy wynik jest: "+ getSumm(a) +" \n");
+
+            RubberScoring a2 = new RubberScoring(20,19,18,17,-110,-110,-110,-110,false,false,false,false,false,false,false,false);
+            System.out.println(getRubberScoringAsString(a2));
+            System.out.println("Końcowy wynik jest: "+ getSumm(a2) +" \n");
 
 
 
         } catch (InvalidNumberOfPointsException | PointsDiferentLessThenZeroException e) {
             e.printStackTrace();
         }
-
 
     }
 

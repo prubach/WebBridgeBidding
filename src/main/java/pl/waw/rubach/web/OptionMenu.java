@@ -4,6 +4,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.*;
+import pl.waw.rubach.scoring.RubberScoring;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 
@@ -242,6 +243,8 @@ class OptionMenu extends MenuBar {
         //   checkboxNtColor.setValue(false);
         //   content.addComponent(checkboxNtColor);
 
+
+
         checkboxMajorColor.setValue(false);
         content.addComponent(checkboxMajorColor);
 
@@ -274,7 +277,9 @@ class OptionMenu extends MenuBar {
 
 
         Label resultsLabel = new Label("");
+        Label resultsLabelFor4Game = new Label("");
         resultsLabel.setContentMode(ContentMode.HTML);
+        resultsLabelFor4Game.setContentMode(ContentMode.HTML);
         pointsInBothHands.addValueChangeListener(event -> resultsLabel.setValue(""));
         numberOfTricks.addValueChangeListener(event -> resultsLabel.setValue(""));
         levelOfContract.addValueChangeListener(event -> resultsLabel.setValue(""));
@@ -322,11 +327,76 @@ class OptionMenu extends MenuBar {
             }
         });
 
+
+        TextField numberOfContract = new TextField("Podaj które to rozdanie (tylko dla zapisu 4 rozdań):");
+        content.addComponent(numberOfContract);
+        numberOfContract.addValueChangeListener(event -> resultsLabel.setValue(""));
+
+        boolean[] checkboxFitWeTable =  {false,false,false,false};
+        boolean[] checkboxFitTheyTable =  {false,false,false,false};
+        float footable[] = {0,0,0,0};
+        int foo2[] ={0,0,0,0};
+
+        numberOfContract.setValue("1");
+        pointsInBothHands.setValue("20");
+        levelOfContract.setValue("3");
+        numberOfTricks.setValue("9");
+
+
+        Button prowadzZapis = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
+
+
+            try {
+
+                int contractNumber = Integer.parseInt(numberOfContract.getValue())-1;
+
+                 checkboxFitWeTable[contractNumber] = checkboxFitWe.getValue();
+                 checkboxFitTheyTable[contractNumber] = checkboxFitThey.getValue();
+
+                String color = "n";
+                if (checkboxMajorColor.getValue()) color = "s";
+                else if (checkboxMinorColor.getValue()) color = "d";
+
+                int foo3 = Integer.parseInt(numberOfTricks.getValue()) - 6;
+                float foo = Float.parseFloat(pointsInBothHands.getValue());
+
+                footable[contractNumber]= foo;
+                if (checkboxThey.getValue()) {
+                    foo = 40 - foo;
+                    foo3 = 13 - foo3;
+                }
+
+                foo2[contractNumber]= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+
+                RubberScoring aa = new RubberScoring(footable[0],footable[1],footable[2],footable[3],foo2[0],foo2[1],foo2[2],foo2[3],checkboxFitWeTable[0],checkboxFitWeTable[1],checkboxFitWeTable[2],checkboxFitWeTable[3],checkboxFitTheyTable[0],checkboxFitTheyTable[1],checkboxFitTheyTable[2],checkboxFitTheyTable[3]);
+
+                System.out.println("Akuku"+ RubberScoring.getRubberScoringAsString(aa));
+
+                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów.  </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ RubberScoring.getSumm(aa) +" impy. ");
+
+
+
+
+            } catch (NumberFormatException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
+                String message = (e instanceof NumberFormatException) ?
+                        "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>" + message + "</font>");
+            }
+
+
+
+
+        });
+
         content.addComponent(calculateImpPoints);
+        content.addComponent(prowadzZapis);
         content.addComponent(resultsLabel);
         window.setContent(content);
         ui.addWindow(window);
     }
+
+
 
     private void actionManualCalculetePoints(VaadinUI ui) {
         final Window window = new Window("Okienko do ręcznego liczenia punktów.");

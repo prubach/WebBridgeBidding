@@ -31,7 +31,7 @@ public class ResultsOfOneGame {
      * Number of Imp Point
      * if 0 is equal, if -1 is one less etc ...
      */
-    private int results;
+    private int results=0;
 
     public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
