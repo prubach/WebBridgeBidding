@@ -296,11 +296,11 @@ class OptionMenu extends MenuBar {
                 checkboxMajorColor.setValue(false));
 
 
-        checkboxDouble.addValueChangeListener(event ->
-                checkboxReDouble.setValue(!checkboxDouble.getValue()));
+      //  checkboxDouble.addValueChangeListener(event ->
+       //         checkboxReDouble.setValue(!checkboxDouble.getValue()));
 
-        checkboxReDouble.addValueChangeListener(event ->
-                checkboxDouble.setValue(!checkboxReDouble.getValue()));
+      //  checkboxReDouble.addValueChangeListener(event ->
+       //         checkboxDouble.setValue(!checkboxReDouble.getValue()));
 
 
         Button calculateImpPoints = new Button("Oblicz punkty i impy! ", clickEvent -> {
@@ -378,9 +378,25 @@ class OptionMenu extends MenuBar {
 
 
 
-            } catch (NumberFormatException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
+            } catch (NumberFormatException  e) {
                 String message = (e instanceof NumberFormatException) ?
-                        "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
+                        "Nieprawidłowy format liczby-  spróbuj jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>" + message + "</font>");
+            }
+
+                catch (InvalidNumberOfPointsException  e) {
+                    String message = (e instanceof InvalidNumberOfPointsException) ?
+                            "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
+                    resultsLabel.setValue("<font color=red>" + message + "</font>");
+            }
+            catch (InvalidContractLevelException  e) {
+                String message = (e instanceof InvalidContractLevelException) ?
+                        "Nieprawidłowo podana poziom kontraktu - spróbuj jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>" + message + "</font>");
+            }
+            catch (PointsDiferentLessThenZeroException e) {
+                String message = (e instanceof PointsDiferentLessThenZeroException) ?
+                        "Błąd różnicy punktów - mniejsza od zera-  spróbuj jeszcze raz!" : e.getMessage();
                 resultsLabel.setValue("<font color=red>" + message + "</font>");
             }
 

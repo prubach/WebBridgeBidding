@@ -4,54 +4,39 @@ import java.util.NoSuchElementException;
 
 public class PointsForContract {
 
-    private int levelOfGame;  //6 + level of game = number of trics should take
-    private int numberOfTrickTaken;
-    private String gameColor;   // S - spaces, H heart, c clubes, Diamonsd N -notrumph
-    private boolean doubleGame = false;
-    private boolean redoubleGame = false;
     private int calculatedPointsForContract = 0;
-    private int aditionalTricsPoints = 0;
 
 
-    public PointsForContract(int levelOfGame, int numberOfTricksTaken, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
+    public PointsForContract(int levelOfGame, int numberOfTrickAboveLevel, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
             throws NoSuchElementException, InvalidContractLevelException {
-        this.gameColor = gameColor;
-        this.levelOfGame = levelOfGame;
-        this.numberOfTrickTaken = numberOfTricksTaken;
-        this.doubleGame = doubleGame;
-        this.redoubleGame = redoubleGame;
+
         if (redoubleGame) doubleGame = false;
+
         this.calculatedPointsForContract = 0;
-        this.aditionalTricsPoints = 0;
+        int aditionalTricksPoints = 0;
 
         calculatedPointsForContract = getMainPoints(levelOfGame, gameColor);
+        if (doubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
+        if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 4;
 
-        if (numberOfTricksTaken == levelOfGame) { //dokładnie swoje
+        if (numberOfTrickAboveLevel > levelOfGame) {
+            // nadróbki
+            if (!doubleGame && !redoubleGame)
+                aditionalTricksPoints =  getMainPoints(numberOfTrickAboveLevel-levelOfGame, gameColor);  //bez kontry i rekontry - tak samo jak lewa
+            if (doubleGame && !asumption)
+                aditionalTricksPoints =(numberOfTrickAboveLevel - levelOfGame) * 100;   //z kontrą przed partią - za 100
+            if (doubleGame && asumption)
+                aditionalTricksPoints =(numberOfTrickAboveLevel - levelOfGame) * 200;    // z kontrą po partii za 200
 
-
-            if (doubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
-            if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 4;
-
-
-        } else if (numberOfTricksTaken > levelOfGame) {  // nadróbki
-            if (!doubleGame && !redoubleGame)  //bez kontry i rekontry - tak samo jak lewa
-                calculatedPointsForContract = calculatedPointsForContract + getNadrobkiPoints(levelOfGame, gameColor, numberOfTricksTaken);
-            if (doubleGame && !asumption)       //z kontrą przed partią - za 100
-                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 100;
-            if (doubleGame && asumption)        // z kontrą po partii za 200
-                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 200;
-
-            if (redoubleGame && !asumption)     // z rekontrą przed partią za 200
-                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 200;
-            if (redoubleGame && asumption)      //z rekontrą po partii za 400
-                calculatedPointsForContract = calculatedPointsForContract + (numberOfTricksTaken - levelOfGame) * 400;
-
-    //    if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract*2;
+            if (redoubleGame && !asumption)
+                aditionalTricksPoints = (numberOfTrickAboveLevel - levelOfGame) * 200;     // z rekontrą przed partią za 200
+            if (redoubleGame && asumption)
+                aditionalTricksPoints =(numberOfTrickAboveLevel - levelOfGame) * 400;     //z rekontrą po partii za 400
 
 
 
-        } else if (numberOfTricksTaken < levelOfGame) {   //wpadki - mniej lew niż zalicytowano - nie ma wpadek z rekontrą bo nie wiem jak się liczą????
-            int wpadki = levelOfGame - numberOfTricksTaken;
+        } else if (numberOfTrickAboveLevel < levelOfGame) {   //wpadki - mniej lew niż zalicytowano - nie ma wpadek z rekontrą bo nie wiem jak się liczą????
+            int wpadki = levelOfGame - numberOfTrickAboveLevel;
 
             if (!asumption && !doubleGame) calculatedPointsForContract = -wpadki * 50;   //bez kontry przed partią 50
             if (!asumption && doubleGame && wpadki == 1) calculatedPointsForContract = -wpadki * 100;  //z kontrą przed partią pierwsza za 100
@@ -66,7 +51,11 @@ public class PointsForContract {
             if(redoubleGame) calculatedPointsForContract = calculatedPointsForContract*2;
         }
 
-        calculatedPointsForContract = calculatedPointsForContract + getKaraZaNieudanaKontre(levelOfGame,numberOfTricksTaken,doubleGame, redoubleGame)+getVunerablePoints(calculatedPointsForContract, levelOfGame, numberOfTricksTaken, asumption) + getSlamPremiaPoints(levelOfGame, numberOfTricksTaken, asumption);
+        calculatedPointsForContract = calculatedPointsForContract
+                                + getKaraZaNieudanaKontre(levelOfGame,numberOfTrickAboveLevel,doubleGame, redoubleGame)
+                                + getVunerablePoints(calculatedPointsForContract, levelOfGame, numberOfTrickAboveLevel, asumption)
+                                + getSlamPremiaPoints(levelOfGame, numberOfTrickAboveLevel, asumption)
+                                + aditionalTricksPoints;
     }
     private int getKaraZaNieudanaKontre(int levelOfGame, int numberOfTrickTaken, boolean doubleGame, boolean redoubleGame){
         if ((doubleGame || redoubleGame) && levelOfGame <=numberOfTrickTaken) return 50;
@@ -96,33 +85,6 @@ public class PointsForContract {
             case "nt":
             case "NT":
                 return levelOfGame * 30 + 10;
-
-            default:
-                throw new NoSuchElementException("Nie ma takiego koloru wpisz jeszcze raz.");
-        }
-    }
-
-    private int getNadrobkiPoints(int levelOfGame, String gameColor, int numberOfTrickTaken) {
-
-        switch (gameColor) {
-            case "s":
-            case "S":
-            case "h":
-            case "H":
-                return (numberOfTrickTaken - levelOfGame) * 30;
-
-            case "d":
-            case "D":
-            case "c":
-            case "C":
-                return (numberOfTrickTaken - levelOfGame) * 20;
-
-            case "n":
-            case "N":
-            case "nt":
-            case "NT":
-                return (numberOfTrickTaken - levelOfGame) * 30;
-
 
             default:
                 throw new NoSuchElementException("Nie ma takiego koloru wpisz jeszcze raz.");

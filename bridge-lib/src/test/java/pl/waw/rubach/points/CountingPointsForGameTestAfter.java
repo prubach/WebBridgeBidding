@@ -34,6 +34,7 @@ public class CountingPointsForGameTestAfter {
 
     private Map<Integer, Integer> testPointsForMajorContractMinusOne = new HashMap<>();
     private Map<Integer, Integer> testPointsForNoTrumphContractMinusOneDouble = new HashMap<>();
+    private Map<Integer, Integer> testNoTrumphContractPointsOneMoreDouble = new HashMap<>();
     private Map<Integer, Integer> testPointsForMajorContractMinusMore = new HashMap<>();
 
     private Map<Integer, Integer>  testPointsForMajorContractMinusMoreDouble = new HashMap<>();
@@ -46,6 +47,7 @@ public class CountingPointsForGameTestAfter {
         int premiaZaKoncowke = 500;
         int premiaZaSzlemika = 750;
         int premiaZaSzlema = 1500;
+        int nadrobkaZKontra = 200;
 
         testPointsForMajorContract.put(1, 30 + premiaZaCzesciowke);
         testPointsForMajorContract.put(2, 60 + premiaZaCzesciowke);
@@ -80,6 +82,13 @@ public class CountingPointsForGameTestAfter {
         testPointsForMinorDoubleContract.put(2, 80 + karaZaKontre + premiaZaCzesciowke);
         testPointsForNoTrumphDoubleContract.put(1, 80 + karaZaKontre + premiaZaCzesciowke);
         testPointsForNoTrumphDoubleContract.put(2, 140 +premiaZaKoncowke  + karaZaKontre);
+        testPointsForNoTrumphDoubleContract.put(3, 200 +premiaZaKoncowke  + karaZaKontre);
+        testPointsForNoTrumphDoubleContract.put(4, 260 +premiaZaKoncowke  + karaZaKontre);
+
+        testNoTrumphContractPointsOneMoreDouble.put(1, 2*40 + nadrobkaZKontra+  karaZaKontre + premiaZaCzesciowke);
+        testNoTrumphContractPointsOneMoreDouble.put(2, 140 + nadrobkaZKontra   +premiaZaKoncowke  + karaZaKontre);
+        testNoTrumphContractPointsOneMoreDouble.put(3, 200 + nadrobkaZKontra+ premiaZaKoncowke  + karaZaKontre);
+        testNoTrumphContractPointsOneMoreDouble.put(4, 260 + nadrobkaZKontra+ premiaZaKoncowke  + karaZaKontre);
 
         //example of redouble contract
 
@@ -91,22 +100,24 @@ public class CountingPointsForGameTestAfter {
         testPointsForNoTrumphReDoubleContract.put(2, 280 +premiaZaKoncowke + karaZaKontre);
 
 
+
         testPointsForMajorContractOneMore.put(1, 60 + premiaZaCzesciowke);
         testPointsForMajorContractOneMore.put(2, 90 + premiaZaCzesciowke);
-        testPointsForMajorContractOneMore.put(3, 120 + premiaZaKoncowke);
+        testPointsForMajorContractOneMore.put(3, 120 + premiaZaCzesciowke);
         testPointsForMajorContractOneMore.put(4, 150 + premiaZaKoncowke);
         testPointsForMajorContractOneMore.put(5, 180 + premiaZaKoncowke);
         testPointsForMajorContractOneMore.put(6, 210 +premiaZaKoncowke + premiaZaSzlemika);
     //    testPointsForMajorContractOneMore.put(7, 240 +500); nie ma sensu 7 i jedna lepiej :)
 
 
-        testPointsForMinorContractOneMoreDouble.put(1, 220 + premiaZaKoncowke  + karaZaKontre); //kontrakt np 1karo + 1 lewa z kontrą (20)*2 +100 za nadróbkę + 50 nieudaną kontrę + 300 premi za końcówkę
-        testPointsForMinorContractOneMoreDouble.put(2, 240 + premiaZaKoncowke  + karaZaKontre);
-        testPointsForMinorContractOneMoreDouble.put(3, 260 + premiaZaKoncowke  + karaZaKontre);
-        testPointsForMinorContractOneMoreDouble.put(4, 280 + premiaZaKoncowke  + karaZaKontre);
-        testPointsForMinorContractOneMoreDouble.put(5, 300 + premiaZaKoncowke  + karaZaKontre);
-        testPointsForMinorContractOneMoreDouble.put(6, 320 + premiaZaKoncowke  + premiaZaSzlemika  + karaZaKontre); //20*6 =120 *2 = 240 + 100 nadróbka = 340
+        testPointsForMinorContractOneMoreDouble.put(1, 2*(20)+nadrobkaZKontra + premiaZaCzesciowke  + karaZaKontre); //kontrakt np 1karo + 1 lewa z kontrą (20)*2 +100 za nadróbkę + 50 nieudaną kontrę + 300 premi za końcówkę
+        testPointsForMinorContractOneMoreDouble.put(2, 2*(40)+nadrobkaZKontra + premiaZaCzesciowke  + karaZaKontre);
+        testPointsForMinorContractOneMoreDouble.put(3, 2*(60)+nadrobkaZKontra +  premiaZaKoncowke  + karaZaKontre);
+        testPointsForMinorContractOneMoreDouble.put(4, 2*(80)+nadrobkaZKontra +  premiaZaKoncowke  + karaZaKontre);
+        testPointsForMinorContractOneMoreDouble.put(5, 2*(100)+nadrobkaZKontra +  premiaZaKoncowke  + karaZaKontre);
+        testPointsForMinorContractOneMoreDouble.put(6, 2*(120)+nadrobkaZKontra +  premiaZaKoncowke  + premiaZaSzlemika  + karaZaKontre); //20*6 =120 *2 = 240 + 100 nadróbka = 340
      //   testPointsForMinorContractOneMoreDouble.put(7, 340+50+500+1500);  nie ma sensu 7 i jedna lepiej :)
+
 
         testPointsForMajorContractMinusOne.put(1, -100);
         testPointsForMajorContractMinusOne.put(2, -100);
@@ -235,6 +246,18 @@ public class CountingPointsForGameTestAfter {
             Assert.assertEquals(testPointsForMinorContractOneMoreDouble.get(p), res);
       //  }
     }}
+
+
+
+    @Test
+    public void testNoTrumphContractPointsOneMoreDouble()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testNoTrumphContractPointsOneMoreDouble.keySet())) {
+            Integer res = new PointsForContract(p, p+1 ,"nt",true,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w bezatu z kotrą  z jedną nadróbką  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testNoTrumphContractPointsOneMoreDouble.get(p), res);
+            //  }
+        }}
 
     @Test
     public void testMajorContractMinusOne()  throws InvalidContractLevelException {
