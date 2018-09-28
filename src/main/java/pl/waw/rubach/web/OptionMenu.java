@@ -316,10 +316,16 @@ class OptionMenu extends MenuBar {
                     foo = 40 - foo;
                     foo3 = 13 - foo3;
                 }
-                int foo2 = new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+                PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue());
+                String des = foo22.getDescription();
+                int foo2 =foo22.getCalculatedPointsForContract();
+                if(checkboxThey.getValue()) {
+                    foo2 = -foo2;
+                }
 
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, czyli " + a.getResults() + " impów.  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  " +
+                        "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
             } catch (NumberFormatException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
@@ -338,12 +344,13 @@ class OptionMenu extends MenuBar {
         int foo2[] ={0,0,0,0};
 
         numberOfContract.setValue("1");
-        pointsInBothHands.setValue("20");
-        levelOfContract.setValue("3");
-        numberOfTricks.setValue("9");
+        pointsInBothHands.setValue("28");
+        levelOfContract.setValue("6");
+        numberOfTricks.setValue("12");
 
 
-        Button prowadzZapis = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
+
+    Button prowadzZapis = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
 
 
             try {
@@ -367,41 +374,35 @@ class OptionMenu extends MenuBar {
                 }
 
                 foo2[contractNumber]= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+                if(checkboxThey.getValue()) {
+                    foo2[contractNumber] = -foo2[contractNumber];}
+
 
                 RubberScoring aa = new RubberScoring(footable[0],footable[1],footable[2],footable[3],foo2[0],foo2[1],foo2[2],foo2[3],checkboxFitWeTable[0],checkboxFitWeTable[1],checkboxFitWeTable[2],checkboxFitWeTable[3],checkboxFitTheyTable[0],checkboxFitTheyTable[1],checkboxFitTheyTable[2],checkboxFitTheyTable[3]);
 
                 System.out.println("Akuku"+ RubberScoring.getRubberScoringAsString(aa));
 
-                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                ResultsOfOneGame  a = new ResultsOfOneGame(foo, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+               
+               
                 resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów.  </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ RubberScoring.getSumm(aa) +" impy. ");
 
 
 
 
-            } catch (NumberFormatException  e) {
-                String message = (e instanceof NumberFormatException) ?
+            } catch (NumberFormatException | InvalidNumberOfPointsException |InvalidContractLevelException |PointsDiferentLessThenZeroException e) {
+                String mes1 = (e instanceof NumberFormatException) ?
                         "Nieprawidłowy format liczby-  spróbuj jeszcze raz!" : e.getMessage();
-                resultsLabel.setValue("<font color=red>" + message + "</font>");
-            }
+                String mes2 = (e instanceof InvalidNumberOfPointsException) ?
+                        "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
 
-                catch (InvalidNumberOfPointsException  e) {
-                    String message = (e instanceof InvalidNumberOfPointsException) ?
-                            "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
-                    resultsLabel.setValue("<font color=red>" + message + "</font>");
-            }
-            catch (InvalidContractLevelException  e) {
-                String message = (e instanceof InvalidContractLevelException) ?
+                String mes3 = (e instanceof InvalidContractLevelException) ?
                         "Nieprawidłowo podana poziom kontraktu - spróbuj jeszcze raz!" : e.getMessage();
-                resultsLabel.setValue("<font color=red>" + message + "</font>");
-            }
-            catch (PointsDiferentLessThenZeroException e) {
-                String message = (e instanceof PointsDiferentLessThenZeroException) ?
+
+                String mes4 = (e instanceof PointsDiferentLessThenZeroException) ?
                         "Błąd różnicy punktów - mniejsza od zera-  spróbuj jeszcze raz!" : e.getMessage();
-                resultsLabel.setValue("<font color=red>" + message + "</font>");
+                resultsLabel.setValue("<font color=red>" + mes1 + mes2 + mes3 + mes4+"</font>");
             }
-
-
-
 
         });
 

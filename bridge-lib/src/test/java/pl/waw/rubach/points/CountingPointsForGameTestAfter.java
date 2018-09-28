@@ -78,6 +78,7 @@ public class CountingPointsForGameTestAfter {
 
         testPointsForMajorDoubleContract.put(1, 60 + karaZaKontre + premiaZaCzesciowke);
         testPointsForMajorDoubleContract.put(2, 120 +premiaZaKoncowke + karaZaKontre);
+        testPointsForMajorDoubleContract.put(6, 360 + premiaZaKoncowke + karaZaKontre + premiaZaSzlemika);
         testPointsForMinorDoubleContract.put(1, 40 + karaZaKontre + premiaZaCzesciowke);
         testPointsForMinorDoubleContract.put(2, 80 + karaZaKontre + premiaZaCzesciowke);
         testPointsForNoTrumphDoubleContract.put(1, 80 + karaZaKontre + premiaZaCzesciowke);
@@ -274,8 +275,8 @@ public class CountingPointsForGameTestAfter {
     public void testMajorContractMinusMore()  throws InvalidContractLevelException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajorContractMinusMore.keySet())) {
-            Integer res = new PointsForContract(3, 3 - p, "s", false, false, beforeAfter).getCalculatedPointsForContract();
-            logger.info("Dla kontraktu o wysokości 3 w kolorze starszym  bez " + p +" wynik jest: " + res + " punktów.");
+            Integer res = new PointsForContract(5, 5 - p, "s", false, false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości 5 w kolorze starszym  bez " + p +" wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajorContractMinusMore.get(p), res);
             //   }
         }

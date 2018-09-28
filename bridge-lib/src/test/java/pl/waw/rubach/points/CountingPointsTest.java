@@ -97,6 +97,9 @@ public class CountingPointsTest {
         testCountingPointsBothAfterFitWeMap.put(24f, -500f, -14);
 
         testCountingPointsBothAfterFitWeMap.put(20f, 0f, -2);
+        testCountingPointsBothAfterFitWeMap.put(28f, 1660f, 14);
+        testCountingPointsBothAfterFitWeMap.put(12f, -1660f, -14);
+
         testCountingPointsBothAfterNoFitWeMap.put(20f, 0f, 2);
         testCountingPointsBothAfterFitTheyMap.put(20f, 0f, 2);
         testCountingPointsBothAfterNoFitTheyMap.put(20f, 0f, -2);
@@ -104,6 +107,8 @@ public class CountingPointsTest {
         testCountingPointsBothAfterNoFitTheyMap.put(10f, -660f, 0);
         testCountingPointsBothAfterNoFitTheyMap.put(10f, -100f, 11);
         testCountingPointsBothAfterFitTheyMap.put(10f, -100f, 12);
+        testCountingPointsBothAfterFitTheyMap.put(28f, 1660f, 14);
+        testCountingPointsBothAfterFitTheyMap.put(12f, -1660f, -14);
     }
 
     @Test

@@ -7,6 +7,10 @@ public class PointsForContract {
     private int calculatedPointsForContract = 0;
 
 
+
+    private String description = null;
+
+
     public PointsForContract(int levelOfGame, int numberOfTrickAboveLevel, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
             throws NoSuchElementException, InvalidContractLevelException {
 
@@ -58,7 +62,9 @@ public class PointsForContract {
                                 + aditionalTricksPoints;
     }
     private int getKaraZaNieudanaKontre(int levelOfGame, int numberOfTrickTaken, boolean doubleGame, boolean redoubleGame){
-        if ((doubleGame || redoubleGame) && levelOfGame <=numberOfTrickTaken) return 50;
+        if ((doubleGame || redoubleGame) && levelOfGame <=numberOfTrickTaken)
+        {description= description + " kara za nieudaną kontrę";
+            return 50;}
         else return 0;
     }
 
@@ -111,5 +117,8 @@ public class PointsForContract {
     //getter
     public int getCalculatedPointsForContract() {
         return calculatedPointsForContract;
+    }
+    public String getDescription() {
+        return description;
     }
 }
