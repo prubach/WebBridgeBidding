@@ -51,6 +51,7 @@ public class ResultsOfOneGame {
         } else {
             expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe, auctionAssumptionThey);
         }
+<<<<<<< Updated upstream
         if (expectedPoints <= pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
         else this.pointDifferent = expectedPoints - pointsForContract;
 
@@ -60,6 +61,21 @@ public class ResultsOfOneGame {
 
         if (expectedPoints <= pointsForContract) this.results = resutl;
         else this.results = -resutl;
+=======
+        else {
+            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands,fitInOlderColorWe,auctionAssumptionWe,auctionAssumptionThey);
+        }
+
+        if (expectedPoints<=pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
+       else this.pointDifferent = expectedPoints - pointsForContract;
+
+        if(pointDifferent<0) throw new PointsDiferentLessThenZeroException("Róznica punktow nie może być ujemna - bład programu chyba");
+
+        int resutl = ImpTable.getInstance().getPoints(pointDifferent);
+
+        if (expectedPoints<=pointsForContract) this.results = resutl;
+       else this.results = -resutl;
+>>>>>>> Stashed changes
     }
 
 
