@@ -5,14 +5,14 @@ buildscript {
         }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE")
         classpath "io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE"
-        classpath "com.devsoap.plugin:gradle-vaadin-plugin:1.2.6"
+        classpath "com.devsoap.plugin:gradle-vaadin-plugin:1.4.1"
     }
 }
 
 plugins {
-    id 'com.devsoap.plugin.vaadin' version '1.2.6'
+    id 'com.devsoap.plugin.vaadin' version '1.4.1'
 }
 
 allprojects {
@@ -37,7 +37,7 @@ allprojects {
 apply plugin: "io.spring.dependency-management"
 apply plugin: 'org.springframework.boot'
 
-ext['hibernate.version'] = '5.1.0.Final'
+ext['hibernate.version'] = '5.3.7.Final'
 
 jar {
     baseName = 'webbridgebidding'
@@ -46,7 +46,7 @@ jar {
 
 dependencyManagement {
     imports {
-        mavenBom 'com.vaadin:vaadin-bom:8.1.7'
+        mavenBom 'com.vaadin:vaadin-bom:8.5.2'
     }
 }
 

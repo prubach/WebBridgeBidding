@@ -2,6 +2,7 @@ package pl.waw.rubach.web;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.SerializableComparator;
 import com.vaadin.server.VaadinRequest;
@@ -46,6 +47,7 @@ public class VaadinUI extends UI {
     private Label bidSystemLabel = new Label("");
     private boolean assumption = false;
     private Label auctionAssumptionLabel = new Label("Założenia: Przed partią");
+    private Link brydzApkLink = new Link("Android Brydz APK", new ExternalResource("/brydz.apk"));
 
     private MenuBar optionMenuBar = new MenuBar();
     private HorizontalLayout legendLabel = new HorizontalLayout();
@@ -145,14 +147,17 @@ public class VaadinUI extends UI {
         createLegendLabel();
         optionMenuBar =new OptionMenu(this);
 //		//HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
-        HorizontalLayout topRightLayout = new HorizontalLayout(legendLabel, auctionAssumptionLabel, bidSystemLabel, optionMenuBar);//, bidSystemMenuBar);
+        HorizontalLayout topRightLayout = new HorizontalLayout(legendLabel, auctionAssumptionLabel, bidSystemLabel, optionMenuBar, brydzApkLink);//, bidSystemMenuBar);
 
         auctionAssumptionLabel.setStyleName("window");
+
+
 
         topRightLayout.setComponentAlignment(legendLabel, Alignment.MIDDLE_LEFT);
         topRightLayout.setComponentAlignment(bidSystemLabel, Alignment.MIDDLE_LEFT);
         topRightLayout.setComponentAlignment(optionMenuBar, Alignment.MIDDLE_LEFT);
         topRightLayout.setComponentAlignment(auctionAssumptionLabel, Alignment.MIDDLE_LEFT);
+        topRightLayout.setComponentAlignment(brydzApkLink, Alignment.MIDDLE_RIGHT);
 
         //topRightLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);
         //topRightLayout.setExpandRatio(bidSystemMenuBar,1);
