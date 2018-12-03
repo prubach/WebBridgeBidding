@@ -227,7 +227,7 @@ public class CountingPointsTest {
 
     }
 
-/*
+/* dobre testy ale nieładnie zapisane (kopia wyżej)
     @Test
     public void testCountingPoints() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         // System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, false,true) + " oczekiwane.");

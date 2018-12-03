@@ -31,41 +31,27 @@ public class ResultsOfOneGame {
      * Number of Imp Point
      * if 0 is equal, if -1 is one less etc ...
      */
-    private int results = 0;
+    private int results=0;
 
     public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         this.pointsInBothHands = pointsInBothHands;
         this.pointsForContract = pointsForContract;
         int expectedPoints;
-        if (pointsInBothHands == 20) {
-            if (fitInOlderColorWe) {
-                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe, auctionAssumptionThey);
-            } else if (fitInOlderColorThey) {
-                expectedPoints = -ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe, auctionAssumptionThey);
-            } else
-                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false, auctionAssumptionWe, auctionAssumptionThey);
+        if(pointsInBothHands == 20)
+        { if(fitInOlderColorWe) {
+            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe, auctionAssumptionThey);
+        }  else if(fitInOlderColorThey) {
+            expectedPoints = - ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe, auctionAssumptionThey);
+        } else expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false, auctionAssumptionWe, auctionAssumptionThey);
 
-        } else if (pointsInBothHands < 20) {
-            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey);
-        } else {
-            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe, auctionAssumptionThey);
         }
-<<<<<<< Updated upstream
-        if (expectedPoints <= pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
-        else this.pointDifferent = expectedPoints - pointsForContract;
-
-        if (pointDifferent < 0)
-            throw new PointsDiferentLessThenZeroException("Róznica punktow nie może być ujemna - bład programu chyba");
-        int resutl = ImpTable.getInstance().getPoints(pointDifferent);
-
-        if (expectedPoints <= pointsForContract) this.results = resutl;
-        else this.results = -resutl;
-=======
+        else if(pointsInBothHands<20){
+            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey);
+        }
         else {
             expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands,fitInOlderColorWe,auctionAssumptionWe,auctionAssumptionThey);
         }
-
         if (expectedPoints<=pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
        else this.pointDifferent = expectedPoints - pointsForContract;
 
@@ -75,8 +61,8 @@ public class ResultsOfOneGame {
 
         if (expectedPoints<=pointsForContract) this.results = resutl;
        else this.results = -resutl;
->>>>>>> Stashed changes
     }
+
 
 
     public float getPointsInBothHands() {

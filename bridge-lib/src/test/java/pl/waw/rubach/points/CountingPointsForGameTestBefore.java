@@ -29,6 +29,21 @@ public class CountingPointsForGameTestBefore {
     private Map<Integer, Integer> testPointsForNoTrumphReDoubleContract = new HashMap<>();
 
     private Map<Integer, Integer> testPointsForMajorContractOneMore = new HashMap<>();
+    private Map<Integer, Integer> testPointsForMinorContractOneMore = new HashMap<>();
+    private Map<Integer, Integer> testNoTrumphContractPointsOneMore = new HashMap<>();
+
+    private Map<Integer, Integer>  testNoTrumphContractPointsTwoMore = new HashMap<>();
+
+    private Map<Integer, Integer>  testMajorContractPointsTwoMore = new HashMap<>();
+    private Map<Integer, Integer>  testMajorContractPointsThreeMore = new HashMap<>();
+    private Map<Integer, Integer>  testMajorContractPointsFourMore = new HashMap<>();
+    private Map<Integer, Integer>  testMajorContractPointsFiveMore = new HashMap<>();
+    private Map<Integer, Integer>  testMajorContractPointsSixMore = new HashMap<>();
+
+    private Map<Integer, Integer>  testNoTrumphContractPointsThreeMore = new HashMap<>();
+    private Map<Integer, Integer>  testNoTrumphContractPointsFourMore = new HashMap<>();
+    private Map<Integer, Integer>  testNoTrumphContractPointsFiveMore = new HashMap<>();
+    private Map<Integer, Integer>  testNoTrumphContractPointsSixMore = new HashMap<>();
 
     private Map<Integer, Integer> testPointsForMinorContractOneMoreDouble = new HashMap<>();
     private Map<Integer, Integer> testNoTrumphContractPointsOneMoreDouble = new HashMap<>();
@@ -36,9 +51,13 @@ public class CountingPointsForGameTestBefore {
     private Map<Integer, Integer> testPointsForMajorContractMinusOne = new HashMap<>();
     private Map<Integer, Integer> testPointsForNoTrumphContractMinusOneDouble = new HashMap<>();
 
-    private Map<Integer, Integer> testPointsForMajorContractMinusMore = new HashMap<>();
-    private Map<Integer, Integer>  testPointsForMajorContractMinusMoreDouble = new HashMap<>();
+    private Map<Integer, Integer> testPointsForMajor3ContractMinusMore = new HashMap<>();
+    private Map<Integer, Integer> testPointsForMajor3ContractMinusMoreDouble = new HashMap<>();
+    private Map<Integer, Integer> testPointsForMajor3ContractMinusMoreReDouble = new HashMap<>();
 
+    private Map<Integer, Integer> testPointsFor3NTContractMinusMore = new HashMap<>();
+    private Map<Integer, Integer> testPointsFor3NTContractMinusMoreDouble = new HashMap<>();
+    private Map<Integer, Integer> testPointsFor3NTContractMinusMoreReDouble = new HashMap<>();
 
     @Before
     public void fillTestPointsMap() {
@@ -49,7 +68,9 @@ public class CountingPointsForGameTestBefore {
         int premiaZaSzlemika = 500;
         int premiaZaSzlema = 1000;
         int nadrobkaZKontra = 100;
+        int wpadkaBezKontry =50;
 
+        //all equal normal contract
         testPointsForMajorContract.put(1, 30+premiaZaCzesciowke);
         testPointsForMajorContract.put(2, 60 +premiaZaCzesciowke);
         testPointsForMajorContract.put(3, 90 +premiaZaCzesciowke);
@@ -74,35 +95,83 @@ public class CountingPointsForGameTestBefore {
         testPointsForNoTrumphContract.put(6, 190 + premiaZaKoncowke +premiaZaSzlemika);
         testPointsForNoTrumphContract.put(7, 220 + premiaZaKoncowke +premiaZaSzlema);
 
-        //example of double contract
+        //all of double contract
 
-        testPointsForMajorDoubleContract.put(1, 60+karaZaKontre  +premiaZaCzesciowke);
-       // testPointsForMajorDoubleContract.put(2, 120 +300+50 +50);
-        testPointsForMinorDoubleContract.put(1, 40+karaZaKontre  +premiaZaCzesciowke);
-        testPointsForMinorDoubleContract.put(2, 80+karaZaKontre  +premiaZaCzesciowke);
+        testPointsForMajorDoubleContract.put(1, 2*30 +karaZaKontre  +premiaZaCzesciowke);
+        testPointsForMajorDoubleContract.put(2, 2*60 +karaZaKontre  +premiaZaKoncowke);
+        testPointsForMajorDoubleContract.put(3, 2*90 +karaZaKontre  +premiaZaKoncowke);
+        testPointsForMajorDoubleContract.put(4, 2*120 +karaZaKontre  +premiaZaKoncowke);
+        testPointsForMajorDoubleContract.put(5, 2*150 +karaZaKontre  +premiaZaKoncowke);
+        testPointsForMajorDoubleContract.put(6, 2*180 +karaZaKontre  +premiaZaKoncowke+premiaZaSzlemika);
+        testPointsForMajorDoubleContract.put(7, 2*210 +karaZaKontre  +premiaZaKoncowke+premiaZaSzlema);
+
+        testPointsForMinorDoubleContract.put(1, 2*20   +karaZaKontre  +premiaZaCzesciowke);
+        testPointsForMinorDoubleContract.put(2, 2*40   +karaZaKontre  +premiaZaCzesciowke);
+        testPointsForMinorDoubleContract.put(3, 2*60   +karaZaKontre  +premiaZaKoncowke);
+        testPointsForMinorDoubleContract.put(4, 2*80   +karaZaKontre  +premiaZaKoncowke);
+        testPointsForMinorDoubleContract.put(5, 2*100  +karaZaKontre  +premiaZaKoncowke);
+        testPointsForMinorDoubleContract.put(6, 2*120  +karaZaKontre  +premiaZaKoncowke+premiaZaSzlemika);
+        testPointsForMinorDoubleContract.put(7, 2*140  +karaZaKontre  +premiaZaKoncowke+premiaZaSzlema);
+
         testPointsForNoTrumphDoubleContract.put(1, 40*2+karaZaKontre  +premiaZaCzesciowke);
         testPointsForNoTrumphDoubleContract.put(2, (40+30)*2 +premiaZaKoncowke +karaZaKontre );
         testPointsForNoTrumphDoubleContract.put(3, 100*2 + karaZaKontre  +premiaZaKoncowke);
         testPointsForNoTrumphDoubleContract.put(4, 130*2 +premiaZaKoncowke +karaZaKontre );
+        testPointsForNoTrumphDoubleContract.put(5, 160*2 +premiaZaKoncowke +karaZaKontre );
+        testPointsForNoTrumphDoubleContract.put(6, 190*2 +premiaZaKoncowke +karaZaKontre +premiaZaSzlemika );
+        testPointsForNoTrumphDoubleContract.put(7, 220*2 +premiaZaKoncowke +karaZaKontre +premiaZaSzlema );
 
-           //example of redouble contract
+           //all of redouble contract
 
-        testPointsForMajorReDoubleContract.put(1, 120 + premiaZaKoncowke + karaZaKontre );
-        testPointsForMajorReDoubleContract.put(2, 240 + premiaZaKoncowke + karaZaKontre );
-        testPointsForMinorReDoubleContract.put(1, 80  + premiaZaCzesciowke  +karaZaKontre );
-        testPointsForMinorReDoubleContract.put(2, 160+ premiaZaKoncowke + karaZaKontre );
-        testPointsForNoTrumphReDoubleContract.put(1, 160 + premiaZaKoncowke +karaZaKontre );
-        testPointsForNoTrumphReDoubleContract.put(2, 280 + premiaZaKoncowke +karaZaKontre );
+        testPointsForMajorReDoubleContract.put(1, 4*30 + premiaZaKoncowke + karaZaKontre );
+        testPointsForMajorReDoubleContract.put(2, 4*2*30 + premiaZaKoncowke + karaZaKontre );
+        testPointsForMajorReDoubleContract.put(3, 4*3*30 + premiaZaKoncowke + karaZaKontre );
+        testPointsForMajorReDoubleContract.put(4, 4*4*30 + premiaZaKoncowke + karaZaKontre );
+        testPointsForMajorReDoubleContract.put(5, 4*5*30 + premiaZaKoncowke + karaZaKontre );
+        testPointsForMajorReDoubleContract.put(6, 4*6*30 + premiaZaKoncowke + karaZaKontre+premiaZaSzlemika );
+        testPointsForMajorReDoubleContract.put(7, 4*7*30 + premiaZaKoncowke + karaZaKontre+premiaZaSzlema );
+
+        testPointsForMinorReDoubleContract.put(1, 4*20  + premiaZaCzesciowke  +karaZaKontre );
+        testPointsForMinorReDoubleContract.put(2, 4*2*20+ premiaZaKoncowke + karaZaKontre );
+        testPointsForMinorReDoubleContract.put(3, 4*3*20+ premiaZaKoncowke + karaZaKontre );
+        testPointsForMinorReDoubleContract.put(4, 4*4*20+ premiaZaKoncowke + karaZaKontre );
+        testPointsForMinorReDoubleContract.put(5, 4*5*20+ premiaZaKoncowke + karaZaKontre );
+        testPointsForMinorReDoubleContract.put(6, 4*6*20+ premiaZaKoncowke + karaZaKontre +premiaZaSzlemika);
+        testPointsForMinorReDoubleContract.put(7, 4*7*20+ premiaZaKoncowke + karaZaKontre +premiaZaSzlema );
+
+        testPointsForNoTrumphReDoubleContract.put(1, 4*40 + premiaZaKoncowke +karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(2, 4*(40+30) + premiaZaKoncowke +karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(3, 4*(40+2*30) + premiaZaKoncowke +karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(4, 4*(40+3*30) + premiaZaKoncowke +karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(5, 4*(40+4*30) + premiaZaKoncowke +karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(6, 4*(40+5*30) + premiaZaKoncowke +karaZaKontre +premiaZaSzlemika);
+        testPointsForNoTrumphReDoubleContract.put(7, 4*(40+6*30) + premiaZaKoncowke +karaZaKontre +premiaZaSzlema );
 
 
-        testPointsForMajorContractOneMore.put(1, 30+30 +premiaZaCzesciowke);
-        testPointsForMajorContractOneMore.put(2, 30+60 +premiaZaCzesciowke);
-        testPointsForMajorContractOneMore.put(3, 30+90 + premiaZaCzesciowke);
-        testPointsForMajorContractOneMore.put(4, 30+120 + premiaZaKoncowke);
-        testPointsForMajorContractOneMore.put(5, 180 + premiaZaKoncowke);
-        testPointsForMajorContractOneMore.put(6, 210 + premiaZaKoncowke +premiaZaSzlemika);
+
+        //all of Nadróbki - one more
+        testPointsForMajorContractOneMore.put(1, 30  +30 + premiaZaCzesciowke);
+        testPointsForMajorContractOneMore.put(2, 60  +30 + premiaZaCzesciowke);
+        testPointsForMajorContractOneMore.put(3, 90  +30 + premiaZaCzesciowke);
+        testPointsForMajorContractOneMore.put(4, 120 +30 + premiaZaKoncowke);
+        testPointsForMajorContractOneMore.put(5, 150 +30 + premiaZaKoncowke);
+        testPointsForMajorContractOneMore.put(6, 180 +30 + premiaZaKoncowke +premiaZaSzlemika);
       //  testPointsForMajorContractOneMore.put(7, 240 +300); nie ma sensu - nie może być 7 i jedna lepiej!!!
 
+        testPointsForMinorContractOneMore.put(1, 20  +20 + premiaZaCzesciowke);
+        testPointsForMinorContractOneMore.put(2, 40  +20 + premiaZaCzesciowke);
+        testPointsForMinorContractOneMore.put(3, 60  +20 + premiaZaCzesciowke);
+        testPointsForMinorContractOneMore.put(4, 80  +20 + premiaZaCzesciowke);
+        testPointsForMinorContractOneMore.put(5, 100 +20 + premiaZaKoncowke);
+        testPointsForMinorContractOneMore.put(6, 120 +20 + premiaZaKoncowke +premiaZaSzlemika);
+        //  testPointsForMajorContractOneMore.put(7, 240 +300); nie ma sensu - nie może być 7 i jedna lepiej!!!
+
+        testNoTrumphContractPointsOneMore.put(1, 40       +30 + premiaZaCzesciowke);
+        testNoTrumphContractPointsOneMore.put(2, 40+30    +30 + premiaZaCzesciowke);
+        testNoTrumphContractPointsOneMore.put(3, 40+30*2  +30 + premiaZaKoncowke);
+        testNoTrumphContractPointsOneMore.put(4, 40+30*3  +30 + premiaZaKoncowke);
+        testNoTrumphContractPointsOneMore.put(5, 40+30*4  +30 + premiaZaKoncowke);
+        testNoTrumphContractPointsOneMore.put(6, 40+30*5  +30 + premiaZaKoncowke+premiaZaSzlemika);
 
         testPointsForMinorContractOneMoreDouble.put(1, 2*20+ nadrobkaZKontra + karaZaKontre +premiaZaCzesciowke); //kontrakt np 1karo + 1 lewa z kontrą (20)*2 +100 za nadróbkę + 50 nieudaną kontrę + 300 premi za końcówkę
         testPointsForMinorContractOneMoreDouble.put(2, 2*40+ nadrobkaZKontra + karaZaKontre + premiaZaCzesciowke);
@@ -111,33 +180,148 @@ public class CountingPointsForGameTestBefore {
         testPointsForMinorContractOneMoreDouble.put(5, 2* 100+ nadrobkaZKontra+ karaZaKontre + premiaZaKoncowke);
         testPointsForMinorContractOneMoreDouble.put(6, 2*120+ nadrobkaZKontra+ karaZaKontre + premiaZaKoncowke +premiaZaSzlemika);
        // testPointsForMinorContractOneMoreDouble.put(7, 240+50+300); nie ma sensu - nie może być 7 i jedna lepiej!!!
+//todo add redouble example (and nt/major double ew.
 
+        //example of two more
+        testNoTrumphContractPointsTwoMore.put(1, 40       +60 + premiaZaCzesciowke);
+        testNoTrumphContractPointsTwoMore.put(2, 40+30    +60 + premiaZaCzesciowke);
+        testNoTrumphContractPointsTwoMore.put(3, 40+2*30  +60 + premiaZaKoncowke);
+        testNoTrumphContractPointsTwoMore.put(4, 40+3*30  +60 + premiaZaKoncowke);
+        testNoTrumphContractPointsTwoMore.put(5, 40+4*30  +60 + premiaZaKoncowke);
+        //     testNoTrumphContractPointsTwoMore.put(6, 40+5*30  +60 + premiaZaKoncowke); Nie może być 6 i dwie lepiej
+
+
+        testMajorContractPointsTwoMore.put(1, 30    +60 + premiaZaCzesciowke);
+        testMajorContractPointsTwoMore.put(2, 2*30  +60 + premiaZaCzesciowke);
+        testMajorContractPointsTwoMore.put(3, 3*30  +60 + premiaZaCzesciowke);
+        testMajorContractPointsTwoMore.put(4, 4*30  +60 + premiaZaKoncowke);
+        testMajorContractPointsTwoMore.put(5, 5*30  +60 + premiaZaKoncowke);
+        //     testMajorContractPointsTwoMore.put(6, 6*30  +60 + premiaZaKoncowke); Nie może być 6 i dwie lepiej
 
         testNoTrumphContractPointsOneMoreDouble.put(1, 2*40 + nadrobkaZKontra+  karaZaKontre + premiaZaCzesciowke);
         testNoTrumphContractPointsOneMoreDouble.put(2, 2*(40+30)  + nadrobkaZKontra+  +premiaZaKoncowke  + karaZaKontre);
-        testNoTrumphContractPointsOneMoreDouble.put(3, 200 + nadrobkaZKontra+ +premiaZaKoncowke  + karaZaKontre);
-        testNoTrumphContractPointsOneMoreDouble.put(4, 260 + nadrobkaZKontra+ +premiaZaKoncowke  + karaZaKontre);
+        testNoTrumphContractPointsOneMoreDouble.put(3, 2*(40+2*30) + nadrobkaZKontra+ +premiaZaKoncowke  + karaZaKontre);
+        testNoTrumphContractPointsOneMoreDouble.put(4, 2*(40+3*30) + nadrobkaZKontra+ +premiaZaKoncowke  + karaZaKontre);
+        testNoTrumphContractPointsOneMoreDouble.put(5, 2*(40+4*30) + nadrobkaZKontra+ +premiaZaKoncowke  + karaZaKontre);
+        testNoTrumphContractPointsOneMoreDouble.put(6, 2*(40+5*30) + nadrobkaZKontra+ +premiaZaKoncowke  + karaZaKontre + premiaZaSzlemika);
+
+//todo add redouble example (and minor/major double ew.
+
+        //example of nt more more only on nt
+        testNoTrumphContractPointsThreeMore.put(1, 40       +90 + premiaZaCzesciowke);
+        testNoTrumphContractPointsThreeMore.put(2, 40+30    +90 + premiaZaCzesciowke);
+        testNoTrumphContractPointsThreeMore.put(3, 40+2*30  +90 + premiaZaKoncowke);
+        testNoTrumphContractPointsThreeMore.put(4, 40+3*30  +90 + premiaZaKoncowke);
+       //   testNoTrumphContractPointsThreeMore.put(5, 40+4*30  +90 + premiaZaKoncowke);
+
+        testNoTrumphContractPointsFourMore.put(1, 40       +120 + premiaZaCzesciowke);
+        testNoTrumphContractPointsFourMore.put(2, 40+30    +120 + premiaZaCzesciowke);
+        testNoTrumphContractPointsFourMore.put(3, 40+2*30  +120 + premiaZaKoncowke);
 
 
+        testNoTrumphContractPointsFiveMore.put(1, 40       +150 + premiaZaCzesciowke);
+        testNoTrumphContractPointsFiveMore.put(2, 40+30    +150 + premiaZaCzesciowke);
+
+        testNoTrumphContractPointsSixMore.put(1, 40        +180 + premiaZaCzesciowke);
+
+// major more more
+        testMajorContractPointsThreeMore.put(1, 30    +90 + premiaZaCzesciowke);
+        testMajorContractPointsThreeMore.put(2, 2*30  +90 + premiaZaCzesciowke);
+        testMajorContractPointsThreeMore.put(3, 3*30  +90 + premiaZaCzesciowke);
+        testMajorContractPointsThreeMore.put(4, 4*30  +90 + premiaZaKoncowke);
+        //   testNoTrumphContractPointsThreeMore.put(5, 40+4*30  +90 + premiaZaKoncowke);
+
+        testMajorContractPointsFourMore.put(1, 30    +120 + premiaZaCzesciowke);
+        testMajorContractPointsFourMore.put(2, 2*30  +120 + premiaZaCzesciowke);
+        testMajorContractPointsFourMore.put(3, 3*30  +120 + premiaZaCzesciowke);
+
+
+        testMajorContractPointsFiveMore.put(1, 30       +150 + premiaZaCzesciowke);
+        testMajorContractPointsFiveMore.put(2, 2*30    +150 + premiaZaCzesciowke);
+
+        testMajorContractPointsSixMore.put(1, 30        +180 + premiaZaCzesciowke);
+//todo minor more more
+
+        //example test jedna wpadka
         testPointsForMajorContractMinusOne.put(1, -50);
         testPointsForMajorContractMinusOne.put(2, -50);
+        testPointsForMajorContractMinusOne.put(3, -50);
+        testPointsForMajorContractMinusOne.put(4, -50);
+        testPointsForMajorContractMinusOne.put(5, -50);
+        testPointsForMajorContractMinusOne.put(6, -50);
 
         testPointsForNoTrumphContractMinusOneDouble.put(1, -100);
         testPointsForNoTrumphContractMinusOneDouble.put(2, -100);
-
-        testPointsForMajorContractMinusMore.put(1, -50);
-        testPointsForMajorContractMinusMore.put(2, -100);
-        testPointsForMajorContractMinusMore.put(3, -150);
-
-        testPointsForNoTrumphContractMinusOneDouble.put(1, -100);
-        testPointsForNoTrumphContractMinusOneDouble.put(2, -100);
+        testPointsForNoTrumphContractMinusOneDouble.put(4, -100);
+        testPointsForNoTrumphContractMinusOneDouble.put(5, -100);
 
 
-        testPointsForMajorContractMinusMoreDouble.put(1, -100);
-        testPointsForMajorContractMinusMoreDouble.put(2, -300);
-        testPointsForMajorContractMinusMoreDouble.put(3, -500);
-        testPointsForMajorContractMinusMoreDouble.put(4, -800);
-        testPointsForMajorContractMinusMoreDouble.put(5, -1100);
+//test for contract major on level 3 with missig p
+
+        testPointsForMajor3ContractMinusMore.put(1, -50);
+        testPointsForMajor3ContractMinusMore.put(2, -2*50);
+        testPointsForMajor3ContractMinusMore.put(3, -3*50);
+        testPointsForMajor3ContractMinusMore.put(4, -4*50);
+        testPointsForMajor3ContractMinusMore.put(5, -5*50);
+        testPointsForMajor3ContractMinusMore.put(6, -6*50);
+        testPointsForMajor3ContractMinusMore.put(7, -7*50);
+        testPointsForMajor3ContractMinusMore.put(8, -8*50);
+        testPointsForMajor3ContractMinusMore.put(9, -9*50);
+
+        testPointsForMajor3ContractMinusMoreDouble.put(1, -100);
+        testPointsForMajor3ContractMinusMoreDouble.put(2, -100-200);
+        testPointsForMajor3ContractMinusMoreDouble.put(3, -100-200-200);
+        testPointsForMajor3ContractMinusMoreDouble.put(4, -500-300);
+        testPointsForMajor3ContractMinusMoreDouble.put(5, -500-2*300);
+        testPointsForMajor3ContractMinusMoreDouble.put(6, -500-3*300);
+        testPointsForMajor3ContractMinusMoreDouble.put(7, -500-4*300);
+        testPointsForMajor3ContractMinusMoreDouble.put(8, -500-5*300);
+        testPointsForMajor3ContractMinusMoreDouble.put(9, -500-6*300);
+
+       testPointsForMajor3ContractMinusMoreReDouble.put(1, -100*2);
+       testPointsForMajor3ContractMinusMoreReDouble.put(2, -300*2);
+       testPointsForMajor3ContractMinusMoreReDouble.put(3, -500*2);
+       testPointsForMajor3ContractMinusMoreReDouble.put(4, -800*2);
+       testPointsForMajor3ContractMinusMoreReDouble.put(5, -1100*2);
+       testPointsForMajor3ContractMinusMoreReDouble.put(6, -1400*2);
+       testPointsForMajor3ContractMinusMoreReDouble.put(7, -1700*2);
+       testPointsForMajor3ContractMinusMoreReDouble.put(8, -2000*2);
+       testPointsForMajor3ContractMinusMoreReDouble.put(9, -2300*2);
+
+
+
+        //test for contract nt on level 3 with missig p
+
+        testPointsFor3NTContractMinusMore.put(1, -50);
+        testPointsFor3NTContractMinusMore.put(2, -100);
+        testPointsFor3NTContractMinusMore.put(3, -150);
+        testPointsFor3NTContractMinusMore.put(4, -200);
+        testPointsFor3NTContractMinusMore.put(5, -250);
+        testPointsFor3NTContractMinusMore.put(6, -300);
+        testPointsFor3NTContractMinusMore.put(7, -350);
+        testPointsFor3NTContractMinusMore.put(8, -400);
+        testPointsFor3NTContractMinusMore.put(9, -450);
+
+        testPointsFor3NTContractMinusMoreDouble.put(1, -100);
+        testPointsFor3NTContractMinusMoreDouble.put(2, -300);
+        testPointsFor3NTContractMinusMoreDouble.put(3, -500);
+        testPointsFor3NTContractMinusMoreDouble.put(4, -800);
+        testPointsFor3NTContractMinusMoreDouble.put(5, -1100);
+        testPointsFor3NTContractMinusMoreDouble.put(6, -1400);
+        testPointsFor3NTContractMinusMoreDouble.put(7, -1700);
+        testPointsFor3NTContractMinusMoreDouble.put(8, -2000);
+        testPointsFor3NTContractMinusMoreDouble.put(9, -2300);
+
+
+        testPointsFor3NTContractMinusMoreReDouble.put(1, -100*2);
+        testPointsFor3NTContractMinusMoreReDouble.put(2, -300*2);
+        testPointsFor3NTContractMinusMoreReDouble.put(3, -500*2);
+        testPointsFor3NTContractMinusMoreReDouble.put(4, -800*2);
+        testPointsFor3NTContractMinusMoreReDouble.put(5, -1100*2);
+        testPointsFor3NTContractMinusMoreReDouble.put(6, -1400*2);
+        testPointsFor3NTContractMinusMoreReDouble.put(7, -1700*2);
+        testPointsFor3NTContractMinusMoreReDouble.put(8, -2000*2);
+        testPointsFor3NTContractMinusMoreReDouble.put(9, -2300*2);
     }
 
 
@@ -239,6 +423,16 @@ public class CountingPointsForGameTestBefore {
         }
     }
 
+    @Test
+    public void testMinorContractOneMore() throws InvalidContractLevelException {
+        //for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testPointsForMinorContractOneMore.keySet())) {
+            Integer res = new PointsForContract(p, p + 1, "d", false, false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym  z jedną nadróbką wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testPointsForMinorContractOneMore.get(p), res);
+            //   }
+        }
+    }
 
     @Test
     public void testMinorContractPointsOneMoreDouble() throws InvalidContractLevelException {
@@ -260,6 +454,119 @@ public class CountingPointsForGameTestBefore {
             //  }
         }}
 
+    @Test
+    public void testNoTrumphContractPointsOneMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testNoTrumphContractPointsOneMore.keySet())) {
+            Integer res = new PointsForContract(p, p+1 ,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w bezatu z jedną nadróbką  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testNoTrumphContractPointsOneMore.get(p), res);
+            //  }
+        }}
+
+    @Test
+    public void testMajorContractPointsTwoMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testMajorContractPointsTwoMore.keySet())) {
+            Integer res = new PointsForContract(p, p+2 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w starszy  z dwiema nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testMajorContractPointsTwoMore.get(p), res);
+            //  }
+        }}
+
+    @Test
+    public void testNoTrumphContractPointsTwoMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testNoTrumphContractPointsTwoMore.keySet())) {
+            Integer res = new PointsForContract(p, p+2 ,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z dwiema nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testNoTrumphContractPointsTwoMore.get(p), res);
+            //  }
+        }}
+
+    @Test
+    public void testNoTrumphContractPointsThreeMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testNoTrumphContractPointsThreeMore.keySet())) {
+            Integer res = new PointsForContract(p, p+3 ,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z trzema nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testNoTrumphContractPointsThreeMore.get(p), res);
+            //  }
+        }}
+    @Test
+    public void testNoTrumphContractPointsFourMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testNoTrumphContractPointsFourMore.keySet())) {
+            Integer res = new PointsForContract(p, p+4 ,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z czterema nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testNoTrumphContractPointsFourMore.get(p), res);
+            //  }
+        }}
+
+    @Test
+    public void testNoTrumphContractPointsFiveMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testNoTrumphContractPointsFiveMore.keySet())) {
+            Integer res = new PointsForContract(p, p+5 ,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z pięcioma nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testNoTrumphContractPointsFiveMore.get(p), res);
+            //  }
+        }}
+
+    @Test
+    public void testNoTrumphContractPointsSixMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testNoTrumphContractPointsSixMore.keySet())) {
+            Integer res = new PointsForContract(p, p+6 ,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z sześcioma nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testNoTrumphContractPointsSixMore.get(p), res);
+            //  }
+        }}
+
+        //
+
+    @Test
+    public void testMajorContractPointsThreeMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testMajorContractPointsThreeMore.keySet())) {
+            Integer res = new PointsForContract(p, p+3 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w starszy  z trzema nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testMajorContractPointsThreeMore.get(p), res);
+            //  }
+        }}
+    @Test
+    public void testMajorContractPointsFourMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testMajorContractPointsFourMore.keySet())) {
+            Integer res = new PointsForContract(p, p+4 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w starszy  z czterema nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testMajorContractPointsFourMore.get(p), res);
+            //  }
+        }}
+
+    @Test
+    public void testMajorContractPointsFiveMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testMajorContractPointsFiveMore.keySet())) {
+            Integer res = new PointsForContract(p, p+5 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w starszy z pięcioma nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testMajorContractPointsFiveMore.get(p), res);
+            //  }
+        }}
+
+    @Test
+    public void testMajorContractPointsSixMore()  throws InvalidContractLevelException {
+        //    for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testMajorContractPointsSixMore.keySet())) {
+            Integer res = new PointsForContract(p, p+6 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości " + p + " w starszy   z sześcioma nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testMajorContractPointsSixMore.get(p), res);
+            //  }
+        }}
+
+    //
+
+
 
     @Test
     public void testMajorContractMinusOne() throws InvalidContractLevelException {
@@ -275,10 +582,10 @@ public class CountingPointsForGameTestBefore {
     @Test
     public void testMajorContractMinusMore() throws InvalidContractLevelException {
         //for(int i=1; i<2; i++){
-        for (int p : new TreeSet<Integer>(testPointsForMajorContractMinusMore.keySet())) {
+        for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMore.keySet())) {
             Integer res = new PointsForContract(3, 3 - p, "s", false, false, beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości 3 w kolorze starszym  bez " + p +" wynik jest: " + res + " punktów.");
-            Assert.assertEquals(testPointsForMajorContractMinusMore.get(p), res);
+            Assert.assertEquals(testPointsForMajor3ContractMinusMore.get(p), res);
             //   }
         }
     }
@@ -294,14 +601,28 @@ public class CountingPointsForGameTestBefore {
         }
     }
 
+
     @Test
     public void testNoTrumphContractMinusMoreDouble() throws InvalidContractLevelException {
         //for(int i=1; i<2; i++){
-        for (int p : new TreeSet<Integer>(testPointsForMajorContractMinusMoreDouble.keySet())) {
-            Integer res = new PointsForContract(3, 3 - p, "s", true, false, beforeAfter).getCalculatedPointsForContract();
+        for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMoreDouble.keySet())) {
+            Integer res = new PointsForContract(3, 3 - p, "nt", true, false, beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości 3 w starszym  bez  "+ p+ "  z kontą wynik jest: " + res + " punktów.");
-            Assert.assertEquals(testPointsForMajorContractMinusMoreDouble.get(p), res);
+            Assert.assertEquals(testPointsForMajor3ContractMinusMoreDouble.get(p), res);
             //   }
         }
     }
+
+    @Test
+    public void testNoTrumphContractMinusMoreReDouble() throws InvalidContractLevelException {
+        //for(int i=1; i<2; i++){
+        for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMoreReDouble.keySet())) {
+            Integer res = new PointsForContract(3, 3 - p, "nt", true, true, beforeAfter).getCalculatedPointsForContract();
+            logger.info("Dla kontraktu o wysokości 3 w starszym  bez  "+ p+ "  z rekontą wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testPointsForMajor3ContractMinusMoreReDouble.get(p), res);
+            //   }
+        }
+    }
+
+
 }

@@ -258,7 +258,7 @@ class OptionMenu extends MenuBar {
         checkboxReDouble.setValue(false);
         content.addComponent(checkboxReDouble);
 
-        TextField numberOfTricks = new TextField("Podaj liczbę zebranych lew:");
+        TextField numberOfTricks = new TextField("Podaj liczbę zebranych  lew:"); //przez rozgrywających
         content.addComponent(numberOfTricks);
 
 
@@ -310,12 +310,13 @@ class OptionMenu extends MenuBar {
                 if (checkboxMajorColor.getValue()) color = "s";
                 else if (checkboxMinorColor.getValue()) color = "d";
 
-                int foo3 = Integer.parseInt(numberOfTricks.getValue()) - 6;
+                int foo3 = Integer.parseInt(numberOfTricks.getValue())-6;
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 if (checkboxThey.getValue()) {
                     foo = 40 - foo;
                     foo3 = 13 - foo3;
                 }
+               // foo3=foo3-6;
                 PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue());
                 String des = foo22.getDescription();
                 int foo2 =foo22.getCalculatedPointsForContract();
