@@ -17,7 +17,7 @@ public class RubberScoring {
      * place
      * names of players
      * photos etc ...
-     * should be done automaticly? - gdzieś tak widziałam...
+     * should be done automaticly? but how????- gdzieś tak widziałam...
      */
     private int gameID =0;
 
@@ -89,7 +89,7 @@ public class RubberScoring {
     }
 
     public static String getRubberScoringAsString(RubberScoring ruberScoring) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-        StringBuilder s = new StringBuilder("***\n  Wyniki dla gry ****  \n");
+        StringBuilder s = new StringBuilder("\n*** Wyniki dla gry ****  \n");
         Map<Integer, ResultsOfOneGame> map = ruberScoring.scorringForOneGame;
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
 
@@ -97,6 +97,7 @@ public class RubberScoring {
             s.append("\n dla ").append(key).append(" gry jest ").append(map.get(key).getPointsForContract()).append(" punktów i wynik jest ").append(map.get(key).getResults()).append(" impów");
 
         }
+        s.append("\n\n \t \t***\n");
         return s.toString();
     };
 

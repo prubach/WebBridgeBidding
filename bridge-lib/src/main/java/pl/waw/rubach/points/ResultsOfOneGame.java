@@ -9,14 +9,7 @@ public class ResultsOfOneGame {
      */
     private float pointsInBothHands;
 
-
-    /**
-     * biding height (you shoud take 6+ this triks to win game
-     * from other part of aplication - results of biding part or user imput
-     */
-    private int gameLevel;
-
-    /**
+     /**
      * point achved by playng contract with some additiona or lacking triks (calculated from normal bridge scoring)
      * (could be also calculated by program in future)
      */
@@ -71,14 +64,6 @@ public class ResultsOfOneGame {
 
     public void setPointsInBothHands(int pointsInBothHands) {
         this.pointsInBothHands = pointsInBothHands;
-    }
-
-    public int getGameLevel() {
-        return gameLevel;
-    }
-
-    public void setGameLevel(int gameLevel) {
-        this.gameLevel = gameLevel;
     }
 
     public int getPointsForContract() {
