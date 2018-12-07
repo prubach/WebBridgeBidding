@@ -311,13 +311,17 @@ class OptionMenu extends MenuBar {
                 else if (checkboxMinorColor.getValue()) color = "d";
 
                 int foo3 = Integer.parseInt(numberOfTricks.getValue());
+                if(foo3>13 || foo3<0) throw new InvalidNumberOfTrickTakenException("liczba wziętych lew źle podana - spróbuj jeszcze raz");
+
+                boolean assumption = checkbox1AssumptionWe.getValue();
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 if (checkboxThey.getValue()) {
                     foo = 40 - foo;
                     foo3 = 13 - foo3;
+                    assumption=checkbox1AssumptionThey.getValue();
                 }
                // foo3=foo3-6;
-                PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue());
+                PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
                 String des = foo22.getDescription();
                 int foo2 =foo22.getCalculatedPointsForContract();
                 if(checkboxThey.getValue()) {
@@ -325,9 +329,9 @@ class OptionMenu extends MenuBar {
                 }
 
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  " +
-                        "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
-            } catch (NumberFormatException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
+                     //   "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
+            } catch (NumberFormatException | InvalidNumberOfTrickTakenException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
                 resultsLabel.setValue("<font color=red>" + message + "</font>");
@@ -344,6 +348,7 @@ class OptionMenu extends MenuBar {
         float footable[] = {0,0,0,0};
         int foo2[] ={0,0,0,0};
 
+        //Fill example date:
         numberOfContract.setValue("1");
         pointsInBothHands.setValue("28");
         levelOfContract.setValue("6");
@@ -356,7 +361,7 @@ class OptionMenu extends MenuBar {
 
             try {
 
-                int contractNumber = Integer.parseInt(numberOfContract.getValue())-1;
+                int contractNumber = Integer.parseInt(numberOfContract.getValue())-1; //bo liczy od zera
 
                  checkboxFitWeTable[contractNumber] = checkboxFitWe.getValue();
                  checkboxFitTheyTable[contractNumber] = checkboxFitThey.getValue();
@@ -365,16 +370,18 @@ class OptionMenu extends MenuBar {
                 if (checkboxMajorColor.getValue()) color = "s";
                 else if (checkboxMinorColor.getValue()) color = "d";
 
-                int foo3 = Integer.parseInt(numberOfTricks.getValue()) - 6;
+                int foo3 = Integer.parseInt(numberOfTricks.getValue()); //-6 tu był problem
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
+                boolean assumption = checkbox1AssumptionWe.getValue();
 
-                footable[contractNumber]= foo;
                 if (checkboxThey.getValue()) {
                     foo = 40 - foo;
                     foo3 = 13 - foo3;
+                    assumption=checkbox1AssumptionThey.getValue();
                 }
+                footable[contractNumber]= foo;
 
-                foo2[contractNumber]= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+                foo2[contractNumber]= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption).getCalculatedPointsForContract();
                 if(checkboxThey.getValue()) {
                     foo2[contractNumber] = -foo2[contractNumber];}
 
