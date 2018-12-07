@@ -10,8 +10,13 @@ public class PointsForContract {
     private String description = "Opis punktów: ";
 
 
-    public PointsForContract(int levelOfGame, int numberOfTrickTakenAbove6, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
+    public PointsForContract(int levelOfGame, int numberOfTrickTaken, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
             throws NoSuchElementException, InvalidContractLevelException {
+
+        if (levelOfGame > 7 || levelOfGame < 1)
+            throw new InvalidContractLevelException("Nie ma takiego poziomu gry spróbuj jeszcze raz"); // pyt : czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
+
+        int numberOfTrickTakenAbove6 = numberOfTrickTaken -6;
 
         if (redoubleGame) doubleGame = false;
 
@@ -23,7 +28,7 @@ public class PointsForContract {
             if (doubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
             if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 4;
 
-            description = description + "punkty za ugraną grę:" + levelOfGame + " " + gameColor + " to: "+ calculatedPointsForContract + ",  + ";
+            description = description + "punkty za ugraną grę:" + levelOfGame + " " + gameColor + " to: "+ calculatedPointsForContract + "pkt. ,  + ";
         }
         if (numberOfTrickTakenAbove6 > levelOfGame) {
             // nadróbki
@@ -85,12 +90,9 @@ public class PointsForContract {
         } else return 0;
     }
 
-    private int getMainPoints(int levelOfGame, String gameColor) throws InvalidContractLevelException {
+    private int getMainPoints(int levelOfGame, String gameColor) throws NoSuchElementException{
 
-        if (levelOfGame > 7 || levelOfGame < 1)
-            throw new InvalidContractLevelException("Nie ma takiego poziomu gry spróbuj jeszcze raz");
-
-        switch (gameColor) {
+            switch (gameColor) {
             case "s":
             case "S":
             case "h":

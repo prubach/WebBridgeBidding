@@ -310,7 +310,7 @@ class OptionMenu extends MenuBar {
                 if (checkboxMajorColor.getValue()) color = "s";
                 else if (checkboxMinorColor.getValue()) color = "d";
 
-                int foo3 = Integer.parseInt(numberOfTricks.getValue())-6;
+                int foo3 = Integer.parseInt(numberOfTricks.getValue());
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 if (checkboxThey.getValue()) {
                     foo = 40 - foo;
