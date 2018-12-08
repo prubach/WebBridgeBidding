@@ -30,27 +30,9 @@ public class PointsForContract {
 
             description = description + "punkty za ugraną grę:" + levelOfGame + " " + gameColor + " to: "+ calculatedPointsForContract + "pkt. ,  + ";
         }
-        if (numberOfTrickTakenAbove6 > levelOfGame) {
-            // nadróbki
-            if (!doubleGame && !redoubleGame) {
-                aditionalTricksPoints = getMainPoints(numberOfTrickTakenAbove6 - levelOfGame, gameColor);  //bez kontry i rekontry - tak samo jak lewa
-                if (gameColor.equals("nt")||gameColor.equals("n")||gameColor.equals("N")||gameColor.equals("NT"))
-                    aditionalTricksPoints = aditionalTricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
-            }
-            if (doubleGame && !asumption)
-                aditionalTricksPoints = (numberOfTrickTakenAbove6 - levelOfGame) * 100;   //z kontrą przed partią - za 100
-            if (doubleGame && asumption)
-                aditionalTricksPoints = (numberOfTrickTakenAbove6 - levelOfGame) * 200;    // z kontrą po partii za 200
-
-            if (redoubleGame && !asumption)
-                aditionalTricksPoints = (numberOfTrickTakenAbove6 - levelOfGame) * 200;     // z rekontrą przed partią za 200
-            if (redoubleGame && asumption)
-                aditionalTricksPoints = (numberOfTrickTakenAbove6 - levelOfGame) * 400;     //z rekontrą po partii za 400
-
-            description = description + " punkty z "+ (numberOfTrickTakenAbove6 - levelOfGame) +" nadróbek to: " + aditionalTricksPoints + "pkt, + ";
-
-
-        } else if (numberOfTrickTakenAbove6 < levelOfGame) {   //wpadki - mniej lew niż zalicytowano -wpadki z rekontrą x2 (ale nie jestem pewna- bo nie wiem jak się liczą????)
+        if (numberOfTrickTakenAbove6 < levelOfGame) {
+            //Undertrick points -
+            // mniej lew niż zalicytowano -wpadki z rekontrą x2 (sprawdzone)
             int undertricks = levelOfGame - numberOfTrickTakenAbove6;
             if (undertricks == 1) description = description + " punkty z " + undertricks + " wpadki. ";
             else description = description + " punkty z " + undertricks + " wpadek. ";
@@ -74,30 +56,21 @@ public class PointsForContract {
                 calculatedPointsForContract = -undertricks * 300 + 100;  //z kontrą po partii kolejne za 300
 
             if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
-        }
 
-        calculatedPointsForContract = calculatedPointsForContract
-                + getKaraZaNieudanaKontre(levelOfGame, numberOfTrickTakenAbove6, doubleGame, redoubleGame)
-                + getVunerablePoints(calculatedPointsForContract, levelOfGame, numberOfTrickTakenAbove6, asumption)
+        }
+             calculatedPointsForContract = calculatedPointsForContract
+                + getOvertrickPoints(numberOfTrickTakenAbove6,levelOfGame,asumption,doubleGame,redoubleGame,gameColor)
+                + getBonusDoubleRedouble(levelOfGame, numberOfTrickTakenAbove6, doubleGame, redoubleGame)
+                + getGamePartGameBonus(calculatedPointsForContract, levelOfGame, numberOfTrickTakenAbove6, asumption)
                 + getSlamPremiaPoints(levelOfGame, numberOfTrickTakenAbove6, asumption)
                 + aditionalTricksPoints;
     }
 
-    private int getKaraZaNieudanaKontre(int levelOfGame, int numberOfTrickTakenAbove6, boolean doubleGame, boolean redoubleGame) {
-        if ((doubleGame ) && levelOfGame <= numberOfTrickTakenAbove6) {
-            description = description + " kara za nieudaną kontrę, ";
-            return 50;
 
-        } else if ((redoubleGame)  && levelOfGame <= numberOfTrickTakenAbove6){
-            description = description + " kara za nieudaną rekontrę, ";
-            return 100;
-        }
-        else return 0;
-    }
 
     private int getMainPoints(int levelOfGame, String gameColor) throws NoSuchElementException{
 
-            switch (gameColor) {
+        switch (gameColor) {
             case "s":
             case "S":
             case "h":
@@ -121,7 +94,44 @@ public class PointsForContract {
         }
     }
 
-    private int getVunerablePoints(int calculatedPointsForContract, int levelOfGame, int numberOfTrickTakenAbove6, boolean assumption) {
+    private int getOvertrickPoints(int numberOfTrickTakenAbove6,int levelOfGame, boolean asumption, boolean doubleGame, boolean redoubleGame, String gameColor) {
+        int aditionalTricksPoints = 0;
+        if (numberOfTrickTakenAbove6 > levelOfGame) {
+
+
+            // Overtrick points
+            if (!doubleGame && !redoubleGame) {
+                aditionalTricksPoints = getMainPoints(numberOfTrickTakenAbove6 - levelOfGame, gameColor);  //bez kontry i rekontry - tak samo jak lewa
+                if (gameColor.equals("nt") || gameColor.equals("n") || gameColor.equals("N") || gameColor.equals("NT"))
+                    aditionalTricksPoints = aditionalTricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
+            }
+            if (doubleGame && !asumption)
+                aditionalTricksPoints = (numberOfTrickTakenAbove6 - levelOfGame) * 100;   //z kontrą przed partią - za 100
+            if (doubleGame && asumption)
+                aditionalTricksPoints = (numberOfTrickTakenAbove6 - levelOfGame) * 200;    // z kontrą po partii za 200
+
+            if (redoubleGame && !asumption)
+                aditionalTricksPoints = (numberOfTrickTakenAbove6 - levelOfGame) * 200;     // z rekontrą przed partią za 200
+            if (redoubleGame && asumption)
+                aditionalTricksPoints = (numberOfTrickTakenAbove6 - levelOfGame) * 400;     //z rekontrą po partii za 400
+
+            description = description + " punkty z " + (numberOfTrickTakenAbove6 - levelOfGame) + " nadróbek to: " + aditionalTricksPoints + "pkt, + ";
+        }
+    return aditionalTricksPoints;}
+
+    private int getBonusDoubleRedouble(int levelOfGame, int numberOfTrickTakenAbove6, boolean doubleGame, boolean redoubleGame) {
+        if ((doubleGame ) && levelOfGame <= numberOfTrickTakenAbove6) {
+            description = description + " kara za nieudaną kontrę, ";
+            return 50;
+
+        } else if ((redoubleGame)  && levelOfGame <= numberOfTrickTakenAbove6){
+            description = description + " kara za nieudaną rekontrę, ";
+            return 100;
+        }
+        else return 0;
+    }
+
+    private int getGamePartGameBonus(int calculatedPointsForContract, int levelOfGame, int numberOfTrickTakenAbove6, boolean assumption) {
 
         if (calculatedPointsForContract >= 100 && numberOfTrickTakenAbove6 >= levelOfGame) {
             description = description + " punkty za ugraną końcówkę.";
@@ -140,6 +150,8 @@ public class PointsForContract {
         }
         return 0;
     }
+
+
 
     //getter
     public int getCalculatedPointsForContract() {

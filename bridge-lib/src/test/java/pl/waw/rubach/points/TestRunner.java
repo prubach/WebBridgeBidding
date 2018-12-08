@@ -38,8 +38,13 @@ public class TestRunner {
             System.out.println(failureCountingPointsTestAfter.toString());
         }
         System.out.println("CountingPointsForGameTestAfter test: " + resultCountingPointsTestAfter.wasSuccessful());
-//=======================================Basic
 
+//=======================================Rubberscoring
+        Result resultRubberScoringTest = JUnitCore.runClasses(RubberScoringTest.class);
+        for (Failure failureRubberScoringTest : resultRubberScoringTest.getFailures()) {
+            System.out.println(failureRubberScoringTest.toString());
+        }
+        System.out.println("Rubber Scorring  test: " + resultRubberScoringTest.wasSuccessful());
 
     }
 }
