@@ -26,6 +26,9 @@ public class ImpExpTest {
     @Before
     public void fillTestPointsMap() {
         //testPointsMap.put()
+      //  testImpPointsMap.put(-1, 0);
+        testImpPointsMap.put(0, 0);
+        testImpPointsMap.put(20, 1);
         testImpPointsMap.put(25, 1);
         testImpPointsMap.put(50, 2);
         testImpPointsMap.put(120, 3);
@@ -33,6 +36,12 @@ public class ImpExpTest {
         testImpPointsMap.put(1090, 14);
         testImpPointsMap.put(1200, 15);
         testImpPointsMap.put(2000, 19);
+        testImpPointsMap.put(6000, 24);
+        testImpPointsMap.put(10000, 24);
+       // testImpPointsMap.put(20000, 24);
+
+
+//test expected results if diferent assumption (fit/no fit)
 
         testExpResBeforeFitMap.put(10f, -550);
         testExpResBeforeFitMap.put(12f, -460);
@@ -48,7 +57,6 @@ public class ImpExpTest {
         testExpResBeforeFitMap.put(39.5f, 1400);
         testExpResBeforeFitMap.put(40f, 1400);
 
-
         testExpResBeforeNoFitMap.put(20f, 0);
         testExpResBeforeNoFitMap.put(20.5f, 25);
         testExpResBeforeNoFitMap.put(25f, 200);
@@ -56,7 +64,6 @@ public class ImpExpTest {
         testExpResBeforeNoFitMap.put(30f, 460);
         testExpResBeforeNoFitMap.put(35f, 1000);
         testExpResBeforeNoFitMap.put(39.5f, 1400);
-
 
         testExpResAfterFitMap.put(10f, -750);
         testExpResAfterFitMap.put(15f, -520);
@@ -85,11 +92,13 @@ public class ImpExpTest {
     @Test
     public void testImpPoints() {
         for (int p : new TreeSet<Integer>(testImpPointsMap.keySet())) {
+     //   if(ImpTable.getInstance().checkImputValue(0,10000,p)){
             Integer res = ImpTable.getInstance().getPoints(p);
             logger.info("Dla " + p + " pkt: " + res + " impów.");
-            Assert.assertEquals(testImpPointsMap.get(p), res);
-        }
+            Assert.assertEquals(testImpPointsMap.get(p), res);}
+      //  }
     }
+
 
 
     @Test
@@ -99,22 +108,27 @@ public class ImpExpTest {
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Fit");
             Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
         }
+
         for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
             Integer res = ExpectedResultsTable.getInstance().getPoints(p, true, true, true);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Fit");
             Assert.assertEquals(testExpResAfterFitMap.get(p), res);
         }
 
-        //for they play (points is 40 -p and results is minus
+        //for they play (points is 40 -p and results is minus - excluding 20 pc because it is previour case)
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-            Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, true, false, false);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Fit");
-            Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
+            if (p != 20) {
+                Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, true, false, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Fit");
+                Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
+            }
         }
         for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
-            Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, true, true, true);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Fit");
-            Assert.assertEquals(testExpResAfterFitMap.get(p), res);
+            if (p != 20) {
+                Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, true, true, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Fit");
+                Assert.assertEquals(testExpResAfterFitMap.get(p), res);
+            }
         }
     }
 
@@ -131,17 +145,21 @@ public class ImpExpTest {
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Bez Fitu");
             Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
         }
-        //for they play (points is 40 -p and results is minus
+        //for they play (points is 40 -p and results is minus - excluding 20 pc because it is previour case)
         for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
-            Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, false, false, false);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Bez Fitu");
-            Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
+            if (p != 20) {
+                Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, false, false, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Bez Fitu");
+                Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
+            }
         }
 
         for (float p : new TreeSet<Float>(testExpResAfterNoFitMap.keySet())) {
-            Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, false, true, true);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Bez Fitu");
-            Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
+            if (p != 20) {
+                Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, false, true, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Bez Fitu");
+                Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
+            }
         }
     }
 
