@@ -314,11 +314,17 @@ class OptionMenu extends MenuBar {
                 if(foo3>13 || foo3<0) throw new InvalidNumberOfTrickTakenException("liczba wziętych lew źle podana - spróbuj jeszcze raz");
 
                 boolean assumption = checkbox1AssumptionWe.getValue();
+                boolean assumption2 = checkbox1AssumptionThey.getValue();
+                boolean fitWe = checkboxFitWe.getValue();
+                boolean fitThey = checkboxFitThey.getValue();
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 if (checkboxThey.getValue()) {
                     foo = 40 - foo;
                     foo3 = 13 - foo3;
                     assumption=checkbox1AssumptionThey.getValue();
+                    fitThey = checkboxFitWe.getValue();
+                    fitWe = checkboxFitThey.getValue();
+                    assumption2 =checkbox1AssumptionWe.getValue();
                 }
                // foo3=foo3-6;
                 PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
@@ -326,9 +332,10 @@ class OptionMenu extends MenuBar {
                 int foo2 =foo22.getCalculatedPointsForContract();
                 if(checkboxThey.getValue()) {
                     foo2 = -foo2;
+
                 }
 
-                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, assumption, assumption2, fitWe, fitThey);
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
                      //   "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
             } catch (NumberFormatException | InvalidNumberOfTrickTakenException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
