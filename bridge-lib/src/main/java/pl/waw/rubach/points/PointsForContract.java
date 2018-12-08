@@ -51,27 +51,27 @@ public class PointsForContract {
 
 
         } else if (numberOfTrickTakenAbove6 < levelOfGame) {   //wpadki - mniej lew niż zalicytowano -wpadki z rekontrą x2 (ale nie jestem pewna- bo nie wiem jak się liczą????)
-            int wpadki = levelOfGame - numberOfTrickTakenAbove6;
-            if (wpadki == 1) description = description + " punkty z " + wpadki + " wpadki. ";
-            else description = description + " punkty z " + wpadki + " wpadek. ";
+            int undertricks = levelOfGame - numberOfTrickTakenAbove6;
+            if (undertricks == 1) description = description + " punkty z " + undertricks + " wpadki. ";
+            else description = description + " punkty z " + undertricks + " wpadek. ";
 
             if (!asumption && !doubleGame && !redoubleGame)
-                calculatedPointsForContract = -wpadki * 50;   //bez kontry przed partią 50
-            if (!asumption && (doubleGame || redoubleGame) && wpadki == 1)
-                calculatedPointsForContract = -wpadki * 100;  //z kontrą przed partią pierwsza za 100
-            else if (!asumption && (doubleGame || redoubleGame) && wpadki == 2)
-                calculatedPointsForContract = -wpadki * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
-            else if (!asumption && (doubleGame || redoubleGame) && wpadki == 3)
-                calculatedPointsForContract = -wpadki * 200 + 100;
-            else if (!asumption && (doubleGame || redoubleGame) && wpadki >= 4)
-                calculatedPointsForContract = -wpadki * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
+                calculatedPointsForContract = -undertricks * 50;   //bez kontry przed partią 50
+            if (!asumption && (doubleGame || redoubleGame) && undertricks == 1)
+                calculatedPointsForContract = -undertricks * 100;  //z kontrą przed partią pierwsza za 100
+            else if (!asumption && (doubleGame || redoubleGame) && undertricks == 2)
+                calculatedPointsForContract = -undertricks * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
+            else if (!asumption && (doubleGame || redoubleGame) && undertricks == 3)
+                calculatedPointsForContract = -undertricks * 200 + 100;
+            else if (!asumption && (doubleGame || redoubleGame) && undertricks >= 4)
+                calculatedPointsForContract = -undertricks * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
 
             if (asumption && !doubleGame && !redoubleGame)
-                calculatedPointsForContract = -wpadki * 100;  //bez kontry po partii 100
-            if (asumption && (doubleGame || redoubleGame) && wpadki == 1)
-                calculatedPointsForContract = -wpadki * 200;  // z kontrą po partii pierwsza za 200
-            else if (asumption && (doubleGame || redoubleGame) && wpadki >= 2)
-                calculatedPointsForContract = -wpadki * 300 + 100;  //z kontrą po partii kolejne za 300
+                calculatedPointsForContract = -undertricks * 100;  //bez kontry po partii 100
+            if (asumption && (doubleGame || redoubleGame) && undertricks == 1)
+                calculatedPointsForContract = -undertricks * 200;  // z kontrą po partii pierwsza za 200
+            else if (asumption && (doubleGame || redoubleGame) && undertricks >= 2)
+                calculatedPointsForContract = -undertricks * 300 + 100;  //z kontrą po partii kolejne za 300
 
             if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
         }
@@ -84,10 +84,15 @@ public class PointsForContract {
     }
 
     private int getKaraZaNieudanaKontre(int levelOfGame, int numberOfTrickTakenAbove6, boolean doubleGame, boolean redoubleGame) {
-        if ((doubleGame || redoubleGame) && levelOfGame <= numberOfTrickTakenAbove6) {
+        if ((doubleGame ) && levelOfGame <= numberOfTrickTakenAbove6) {
             description = description + " kara za nieudaną kontrę, ";
             return 50;
-        } else return 0;
+
+        } else if ((redoubleGame)  && levelOfGame <= numberOfTrickTakenAbove6){
+            description = description + " kara za nieudaną rekontrę, ";
+            return 100;
+        }
+        else return 0;
     }
 
     private int getMainPoints(int levelOfGame, String gameColor) throws NoSuchElementException{

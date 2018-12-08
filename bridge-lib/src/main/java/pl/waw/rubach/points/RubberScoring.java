@@ -1,8 +1,4 @@
-package pl.waw.rubach.scoring;
-
-import pl.waw.rubach.points.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.PointsDiferentLessThenZeroException;
-import pl.waw.rubach.points.ResultsOfOneGame;
+package pl.waw.rubach.points;
 
 import java.util.HashMap;
 import java.util.Map;

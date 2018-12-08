@@ -116,9 +116,9 @@ public class CountingPointsForGameTestBefore {
         testPointsForMinorDoubleContract.put(6, 2*120  +karaZaKontre  +premiaZaKoncowke+premiaZaSzlemika);
         testPointsForMinorDoubleContract.put(7, 2*140  +karaZaKontre  +premiaZaKoncowke+premiaZaSzlema);
 
-        testPointsForNoTrumphDoubleContract.put(1, 40*2+karaZaKontre  +premiaZaCzesciowke);
+        testPointsForNoTrumphDoubleContract.put(1, 40*2   +premiaZaCzesciowke +karaZaKontre);
         testPointsForNoTrumphDoubleContract.put(2, (40+30)*2 +premiaZaKoncowke +karaZaKontre );
-        testPointsForNoTrumphDoubleContract.put(3, 100*2 + karaZaKontre  +premiaZaKoncowke);
+        testPointsForNoTrumphDoubleContract.put(3, 100*2 +premiaZaKoncowke +karaZaKontre);
         testPointsForNoTrumphDoubleContract.put(4, 130*2 +premiaZaKoncowke +karaZaKontre );
         testPointsForNoTrumphDoubleContract.put(5, 160*2 +premiaZaKoncowke +karaZaKontre );
         testPointsForNoTrumphDoubleContract.put(6, 190*2 +premiaZaKoncowke +karaZaKontre +premiaZaSzlemika );
@@ -126,29 +126,29 @@ public class CountingPointsForGameTestBefore {
 
            //all of redouble contract
 
-        testPointsForMajorReDoubleContract.put(1, 4*30 + premiaZaKoncowke + karaZaKontre );
-        testPointsForMajorReDoubleContract.put(2, 4*2*30 + premiaZaKoncowke + karaZaKontre );
-        testPointsForMajorReDoubleContract.put(3, 4*3*30 + premiaZaKoncowke + karaZaKontre );
-        testPointsForMajorReDoubleContract.put(4, 4*4*30 + premiaZaKoncowke + karaZaKontre );
-        testPointsForMajorReDoubleContract.put(5, 4*5*30 + premiaZaKoncowke + karaZaKontre );
-        testPointsForMajorReDoubleContract.put(6, 4*6*30 + premiaZaKoncowke + karaZaKontre+premiaZaSzlemika );
-        testPointsForMajorReDoubleContract.put(7, 4*7*30 + premiaZaKoncowke + karaZaKontre+premiaZaSzlema );
+        testPointsForMajorReDoubleContract.put(1, 4*30 + premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMajorReDoubleContract.put(2, 4*2*30 + premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMajorReDoubleContract.put(3, 4*3*30 + premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMajorReDoubleContract.put(4, 4*4*30 + premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMajorReDoubleContract.put(5, 4*5*30 + premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMajorReDoubleContract.put(6, 4*6*30 + premiaZaKoncowke + 2*karaZaKontre+premiaZaSzlemika );
+        testPointsForMajorReDoubleContract.put(7, 4*7*30 + premiaZaKoncowke + 2*karaZaKontre+premiaZaSzlema );
 
-        testPointsForMinorReDoubleContract.put(1, 4*20  + premiaZaCzesciowke  +karaZaKontre );
-        testPointsForMinorReDoubleContract.put(2, 4*2*20+ premiaZaKoncowke + karaZaKontre );
-        testPointsForMinorReDoubleContract.put(3, 4*3*20+ premiaZaKoncowke + karaZaKontre );
-        testPointsForMinorReDoubleContract.put(4, 4*4*20+ premiaZaKoncowke + karaZaKontre );
-        testPointsForMinorReDoubleContract.put(5, 4*5*20+ premiaZaKoncowke + karaZaKontre );
-        testPointsForMinorReDoubleContract.put(6, 4*6*20+ premiaZaKoncowke + karaZaKontre +premiaZaSzlemika);
-        testPointsForMinorReDoubleContract.put(7, 4*7*20+ premiaZaKoncowke + karaZaKontre +premiaZaSzlema );
+        testPointsForMinorReDoubleContract.put(1, 4*20  + premiaZaCzesciowke  +2*karaZaKontre );
+        testPointsForMinorReDoubleContract.put(2, 4*2*20+ premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMinorReDoubleContract.put(3, 4*3*20+ premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMinorReDoubleContract.put(4, 4*4*20+ premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMinorReDoubleContract.put(5, 4*5*20+ premiaZaKoncowke + 2*karaZaKontre );
+        testPointsForMinorReDoubleContract.put(6, 4*6*20+ premiaZaKoncowke + 2*karaZaKontre +premiaZaSzlemika);
+        testPointsForMinorReDoubleContract.put(7, 4*7*20+ premiaZaKoncowke + 2*karaZaKontre +premiaZaSzlema );
 
-        testPointsForNoTrumphReDoubleContract.put(1, 4*40 + premiaZaKoncowke +karaZaKontre );
-        testPointsForNoTrumphReDoubleContract.put(2, 4*(40+30) + premiaZaKoncowke +karaZaKontre );
-        testPointsForNoTrumphReDoubleContract.put(3, 4*(40+2*30) + premiaZaKoncowke +karaZaKontre );
-        testPointsForNoTrumphReDoubleContract.put(4, 4*(40+3*30) + premiaZaKoncowke +karaZaKontre );
-        testPointsForNoTrumphReDoubleContract.put(5, 4*(40+4*30) + premiaZaKoncowke +karaZaKontre );
-        testPointsForNoTrumphReDoubleContract.put(6, 4*(40+5*30) + premiaZaKoncowke +karaZaKontre +premiaZaSzlemika);
-        testPointsForNoTrumphReDoubleContract.put(7, 4*(40+6*30) + premiaZaKoncowke +karaZaKontre +premiaZaSzlema );
+        testPointsForNoTrumphReDoubleContract.put(1, 4*40 + premiaZaKoncowke +2*karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(2, 4*(40+30) + premiaZaKoncowke +2*karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(3, 4*(40+2*30) + premiaZaKoncowke +2*karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(4, 4*(40+3*30) + premiaZaKoncowke +2*karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(5, 4*(40+4*30) + premiaZaKoncowke +2*karaZaKontre );
+        testPointsForNoTrumphReDoubleContract.put(6, 4*(40+5*30) + premiaZaKoncowke +2*karaZaKontre +premiaZaSzlemika);
+        testPointsForNoTrumphReDoubleContract.put(7, 4*(40+6*30) + premiaZaKoncowke +2*karaZaKontre +premiaZaSzlema );
 
 
         //all of Nadróbki - one more
