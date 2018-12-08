@@ -8,7 +8,7 @@ public class PointsForContract {
 
 
     private String description = "Opis punktów: ";
-
+//pyt pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
 
     public PointsForContract(int levelOfGame, int numberOfTrickTaken, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
             throws NoSuchElementException, InvalidContractLevelException {
