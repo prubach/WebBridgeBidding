@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class CountingPointsTest {
+public class CountingPointsBasicTest {
 
-    private static Logger logger = LoggerFactory.getLogger(CountingPointsTest.class);
+    private static Logger logger = LoggerFactory.getLogger(CountingPointsBasicTest.class);
 
 
     private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
@@ -55,7 +55,7 @@ public class CountingPointsTest {
         testCountingPointsBothAfterFitWeMap.put(12f, -1660f, -14);
 
         //both fit
-      //  testCountingPointsBothAfterFitBoth.put(20f, 0f, 2);  //pyt problem who should play (how to see who have spades ) - probably is better in this case marke fit to spads and no fit to hearts???
+      //  testCountingPointsBothAfterFitBoth.put(20f, 0f, 2);  //gra problem who should play (how to see who have spades ) - probably is better in this case marke fit to spads and no fit to hearts???
         testCountingPointsBothAfterFitBoth.put(30f, 750f, 0);
         testCountingPointsBothAfterFitBoth.put(10f, -750f, 0);
         testCountingPointsBothAfterFitBoth.put(30f, 1250f, 11);

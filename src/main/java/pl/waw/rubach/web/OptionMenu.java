@@ -352,6 +352,7 @@ class OptionMenu extends MenuBar {
 
         boolean[] checkboxFitWeTable =  {false,false,false,false};
         boolean[] checkboxFitTheyTable =  {false,false,false,false};
+        String[] descriptionTable = {"pierwszy kontrakt:","drugi kontrakt","trzeci kontrakt","czwarty kontrakt"};
         float footable[] = {0,0,0,0};
         int foo2[] ={0,0,0,0};
 
@@ -388,7 +389,10 @@ class OptionMenu extends MenuBar {
                 }
                 footable[contractNumber]= foo;
 
-                foo2[contractNumber]= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption).getCalculatedPointsForContract();
+                PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
+                descriptionTable[contractNumber] = foo22.getDescription();
+                foo2[contractNumber] =foo22.getCalculatedPointsForContract();
+
                 if(checkboxThey.getValue()) {
                     foo2[contractNumber] = -foo2[contractNumber];}
 

@@ -9,7 +9,7 @@ public class TestRunner {
     public static void main(String[] args) {
 
 //=================================Points counting first:   Imp and Expected Points test
-        Result resultImpExpTest = JUnitCore.runClasses(pl.waw.rubach.points.CountingPointsTest.class);
+        Result resultImpExpTest = JUnitCore.runClasses(CountingPointsBasicTest.class);
         for (Failure failureGameModelCards : resultImpExpTest.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
@@ -17,11 +17,11 @@ public class TestRunner {
 
 //=======================================Points counting Basic - taking points in both hands and points for contract giving ipm points
 
-        Result resultCountingPointsTest = JUnitCore.runClasses(pl.waw.rubach.points.CountingPointsTest.class);
+        Result resultCountingPointsTest = JUnitCore.runClasses(CountingPointsBasicTest.class);
         for (Failure failureGameModelCards : resultCountingPointsTest.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
-        System.out.println("CountingPointsTest test: " + resultCountingPointsTest.wasSuccessful());
+        System.out.println("CountingPointsBasicTest test: " + resultCountingPointsTest.wasSuccessful());
 
 
 //=================================Points for contract  counting not  Vulnerable Package Test

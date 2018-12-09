@@ -17,6 +17,10 @@ public class RubberScoring {
      */
     private int gameID = 0;
 
+    public Map<Integer, ResultsOfOneGame> getScorringForOneGame() {
+        return scorringForOneGame;
+    }
+
     private Map<Integer, ResultsOfOneGame> scorringForOneGame = new HashMap<>();
 
 
@@ -32,6 +36,15 @@ public class RubberScoring {
         fillMapRubberScorring(3, piH3, pfC3, fW3, fT3);
         fillMapRubberScorring(4, piH4, pfC4, fW4, fT4);
 
+    }
+    public RubberScoring(int result1,int result2,int result3,int result4) {
+        int s = result1+result2+result3+result4;
+        System.out.println("Do tej pory  wynik jest: " + s + " \n");
+    }
+
+    public RubberScoring(int contract1, String color1, int contract2, String color2, int contract3, String color3, int contract4, String color4, int pfC1, int pfC2, int pfC3, int pfC4,
+                         boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4) {
+        //todo add number of trics and calculate results form that, than rubber scorring
     }
 
     public static int getSumm(RubberScoring ruberScoring) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
@@ -112,8 +125,9 @@ public class RubberScoring {
 
             }
         }
+        ResultsOfOneGame a = new ResultsOfOneGame(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
-        scorringForOneGame.put(contractNumber, new ResultsOfOneGame(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey));
+        scorringForOneGame.put(contractNumber,a );
     }
 
 
