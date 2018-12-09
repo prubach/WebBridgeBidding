@@ -13,6 +13,7 @@ class OptionMenu extends MenuBar {
 
     private VaadinUI ui;
 
+    String descriprionOf4play;
     private CheckBox checkbox1AssumptionWe = new CheckBox("Czy jesteście po partii (ustawiane w głównej aplikacji albo tutaj)? ");
     private CheckBox checkbox1AssumptionThey = new CheckBox("Czy przeciwnicy są  po partii (ustawiane w głównej aplikacji albo tutaj)? ");
 
@@ -390,7 +391,7 @@ class OptionMenu extends MenuBar {
                 footable[contractNumber]= foo;
 
                 PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
-                descriptionTable[contractNumber] = foo22.getDescription();
+                descriptionTable[contractNumber] = descriptionTable[contractNumber]+ foo22.getShortDescription();
                 foo2[contractNumber] =foo22.getCalculatedPointsForContract();
 
                 if(checkboxThey.getValue()) {
@@ -399,14 +400,20 @@ class OptionMenu extends MenuBar {
 
                 RubberScoring aa = new RubberScoring(footable[0],footable[1],footable[2],footable[3],foo2[0],foo2[1],foo2[2],foo2[3],checkboxFitWeTable[0],checkboxFitWeTable[1],checkboxFitWeTable[2],checkboxFitWeTable[3],checkboxFitTheyTable[0],checkboxFitTheyTable[1],checkboxFitTheyTable[2],checkboxFitTheyTable[3]);
 
-                System.out.println("Akuku"+ RubberScoring.getRubberScoringAsString(aa));
+              //  System.out.println("Akuku"+ RubberScoring.getRubberScoringAsString(aa));
 
                 ResultsOfOneGame  a = new ResultsOfOneGame(foo, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                
                
-                resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów.  </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ RubberScoring.getSumm(aa) +" impy. ");
+                resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów. " +
+                        " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ aa.getSumm(aa) +" impy. ");
 
-
+                StringBuilder s = new StringBuilder("\n*** Zapis gier numer: "+aa.getGameID()+".  ***  \n");
+                for(int i=0;i<4;i++){
+                    s.append("\n").append(descriptionTable[i]);
+                }
+                s.append("\n\n \t \t***\n");
+descriprionOf4play=s.toString()+RubberScoring.getRubberScoringAsString(aa);
 
 
             } catch (NumberFormatException | InvalidNumberOfPointsException |InvalidContractLevelException |PointsDiferentLessThenZeroException e) {
@@ -425,9 +432,16 @@ class OptionMenu extends MenuBar {
 
         });
 
+        Button pokazWyniki = new Button("Pokaz wyniki ostatnich  4 rozdań! ", clickEvent -> {
+
+            System.out.println("Akuku"+ descriprionOf4play);
+
+        });
+
         content.addComponent(calculateImpPoints);
         content.addComponent(prowadzZapis);
         content.addComponent(resultsLabel);
+        content.addComponent(pokazWyniki);
         window.setContent(content);
         ui.addWindow(window);
     }

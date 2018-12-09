@@ -28,4 +28,17 @@ public class RubberScoringTest {
 
 
 
+    @Test
+    public void testRubberScoringTest2() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, InvalidContractLevelException {
+
+        RubberScoring a = new RubberScoring(1, "nt", 1,"nt", 3,"nt",3,"nt",20,21,22,23,7,6,8,9,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false);
+
+        //System.out.println("Końcowy wynik jest: "+ a.getSumm(a) +" \n");
+        Assert.assertEquals(RubberScoring.getSumm(a), 6);
+        RubberScoring a2 = new RubberScoring(1, "nt", 1,"nt", 1,"nt",1,"nt",20,21,22,23,7,6,8,9,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false);
+        // System.out.println("Końcowy wynik jest: "+ a.getSumm(a2) +" \n");
+
+        Assert.assertEquals(RubberScoring.getSumm(a2), 2);
+    }
+
 }

@@ -7,6 +7,7 @@ public class PointsForContract {
     private int calculatedPointsForContract = 0;
 
 
+    private String shortDescription =" Kontrakt jest: ";
     private String description = "Opis punktów: ";
 //pyt pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
 
@@ -19,6 +20,11 @@ public class PointsForContract {
         int numberOfTrickTakenAbove6 = numberOfTrickTaken -6;
 
         if (redoubleGame) doubleGame = false;
+
+        if(doubleGame) shortDescription = shortDescription + levelOfGame + gameColor + " z kontrą, zebrano "+ numberOfTrickTaken + " lew.";
+        else if(redoubleGame) shortDescription = shortDescription + levelOfGame + gameColor + " z rekontrą, zebrano "+ numberOfTrickTaken + " lew.";
+        else shortDescription = shortDescription + levelOfGame + gameColor + ", zebrano "+ numberOfTrickTaken + " lew.";
+
 
         this.calculatedPointsForContract = 0;
         int aditionalTricksPoints = 0;
@@ -160,5 +166,8 @@ public class PointsForContract {
 
     public String getDescription() {
         return description;
+    }
+    public String getShortDescription() {
+        return shortDescription;
     }
 }
