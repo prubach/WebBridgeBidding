@@ -406,7 +406,7 @@ class OptionMenu extends MenuBar {
                
                
                 resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów. " +
-                        " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ aa.getSumm(aa) +" impy. ");
+                        " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ aa.getSumm() +" impy. ");
 
                 StringBuilder s = new StringBuilder("\n*** Zapis gier numer: "+aa.getGameID()+".  ***  \n");
                 for(int i=0;i<4;i++){

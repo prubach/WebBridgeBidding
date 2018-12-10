@@ -50,13 +50,13 @@ public class RubberScoring {
         fillMapRubberScorring(3, piH3, pfC3, fW3, fT3);
         fillMapRubberScorring(4, piH4, pfC4, fW4, fT4);
 
-        this.summ=getSumm(this);
+        this.summ=getSumm();
 
     }
     public RubberScoring(int result1,int result2,int result3,int result4)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         setSumm(result1+result2+result3+result4);
-        System.out.println("Do tej pory  wynik jest: " + getSumm(this) + " \n");
+        System.out.println("Do tej pory  wynik jest: " + getSumm() + " \n");
     }
 
     public RubberScoring(int lev1, String color1, int lev2,  String color2, int lev3, String color3, int lev4, String color4,
@@ -73,21 +73,20 @@ public class RubberScoring {
         fillMapRubberScorring(3, piH3, lev3, color3, ntt3, d3,r3,fW3,fT3);
         fillMapRubberScorring(4, piH4, lev4, color4, ntt4, d4,r4,fW4,fT4);
 
-        this.summ=getSumm(this);
+        this.summ=getSumm();
     }
 
-    public int getSumm(RubberScoring ruberScoring) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-      return getSumm(ruberScoring,false);
+    public int getSumm() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+      return getSumm(false);
     }
 //pyt było static teraz udało się zmienić na nie static nie wiem jak powinno być - chyba lepiej nie static żeby było do każdego elementu ale nie czuję różnicy
-    public int getSumm(RubberScoring ruberScoring,boolean print) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public int getSumm(boolean print) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
-        Map<Integer, ResultsOfOneGame> map = ruberScoring.scorringForOneGame;
-        SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
+        SortedSet<Integer> ptsMapSet = new TreeSet<>(scorringForOneGame.keySet());
         int s = 0;
         for (Integer key : ptsMapSet) {
 
-            if (map.get(key).getPointsInBothHands() != 0) s = s + map.get(key).getResults();
+            if (scorringForOneGame.get(key).getPointsInBothHands() != 0) s = s + scorringForOneGame.get(key).getResults();
             if(print)System.out.println("Do tej pory  wynik jest: " + s + " \n");
         }
         return s;
@@ -211,16 +210,16 @@ public class RubberScoring {
             RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
 
             System.out.println(getRubberScoringAsString(a));
-            System.out.println("Końcowy wynik jest: " + a.getSumm(a) + " \n");
+            System.out.println("Końcowy wynik jest: " + a.getSumm() + " \n");
 
             RubberScoring a2 = new RubberScoring(20, 19, 18, 17, -110, -110, -110, -110, false, false, false, false, false, false, false, false);
             System.out.println(getRubberScoringAsString(a2));
-            System.out.println("Końcowy wynik jest: " + a.getSumm(a2) + " \n");
+            System.out.println("Końcowy wynik jest: " + a2.getSumm() + " \n");
 
             RubberScoring b = new RubberScoring(1, "nt", 1,"nt", 3,"nt",3,"nt",20,21,22,23,7,6,8,9,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false);
             System.out.println(getRubberScoringAsString(b));
 
-            System.out.println("Końcowy wynik liczony od podstaw jest: " + a.getSumm(b) + " \n");
+            System.out.println("Końcowy wynik liczony od podstaw jest: " + b.getSumm() + " \n");
 
 
 
