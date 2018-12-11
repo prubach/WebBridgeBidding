@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class CountingPointsForGameTestAfter {
+public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBefore {
 
     private static Logger logger = LoggerFactory.getLogger(CountingPointsForGameTestAfter.class);
     private boolean beforeAfter = true;

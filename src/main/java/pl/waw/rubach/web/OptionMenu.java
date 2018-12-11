@@ -416,18 +416,23 @@ class OptionMenu extends MenuBar {
 descriprionOf4play=s.toString()+RubberScoring.getRubberScoringAsString(aa);
 
 
-            } catch (NumberFormatException | InvalidNumberOfPointsException |InvalidContractLevelException |PointsDiferentLessThenZeroException e) {
+            } catch (InvalidContractLevelException e) {
+                String mes3 = e.getMessage();
+                //e.getContractLevel();
+                resultsLabel.setValue("<font color=red>" + mes3 + "</font>");
+            } catch (NumberFormatException | BridgeException e) {
                 String mes1 = (e instanceof NumberFormatException) ?
                         "Nieprawidłowy format liczby-  spróbuj jeszcze raz!" : e.getMessage();
                 String mes2 = (e instanceof InvalidNumberOfPointsException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
 
-                String mes3 = (e instanceof InvalidContractLevelException) ?
-                        "Nieprawidłowo podana poziom kontraktu - spróbuj jeszcze raz!" : e.getMessage();
+
+                //String mes3 = (e instanceof InvalidContractLevelException) ?
+                //        "Nieprawidłowo podana poziom kontraktu - spróbuj jeszcze raz!" : e.getMessage();
 
                 String mes4 = (e instanceof PointsDiferentLessThenZeroException) ?
                         "Błąd różnicy punktów - mniejsza od zera-  spróbuj jeszcze raz!" : e.getMessage();
-                resultsLabel.setValue("<font color=red>" + mes1 + mes2 + mes3 + mes4+"</font>");
+                resultsLabel.setValue("<font color=red>" + mes1 + mes2 + mes4+"</font>");
             }
 
         });

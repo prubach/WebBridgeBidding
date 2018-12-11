@@ -1,6 +1,6 @@
 package pl.waw.rubach.points;
 
-public class InvalidNumberOfTrickTakenException extends Exception {
+public class InvalidNumberOfTrickTakenException extends BridgeException {
     public InvalidNumberOfTrickTakenException(String message) {
         super(message);
     }

@@ -15,7 +15,7 @@ public class PointsForContract {
             throws NoSuchElementException, InvalidContractLevelException {
 
         if (levelOfGame > 7 || levelOfGame < 1)
-            throw new InvalidContractLevelException("Nie ma takiego poziomu gry spróbuj jeszcze raz"); // pyt : czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
+            throw new InvalidContractLevelException(levelOfGame); // pyt : czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
 
         int numberOfTrickTakenAbove6 = numberOfTrickTaken -6;
 

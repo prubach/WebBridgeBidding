@@ -227,7 +227,7 @@ public class RubberScoring {
 
 
 
-        } catch (InvalidNumberOfPointsException | PointsDiferentLessThenZeroException |InvalidContractLevelException e) {
+        } catch (BridgeException e) {
             e.printStackTrace();
         }
 
