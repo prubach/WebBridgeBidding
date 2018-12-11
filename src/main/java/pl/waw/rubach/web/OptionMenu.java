@@ -4,7 +4,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.*;
-import pl.waw.rubach.scoring.RubberScoring;
+import pl.waw.rubach.points.RubberScoring;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 
@@ -13,6 +13,7 @@ class OptionMenu extends MenuBar {
 
     private VaadinUI ui;
 
+    String descriprionOf4play;
     private CheckBox checkbox1AssumptionWe = new CheckBox("Czy jesteście po partii (ustawiane w głównej aplikacji albo tutaj)? ");
     private CheckBox checkbox1AssumptionThey = new CheckBox("Czy przeciwnicy są  po partii (ustawiane w głównej aplikacji albo tutaj)? ");
 
@@ -258,7 +259,7 @@ class OptionMenu extends MenuBar {
         checkboxReDouble.setValue(false);
         content.addComponent(checkboxReDouble);
 
-        TextField numberOfTricks = new TextField("Podaj liczbę zebranych lew:");
+        TextField numberOfTricks = new TextField("Podaj liczbę zebranych  lew:"); //przez rozgrywających
         content.addComponent(numberOfTricks);
 
 
@@ -310,23 +311,35 @@ class OptionMenu extends MenuBar {
                 if (checkboxMajorColor.getValue()) color = "s";
                 else if (checkboxMinorColor.getValue()) color = "d";
 
-                int foo3 = Integer.parseInt(numberOfTricks.getValue()) - 6;
+                int foo3 = Integer.parseInt(numberOfTricks.getValue());
+                if(foo3>13 || foo3<0) throw new InvalidNumberOfTrickTakenException("liczba wziętych lew źle podana - spróbuj jeszcze raz");
+
+                boolean assumption = checkbox1AssumptionWe.getValue();
+                boolean assumption2 = checkbox1AssumptionThey.getValue();
+                boolean fitWe = checkboxFitWe.getValue();
+                boolean fitThey = checkboxFitThey.getValue();
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 if (checkboxThey.getValue()) {
                     foo = 40 - foo;
                     foo3 = 13 - foo3;
+                    assumption=checkbox1AssumptionThey.getValue();
+                    fitThey = checkboxFitWe.getValue();
+                    fitWe = checkboxFitThey.getValue();
+                    assumption2 =checkbox1AssumptionWe.getValue();
                 }
-                PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue());
+               // foo3=foo3-6;
+                PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
                 String des = foo22.getDescription();
                 int foo2 =foo22.getCalculatedPointsForContract();
                 if(checkboxThey.getValue()) {
                     foo2 = -foo2;
+
                 }
 
-                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  " +
-                        "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
-            } catch (NumberFormatException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
+                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, assumption, assumption2, fitWe, fitThey);
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
+                     //   "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
+            } catch (NumberFormatException | InvalidNumberOfTrickTakenException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
                 resultsLabel.setValue("<font color=red>" + message + "</font>");
@@ -340,9 +353,11 @@ class OptionMenu extends MenuBar {
 
         boolean[] checkboxFitWeTable =  {false,false,false,false};
         boolean[] checkboxFitTheyTable =  {false,false,false,false};
+        String[] descriptionTable = {"pierwszy kontrakt:","drugi kontrakt","trzeci kontrakt","czwarty kontrakt"};
         float footable[] = {0,0,0,0};
         int foo2[] ={0,0,0,0};
 
+        //Fill example date:
         numberOfContract.setValue("1");
         pointsInBothHands.setValue("28");
         levelOfContract.setValue("6");
@@ -355,7 +370,7 @@ class OptionMenu extends MenuBar {
 
             try {
 
-                int contractNumber = Integer.parseInt(numberOfContract.getValue())-1;
+                int contractNumber = Integer.parseInt(numberOfContract.getValue())-1; //bo liczy od zera
 
                  checkboxFitWeTable[contractNumber] = checkboxFitWe.getValue();
                  checkboxFitTheyTable[contractNumber] = checkboxFitThey.getValue();
@@ -364,30 +379,41 @@ class OptionMenu extends MenuBar {
                 if (checkboxMajorColor.getValue()) color = "s";
                 else if (checkboxMinorColor.getValue()) color = "d";
 
-                int foo3 = Integer.parseInt(numberOfTricks.getValue()) - 6;
+                int foo3 = Integer.parseInt(numberOfTricks.getValue()); //-6 tu był problem
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
+                boolean assumption = checkbox1AssumptionWe.getValue();
 
-                footable[contractNumber]= foo;
                 if (checkboxThey.getValue()) {
                     foo = 40 - foo;
                     foo3 = 13 - foo3;
+                    assumption=checkbox1AssumptionThey.getValue();
                 }
+                footable[contractNumber]= foo;
 
-                foo2[contractNumber]= new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), checkbox1AssumptionWe.getValue()).getCalculatedPointsForContract();
+                PointsForContract foo22=     new PointsForContract(Integer.parseInt(levelOfContract.getValue()), foo3, color, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
+                descriptionTable[contractNumber] = descriptionTable[contractNumber]+ foo22.getShortDescription();
+                foo2[contractNumber] =foo22.getCalculatedPointsForContract();
+
                 if(checkboxThey.getValue()) {
                     foo2[contractNumber] = -foo2[contractNumber];}
 
 
                 RubberScoring aa = new RubberScoring(footable[0],footable[1],footable[2],footable[3],foo2[0],foo2[1],foo2[2],foo2[3],checkboxFitWeTable[0],checkboxFitWeTable[1],checkboxFitWeTable[2],checkboxFitWeTable[3],checkboxFitTheyTable[0],checkboxFitTheyTable[1],checkboxFitTheyTable[2],checkboxFitTheyTable[3]);
 
-                System.out.println("Akuku"+ RubberScoring.getRubberScoringAsString(aa));
+              //  System.out.println("Akuku"+ RubberScoring.getRubberScoringAsString(aa));
 
                 ResultsOfOneGame  a = new ResultsOfOneGame(foo, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                
                
-                resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów.  </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ RubberScoring.getSumm(aa) +" impy. ");
+                resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów. " +
+                        " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ aa.getSumm() +" impy. ");
 
-
+                StringBuilder s = new StringBuilder("\n*** Zapis gier numer: "+aa.getGameID()+".  ***  \n");
+                for(int i=0;i<4;i++){
+                    s.append("\n").append(descriptionTable[i]);
+                }
+                s.append("\n\n \t \t***\n");
+descriprionOf4play=s.toString()+RubberScoring.getRubberScoringAsString(aa);
 
 
             } catch (NumberFormatException | InvalidNumberOfPointsException |InvalidContractLevelException |PointsDiferentLessThenZeroException e) {
@@ -406,9 +432,16 @@ class OptionMenu extends MenuBar {
 
         });
 
+        Button pokazWyniki = new Button("Pokaz wyniki ostatnich  4 rozdań! ", clickEvent -> {
+
+            System.out.println("Akuku"+ descriprionOf4play);
+
+        });
+
         content.addComponent(calculateImpPoints);
         content.addComponent(prowadzZapis);
         content.addComponent(resultsLabel);
+        content.addComponent(pokazWyniki);
         window.setContent(content);
         ui.addWindow(window);
     }

@@ -41,4 +41,14 @@ public abstract class AbstractTable {
     }
 
 
+    /**
+     * Function to check condition if imput values are correct
+     *
+     * return boolean true if good false if wrong
+     * */
+    public boolean checkImputValue(int begin, int end, int value) {
+
+        return value <= end && value >= begin;
+    }
+
 }
