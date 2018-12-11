@@ -38,6 +38,10 @@ public class RubberScoring {
     private Map<Integer, ResultsOfOneGame> scorringForOneGame = new HashMap<>();
 
 
+    //todo - to co mówiłeś przez telefon czyli konstruktor taki który jeszcze nie ma tych parametrów tylko tworzy obiekt a potem zrobić fukncje tak żeby te kolejne wiersze
+    //uzupełniało w czasie jak się liczy - wtedy będzie wiedziało co jest do tego rozdania a co nie - o to mi chodziło tylko się pogubiłam!!!
+
+
     public RubberScoring(float piH1, float piH2, float piH3, float piH4, int pfC1, int pfC2, int pfC3, int pfC4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
