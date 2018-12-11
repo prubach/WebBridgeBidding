@@ -55,7 +55,7 @@ public class ResultsOfOneGame {
         else this.pointDifferent = expectedPoints - pointsForContract;
 
         if (pointDifferent < 0)
-            throw new PointsDiferentLessThenZeroException("Róznica punktow nie może być ujemna - bład programu chyba");
+            throw new PointsDiferentLessThenZeroException();
         int resutl = ImpTable.getInstance().getPoints(pointDifferent);
 
         if (expectedPoints <= pointsForContract) this.results = resutl;

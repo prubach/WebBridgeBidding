@@ -8,7 +8,6 @@ import java.util.TreeSet;
 public class RubberScoring {
 
 
-
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
      * date and time
@@ -29,7 +28,7 @@ public class RubberScoring {
     /**
      * Result of 4 games
      */
-    private int summ=0;
+    private int summ = 0;
 
 
     /**
@@ -46,83 +45,74 @@ public class RubberScoring {
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
-        this.gameID = gameID+1;
-        this.description= " ";
+        this.gameID = gameID + 1;
+        this.description = " ";
 
         fillMapRubberScorring(1, piH1, pfC1, fW1, fT1);
         fillMapRubberScorring(2, piH2, pfC2, fW2, fT2);
         fillMapRubberScorring(3, piH3, pfC3, fW3, fT3);
         fillMapRubberScorring(4, piH4, pfC4, fW4, fT4);
 
-        this.summ=getSumm();
+        this.summ = getSumm();
 
     }
-    public RubberScoring(int result1,int result2,int result3,int result4)
+
+    public RubberScoring(int result1, int result2, int result3, int result4)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-        setSumm(result1+result2+result3+result4);
+        setSumm(result1 + result2 + result3 + result4);
         System.out.println("Do tej pory  wynik jest: " + getSumm() + " \n");
     }
 
-    public RubberScoring(int lev1, String color1, int lev2,  String color2, int lev3, String color3, int lev4, String color4,
+    public RubberScoring(int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
                          int piH1, int piH2, int piH3, int piH4, int ntt1, int ntt2, int ntt3, int ntt4,
-                         boolean d1,boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
+                         boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws PointsDiferentLessThenZeroException, InvalidNumberOfPointsException, InvalidContractLevelException {
 
         this.gameID = 1;
-        this.description= " ";
+        this.description = " ";
 
-        fillMapRubberScorring(1, piH1, lev1, color1, ntt1, d1,r1,fW1,fT1);
-        fillMapRubberScorring(2, piH2, lev2, color2, ntt2, d2,r2,fW2,fT2);
-        fillMapRubberScorring(3, piH3, lev3, color3, ntt3, d3,r3,fW3,fT3);
-        fillMapRubberScorring(4, piH4, lev4, color4, ntt4, d4,r4,fW4,fT4);
+        fillMapRubberScorring(1, piH1, lev1, color1, ntt1, d1, r1, fW1, fT1);
+        fillMapRubberScorring(2, piH2, lev2, color2, ntt2, d2, r2, fW2, fT2);
+        fillMapRubberScorring(3, piH3, lev3, color3, ntt3, d3, r3, fW3, fT3);
+        fillMapRubberScorring(4, piH4, lev4, color4, ntt4, d4, r4, fW4, fT4);
 
-        this.summ=getSumm();
+        this.summ = getSumm();
     }
 
-    public int getSumm() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-      return getSumm(false);
-    }
-//pyt było static teraz udało się zmienić na nie static nie wiem jak powinno być - chyba lepiej nie static żeby było do każdego elementu ale nie czuję różnicy
-    public int getSumm(boolean print) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
-        SortedSet<Integer> ptsMapSet = new TreeSet<>(scorringForOneGame.keySet());
-        int s = 0;
-        for (Integer key : ptsMapSet) {
+    //For easier tests
+    public static void main(String[] args) {
 
-            if (scorringForOneGame.get(key).getPointsInBothHands() != 0) s = s + scorringForOneGame.get(key).getResults();
-            if(print)System.out.println("Do tej pory  wynik jest: " + s + " \n");
+        try {
+            RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
+
+            System.out.println(a.getRubberScoringAsString());
+            System.out.println("Końcowy wynik jest: " + a.getSumm() + " \n");
+
+            RubberScoring a2 = new RubberScoring(20, 19, 18, 17, -110, -110, -110, -110, false, false, false, false, false, false, false, false);
+            System.out.println(a2.getRubberScoringAsString());
+            System.out.println("Końcowy wynik jest: " + a2.getSumm() + " \n");
+
+            RubberScoring b = new RubberScoring(1, "nt", 1, "nt", 3, "nt", 3, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+            System.out.println(b.getRubberScoringAsString());
+
+            System.out.println("Końcowy wynik liczony od podstaw jest: " + b.getSumm() + " \n");
+
+
+        } catch (BridgeException e) {
+            e.printStackTrace();
         }
-        return s;
-    }
-
-
-
-    public static String getRubberScoringAsString(int piH1, int piH2, int piH3, int piH4, int pfC1, int pfC2, int pfC3, int pfC4,
-                                                  boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-
-        return getRubberScoringAsString(new RubberScoring(piH1, piH2, piH3, piH4, pfC1, pfC2, pfC3, pfC4, fW1, fW2, fW3, fW4, fT1, fT2, fT3, fT4));
-
-    }
-
-    public static String getRubberScoringAsString(int lev1, String color1, int lev2,  String color2, int lev3, String color3, int lev4, String color4,
-                                                  int piH1, int piH2, int piH3, int piH4, int ntt1, int ntt2, int ntt3, int ntt4,
-                                                  boolean d1,boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
-                                                  boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, InvalidContractLevelException {
-
-        return getRubberScoringAsString(new RubberScoring(lev1, color1, lev2, color2, lev3, color3, lev4, color4, piH1, piH2, piH3, piH4, ntt1, ntt2, ntt3, ntt4, d1, r1, d2, r2, d3, r3, d4, r4, fW1, fW2, fW3, fW4, fT1, fT2, fT3, fT4));
 
     }
 
 
-    public static String getRubberScoringAsString(RubberScoring ruberScoring) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-        StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: "+ruberScoring.getGameID()+".  ***  \n");
+    public String getRubberScoringAsString() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+        StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + this.getGameID() + ".  ***  \n");
 
-        Map<Integer, ResultsOfOneGame> map = ruberScoring.scorringForOneGame;
+        Map<Integer, ResultsOfOneGame> map = this.scorringForOneGame;
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
-        s.append("\n").append(ruberScoring.getDescription());
+        s.append("\n").append(this.getDescription());
 
         for (Integer key : ptsMapSet) {
 
@@ -134,7 +124,29 @@ public class RubberScoring {
         return s.toString();
     }
 
+    public int getSumm() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+        return getSumm(false);
+    }
 
+    public void setSumm(int summ) {
+        this.summ = summ;
+    }
+
+    //odp - zmieninione na nie static było static teraz udało się zmienić na nie static nie wiem jak powinno być - chyba lepiej nie static żeby było do każdego elementu ale nie czuję różnicy
+    public int getSumm(boolean print) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+
+        SortedSet<Integer> ptsMapSet = new TreeSet<>(scorringForOneGame.keySet());
+        int s = 0;
+        for (Integer key : ptsMapSet) {
+
+            if (scorringForOneGame.get(key).getPointsInBothHands() != 0)
+                s = s + scorringForOneGame.get(key).getResults();
+            if (print) System.out.println("Do tej pory  wynik jest: " + s + " \n");
+        }
+        return s;
+    }
+
+    //getters
 
     private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int pointsForContract, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
@@ -159,10 +171,10 @@ public class RubberScoring {
         }
         ResultsOfOneGame a = new ResultsOfOneGame(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
-        scorringForOneGame.put(contractNumber,a );
+        scorringForOneGame.put(contractNumber, a);
     }
 
-    private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int levelOfGame, String color,int numberOfTricksTaken, boolean doub, boolean redouble, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int levelOfGame, String color, int numberOfTricksTaken, boolean doub, boolean redouble, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, InvalidContractLevelException {
 
         boolean auctionAssumptionWe = false;
@@ -183,54 +195,23 @@ public class RubberScoring {
 
             }
         }
-        PointsForContract b = new PointsForContract(levelOfGame,numberOfTricksTaken,color,doub, redouble, auctionAssumptionWe);
-        description = description+ b.getShortDescription()+ "\n";
+        PointsForContract b = new PointsForContract(levelOfGame, numberOfTricksTaken, color, doub, redouble, auctionAssumptionWe);
+        description = description + b.getShortDescription() + "\n";
         ResultsOfOneGame a = new ResultsOfOneGame(pointsInBothHands, b.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
-        scorringForOneGame.put(contractNumber,a );
+        scorringForOneGame.put(contractNumber, a);
     }
-
-    //getters
 
     public int getGameID() {
         return gameID;
     }
+
     public String getDescription() {
         return description;
     }
+
     public Map<Integer, ResultsOfOneGame> getScorringForOneGame() {
         return scorringForOneGame;
-    }
-
-    public void setSumm(int summ) {
-        this.summ = summ;
-    }
-
-
-//For easier tests
-    public static void main(String[] args) {
-
-        try {
-            RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
-
-            System.out.println(getRubberScoringAsString(a));
-            System.out.println("Końcowy wynik jest: " + a.getSumm() + " \n");
-
-            RubberScoring a2 = new RubberScoring(20, 19, 18, 17, -110, -110, -110, -110, false, false, false, false, false, false, false, false);
-            System.out.println(getRubberScoringAsString(a2));
-            System.out.println("Końcowy wynik jest: " + a2.getSumm() + " \n");
-
-            RubberScoring b = new RubberScoring(1, "nt", 1,"nt", 3,"nt",3,"nt",20,21,22,23,7,6,8,9,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false);
-            System.out.println(getRubberScoringAsString(b));
-
-            System.out.println("Końcowy wynik liczony od podstaw jest: " + b.getSumm() + " \n");
-
-
-
-        } catch (BridgeException e) {
-            e.printStackTrace();
-        }
-
     }
 
 

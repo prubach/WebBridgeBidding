@@ -9,13 +9,13 @@ public class PointsForContract {
 
     private String shortDescription =" Kontrakt jest: ";
     private String description = "Opis punktów: ";
-//pyt pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
+//todo odp tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
 
     public PointsForContract(int levelOfGame, int numberOfTrickTaken, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
             throws NoSuchElementException, InvalidContractLevelException {
 
         if (levelOfGame > 7 || levelOfGame < 1)
-            throw new InvalidContractLevelException(levelOfGame); // pyt : czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
+            throw new InvalidContractLevelException(levelOfGame); // odp TAK - wyrzuca !!  czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
 
         int numberOfTrickTakenAbove6 = numberOfTrickTaken -6;
 
@@ -97,6 +97,7 @@ public class PointsForContract {
 
             default:
                 throw new NoSuchElementException("Nie ma takiego koloru wpisz jeszcze raz.");
+                //pyt tutaj jakiś jeszcze gotowy wyjątek nie wiem skąd i po co ale co dziwniejsze wyżej nie ma catch ani nic?
         }
     }
 

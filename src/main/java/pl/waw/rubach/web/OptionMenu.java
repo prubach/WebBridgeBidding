@@ -312,7 +312,7 @@ class OptionMenu extends MenuBar {
                 else if (checkboxMinorColor.getValue()) color = "d";
 
                 int foo3 = Integer.parseInt(numberOfTricks.getValue());
-                if(foo3>13 || foo3<0) throw new InvalidNumberOfTrickTakenException("liczba wziętych lew źle podana - spróbuj jeszcze raz");
+                if(foo3>13 || foo3<0) throw new InvalidNumberOfTrickTakenException(foo3);
 
                 boolean assumption = checkbox1AssumptionWe.getValue();
                 boolean assumption2 = checkbox1AssumptionThey.getValue();
@@ -339,7 +339,9 @@ class OptionMenu extends MenuBar {
                 ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, assumption, assumption2, fitWe, fitThey);
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + foo2 + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
                      //   "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
-            } catch (NumberFormatException | InvalidNumberOfTrickTakenException | InvalidNumberOfPointsException | InvalidContractLevelException | PointsDiferentLessThenZeroException e) {
+            }
+            //pyt cz1: czy lepiej tak jak jest instance of ale w jednej linijce (i raz kolorowane)
+            catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
                 resultsLabel.setValue("<font color=red>" + message + "</font>");
@@ -397,13 +399,14 @@ class OptionMenu extends MenuBar {
                 if(checkboxThey.getValue()) {
                     foo2[contractNumber] = -foo2[contractNumber];}
 
+                ResultsOfOneGame  a = new ResultsOfOneGame(foo, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+
 
                 RubberScoring aa = new RubberScoring(footable[0],footable[1],footable[2],footable[3],foo2[0],foo2[1],foo2[2],foo2[3],checkboxFitWeTable[0],checkboxFitWeTable[1],checkboxFitWeTable[2],checkboxFitWeTable[3],checkboxFitTheyTable[0],checkboxFitTheyTable[1],checkboxFitTheyTable[2],checkboxFitTheyTable[3]);
 
               //  System.out.println("Akuku"+ RubberScoring.getRubberScoringAsString(aa));
 
-                ResultsOfOneGame  a = new ResultsOfOneGame(foo, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-               
+
                
                 resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów. " +
                         " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ aa.getSumm() +" impy. ");
@@ -413,26 +416,16 @@ class OptionMenu extends MenuBar {
                     s.append("\n").append(descriptionTable[i]);
                 }
                 s.append("\n\n \t \t***\n");
-descriprionOf4play=s.toString()+RubberScoring.getRubberScoringAsString(aa);
+descriprionOf4play=s.toString()+aa.getRubberScoringAsString();
 
-
-            } catch (InvalidContractLevelException e) {
-                String mes3 = e.getMessage();
+//pyt: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
+            } catch (BridgeException e) {
+                String mes1 = e.getMessage();
                 //e.getContractLevel();
-                resultsLabel.setValue("<font color=red>" + mes3 + "</font>");
-            } catch (NumberFormatException | BridgeException e) {
-                String mes1 = (e instanceof NumberFormatException) ?
-                        "Nieprawidłowy format liczby-  spróbuj jeszcze raz!" : e.getMessage();
-                String mes2 = (e instanceof InvalidNumberOfPointsException) ?
-                        "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
-
-
-                //String mes3 = (e instanceof InvalidContractLevelException) ?
-                //        "Nieprawidłowo podana poziom kontraktu - spróbuj jeszcze raz!" : e.getMessage();
-
-                String mes4 = (e instanceof PointsDiferentLessThenZeroException) ?
-                        "Błąd różnicy punktów - mniejsza od zera-  spróbuj jeszcze raz!" : e.getMessage();
-                resultsLabel.setValue("<font color=red>" + mes1 + mes2 + mes4+"</font>");
+                resultsLabel.setValue("<font color=red>" + mes1 + "</font>");
+            } catch (NumberFormatException  e) {
+                String mes1 = "Nieprawidłowy format liczby-  spróbuj jeszcze raz!" ;
+                resultsLabel.setValue("<font color=red>" + mes1 + "</font>");
             }
 
         });

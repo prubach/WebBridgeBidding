@@ -60,8 +60,7 @@ public class ExpectedResultsTable {
             throws InvalidNumberOfPointsException {
 
         //test if points value is correct if not print Exeption
-        if (points < 0 || points > 40) throw new InvalidNumberOfPointsException("Liczba punktów na rękach partnerów musi " +
-                "być dodatnia i  mniejsza od 40");
+        if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
 
         //if 1 we  so points are for us, if -1 they and points for us is minus that for they
         int howShoudPlayIndicator =1;
