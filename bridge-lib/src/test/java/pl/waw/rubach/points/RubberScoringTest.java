@@ -14,7 +14,7 @@ public class RubberScoringTest {
 
 
     @Test
-    public void testRubberScoringTest() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testRubberScoringTest() throws BridgeException {
 
         RubberScoring a = new RubberScoring(20,21,22,23,110,110,110,110,false,false,false,false,false,false,false,false);
 
@@ -29,7 +29,7 @@ public class RubberScoringTest {
 
 
     @Test
-    public void testRubberScoringTest2() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, InvalidContractLevelException {
+    public void testRubberScoringTest2() throws BridgeException {
 
         RubberScoring a = new RubberScoring(1, "nt", 1,"nt", 3,"nt",3,"nt",20,21,22,23,7,6,8,9,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false);
 

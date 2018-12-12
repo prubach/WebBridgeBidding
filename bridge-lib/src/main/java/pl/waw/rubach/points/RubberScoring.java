@@ -43,7 +43,7 @@ public class RubberScoring {
 
     public RubberScoring(float piH1, float piH2, float piH3, float piH4, int pfC1, int pfC2, int pfC3, int pfC4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+            throws BridgeException {
 
         this.gameID = gameID + 1;
         this.description = " ";
@@ -58,7 +58,7 @@ public class RubberScoring {
     }
 
     public RubberScoring(int result1, int result2, int result3, int result4)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+            throws BridgeException {
         setSumm(result1 + result2 + result3 + result4);
         System.out.println("Do tej pory  wynik jest: " + getSumm() + " \n");
     }
@@ -67,7 +67,7 @@ public class RubberScoring {
                          int piH1, int piH2, int piH3, int piH4, int ntt1, int ntt2, int ntt3, int ntt4,
                          boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
-            throws PointsDiferentLessThenZeroException, InvalidNumberOfPointsException, InvalidContractLevelException {
+            throws BridgeException {
 
         this.gameID = 1;
         this.description = " ";
@@ -175,7 +175,7 @@ public class RubberScoring {
     }
 
     private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int gameLevel, String suit, int numberOfTricksTaken, boolean doub, boolean redouble, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, InvalidContractLevelException {
+            throws BridgeException {
 
         boolean auctionAssumptionWe = false;
         boolean auctionAssumptionThey = false;

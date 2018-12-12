@@ -325,7 +325,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
 
 
     @Test
-    public void testMajorContract() throws InvalidContractLevelException {
+    public void testMajorContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMajorContract.keySet())) {
             Integer res = new PointsForContract(p,p+6,"s",false,false,beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym wynik jest: " + res + " punktów.");
@@ -333,7 +333,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testMinorContract() throws InvalidContractLevelException {
+    public void testMinorContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMinorContract.keySet())) {
             Integer res = new PointsForContract(p,p+6,"d",false,false,beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym wynik jest: " + res + " punktów.");
@@ -341,7 +341,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testNoTrumphContract() throws InvalidContractLevelException {
+    public void testNoTrumphContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForNoTrumphContract.keySet())) {
             Integer res = new PointsForContract(p,p+6,"n",false,false,beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bez atu wynik jest: " + res + " punktów.");
@@ -350,7 +350,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
     }
 
     @Test
-    public void testMajorDoubleContract() throws InvalidContractLevelException {
+    public void testMajorDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMajorDoubleContract.keySet())) {
             Integer res = new PointsForContract(p,p+6,"s",true,false,beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym z kontrą wynik jest: " + res + " punktów.");
@@ -358,7 +358,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testMinorDoubleContract() throws InvalidContractLevelException {
+    public void testMinorDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMinorDoubleContract.keySet())) {
             Integer res = new PointsForContract(p, p+6,"d",true,false, beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z kotrą wynik jest: " + res + " punktów.");
@@ -366,7 +366,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testNoTrumphDoubleContract() throws InvalidContractLevelException {
+    public void testNoTrumphDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForNoTrumphDoubleContract.keySet())) {
             Integer res = new PointsForContract(p, p+6,"n",true,false, beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bez atu z kontrą wynik jest: " + res + " punktów.");
@@ -375,7 +375,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
     }
 
     @Test
-    public void testMajorReDoubleContract() throws InvalidContractLevelException {
+    public void testMajorReDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMajorReDoubleContract.keySet())) {
             Integer res = new PointsForContract(p, p+6,"s",false,true, beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym z rekontrą wynik jest: " + res + " punktów.");
@@ -383,7 +383,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testMinorReDoubleContract() throws InvalidContractLevelException {
+    public void testMinorReDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMinorReDoubleContract.keySet())) {
             Integer res = new PointsForContract(p, p+6,"d",false,true, beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z rekotrą wynik jest: " + res + " punktów.");
@@ -391,7 +391,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testNoTrumphReDoubleContract() throws InvalidContractLevelException {
+    public void testNoTrumphReDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForNoTrumphReDoubleContract.keySet())) {
             Integer res = new PointsForContract(p, p+6,"n",false,true, beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bez atu z rekontrą wynik jest: " + res + " punktów.");
@@ -402,7 +402,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
     //TESTS NADRÓBKI
 
     @Test
-    public void testMajorContractOneMore() throws InvalidContractLevelException {
+    public void testMajorContractOneMore() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajorContractOneMore.keySet())) {
             Integer res = new PointsForContract(p, p + 1+6, "s", false, false, beforeAfter).getCalculatedPointsForContract();
@@ -412,7 +412,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testMinorContractOneMore() throws InvalidContractLevelException {
+    public void testMinorContractOneMore() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMinorContractOneMore.keySet())) {
             Integer res = new PointsForContract(p, p + 1+6, "d", false, false, beforeAfter).getCalculatedPointsForContract();
@@ -423,7 +423,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
     }
     //missin major double one more
     @Test
-    public void testMinorContractOneMoreDouble() throws InvalidContractLevelException {
+    public void testMinorContractOneMoreDouble() throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMinorContractOneMoreDouble.keySet())) {
             Integer res = new PointsForContract(p, p+1+6 ,"d",true,false, beforeAfter).getCalculatedPointsForContract();
@@ -433,7 +433,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }}
 
     @Test
-    public void testNoTrumphContractOneMore()  throws InvalidContractLevelException {
+    public void testNoTrumphContractOneMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsOneMore.keySet())) {
             Integer res = new PointsForContract(p, p+1 +6,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -442,7 +442,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testNoTrumphContractOneMoreDouble()  throws InvalidContractLevelException {
+    public void testNoTrumphContractOneMoreDouble()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsOneMoreDouble.keySet())) {
             Integer res = new PointsForContract(p, p+1 +6,"nt",true,false, beforeAfter).getCalculatedPointsForContract();
@@ -453,7 +453,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
 
 
     @Test
-    public void testMajorContractTwoMore()  throws InvalidContractLevelException {
+    public void testMajorContractTwoMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsTwoMore.keySet())) {
             Integer res = new PointsForContract(p, p+2 +6,"s",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -462,7 +462,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testMajorContractThreeMore()  throws InvalidContractLevelException {
+    public void testMajorContractThreeMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsThreeMore.keySet())) {
             Integer res = new PointsForContract(p, p+3+6 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -471,7 +471,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testMajorContractFourMore()  throws InvalidContractLevelException {
+    public void testMajorContractFourMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsFourMore.keySet())) {
             Integer res = new PointsForContract(p, p+4+6 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -480,7 +480,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testMajorContractFiveMore()  throws InvalidContractLevelException {
+    public void testMajorContractFiveMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsFiveMore.keySet())) {
             Integer res = new PointsForContract(p, p+5+6 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -489,7 +489,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testMajorContractSixMore()  throws InvalidContractLevelException {
+    public void testMajorContractSixMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsSixMore.keySet())) {
             Integer res = new PointsForContract(p, p+6+6 ,"s",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -500,7 +500,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
 
     //
     @Test
-    public void testNoTrumphContractTwoMore()  throws InvalidContractLevelException {
+    public void testNoTrumphContractTwoMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsTwoMore.keySet())) {
             Integer res = new PointsForContract(p, p+2+6 ,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -509,7 +509,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testNoTrumphContractThreeMore()  throws InvalidContractLevelException {
+    public void testNoTrumphContractThreeMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsThreeMore.keySet())) {
             Integer res = new PointsForContract(p, p+3+6,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -518,7 +518,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testNoTrumphContractFourMore()  throws InvalidContractLevelException {
+    public void testNoTrumphContractFourMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsFourMore.keySet())) {
             Integer res = new PointsForContract(p, p+4 +6,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -527,7 +527,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testNoTrumphContractFiveMore()  throws InvalidContractLevelException {
+    public void testNoTrumphContractFiveMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsFiveMore.keySet())) {
             Integer res = new PointsForContract(p, p+5 +6,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -536,7 +536,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //  }
         }}
     @Test
-    public void testNoTrumphContractSixMore()  throws InvalidContractLevelException {
+    public void testNoTrumphContractSixMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsSixMore.keySet())) {
             Integer res = new PointsForContract(p, p+6 +6,"nt",false,false, beforeAfter).getCalculatedPointsForContract();
@@ -549,7 +549,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
 
 
     @Test
-    public void testMajorContractMinusOne() throws InvalidContractLevelException {
+    public void testMajorContractMinusOne() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajorContractMinusOne.keySet())) {
             Integer res = new PointsForContract(p, p - 1+6, "s", false, false, beforeAfter).getCalculatedPointsForContract();
@@ -558,8 +558,9 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
             //   }
         }
     }
+
     @Test
-    public void testNoTrumphContractMinusOneDouble() throws InvalidContractLevelException {
+    public void testNoTrumphContractMinusOneDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForNoTrumphContractMinusOneDouble.keySet())) {
             Integer res = new PointsForContract(p, p - 1+6, "n", true, false, beforeAfter).getCalculatedPointsForContract();
@@ -569,9 +570,8 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
 
-
     @Test
-    public void testMajor3ContractMinusMore() throws InvalidContractLevelException {
+    public void testMajor3ContractMinusMore() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMore.keySet())) {
             Integer res = new PointsForContract(3, 3 - p+6, "s", false, false, beforeAfter).getCalculatedPointsForContract();
@@ -581,7 +581,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testMajor3ContractMinusMoreDouble() throws InvalidContractLevelException {
+    public void testMajor3ContractMinusMoreDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMoreDouble.keySet())) {
             Integer res = new PointsForContract(3, 3 - p+6, "nt", true, false, beforeAfter).getCalculatedPointsForContract();
@@ -591,7 +591,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testMajor3ContractMinusMoreReDouble() throws InvalidContractLevelException {
+    public void testMajor3ContractMinusMoreReDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMoreReDouble.keySet())) {
             Integer res = new PointsForContract(3, 3 - p+6, "nt", true, true, beforeAfter).getCalculatedPointsForContract();
@@ -602,7 +602,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
     }
 
     @Test
-    public void testNoTrumph3ContractMinusMore() throws InvalidContractLevelException {
+    public void testNoTrumph3ContractMinusMore() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsFor3NTContractMinusMore.keySet())) {
             Integer res = new PointsForContract(3, 3 - p+6, "s", false, false, beforeAfter).getCalculatedPointsForContract();
@@ -612,7 +612,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testNoTrumph3ContractMinusMoreDouble() throws InvalidContractLevelException {
+    public void testNoTrumph3ContractMinusMoreDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsFor3NTContractMinusMoreDouble.keySet())) {
             Integer res = new PointsForContract(3, 3 - p+6, "nt", true, false, beforeAfter).getCalculatedPointsForContract();
@@ -622,7 +622,7 @@ public class CountingPointsForGameTestAfter extends CountingPointsForGameTestBef
         }
     }
     @Test
-    public void testNoTrumph3ContractMinusMoreReDouble() throws InvalidContractLevelException {
+    public void testNoTrumph3ContractMinusMoreReDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsFor3NTContractMinusMoreReDouble.keySet())) {
             Integer res = new PointsForContract(3, 3 - p+6, "nt", true, true, beforeAfter).getCalculatedPointsForContract();

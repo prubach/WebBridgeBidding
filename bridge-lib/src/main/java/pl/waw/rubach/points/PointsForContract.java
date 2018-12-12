@@ -1,7 +1,5 @@
 package pl.waw.rubach.points;
 
-import java.util.NoSuchElementException;
-
 public class PointsForContract {
 
     private int calculatedPointsForContract = 0;
@@ -12,7 +10,7 @@ public class PointsForContract {
 //todo odp tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
 
     public PointsForContract(int gameLevel, int numberOfTrickTaken, String gameSuit, boolean doubleGame, boolean redoubleGame, boolean asumption)
-            throws NoSuchElementException, InvalidContractLevelException {
+            throws InvalidContractLevelException, InvalidContractSuitException {
 
         if (gameLevel > 7 || gameLevel < 1)
             throw new InvalidContractLevelException(gameLevel); // odp TAK - wyrzuca !!  czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
@@ -74,7 +72,7 @@ public class PointsForContract {
 
 
 
-    private int getMainPoints(int levelOfGame, String gameColor) throws NoSuchElementException{
+    private int getMainPoints(int levelOfGame, String gameColor) throws InvalidContractSuitException{
 
         switch (gameColor) {
             case "s":
@@ -96,12 +94,12 @@ public class PointsForContract {
                 return levelOfGame * 30 + 10;
 
             default:
-                throw new NoSuchElementException("Nie ma takiego koloru wpisz jeszcze raz.");
+                throw new InvalidContractSuitException("Nie ma takiego koloru wpisz jeszcze raz.");
                 //pyt tutaj jakiś jeszcze gotowy wyjątek nie wiem skąd i po co ale co dziwniejsze wyżej nie ma catch ani nic?
         }
     }
 
-    private int getOvertrickPoints(int numberOfTrickTakenAbove6,int levelOfGame, boolean asumption, boolean doubleGame, boolean redoubleGame, String gameColor) {
+    private int getOvertrickPoints(int numberOfTrickTakenAbove6,int levelOfGame, boolean asumption, boolean doubleGame, boolean redoubleGame, String gameColor) throws InvalidContractSuitException{
         int aditionalTricksPoints = 0;
         if (numberOfTrickTakenAbove6 > levelOfGame) {
 
