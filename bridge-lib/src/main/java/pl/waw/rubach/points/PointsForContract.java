@@ -11,35 +11,35 @@ public class PointsForContract {
     private String description = "Opis punktów: ";
 //todo odp tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
 
-    public PointsForContract(int levelOfGame, int numberOfTrickTaken, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
+    public PointsForContract(int gameLevel, int numberOfTrickTaken, String gameColor, boolean doubleGame, boolean redoubleGame, boolean asumption)
             throws NoSuchElementException, InvalidContractLevelException {
 
-        if (levelOfGame > 7 || levelOfGame < 1)
-            throw new InvalidContractLevelException(levelOfGame); // odp TAK - wyrzuca !!  czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
+        if (gameLevel > 7 || gameLevel < 1)
+            throw new InvalidContractLevelException(gameLevel); // odp TAK - wyrzuca !!  czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
 
         int numberOfTrickTakenAbove6 = numberOfTrickTaken -6;
 
         if (redoubleGame) doubleGame = false;
 
-        if(doubleGame) shortDescription = shortDescription + levelOfGame + gameColor + " z kontrą, zebrano "+ numberOfTrickTaken + " lew.";
-        else if(redoubleGame) shortDescription = shortDescription + levelOfGame + gameColor + " z rekontrą, zebrano "+ numberOfTrickTaken + " lew.";
-        else shortDescription = shortDescription + levelOfGame + gameColor + ", zebrano "+ numberOfTrickTaken + " lew.";
+        if(doubleGame) shortDescription = shortDescription + gameLevel + gameColor + " z kontrą, zebrano "+ numberOfTrickTaken + " lew.";
+        else if(redoubleGame) shortDescription = shortDescription + gameLevel + gameColor + " z rekontrą, zebrano "+ numberOfTrickTaken + " lew.";
+        else shortDescription = shortDescription + gameLevel + gameColor + ", zebrano "+ numberOfTrickTaken + " lew.";
 
 
         this.calculatedPointsForContract = 0;
         int aditionalTricksPoints = 0;
 
-        if (numberOfTrickTakenAbove6 >= levelOfGame) {
-            calculatedPointsForContract = getMainPoints(levelOfGame, gameColor);
+        if (numberOfTrickTakenAbove6 >= gameLevel) {
+            calculatedPointsForContract = getMainPoints(gameLevel, gameColor);
             if (doubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
             if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 4;
 
-            description = description + "punkty za ugraną grę:" + levelOfGame + " " + gameColor + " to: "+ calculatedPointsForContract + "pkt. ,  + ";
+            description = description + "punkty za ugraną grę:" + gameLevel + " " + gameColor + " to: "+ calculatedPointsForContract + "pkt. ,  + ";
         }
-        if (numberOfTrickTakenAbove6 < levelOfGame) {
+        if (numberOfTrickTakenAbove6 < gameLevel) {
             //Undertrick points -
             // mniej lew niż zalicytowano -wpadki z rekontrą x2 (sprawdzone)
-            int undertricks = levelOfGame - numberOfTrickTakenAbove6;
+            int undertricks = gameLevel - numberOfTrickTakenAbove6;
             if (undertricks == 1) description = description + " punkty z " + undertricks + " wpadki. ";
             else description = description + " punkty z " + undertricks + " wpadek. ";
 
@@ -65,10 +65,10 @@ public class PointsForContract {
 
         }
              calculatedPointsForContract = calculatedPointsForContract
-                + getOvertrickPoints(numberOfTrickTakenAbove6,levelOfGame,asumption,doubleGame,redoubleGame,gameColor)
-                + getBonusDoubleRedouble(levelOfGame, numberOfTrickTakenAbove6, doubleGame, redoubleGame)
-                + getGamePartGameBonus(calculatedPointsForContract, levelOfGame, numberOfTrickTakenAbove6, asumption)
-                + getSlamPremiaPoints(levelOfGame, numberOfTrickTakenAbove6, asumption)
+                + getOvertrickPoints(numberOfTrickTakenAbove6,gameLevel,asumption,doubleGame,redoubleGame,gameColor)
+                + getBonusDoubleRedouble(gameLevel, numberOfTrickTakenAbove6, doubleGame, redoubleGame)
+                + getGamePartGameBonus(calculatedPointsForContract, gameLevel, numberOfTrickTakenAbove6, asumption)
+                + getSlamPremiaPoints(gameLevel, numberOfTrickTakenAbove6, asumption)
                 + aditionalTricksPoints;
     }
 

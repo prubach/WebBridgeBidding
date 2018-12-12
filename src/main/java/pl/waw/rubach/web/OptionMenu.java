@@ -4,7 +4,6 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.*;
-import pl.waw.rubach.points.RubberScoring;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 
@@ -13,7 +12,7 @@ class OptionMenu extends MenuBar {
 
     private VaadinUI ui;
 
-    String descriprionOf4play;
+    private String descriprionOf4play;
     private CheckBox checkbox1AssumptionWe = new CheckBox("Czy jesteście po partii (ustawiane w głównej aplikacji albo tutaj)? ");
     private CheckBox checkbox1AssumptionThey = new CheckBox("Czy przeciwnicy są  po partii (ustawiane w głównej aplikacji albo tutaj)? ");
 
@@ -382,6 +381,8 @@ class OptionMenu extends MenuBar {
                 else if (checkboxMinorColor.getValue()) color = "d";
 
                 int foo3 = Integer.parseInt(numberOfTricks.getValue()); //-6 tu był problem
+
+                if(foo3>13 || foo3<0) throw new InvalidNumberOfTrickTakenException(foo3);
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 boolean assumption = checkbox1AssumptionWe.getValue();
 
@@ -416,7 +417,7 @@ class OptionMenu extends MenuBar {
                     s.append("\n").append(descriptionTable[i]);
                 }
                 s.append("\n\n \t \t***\n");
-descriprionOf4play=s.toString()+aa.getRubberScoringAsString();
+descriprionOf4play=s.toString()+"\n"+aa.getRubberScoringAsString();
 
 //pyt: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
             } catch (BridgeException e) {
@@ -432,7 +433,8 @@ descriprionOf4play=s.toString()+aa.getRubberScoringAsString();
 
         Button pokazWyniki = new Button("Pokaz wyniki ostatnich  4 rozdań! ", clickEvent -> {
 
-            System.out.println("Akuku"+ descriprionOf4play);
+            actionDisplayResultsOf4GameWindow(this.ui);
+            //System.out.println("Akuku"+ descriprionOf4play);
 
         });
 
@@ -444,6 +446,29 @@ descriprionOf4play=s.toString()+aa.getRubberScoringAsString();
         ui.addWindow(window);
     }
 
+    private void actionDisplayResultsOf4GameWindow(VaadinUI ui) {
+        final Window window = new Window("Okienko z wynikami ostatnich czterech rozdań.");
+        window.setWidth("50%");
+        window.setHeight("60%");
+        window.addStyleName("window");
+        final FormLayout content = new FormLayout();
+        content.setMargin(true);
+        content.addComponent(new Label("Wersja wstępna - wyniki ostatnich zapisanych rozdań :)"));
+       // content.addComponent(new Label("Uwaga na razie nie ma możliwości zapisu edytowanego tekstu"));
+        TextArea a =  new TextArea();
+        a.setWidth("100%");
+        a.setHeight("400%");
+        a.setValue(descriprionOf4play);
+        //a.setEditable(false);
+
+        content.addComponent(a);
+
+
+        //System.out.println("Akuku"+ descriprionOf4play);
+        content.addStyleName("window");
+        window.setContent(content);
+        ui.addWindow(window);
+    }
 
 
     private void actionManualCalculetePoints(VaadinUI ui) {
