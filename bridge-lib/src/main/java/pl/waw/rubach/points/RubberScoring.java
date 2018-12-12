@@ -174,7 +174,7 @@ public class RubberScoring {
         scorringForOneGame.put(contractNumber, a);
     }
 
-    private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int levelOfGame, String color, int numberOfTricksTaken, boolean doub, boolean redouble, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int gameLevel, String suit, int numberOfTricksTaken, boolean doub, boolean redouble, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, InvalidContractLevelException {
 
         boolean auctionAssumptionWe = false;
@@ -195,7 +195,7 @@ public class RubberScoring {
 
             }
         }
-        PointsForContract b = new PointsForContract(levelOfGame, numberOfTricksTaken, color, doub, redouble, auctionAssumptionWe);
+        PointsForContract b = new PointsForContract(gameLevel, numberOfTricksTaken, suit, doub, redouble, auctionAssumptionWe);
         description = description + b.getShortDescription() + "\n";
         ResultsOfOneGame a = new ResultsOfOneGame(pointsInBothHands, b.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
