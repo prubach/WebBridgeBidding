@@ -37,6 +37,11 @@ public class CountingPointsBasicTest {
 //todo make copy of this for both before :) and one before the second after
         testCountingPointsBothBeforNoFitMap.put(28f, 990f, 11);
         testCountingPointsBothBeforNoFitMap.put(12f, -990f, -11);
+        testCountingPointsBothBeforNoFitMap.put(20f, 400f, 9);
+        testCountingPointsBothBeforNoFitMap.put(22f, 400f, 8);
+        testCountingPointsBothBeforNoFitMap.put(23f, 400f, 7);
+        testCountingPointsBothBeforNoFitMap.put(28f, 400f, 0);
+
 
 
         //Fit only we - they no fit

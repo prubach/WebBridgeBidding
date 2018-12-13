@@ -35,6 +35,11 @@ public class RubberScoringTest {
 
         //System.out.println("Końcowy wynik jest: "+ a.getSumm(a) +" \n");
         Assert.assertEquals(a.getSumm(), 6);
+
+        RubberScoring a1 = new RubberScoring(1, "nt", 1,"nt", 6,"nt",6,"nt",12,28,15,35,7,6,1,12,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false);
+        //System.out.println("Końcowy wynik jest: "+ a.getSumm(a) +" \n");
+      //  Assert.assertEquals(a1.getSumm(), 0);
+
         RubberScoring a2 = new RubberScoring(1, "nt", 1,"nt", 1,"nt",1,"nt",20,21,22,23,7,6,8,9,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false);
         // System.out.println("Końcowy wynik jest: "+ a.getSumm(a2) +" \n");
 

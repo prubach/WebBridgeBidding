@@ -23,6 +23,14 @@ public class TestRunner {
         }
         System.out.println("CountingPointsBasicTest test: " + resultCountingPointsTest.wasSuccessful());
 
+//=======================================Points counting BothPlay - taking points in both hands and points for contract giving ipm points
+
+        Result resultCountingPointsBothPlayTest = JUnitCore.runClasses(CountingPointsBothPlayTest.class);
+        for (Failure failureGameModelCards : resultCountingPointsBothPlayTest.getFailures()) {
+            System.out.println(failureGameModelCards.toString());
+        }
+        System.out.println("CountingPointsBothPlayTest test: " + resultCountingPointsBothPlayTest.wasSuccessful());
+
 
 //=================================Points for contract  counting not  Vulnerable Package Test
         Result resultCountingPointsTestBefore = JUnitCore.runClasses(CountingPointsForGameTestBefore.class);
