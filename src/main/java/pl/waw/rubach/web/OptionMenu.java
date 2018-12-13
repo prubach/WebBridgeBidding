@@ -318,6 +318,7 @@ class OptionMenu extends MenuBar {
                 boolean fitWe = checkboxFitWe.getValue();
                 boolean fitThey = checkboxFitThey.getValue();
                 float pointsInBH = Float.parseFloat(pointsInBothHands.getValue());
+
                 if (checkboxThey.getValue()) {
                     pointsInBH = 40 - pointsInBH;
                     trickTaken = 13 - trickTaken;
@@ -372,6 +373,7 @@ class OptionMenu extends MenuBar {
             try {
 
                 int contractNumber = Integer.parseInt(numberOfContract.getValue())-1; //bo liczy od zera
+                if (contractNumber>4 || contractNumber<0) throw new InvalidNumberOfGamesInRuber(contractNumber);
 
                  checkboxFitWeTable[contractNumber] = checkboxFitWe.getValue();
                  checkboxFitTheyTable[contractNumber] = checkboxFitThey.getValue();
@@ -383,15 +385,18 @@ class OptionMenu extends MenuBar {
                 int trickTaken = Integer.parseInt(numberOfTricks.getValue()); //-6 tu był problem
 
                 if(trickTaken>13 || trickTaken<0) throw new InvalidNumberOfTrickTakenException(trickTaken);
-                float foo = Float.parseFloat(pointsInBothHands.getValue());
+
                 boolean assumption = checkbox1AssumptionWe.getValue();
+                boolean assumption2 = checkbox1AssumptionThey.getValue();
+                boolean fitWe = checkboxFitWe.getValue();
+                float pointsInBH = Float.parseFloat(pointsInBothHands.getValue());
 
                 if (checkboxThey.getValue()) {
-                    foo = 40 - foo;
+                    pointsInBH = 40 - pointsInBH;
                     trickTaken = 13 - trickTaken;
                     assumption=checkbox1AssumptionThey.getValue();
                 }
-                footable[contractNumber]= foo;
+                footable[contractNumber]= pointsInBH;
 
                 PointsForContract foo22=     new PointsForContract(Integer.parseInt(contractLevel.getValue()), trickTaken, suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
                 descriptionTable[contractNumber] = descriptionTable[contractNumber]+ foo22.getShortDescription();
@@ -400,7 +405,7 @@ class OptionMenu extends MenuBar {
                 if(checkboxThey.getValue()) {
                     foo2[contractNumber] = -foo2[contractNumber];}
 
-                ResultsOfOneGame  a = new ResultsOfOneGame(foo, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                ResultsOfOneGame  a = new ResultsOfOneGame(pointsInBH, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
 
                 RubberScoring aa = new RubberScoring(footable[0],footable[1],footable[2],footable[3],foo2[0],foo2[1],foo2[2],foo2[3],checkboxFitWeTable[0],checkboxFitWeTable[1],checkboxFitWeTable[2],checkboxFitWeTable[3],checkboxFitTheyTable[0],checkboxFitTheyTable[1],checkboxFitTheyTable[2],checkboxFitTheyTable[3]);
