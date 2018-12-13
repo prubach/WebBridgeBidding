@@ -40,13 +40,33 @@ public class BidHelper {
     public static String getBidSuit(String bidSuit) {
         switch (bidSuit) {
             case "C":
-                return "<font color=\"black\">\u2663</font>";
-            case "D":
-                return "<font color=\"red\">\u2666</font>";
-            case "H":
-                return "<font color=\"red\">\u2665</font>";
             case "S":
-                return "<font color=\"black\">\u2660</font>";
+                return "<font color=\"black\">" + getBidSuitSymbol(bidSuit) + "</font>";
+            case "D":
+            case "H":
+                return "<font color=\"red\">" + getBidSuitSymbol(bidSuit) + "</font>";
+            case "NT":
+                return "BA";
+        }
+        return "";
+    }
+
+    /**
+     * Use the Suit symbols instead of letters
+     *
+     * @param bidSuit
+     * @return
+     */
+    public static String getBidSuitSymbol(String bidSuit) {
+        switch (bidSuit) {
+            case "C":
+                return "\u2663";
+            case "D":
+                return "\u2666";
+            case "H":
+                return "\u2665";
+            case "S":
+                return "\u2660";
             case "NT":
                 return "BA";
         }
@@ -60,13 +80,24 @@ public class BidHelper {
      * @return
      */
     public static String getBidSuitAndroid(String bidSuit) {
+        return "<font color=\"" + getBidSuitColorAndroid(bidSuit) + "\">" + getBidSuitSymbol(bidSuit) + "</font>";
+    }
+
+
+    /**
+     * Use the Suit symbols instead of letters, add red color to hearts and diamonds
+     *
+     * @param bidSuit
+     * @return
+     */
+    public static String getBidSuitColorAndroid(String bidSuit) {
         switch (bidSuit) {
             case "D":
-                return "<font color=\"#FF0000\">\u2662</font>";
             case "H":
-                return "<font color=\"#FF0000\">\u2661</font>";
+                return "#FF0000";
             default:
-                return getBidSuit(bidSuit);
+                return "#000000";
         }
     }
+
 }
