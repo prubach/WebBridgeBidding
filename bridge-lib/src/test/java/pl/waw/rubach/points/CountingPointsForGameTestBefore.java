@@ -23,9 +23,6 @@ public class CountingPointsForGameTestBefore {
     protected int wpadkaBezKontry =50;
     protected int wpadka1Zkontra=100;
     protected int wpadka2Zkontra=200;
-    protected int isDouble =2;
-    protected int isRedouble =4;
-    protected int isNormal =1;
 
     protected Map<Integer, Integer> testPointsForMajorContract = new HashMap<>();
     protected Map<Integer, Integer> testPointsForMinorContract = new HashMap<>();
@@ -78,22 +75,24 @@ public class CountingPointsForGameTestBefore {
 
     @Before
     public void fillTestPointsMap() {
-      //all equal normal contract
-        testPointsForMajorContract.put(1, 30  + premiaZaCzesciowke);
-        testPointsForMajorContract.put(2, 60  + premiaZaCzesciowke);
-        testPointsForMajorContract.put(3, 90  + premiaZaCzesciowke);
-        testPointsForMajorContract.put(4, 120 + premiaZaKoncowke);
-        testPointsForMajorContract.put(5, 150 + premiaZaKoncowke);
-        testPointsForMajorContract.put(6, 180 + premiaZaKoncowke +premiaZaSzlemika);
-        testPointsForMajorContract.put(7, 210+  premiaZaKoncowke +premiaZaSzlema);
+        //testPointsMap.put()
 
-        testPointsForMinorContract.put(1, 20  + premiaZaCzesciowke);
-        testPointsForMinorContract.put(2, 40  + premiaZaCzesciowke);
-        testPointsForMinorContract.put(3, 60  + premiaZaCzesciowke);
-        testPointsForMinorContract.put(4, 80  + premiaZaCzesciowke);
-        testPointsForMinorContract.put(5, 100 + premiaZaKoncowke);
-        testPointsForMinorContract.put(6, 120 + premiaZaKoncowke + premiaZaSzlemika);
-        testPointsForMinorContract.put(7, 140 + premiaZaKoncowke +premiaZaSzlema);
+        //all equal normal contract
+        testPointsForMajorContract.put(1, 30+premiaZaCzesciowke);
+        testPointsForMajorContract.put(2, 60 +premiaZaCzesciowke);
+        testPointsForMajorContract.put(3, 90 +premiaZaCzesciowke);
+        testPointsForMajorContract.put(4, 120 +premiaZaKoncowke);
+        testPointsForMajorContract.put(5, 150 +premiaZaKoncowke);
+        testPointsForMajorContract.put(6, 180 +premiaZaKoncowke +premiaZaSzlemika);
+        testPointsForMajorContract.put(7, 210+ premiaZaKoncowke +premiaZaSzlema);
+
+        testPointsForMinorContract.put(1, 20 + premiaZaCzesciowke);
+        testPointsForMinorContract.put(2, 40 + premiaZaCzesciowke);
+        testPointsForMinorContract.put(3, 60 + premiaZaCzesciowke);
+        testPointsForMinorContract.put(4, 80 + premiaZaCzesciowke);
+        testPointsForMinorContract.put(5, 100 +premiaZaKoncowke);
+        testPointsForMinorContract.put(6, 120 +premiaZaKoncowke + premiaZaSzlemika);
+        testPointsForMinorContract.put(7, 140 +premiaZaKoncowke +premiaZaSzlema);
 
         testPointsForNoTrumphContract.put(1, 40 + premiaZaCzesciowke);
         testPointsForNoTrumphContract.put(2, 70 + premiaZaCzesciowke);
@@ -368,7 +367,6 @@ public class CountingPointsForGameTestBefore {
         for (int p : new TreeSet<Integer>(testPointsForMajorContract.keySet())) {
             Integer res = new PointsForContract(p,p+6,"s",false,false,beforeAfter).getCalculatedPointsForContract();
             Integer resA = new PointsForContract(p,p+6,"s",1,beforeAfter).getCalculatedPointsForContract();
-
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym wynik jest: " + res +"/" + resA +" punktów.");
             Assert.assertEquals(testPointsForMajorContract.get(p), res);
             Assert.assertEquals(testPointsForMajorContract.get(p), resA);
@@ -462,9 +460,8 @@ public class CountingPointsForGameTestBefore {
             Integer res = new PointsForContract(p, p+1+6 ,"d",true,false, beforeAfter).getCalculatedPointsForContract();
                  logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z kotrą  z jedną nadróbką  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMinorContractOneMoreDouble.get(p), res);
-
-    }
-    }
+      //  }
+    }}
     @Test
     public void testNoTrumphContractOneMoreDouble()  throws BridgeException {
         //    for(int i=1; i<2; i++){
@@ -492,12 +489,6 @@ public class CountingPointsForGameTestBefore {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMinorContractOneMoreReDouble.keySet())) {
             Integer res = new PointsForContract(p, p+1+6 ,"d",false,true, beforeAfter).getCalculatedPointsForContract();
-            logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z rekotrą  z jedną nadróbką  wynik jest: " + res + " punktów.");
-            Assert.assertEquals(testPointsForMinorContractOneMoreReDouble.get(p), res);
-            //  }
-        }
-        for (int p : new TreeSet<Integer>(testPointsForMinorContractOneMoreReDouble.keySet())) {
-            Integer res = new PointsForContract(p, p+1+6 ,"d",true,true, beforeAfter).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z rekotrą  z jedną nadróbką  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMinorContractOneMoreReDouble.get(p), res);
             //  }
