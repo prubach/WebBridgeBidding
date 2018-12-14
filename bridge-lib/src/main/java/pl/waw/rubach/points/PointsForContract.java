@@ -73,9 +73,9 @@ public class PointsForContract {
 
         }
         calculatedPointsForContract = calculatedPointsForContract
+                + getGamePartGameBonus(calculatedPointsForContract, contractLevel, oddTricks, auctionAssumptionPlaingPair)
                 + getOvertrickPoints(contractLevel, oddTricks, auctionAssumptionPlaingPair, normalDoubleRedubleSingnature, contractSuit)
                 + getBonusDoubleRedouble(contractLevel, oddTricks, isContractDouble, isContractRedouble)
-                + getGamePartGameBonus(calculatedPointsForContract, contractLevel, oddTricks, auctionAssumptionPlaingPair)
                 + getSlamsBonusPoints(contractLevel, oddTricks, auctionAssumptionPlaingPair);
     }
 
@@ -119,21 +119,9 @@ public class PointsForContract {
         }
     }
 
-    /**
-     * When declarer makes overtricks, their score value depends upon the contract denomination, declarer's vulnerability and whether or not the contract is undoubled, doubled or redoubled.
-     * In an undoubled contract each overtrick earns the same as in contract points (30 for notrump and major suit contracts, 20 for minor suit contracts);
-     * values increase significantly when the contract has been doubled or redoubled, especially when vulnerable.
-     *
-     * @param contractLevel  The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken.
-     * @param oddTricks   The number of tricks above six (the book) that are taken by declarer.
-     * @param auctionAssumptionPlaingPair  is vulnerable or not vulnerable
-     * @param isContractDouble   is contract double
-     * @param isContractRedouble is conract redouble
-     * @param gameSuit  Cards suits [denomination or strain] that denotes the proposed trump suit or notrump. Thus, there are five denominations – notrump, spades, hearts, diamonds and clubs.
-     * @return scorring for overtricks
-     * @throws InvalidContractSuitException if contract suits is not correct
-     */
-    private int getOvertrickPoints(int contractLevel, int oddTricks,  boolean auctionAssumptionPlaingPair, int s, String gameSuit) throws InvalidContractSuitException {
+
+    private int getOvertrickPoints(int contractLevel, int oddTricks,  boolean auctionAssumptionPlaingPair, int s, String contractSuit) throws InvalidContractSuitException {
+       // getOvertrickPoints(contractLevel,oddTricks,auctionAssumptionPlaingPair,s==2,s==4,contractSuit);
         int aditionalTricksPoints = 0;
         if (oddTricks > contractLevel) {
 
@@ -141,8 +129,8 @@ public class PointsForContract {
             // Overtrick points
             if(s==1) {
           //  if (!isContractDouble && !isContractRedouble) {
-                aditionalTricksPoints = getContractPoints(oddTricks - contractLevel, gameSuit);  //bez kontry i rekontry - tak samo jak lewa
-                if (gameSuit.equals("nt") || gameSuit.equals("n") || gameSuit.equals("N") || gameSuit.equals("NT"))
+                aditionalTricksPoints = getContractPoints(oddTricks - contractLevel, contractSuit);  //bez kontry i rekontry - tak samo jak lewa
+                if (contractSuit.equals("nt") || contractSuit.equals("n") || contractSuit.equals("N") || contractSuit.equals("NT"))
                     aditionalTricksPoints = aditionalTricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
             }
             //if (isContractDouble && !auctionAssumptionPlaingPair)
@@ -163,7 +151,50 @@ public class PointsForContract {
         }
         return aditionalTricksPoints;
     }
+    /**
+     * When declarer makes overtricks, their score value depends upon the contract denomination, declarer's vulnerability and whether or not the contract is undoubled, doubled or redoubled.
+     * In an undoubled contract each overtrick earns the same as in contract points (30 for notrump and major suit contracts, 20 for minor suit contracts);
+     * values increase significantly when the contract has been doubled or redoubled, especially when vulnerable.
+     *
+     * @param contractLevel  The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken.
+     * @param oddTricks   The number of tricks above six (the book) that are taken by declarer.
+     * @param auctionAssumptionPlaingPair  is vulnerable or not vulnerable
+     * @param isContractDouble   is contract double
+     * @param isContractRedouble is conract redouble
+     * @param contractSuit  Cards suits [denomination or strain] that denotes the proposed trump suit or notrump. Thus, there are five denominations – notrump, spades, hearts, diamonds and clubs.
+     * @return scorring for overtricks
+     * @throws InvalidContractSuitException if contract suits is not correct
+     */
+    private int getOvertrickPoints(int contractLevel, int oddTricks,  boolean auctionAssumptionPlaingPair, boolean isContractDouble, boolean isContractRedouble, String contractSuit) throws InvalidContractSuitException {
+       return getOvertrickPoints(contractLevel,oddTricks,auctionAssumptionPlaingPair,isContractRedouble ? 4 : (isContractDouble ? 2 :1),contractSuit);
 
+       /* int aditionalTricksPoints = 0;
+        if (oddTricks > contractLevel) {
+
+
+            // Overtrick points
+             if (!isContractDouble && !isContractRedouble) {
+                aditionalTricksPoints = getContractPoints(oddTricks - contractLevel, contractSuit);  //bez kontry i rekontry - tak samo jak lewa
+                if (contractSuit.equals("nt") || contractSuit.equals("n") || contractSuit.equals("N") || contractSuit.equals("NT"))
+                    aditionalTricksPoints = aditionalTricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
+            }
+            if (isContractDouble && !auctionAssumptionPlaingPair)
+                aditionalTricksPoints = (oddTricks - contractLevel) * 100;   //z kontrą przed partią - za 100
+            if (isContractDouble && auctionAssumptionPlaingPair)
+                aditionalTricksPoints = (oddTricks - contractLevel) * 200;    // z kontrą po partii za 200
+
+            if (isContractRedouble && !auctionAssumptionPlaingPair)
+                aditionalTricksPoints = (oddTricks - contractLevel) * 200;     // z rekontrą przed partią za 200
+            if (isContractRedouble && auctionAssumptionPlaingPair)
+                aditionalTricksPoints = (oddTricks - contractLevel) * 400;     //z rekontrą po partii za 400
+
+            description = description + " punkty z " + (oddTricks - contractLevel) + " nadróbek to: " + aditionalTricksPoints + "pkt, + ";
+        }
+        return aditionalTricksPoints;*/
+    }
+
+
+    //todo zamienić na s
     /**
      * When a contract is defeated, penalty points are awarded to the defending side. The value of the penalty depends on the number of undertricks,
      * whether the declaring side is vulnerable or not vulnerable and whether the contract was undoubled, doubled or redoubled.    *
@@ -203,7 +234,7 @@ public class PointsForContract {
         return underTricskPoints;
     }
 
-
+    //todo zamienić na s
     /**
      * When a doubled or redoubled contract is made, a bonus is awarded to the declaring side. It is colloquially referred to as a bonus for "insult",
      * meaning that the opponents have insulted the pair by suggesting that the declarer will not make the contract.
@@ -225,11 +256,22 @@ public class PointsForContract {
         } else return 0;
     }
 
-    private int getGamePartGameBonus(int calculatedPointsForContract, int levelOfGame, int numberOfTrickTakenAbove6, boolean assumption) {
+    /**
+     * In duplicate bridge only, game and partial-game bonuses are awarded at the conclusion of each deal as follows:
+     *     any partial contract, i.e. one scoring less than 100 contract points, scores a bonus of 50 points, and
+     *     any game contract, i.e. one scoring 100 or more points, scores a game bonus of 300 if not vulnerable and 500 if vulnerable.
+     *
+     * @param calculatedPointsForContract - are points for Contract - not overtrics included - so to know is is more then 100.
+     * @param contractLevel  The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken.
+     * @param oddTricks   The number of tricks above six (the book) that are taken by declarer.
+     * @param auctionAssumptionPlaingPair  is vulnerable or not vulnerable
+     * @return game/ part game or slam bonnus
+     */
+    private int getGamePartGameBonus(int calculatedPointsForContract, int contractLevel, int oddTricks, boolean auctionAssumptionPlaingPair) {
 
-        if (calculatedPointsForContract >= 100 && numberOfTrickTakenAbove6 >= levelOfGame) {
+        if (calculatedPointsForContract >= 100 && oddTricks >= contractLevel) {
             description = description + " punkty za ugraną końcówkę.";
-            return (assumption) ? 500 : 300;
+            return (auctionAssumptionPlaingPair) ? 500 : 300;
         } else if (calculatedPointsForContract > 0) {
             description = description + " 50 pkt za częściówkę.";
             return 50;
