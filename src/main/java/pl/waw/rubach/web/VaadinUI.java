@@ -23,12 +23,9 @@ import pl.waw.rubach.repo.BidRepository;
 import pl.waw.rubach.repo.BidSystemRepository;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_LEFT;
-import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_RIGHT;
-import static com.vaadin.icons.VaadinIcons.HOME;
+import static com.vaadin.icons.VaadinIcons.*;
 
 @SpringUI
 @Theme("WebBridgeBidding")
@@ -353,7 +350,7 @@ public class VaadinUI extends UI {
                     :
                     bidRepo.findByBidSystemAndParentBidAndAssumptionLessThanEqual(curBidSystem, bid.getParentBid(),0)));
             //logger.warn("Selecting bid in bidGrid: " + getBidLevelSuit(bid));
-            //TODO Selection doesn't work!!!
+            //fixme Selection doesn't work!!!
             bidGrid.deselectAll();
             bidGrid.asSingleSelect().setValue(bid);
             bidGrid.select(bid);

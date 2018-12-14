@@ -64,7 +64,6 @@ class OptionMenu extends MenuBar {
 
         // A top-level menu item that opens a submenu
         MenuBar.MenuItem optionMenuItemsAuctionAssumption = this.addItem("Założenia licytacyjne:", QUESTION_CIRCLE, null);
-        //TODO find if it is importatn what oponents are (if yes could be added but dont't think so - should be radioButton or sth to show if it is or not?
         optionMenuItemsAuctionAssumption.addItem("Obie przed partią", null, comandToSetAssumptionNo);
         optionMenuItemsAuctionAssumption.addItem("My przed, oni po", null, comandToSetAssumptionNo);
         optionMenuItemsAuctionAssumption.addItem("Oni przed, my po", null, comandToSetAssumptionYes);

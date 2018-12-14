@@ -41,7 +41,8 @@ public class RubberScoring {
 
     //todo - to co mówiłeś przez telefon czyli konstruktor taki który jeszcze nie ma tych parametrów tylko tworzy obiekt a potem zrobić fukncje tak żeby te kolejne wiersze
     //uzupełniało w czasie jak się liczy - wtedy będzie wiedziało co jest do tego rozdania a co nie - o to mi chodziło tylko się pogubiłam!!!
-
+    //powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...
+    //po polsku mogło by być Punkty/ZapisPorównawczy i drugi ZapisRobrowy
 
     public RubberScoring(float piH1, float piH2, float piH3, float piH4, int pfC1, int pfC2, int pfC3, int pfC4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)

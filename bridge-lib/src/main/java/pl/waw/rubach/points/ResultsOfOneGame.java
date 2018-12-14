@@ -45,10 +45,9 @@ public class ResultsOfOneGame {
      * Number of Imp Point
      * if 0 is equal, if -1 is one less etc ...
      */
-    private int results;// = 0;
-    //pyt dlaczego tak?  że niżej a nie tu
+    private int results; //= 0;     //pyt dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w PointsForContract i ono ma dwa razy i działa a tu nie ?
 
-    //pyt ogólne: czy to nie powinno się zmienić na Game albo OneGame albo coś takiego - a nie tylko wynik?  - bo ja to rozumiałam źle bardziej w kategorii funkcji
+    //todo ogólne: to się ma zmienić na ImpPoints  albo CalculatedImpPoints czy coś podobnego i rozumiem że tego nie rozbudowywać bo klasę Game chcesz robić w Androidzie od razu?
 
     public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe,
                             boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
