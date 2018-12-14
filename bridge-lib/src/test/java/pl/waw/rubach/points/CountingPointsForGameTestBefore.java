@@ -24,8 +24,6 @@ public class CountingPointsForGameTestBefore {
     protected int wpadka1Zkontra=100;
     protected int wpadka2Zkontra=200;
 
-    //pyt jak zrobić żeby nie powtarzać (przepisywać tych testów do drugiej klasy After) -jeżeli rózni się tylko to  co jest powyżej - czy zrobić testy z parametrem czy jak?
-
     protected Map<Integer, Integer> testPointsForMajorContract = new HashMap<>();
     protected Map<Integer, Integer> testPointsForMinorContract = new HashMap<>();
     protected Map<Integer, Integer> testPointsForNoTrumphContract = new HashMap<>();

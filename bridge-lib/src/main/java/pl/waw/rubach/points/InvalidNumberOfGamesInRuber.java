@@ -13,7 +13,7 @@ public class InvalidNumberOfGamesInRuber extends BridgeException {
          this.numberGiven = numberGiven;
     }
 
-    public float getPointsGiven() {
+    public int getNumberGiven() {
         return numberGiven;
     }
 }

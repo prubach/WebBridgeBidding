@@ -61,7 +61,7 @@ public class CountingPointsBasicTest {
         testCountingPointsBothAfterFitWeMap.put(12f, -1660f, -14);
 
         //both fit
-      //  testCountingPointsBothAfterFitBoth.put(20f, 0f, 2);  //gra problem who should play (how to see who have spades ) - probably is better in this case marke fit to spads and no fit to hearts???
+      //  testCountingPointsBothAfterFitBoth.put(20f, 0f, 2);  //not such case if both have 20PC and fit in major color mark only spades (one have fit)
         testCountingPointsBothAfterFitBoth.put(30f, 750f, 0);
         testCountingPointsBothAfterFitBoth.put(10f, -750f, 0);
         testCountingPointsBothAfterFitBoth.put(30f, 1250f, 11);

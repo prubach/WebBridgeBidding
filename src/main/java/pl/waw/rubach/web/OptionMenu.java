@@ -310,8 +310,8 @@ class OptionMenu extends MenuBar {
                 if (checkboxMajorColor.getValue()) suit = "s";
                 else if (checkboxMinorColor.getValue()) suit = "d";
 
-                int trickTaken = Integer.parseInt(numberOfTricks.getValue());
-                if(trickTaken >13 || trickTaken <0) throw new InvalidNumberOfTrickTakenException(trickTaken);
+                int tricksTaken = Integer.parseInt(numberOfTricks.getValue());
+                if(tricksTaken >13 || tricksTaken <0) throw new InvalidNumberOfTrickTakenException(tricksTaken);
 
                 boolean assumption = checkbox1AssumptionWe.getValue();
                 boolean assumption2 = checkbox1AssumptionThey.getValue();
@@ -321,14 +321,14 @@ class OptionMenu extends MenuBar {
 
                 if (checkboxThey.getValue()) {
                     pointsInBH = 40 - pointsInBH;
-                    trickTaken = 13 - trickTaken;
+                    tricksTaken = 13 - tricksTaken;
                     assumption=checkbox1AssumptionThey.getValue();
                     fitThey = checkboxFitWe.getValue();
                     fitWe = checkboxFitThey.getValue();
                     assumption2 =checkbox1AssumptionWe.getValue();
                 }
-               // trickTaken=trickTaken-6;
-                PointsForContract pointsForContract=     new PointsForContract(Integer.parseInt(contractLevel.getValue()), trickTaken, suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
+               // tricksTaken=tricksTaken-6;
+                PointsForContract pointsForContract=     new PointsForContract(Integer.parseInt(contractLevel.getValue()), tricksTaken, suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption);
                 String des = pointsForContract.getDescription();
                 int pointsContract =pointsForContract.getCalculatedPointsForContract();
                 if(checkboxThey.getValue()) {

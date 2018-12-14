@@ -48,6 +48,8 @@ public class ResultsOfOneGame {
     private int results;// = 0;
     //pyt dlaczego tak?  że niżej a nie tu
 
+    //pyt ogólne: czy to nie powinno się zmienić na Game albo OneGame albo coś takiego - a nie tylko wynik?  - bo ja to rozumiałam źle bardziej w kategorii funkcji
+
     public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe,
                             boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
