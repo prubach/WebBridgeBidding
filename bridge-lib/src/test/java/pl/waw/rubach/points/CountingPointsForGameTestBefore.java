@@ -12,62 +12,62 @@ import java.util.TreeSet;
 
 public class CountingPointsForGameTestBefore {
 
-    private static Logger logger = LoggerFactory.getLogger(CountingPointsForGameTestBefore.class);
-    private boolean beforeAfter = false;
-    private int karaZaKontre = 50;
-    private int premiaZaCzesciowke = 50;
-    private int premiaZaKoncowke = 300;
-    private int premiaZaSzlemika = 500;
-    private int premiaZaSzlema = 1000;
-    private int nadrobkaZKontra = 100;
-    private int wpadkaBezKontry =50;
-    private int wpadka1Zkontra=100;
-    private int wpadka2Zkontra=200;
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+    protected boolean beforeAfter = false;
+    protected int karaZaKontre = 50;
+    protected int premiaZaCzesciowke = 50;
+    protected int premiaZaKoncowke = 300;
+    protected int premiaZaSzlemika = 500;
+    protected int premiaZaSzlema = 1000;
+    protected int nadrobkaZKontra = 100;
+    protected int wpadkaBezKontry =50;
+    protected int wpadka1Zkontra=100;
+    protected int wpadka2Zkontra=200;
 
     //pyt jak zrobić żeby nie powtarzać (przepisywać tych testów do drugiej klasy After) -jeżeli rózni się tylko to  co jest powyżej - czy zrobić testy z parametrem czy jak?
 
-    private Map<Integer, Integer> testPointsForMajorContract = new HashMap<>();
-    private Map<Integer, Integer> testPointsForMinorContract = new HashMap<>();
-    private Map<Integer, Integer> testPointsForNoTrumphContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMajorContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMinorContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForNoTrumphContract = new HashMap<>();
 
-    private Map<Integer, Integer> testPointsForMajorDoubleContract = new HashMap<>();
-    private Map<Integer, Integer> testPointsForMinorDoubleContract = new HashMap<>();
-    private Map<Integer, Integer> testPointsForNoTrumphDoubleContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMajorDoubleContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMinorDoubleContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForNoTrumphDoubleContract = new HashMap<>();
 
-    private Map<Integer, Integer> testPointsForMajorReDoubleContract = new HashMap<>();
-    private Map<Integer, Integer> testPointsForMinorReDoubleContract = new HashMap<>();
-    private Map<Integer, Integer> testPointsForNoTrumphReDoubleContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMajorReDoubleContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMinorReDoubleContract = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForNoTrumphReDoubleContract = new HashMap<>();
 
-    private Map<Integer, Integer> testPointsForMajorContractOneMore = new HashMap<>();
-    private Map<Integer, Integer> testPointsForMinorContractOneMore = new HashMap<>();
-    private Map<Integer, Integer> testNoTrumphContractPointsOneMore = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMajorContractOneMore = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMinorContractOneMore = new HashMap<>();
+    protected Map<Integer, Integer> testNoTrumphContractPointsOneMore = new HashMap<>();
 
 
-    private Map<Integer, Integer>  testMajorContractPointsTwoMore = new HashMap<>();
-    private Map<Integer, Integer>  testMajorContractPointsThreeMore = new HashMap<>();
-    private Map<Integer, Integer>  testMajorContractPointsFourMore = new HashMap<>();
-    private Map<Integer, Integer>  testMajorContractPointsFiveMore = new HashMap<>();
-    private Map<Integer, Integer>  testMajorContractPointsSixMore = new HashMap<>();
+    protected Map<Integer, Integer>  testMajorContractPointsTwoMore = new HashMap<>();
+    protected Map<Integer, Integer>  testMajorContractPointsThreeMore = new HashMap<>();
+    protected Map<Integer, Integer>  testMajorContractPointsFourMore = new HashMap<>();
+    protected Map<Integer, Integer>  testMajorContractPointsFiveMore = new HashMap<>();
+    protected Map<Integer, Integer>  testMajorContractPointsSixMore = new HashMap<>();
 
-    private Map<Integer, Integer>  testNoTrumphContractPointsTwoMore = new HashMap<>();
-    private Map<Integer, Integer>  testNoTrumphContractPointsThreeMore = new HashMap<>();
-    private Map<Integer, Integer>  testNoTrumphContractPointsFourMore = new HashMap<>();
-    private Map<Integer, Integer>  testNoTrumphContractPointsFiveMore = new HashMap<>();
-    private Map<Integer, Integer>  testNoTrumphContractPointsSixMore = new HashMap<>();
+    protected Map<Integer, Integer>  testNoTrumphContractPointsTwoMore = new HashMap<>();
+    protected Map<Integer, Integer>  testNoTrumphContractPointsThreeMore = new HashMap<>();
+    protected Map<Integer, Integer>  testNoTrumphContractPointsFourMore = new HashMap<>();
+    protected Map<Integer, Integer>  testNoTrumphContractPointsFiveMore = new HashMap<>();
+    protected Map<Integer, Integer>  testNoTrumphContractPointsSixMore = new HashMap<>();
 
-    private Map<Integer, Integer> testPointsForMinorContractOneMoreDouble = new HashMap<>();
-    private Map<Integer, Integer> testNoTrumphContractPointsOneMoreDouble = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMinorContractOneMoreDouble = new HashMap<>();
+    protected Map<Integer, Integer> testNoTrumphContractPointsOneMoreDouble = new HashMap<>();
 
-    private Map<Integer, Integer> testPointsForMajorContractMinusOne = new HashMap<>();
-    private Map<Integer, Integer> testPointsForNoTrumphContractMinusOneDouble = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMajorContractMinusOne = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForNoTrumphContractMinusOneDouble = new HashMap<>();
 
-    private Map<Integer, Integer> testPointsForMajor3ContractMinusMore = new HashMap<>();
-    private Map<Integer, Integer> testPointsForMajor3ContractMinusMoreDouble = new HashMap<>();
-    private Map<Integer, Integer> testPointsForMajor3ContractMinusMoreReDouble = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMajor3ContractMinusMore = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMajor3ContractMinusMoreDouble = new HashMap<>();
+    protected Map<Integer, Integer> testPointsForMajor3ContractMinusMoreReDouble = new HashMap<>();
 
-    private Map<Integer, Integer> testPointsFor3NTContractMinusMore = new HashMap<>();
-    private Map<Integer, Integer> testPointsFor3NTContractMinusMoreDouble = new HashMap<>();
-    private Map<Integer, Integer> testPointsFor3NTContractMinusMoreReDouble = new HashMap<>();
+    protected Map<Integer, Integer> testPointsFor3NTContractMinusMore = new HashMap<>();
+    protected Map<Integer, Integer> testPointsFor3NTContractMinusMoreDouble = new HashMap<>();
+    protected Map<Integer, Integer> testPointsFor3NTContractMinusMoreReDouble = new HashMap<>();
 
     @Before
     public void fillTestPointsMap() {

@@ -8,6 +8,8 @@ import java.util.TreeSet;
 public class RubberScoring {
 
 
+    //TODO Trzeba to przerobić tak, aby nie przyjmował wszystkiego w konstruktorze tylko krok po kroku po każdym rozdaniu inaczej nie ma to sensu...
+
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
      * date and time
@@ -148,7 +150,8 @@ public class RubberScoring {
 
     //getters
 
-    private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int pointsForContract, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int pointsForContract,
+                                       boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
         boolean auctionAssumptionWe = false;
@@ -174,7 +177,9 @@ public class RubberScoring {
         scorringForOneGame.put(contractNumber, a);
     }
 
-    private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int gameLevel, String suit, int numberOfTricksTaken, boolean doub, boolean redouble, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    private void fillMapRubberScorring(int contractNumber, float pointsInBothHands, int gameLevel, String suit,
+                                       int numberOfTricksTaken, boolean doub, boolean redouble,
+                                       boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
         boolean auctionAssumptionWe = false;

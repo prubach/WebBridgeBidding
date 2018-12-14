@@ -5,7 +5,7 @@ public class PointsForContract {
     private int calculatedPointsForContract = 0;
 
 
-    private String shortDescription =" Kontrakt jest: ";
+    private String shortDescription = " Kontrakt jest: ";
     private String description = "Opis punktów: ";
 //todo odp tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
 
@@ -15,13 +15,15 @@ public class PointsForContract {
         if (gameLevel > 7 || gameLevel < 1)
             throw new InvalidContractLevelException(gameLevel); // odp TAK - wyrzuca !!  czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
 
-        int numberOfTrickTakenAbove6 = numberOfTrickTaken -6;
+        int numberOfTrickTakenAbove6 = numberOfTrickTaken - 6;
 
         if (redoubleGame) doubleGame = false;
 
-        if(doubleGame) shortDescription = shortDescription + gameLevel + gameSuit + " z kontrą, zebrano "+ numberOfTrickTaken + " lew.";
-        else if(redoubleGame) shortDescription = shortDescription + gameLevel + gameSuit + " z rekontrą, zebrano "+ numberOfTrickTaken + " lew.";
-        else shortDescription = shortDescription + gameLevel + gameSuit + ", zebrano "+ numberOfTrickTaken + " lew.";
+        if (doubleGame)
+            shortDescription = shortDescription + gameLevel + gameSuit + " z kontrą, zebrano " + numberOfTrickTaken + " lew.";
+        else if (redoubleGame)
+            shortDescription = shortDescription + gameLevel + gameSuit + " z rekontrą, zebrano " + numberOfTrickTaken + " lew.";
+        else shortDescription = shortDescription + gameLevel + gameSuit + ", zebrano " + numberOfTrickTaken + " lew.";
 
 
         this.calculatedPointsForContract = 0;
@@ -32,7 +34,7 @@ public class PointsForContract {
             if (doubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
             if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 4;
 
-            description = description + "punkty za ugraną grę:" + gameLevel + " " + gameSuit + " to: "+ calculatedPointsForContract + "pkt. ,  + ";
+            description = description + "punkty za ugraną grę:" + gameLevel + " " + gameSuit + " to: " + calculatedPointsForContract + "pkt. ,  + ";
         }
         if (numberOfTrickTakenAbove6 < gameLevel) {
             //Undertrick points -
@@ -62,8 +64,8 @@ public class PointsForContract {
             if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
 
         }
-             calculatedPointsForContract = calculatedPointsForContract
-                + getOvertrickPoints(numberOfTrickTakenAbove6,gameLevel,asumption,doubleGame,redoubleGame,gameSuit)
+        calculatedPointsForContract = calculatedPointsForContract
+                + getOvertrickPoints(numberOfTrickTakenAbove6, gameLevel, asumption, doubleGame, redoubleGame, gameSuit)
                 + getBonusDoubleRedouble(gameLevel, numberOfTrickTakenAbove6, doubleGame, redoubleGame)
                 + getGamePartGameBonus(calculatedPointsForContract, gameLevel, numberOfTrickTakenAbove6, asumption)
                 + getSlamPremiaPoints(gameLevel, numberOfTrickTakenAbove6, asumption)
@@ -71,8 +73,7 @@ public class PointsForContract {
     }
 
 
-
-    private int getMainPoints(int levelOfGame, String gameColor) throws InvalidContractSuitException{
+    private int getMainPoints(int levelOfGame, String gameColor) throws InvalidContractSuitException {
 
         switch (gameColor) {
             case "s":
@@ -99,7 +100,7 @@ public class PointsForContract {
         }
     }
 
-    private int getOvertrickPoints(int numberOfTrickTakenAbove6,int levelOfGame, boolean asumption, boolean doubleGame, boolean redoubleGame, String gameColor) throws InvalidContractSuitException{
+    private int getOvertrickPoints(int numberOfTrickTakenAbove6, int levelOfGame, boolean asumption, boolean doubleGame, boolean redoubleGame, String gameColor) throws InvalidContractSuitException {
         int aditionalTricksPoints = 0;
         if (numberOfTrickTakenAbove6 > levelOfGame) {
 
@@ -122,18 +123,18 @@ public class PointsForContract {
 
             description = description + " punkty z " + (numberOfTrickTakenAbove6 - levelOfGame) + " nadróbek to: " + aditionalTricksPoints + "pkt, + ";
         }
-    return aditionalTricksPoints;}
+        return aditionalTricksPoints;
+    }
 
     private int getBonusDoubleRedouble(int levelOfGame, int numberOfTrickTakenAbove6, boolean doubleGame, boolean redoubleGame) {
-        if ((doubleGame ) && levelOfGame <= numberOfTrickTakenAbove6) {
+        if ((doubleGame) && levelOfGame <= numberOfTrickTakenAbove6) {
             description = description + " kara za nieudaną kontrę, ";
             return 50;
 
-        } else if ((redoubleGame)  && levelOfGame <= numberOfTrickTakenAbove6){
+        } else if ((redoubleGame) && levelOfGame <= numberOfTrickTakenAbove6) {
             description = description + " kara za nieudaną rekontrę, ";
             return 100;
-        }
-        else return 0;
+        } else return 0;
     }
 
     private int getGamePartGameBonus(int calculatedPointsForContract, int levelOfGame, int numberOfTrickTakenAbove6, boolean assumption) {
@@ -157,7 +158,6 @@ public class PointsForContract {
     }
 
 
-
     //getter
     public int getCalculatedPointsForContract() {
         return calculatedPointsForContract;
@@ -166,6 +166,7 @@ public class PointsForContract {
     public String getDescription() {
         return description;
     }
+
     public String getShortDescription() {
         return shortDescription;
     }

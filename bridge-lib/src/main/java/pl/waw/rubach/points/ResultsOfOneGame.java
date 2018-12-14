@@ -48,7 +48,8 @@ public class ResultsOfOneGame {
     private int results;// = 0;
     //pyt dlaczego tak?  że niżej a nie tu
 
-    public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe,
+                            boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         this.results = 0;
         this.pointsInBothHands = pointsInBothHands;
@@ -78,24 +79,18 @@ public class ResultsOfOneGame {
         else this.results = -resutl;
     }
 
-    public ResultsOfOneGame(float pointsInBothHands, int contractLevel,int numberOfTrickTaken, String contractSuit,  boolean doubleGame, boolean redoubleGame, boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    public ResultsOfOneGame(float pointsInBothHands, int contractLevel,int numberOfTrickTaken, String contractSuit,
+                            boolean doubleGame, boolean redoubleGame, boolean auctionAssumptionWe,
+                            boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
-        this.pointsInBothHands = pointsInBothHands;
+
+        this(pointsInBothHands,
+                new PointsForContract(contractLevel, numberOfTrickTaken, contractSuit, doubleGame, redoubleGame, auctionAssumptionWe).getCalculatedPointsForContract(),
+                auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         this.contractLevel = contractLevel;
         this.contractSuit= contractSuit;
         this.numberOfTricskTaken=numberOfTrickTaken;
-      //  if( doubleGame)  this.nothingDoubleRedoube = 2;
-      //  if(redoubleGame)  this.nothingDoubleRedoube=4;  this.nothingDoubleRedoube=1;
-
-
-        boolean asumption = auctionAssumptionWe;
-        PointsForContract obj =new  PointsForContract(contractLevel,numberOfTrickTaken, contractSuit, doubleGame,redoubleGame, asumption);
-        this.pointsForContract = obj.getCalculatedPointsForContract();
-       //pyt dlaczego tak? Chciałam uruchomić konstruktor ale on tam na końcu zeruje wynik? dlaczego?
-        this.results = new ResultsOfOneGame(pointsInBothHands,obj.getCalculatedPointsForContract(),auctionAssumptionWe,auctionAssumptionThey,fitInOlderColorWe,fitInOlderColorThey).getResults();
-
     }
-
 
     public float getPointsInBothHands() {
         return pointsInBothHands;
