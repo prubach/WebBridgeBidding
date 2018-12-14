@@ -2,101 +2,118 @@ package pl.waw.rubach.points;
 
 public class PointsForContract {
 
+    /**
+     * Points for contract calculated with modyfy bridge rulles according to 4 play scoring
+     */
     private int calculatedPointsForContract = 0;
 
-
+    /**
+     * Short descirption only with contract main parameter
+     */
     private String shortDescription = " Kontrakt jest: ";
+    /**
+     * Long description explain how points are calulating
+     */
     private String description = "Opis punktów: ";
 //todo odp tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
 
-    public PointsForContract(int gameLevel, int numberOfTrickTaken, String gameSuit, boolean doubleGame, boolean redoubleGame, boolean asumption)
+
+    public PointsForContract(int contractLevel, int numberOfTrickTaken, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair)
             throws InvalidContractLevelException, InvalidContractSuitException {
 
-        if (gameLevel > 7 || gameLevel < 1)
-            throw new InvalidContractLevelException(gameLevel); // odp TAK - wyrzuca !!  czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
+        if (contractLevel > 7 || contractLevel < 1)
+            throw new InvalidContractLevelException(contractLevel); // odp TAK - wyrzuca !!  czy jak jest wyjątek to już nie liczy dalej - tak bym chciała ...
 
         int numberOfTrickTakenAbove6 = numberOfTrickTaken - 6;
 
-        if (redoubleGame) doubleGame = false;
+        if (isContractRedouble) isContractDouble = false;
 
-        if (doubleGame)
-            shortDescription = shortDescription + gameLevel + gameSuit + " z kontrą, zebrano " + numberOfTrickTaken + " lew.";
-        else if (redoubleGame)
-            shortDescription = shortDescription + gameLevel + gameSuit + " z rekontrą, zebrano " + numberOfTrickTaken + " lew.";
-        else shortDescription = shortDescription + gameLevel + gameSuit + ", zebrano " + numberOfTrickTaken + " lew.";
+        if (isContractDouble)
+            shortDescription = shortDescription + contractLevel + contractSuit + " z kontrą, zebrano " + numberOfTrickTaken + " lew.";
+        else if (isContractRedouble)
+            shortDescription = shortDescription + contractLevel + contractSuit + " z rekontrą, zebrano " + numberOfTrickTaken + " lew.";
+        else shortDescription = shortDescription + contractLevel + contractSuit + ", zebrano " + numberOfTrickTaken + " lew.";
 
 
         this.calculatedPointsForContract = 0;
+        /**
+         * overtricks points dependfing of if is double/redouble and v
+         */
         int aditionalTricksPoints = 0;
 
-        if (numberOfTrickTakenAbove6 >= gameLevel) {
-            calculatedPointsForContract = getMainPoints(gameLevel, gameSuit);
-            if (doubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
-            if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 4;
+        if (numberOfTrickTakenAbove6 >= contractLevel) {
+            calculatedPointsForContract = getMainPoints(contractLevel, contractSuit);
+            if (isContractDouble) calculatedPointsForContract = calculatedPointsForContract * 2;
+            if (isContractRedouble) calculatedPointsForContract = calculatedPointsForContract * 4;
 
-            description = description + "punkty za ugraną grę:" + gameLevel + " " + gameSuit + " to: " + calculatedPointsForContract + "pkt. ,  + ";
+            description = description + "punkty za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + calculatedPointsForContract + "pkt.   + ";
         }
-        if (numberOfTrickTakenAbove6 < gameLevel) {
+        if (numberOfTrickTakenAbove6 < contractLevel) {
             //Undertrick points -
             // mniej lew niż zalicytowano -wpadki z rekontrą x2 (sprawdzone)
-            int undertricks = gameLevel - numberOfTrickTakenAbove6;
+            int undertricks = contractLevel - numberOfTrickTakenAbove6;
             if (undertricks == 1) description = description + " punkty z " + undertricks + " wpadki. ";
             else description = description + " punkty z " + undertricks + " wpadek. ";
 
-            if (!asumption && !doubleGame && !redoubleGame)
+            if (!auctionAssumptionPlaingPair && !isContractDouble && !isContractRedouble)
                 calculatedPointsForContract = -undertricks * 50;   //bez kontry przed partią 50
-            if (!asumption && (doubleGame || redoubleGame) && undertricks == 1)
+            if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && undertricks == 1)
                 calculatedPointsForContract = -undertricks * 100;  //z kontrą przed partią pierwsza za 100
-            else if (!asumption && (doubleGame || redoubleGame) && undertricks == 2)
+            else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && undertricks == 2)
                 calculatedPointsForContract = -undertricks * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
-            else if (!asumption && (doubleGame || redoubleGame) && undertricks == 3)
+            else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && undertricks == 3)
                 calculatedPointsForContract = -undertricks * 200 + 100;
-            else if (!asumption && (doubleGame || redoubleGame) && undertricks >= 4)
+            else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && undertricks >= 4)
                 calculatedPointsForContract = -undertricks * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
 
-            if (asumption && !doubleGame && !redoubleGame)
+            if (auctionAssumptionPlaingPair && !isContractDouble && !isContractRedouble)
                 calculatedPointsForContract = -undertricks * 100;  //bez kontry po partii 100
-            if (asumption && (doubleGame || redoubleGame) && undertricks == 1)
+            if (auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && undertricks == 1)
                 calculatedPointsForContract = -undertricks * 200;  // z kontrą po partii pierwsza za 200
-            else if (asumption && (doubleGame || redoubleGame) && undertricks >= 2)
+            else if (auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && undertricks >= 2)
                 calculatedPointsForContract = -undertricks * 300 + 100;  //z kontrą po partii kolejne za 300
 
-            if (redoubleGame) calculatedPointsForContract = calculatedPointsForContract * 2;
+            if (isContractRedouble) calculatedPointsForContract = calculatedPointsForContract * 2;
 
         }
         calculatedPointsForContract = calculatedPointsForContract
-                + getOvertrickPoints(numberOfTrickTakenAbove6, gameLevel, asumption, doubleGame, redoubleGame, gameSuit)
-                + getBonusDoubleRedouble(gameLevel, numberOfTrickTakenAbove6, doubleGame, redoubleGame)
-                + getGamePartGameBonus(calculatedPointsForContract, gameLevel, numberOfTrickTakenAbove6, asumption)
-                + getSlamPremiaPoints(gameLevel, numberOfTrickTakenAbove6, asumption)
+                + getOvertrickPoints(numberOfTrickTakenAbove6, contractLevel, auctionAssumptionPlaingPair, isContractDouble, isContractRedouble, contractSuit)
+                + getBonusDoubleRedouble(contractLevel, numberOfTrickTakenAbove6, isContractDouble, isContractRedouble)
+                + getGamePartGameBonus(calculatedPointsForContract, contractLevel, numberOfTrickTakenAbove6, auctionAssumptionPlaingPair)
+                + getSlamPremiaPoints(contractLevel, numberOfTrickTakenAbove6, auctionAssumptionPlaingPair)
                 + aditionalTricksPoints;
     }
 
+    /**
+     * function calculate points for declared tricks which are taken (and also overtricks without double/ redoubld
+     * @param contractLevel
+     * @param contractSuit
+     * @return number of points
+     * @throws InvalidContractSuitException
+     */
+    private int getMainPoints(int contractLevel, String contractSuit) throws InvalidContractSuitException {
 
-    private int getMainPoints(int levelOfGame, String gameColor) throws InvalidContractSuitException {
-
-        switch (gameColor) {
+        switch (contractSuit) {
             case "s":
             case "S":
             case "h":
             case "H":
-                return levelOfGame * 30;
+                return contractLevel * 30;
 
             case "d":
             case "D":
             case "c":
             case "C":
-                return levelOfGame * 20;
+                return contractLevel * 20;
 
             case "n":
             case "N":
             case "nt":
             case "NT":
-                return levelOfGame * 30 + 10;
+                return contractLevel * 30 + 10;
 
             default:
                 throw new InvalidContractSuitException("Nie ma takiego koloru wpisz jeszcze raz.");
-                //pyt tutaj jakiś jeszcze gotowy wyjątek nie wiem skąd i po co ale co dziwniejsze wyżej nie ma catch ani nic?
         }
     }
 
