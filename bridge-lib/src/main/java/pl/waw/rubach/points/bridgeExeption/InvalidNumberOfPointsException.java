@@ -1,4 +1,4 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.bridgeExeption;
 
 public class InvalidNumberOfPointsException extends BridgeException {
 
@@ -8,7 +8,7 @@ public class InvalidNumberOfPointsException extends BridgeException {
         super(message);
     }
 
-    InvalidNumberOfPointsException(float pointsGiven) {
+    public InvalidNumberOfPointsException(float pointsGiven) {
         super("Nieprawidłowo podana liczba punktów na obu rękach partnerów-  podano: " + pointsGiven + " a powinna być liczba dodatnia  i nie większa od 40 - spróbuj jeszcze raz!");
          this.pointsGiven = pointsGiven;
     }

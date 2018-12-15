@@ -1,5 +1,9 @@
 package pl.waw.rubach.points;
 
+import pl.waw.rubach.points.bridgeExeption.BridgeException;
+import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
@@ -70,6 +74,14 @@ public class RubberScoring {
     //to co mówiłeś przez telefon czyli konstruktor taki który jeszcze nie ma tych parametrów tylko tworzy obiekt a potem zrobić fukncje tak żeby te kolejne wiersze
     //uzupełniało w czasie jak się liczy - wtedy będzie wiedziało co jest do tego rozdania a co nie - o to mi chodziło tylko się pogubiłam!!! na razie zostawię te stare konstruktory
 
+    public RubberScoring(int result1, int result2, int result3, int result4)
+            throws BridgeException {
+        this();
+        setSumm(result1 + result2 + result3 + result4);
+        System.out.println("Końcowy wynik gry numer:"+ getGameID()+" z podanymi wynikami "+ result1+" " + result2 + " "+result3 +" " + result4 +" jest: " + getSumm() + " \n");
+    }
+
+
     public RubberScoring(float piH1, float piH2, float piH3, float piH4, int pfC1, int pfC2, int pfC3, int pfC4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
@@ -84,12 +96,6 @@ public class RubberScoring {
 
     }
 
-    public RubberScoring(int result1, int result2, int result3, int result4)
-            throws BridgeException {
-        this();
-        setSumm(result1 + result2 + result3 + result4);
-        System.out.println("Końcowy wynik gry numer:"+ getGameID()+" z podanymi wynikami "+ result1+" " + result2 + " "+result3 +" " + result4 +" jest: " + getSumm() + " \n");
-    }
 
     public RubberScoring(int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
                          int piH1, int piH2, int piH3, int piH4, int ntt1, int ntt2, int ntt3, int ntt4,
@@ -109,15 +115,6 @@ public class RubberScoring {
 
 
 
-
-   public void fillOneContractFrom4GameSet(int contractNumber,ResultsOfOneGame rooG)
-           throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-        fillAssumption(contractNumber);
-        scorringForOneGame.put(contractNumber,rooG);
-   }
-
-
-
     public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, int pointsForContract,
                                             boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
@@ -126,6 +123,13 @@ public class RubberScoring {
         ResultsOfOneGame a = new ResultsOfOneGame(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         scorringForOneGame.put(contractNumber, a);
     }
+
+    public void fillOneContractFrom4GameSet(int contractNumber,ResultsOfOneGame rooG)
+            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+        fillAssumption(contractNumber);
+        scorringForOneGame.put(contractNumber,rooG);
+    }
+
 
     public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, PointsForContract pFC,
                                             boolean fitInOlderColorWe, boolean fitInOlderColorThey)

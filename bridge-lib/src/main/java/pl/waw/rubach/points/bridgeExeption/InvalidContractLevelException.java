@@ -1,4 +1,4 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.bridgeExeption;
 
 public class InvalidContractLevelException extends BridgeException {
 
@@ -13,7 +13,7 @@ public class InvalidContractLevelException extends BridgeException {
         //"Nieprawidłowo podana poziom kontraktu - spróbuj jeszcze raz!"
     }
 
-    InvalidContractLevelException(int contractLevel) {
+    public InvalidContractLevelException(int contractLevel) {
         super("Nie ma takiego poziomu gry, podano: " + contractLevel + " a powinno być między 1 a 7 (szlem) - spróbuj jeszcze raz");
         this.contractLevel = contractLevel;
     }

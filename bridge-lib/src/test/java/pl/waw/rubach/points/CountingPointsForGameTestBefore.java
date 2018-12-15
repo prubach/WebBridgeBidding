@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.waw.rubach.points.bridgeExeption.BridgeException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -363,7 +364,7 @@ public class CountingPointsForGameTestBefore {
 
 
     @Test
-    public void testMajorContract() throws  BridgeException {
+    public void testMajorContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMajorContract.keySet())) {
             Integer res = new PointsForContract(p,p+6,"s",false,false,beforeAfter).getCalculatedPointsForContract();
             Integer resA = new PointsForContract(p,p+6,"s",1,beforeAfter).getCalculatedPointsForContract();

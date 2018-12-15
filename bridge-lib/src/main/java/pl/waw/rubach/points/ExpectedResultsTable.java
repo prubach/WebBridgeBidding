@@ -1,6 +1,7 @@
 package pl.waw.rubach.points;
 
 import org.apache.commons.collections4.map.MultiKeyMap;
+import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
 
 import java.util.HashMap;
 import java.util.Map;

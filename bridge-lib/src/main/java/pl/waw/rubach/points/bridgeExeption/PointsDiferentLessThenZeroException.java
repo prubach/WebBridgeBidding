@@ -1,4 +1,4 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.bridgeExeption;
 
 public class PointsDiferentLessThenZeroException extends BridgeException {
     /**
@@ -10,7 +10,7 @@ public class PointsDiferentLessThenZeroException extends BridgeException {
      */
     //pyt na przyszłość może zrobić żeby zapisało w jakim przypadku to było? bo takiego błędu nie powinno być - to nie błąd użytkownika  - a może takiego wyjątku nie powinno wcale być
 
-    PointsDiferentLessThenZeroException() {
+    public PointsDiferentLessThenZeroException() {
         super("Błąd różnicy punktów - mniejsza od zera- to jakiś błąd programu");
         //second option of message: "Róznica punktow nie może być ujemna - bład programu chyba"
     }

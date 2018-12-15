@@ -1,5 +1,9 @@
 package pl.waw.rubach.points;
 
+import pl.waw.rubach.points.bridgeExeption.BridgeException;
+import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
+
 public class ResultsOfOneGame {
 
     /**

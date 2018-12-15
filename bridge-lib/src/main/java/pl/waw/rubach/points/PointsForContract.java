@@ -1,5 +1,10 @@
 package pl.waw.rubach.points;
 
+import pl.waw.rubach.points.bridgeExeption.InvalidContractLevelException;
+import pl.waw.rubach.points.bridgeExeption.InvalidContractSuitException;
+import pl.waw.rubach.points.bridgeExeption.InvalidNormalDoubleRedoubleSignature;
+import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfTrickTakenException;
+
 public class PointsForContract {
 
     //CONTRACT PARAMETER - arguments of constructor
