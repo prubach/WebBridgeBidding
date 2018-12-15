@@ -12,9 +12,9 @@ import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
 
 import java.util.Map;
 
-public class CountingPointsBasicTest {
+public class ResultsOfOneGameBasicTest {
 
-    private static Logger logger = LoggerFactory.getLogger(CountingPointsBasicTest.class);
+    private static Logger logger = LoggerFactory.getLogger(ResultsOfOneGameBasicTest.class);
 
 
     private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
@@ -36,6 +36,9 @@ public class CountingPointsBasicTest {
     public void fillTestPointsMap() {
 //todo make copy of this for both before :) and one before the second after
         testCountingPointsBothBeforNoFitMap.put(28f, 990f, 11);
+        testCountingPointsBothBeforNoFitMap.put(29f, -50f, -10);
+        testCountingPointsBothBeforNoFitMap.put(11f, 50f, 10);
+
         testCountingPointsBothBeforNoFitMap.put(12f, -990f, -11);
         testCountingPointsBothBeforNoFitMap.put(20f, 400f, 9);
         testCountingPointsBothBeforNoFitMap.put(22f, 400f, 8);

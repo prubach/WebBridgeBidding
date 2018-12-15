@@ -9,7 +9,7 @@ public class TestRunner {
     public static void main(String[] args) {
 
 //=================================Points counting first:   Imp and Expected Points test
-        Result resultImpExpTest = JUnitCore.runClasses(CountingPointsBasicTest.class);
+        Result resultImpExpTest = JUnitCore.runClasses(ResultsOfOneGameBasicTest.class);
         for (Failure failureGameModelCards : resultImpExpTest.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
@@ -17,35 +17,35 @@ public class TestRunner {
 
 //=======================================Points counting Basic - taking points in both hands and points for contract giving ipm points
 
-        Result resultCountingPointsTest = JUnitCore.runClasses(CountingPointsBasicTest.class);
+        Result resultCountingPointsTest = JUnitCore.runClasses(ResultsOfOneGameBasicTest.class);
         for (Failure failureGameModelCards : resultCountingPointsTest.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
-        System.out.println("CountingPointsBasicTest test: " + resultCountingPointsTest.wasSuccessful());
+        System.out.println("ResultsOfOneGameBasicTest test: " + resultCountingPointsTest.wasSuccessful());
 
 //=======================================Points counting BothPlay - taking points in both hands and points for contract giving ipm points
 
-        Result resultCountingPointsBothPlayTest = JUnitCore.runClasses(CountingPointsBothPlayTest.class);
+        Result resultCountingPointsBothPlayTest = JUnitCore.runClasses(ResultsOfOneGameAdvanceTest.class);
         for (Failure failureGameModelCards : resultCountingPointsBothPlayTest.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
-        System.out.println("CountingPointsBothPlayTest test: " + resultCountingPointsBothPlayTest.wasSuccessful());
+        System.out.println("ResultsOfOneGameAdvanceTest test: " + resultCountingPointsBothPlayTest.wasSuccessful());
 
 
 //=================================Points for contract  counting not  Vulnerable Package Test
-        Result resultCountingPointsTestBefore = JUnitCore.runClasses(CountingPointsForGameTestBefore.class);
+        Result resultCountingPointsTestBefore = JUnitCore.runClasses(PointsForGameTestBefore.class);
         for (Failure failureCountingPointsTestBefore : resultCountingPointsTestBefore.getFailures()) {
             System.out.println(failureCountingPointsTestBefore.toString());
         }
-        System.out.println("CountingPointsForGameTestBefore test: " + resultCountingPointsTestBefore.wasSuccessful());
+        System.out.println("PointsForGameTestBefore test: " + resultCountingPointsTestBefore.wasSuccessful());
 
 
 //=================================Points for contract counting Vulnerable Package Test
-        Result resultCountingPointsTestAfter = JUnitCore.runClasses(CountingPointsForGameTestAfter.class);
+        Result resultCountingPointsTestAfter = JUnitCore.runClasses(PointsForGameTestAfter.class);
         for (Failure failureCountingPointsTestAfter : resultCountingPointsTestAfter.getFailures()) {
             System.out.println(failureCountingPointsTestAfter.toString());
         }
-        System.out.println("CountingPointsForGameTestAfter test: " + resultCountingPointsTestAfter.wasSuccessful());
+        System.out.println("PointsForGameTestAfter test: " + resultCountingPointsTestAfter.wasSuccessful());
 
 //=======================================Rubberscoring
         Result resultRubberScoringTest = JUnitCore.runClasses(RubberScoringTest.class);

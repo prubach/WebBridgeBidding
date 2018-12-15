@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class ImpExpTest {
+public class ImpExpTableTest {
 
-    private static Logger logger = LoggerFactory.getLogger(ImpExpTest.class);
+    private static Logger logger = LoggerFactory.getLogger(ImpExpTableTest.class);
 
     private Map<Float, Integer> testExpResBeforeFitMap = new HashMap<>();
     private Map<Float, Integer> testExpResAfterFitMap = new HashMap<>();
@@ -39,6 +39,7 @@ public class ImpExpTest {
         testImpPointsMap.put(2000, 19);
         testImpPointsMap.put(6000, 24);
         testImpPointsMap.put(10000, 24);
+        testImpPointsMap.put(430+50, 10);
        // testImpPointsMap.put(20000, 24);
 
 
@@ -58,6 +59,7 @@ public class ImpExpTest {
         testExpResBeforeFitMap.put(39.5f, 1400);
         testExpResBeforeFitMap.put(40f, 1400);
 
+        testExpResBeforeNoFitMap.put(11f, -430);
         testExpResBeforeNoFitMap.put(20f, 0);
         testExpResBeforeNoFitMap.put(20.5f, 25);
         testExpResBeforeNoFitMap.put(25f, 200);

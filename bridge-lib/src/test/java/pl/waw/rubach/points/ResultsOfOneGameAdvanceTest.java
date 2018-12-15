@@ -12,11 +12,12 @@ import pl.waw.rubach.points.bridgeExeption.BridgeException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CountingPointsBothPlayTest {
+public class ResultsOfOneGameAdvanceTest {
 
-    private static Logger logger = LoggerFactory.getLogger(CountingPointsBothPlayTest.class);
+    private static Logger logger = LoggerFactory.getLogger(ResultsOfOneGameAdvanceTest.class);
 
-
+    protected boolean weBeforeAfter = false;
+    protected boolean theyBeforeAfter = false;
 
     private MultiKeyMap<Integer, Integer> testCountingPointsNTBothBeforeBothNoFit = new MultiKeyMap<>();
     private Map<Integer, Integer> testCountingPoints3NTBothBeforeBothNoFit = new HashMap<>();
@@ -38,18 +39,17 @@ public class CountingPointsBothPlayTest {
     @Before
     public void fillTestPointsMap() {
         //                          key1: liczba puntków  key2: wysokość key3 liczba lew
+        testCountingPointsNTBothBeforeBothNoFit.put( 29,6,11, -10); //990
         testCountingPointsNTBothBeforeBothNoFit.put( 28,6,12, 11); //990
         testCountingPointsNTBothBeforeBothNoFit.put( 20,6,12, 14); //990
-       testCountingPointsNTBothBeforeBothNoFit.put( 20, 3,9, 9); //400
+        testCountingPointsNTBothBeforeBothNoFit.put( 20, 3,9, 9); //400
         testCountingPointsNTBothBeforeBothNoFit.put( 22,3,9, 8); //400
         testCountingPointsNTBothBeforeBothNoFit.put( 26,3,9, 3); //400
 
     }
 
-//    RubberScoring a1 = new RubberScoring(1, "nt", 1,"nt", 6,"nt",6,"nt",12,28,15,35,7,6,1,12,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false);
     @Test
     public void testCountingPointsA() throws BridgeException {
- // ResultsOfOneGame(float pointsInBothHands, int contractLevel, int numberOfTrickTaken, String contractSuit, boolean doubleGame, boolean redoubleGame, boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
 
         ResultsOfOneGame a = new ResultsOfOneGame(20f,3,9,"nt",false,false,false,false,false,false);
         Assert.assertEquals(a.getResults(), 9);
@@ -68,7 +68,7 @@ public class CountingPointsBothPlayTest {
             int contractLevel = entry.getKey().getKey(1);
             int numberOfTricksTaken = entry.getKey().getKey(2);
 
-  ResultsOfOneGame roog = new ResultsOfOneGame(pointsInBothHands,contractLevel,numberOfTricksTaken,"nt",false,false,false,false,false,false);
+  ResultsOfOneGame roog = new ResultsOfOneGame(pointsInBothHands,contractLevel,numberOfTricksTaken,"nt",false,false,weBeforeAfter,theyBeforeAfter,false,false);
 
 //             ResultsOfOneGame roog = new ResultsOfOneGame(pointsInBothHands,400,false,false,false,false);
             Integer res = roog.getResults();

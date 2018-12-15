@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class CountingPointsForGameTestBefore {
+public class PointsForGameTestBefore {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
     protected boolean beforeAfter = false;
