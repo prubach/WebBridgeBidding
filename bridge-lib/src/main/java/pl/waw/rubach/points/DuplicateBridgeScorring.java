@@ -5,6 +5,7 @@ import pl.waw.rubach.points.bridgeExeption.InvalidContractSuitException;
 import pl.waw.rubach.points.bridgeExeption.InvalidNormalDoubleRedoubleSignature;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfTrickTakenException;
 
+//TO BYŁO PointsForContract
 public class DuplicateBridgeScorring {
 
     //CONTRACT PARAMETER - arguments of constructor
@@ -71,12 +72,10 @@ public class DuplicateBridgeScorring {
 //pyt czy to tak? Bo jakoś mam wrażenie że ta pierwsza wersja była dużo czytelniejsza a oszczędność dwóch liniek (tam gdzie było mnożenie)...  i mniej czytelnie - na razie zostawiam zmienne a nie s?
 // No i nie chce mi się zmieniać testów wiec ten drugi konstruktor i tak musi zostać ...
 // kombinowałam w testach z mnożnikami żeby np samo się generowało z kontrą i rekontrką ale nie da się chyba bo za dużo się zmienia...
+//DuplicateBridgeScorring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
 
 
-
-    //todo zmienić nazwę może na  DuplicateBridgeScorring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
-    //po polsku było by po prostu zapis międzynarodowy (w odróżnieniu od zapisu polskiego
-
+    //TO BYŁO PointsForContract
     public DuplicateBridgeScorring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionPlaingPair, numberOfTrickTakenByDeclarer);

@@ -4,7 +4,8 @@ import pl.waw.rubach.points.bridgeExeption.BridgeException;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
 import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
 
-public class ResultsOfOneGame {
+//TO było ResultsOfOneGame
+public class CalculatedImpPointsForOneDeal {
 
     /**
      * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
@@ -49,8 +50,8 @@ public class ResultsOfOneGame {
     private int results; //= 0;     //pyt dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w DuplicateBridgeScorring i ono ma dwa razy i działa a tu nie ?
 
     //todo ogólne: to się ma zmienić na ImpPoints  albo CalculatedImpPointsForOneDeal czy coś pomiędzy i rozumiem że tego nie rozbudowywać bo klasę Game chcesz robić w Androidzie od razu?
-    public ResultsOfOneGame(boolean wePlay, float pointsInBothHandsPP, int pointsForContractPP, boolean auctionAssumptionPlaingPair,
-                            boolean auctionAssumptionOponens, boolean fitInOlderColorPlayingPair, boolean fitInOlderColorOponens)
+    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsPP, int pointsForContractPP, boolean auctionAssumptionPlaingPair,
+                                         boolean auctionAssumptionOponens, boolean fitInOlderColorPlayingPair, boolean fitInOlderColorOponens)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         this.results = 0;
 
@@ -88,16 +89,16 @@ public class ResultsOfOneGame {
     }
 
 
-    public ResultsOfOneGame(float pointsInBothHands,
-                            int pointsForContract,
-                            boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    public CalculatedImpPointsForOneDeal(float pointsInBothHands,
+                                         int pointsForContract,
+                                         boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
     this(true,pointsInBothHands,pointsForContract,auctionAssumptionWe,auctionAssumptionThey,fitInOlderColorWe,fitInOlderColorThey);
     }
 
-    public ResultsOfOneGame(float pointsInBothHands,
-                            int contractLevel, int numberOfTrickTakenByDeclarer, String contractSuit, boolean doubleGame, boolean redoubleGame,
-                            boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    public CalculatedImpPointsForOneDeal(float pointsInBothHands,
+                                         int contractLevel, int numberOfTrickTakenByDeclarer, String contractSuit, boolean doubleGame, boolean redoubleGame,
+                                         boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
         this(pointsInBothHands,
@@ -109,9 +110,9 @@ public class ResultsOfOneGame {
         this.numberOfTrickTakenByDeclarer = numberOfTrickTakenByDeclarer;
     }
 
-    public ResultsOfOneGame(float pointsInBothHands,
-                            int contractLevel, int numberOfTrickTakenByDeclarer, String contractSuit, int normalDoubleRedubleSingnature,
-                            boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    public CalculatedImpPointsForOneDeal(float pointsInBothHands,
+                                         int contractLevel, int numberOfTrickTakenByDeclarer, String contractSuit, int normalDoubleRedubleSingnature,
+                                         boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
         this(pointsInBothHands,
@@ -196,8 +197,8 @@ public class ResultsOfOneGame {
     public static void main(String[] args) {
 
         try {
-            ResultsOfOneGame roog1 = new ResultsOfOneGame(20,3,9,"nt",false,false,false,false,false,false);
-            ResultsOfOneGame roog2 = new ResultsOfOneGame(20,3,9,"nt",1,false,false,false,false);
+            CalculatedImpPointsForOneDeal roog1 = new CalculatedImpPointsForOneDeal(20,3,9,"nt",false,false,false,false,false,false);
+            CalculatedImpPointsForOneDeal roog2 = new CalculatedImpPointsForOneDeal(20,3,9,"nt",1,false,false,false,false);
 
             System.out.println("Końcowy wynik liczony od podstaw jest: " + roog1.getResults() + " \n");
             System.out.println("Końcowy wynik liczony od podstaw jest: " + roog2.getResults() + " \n");

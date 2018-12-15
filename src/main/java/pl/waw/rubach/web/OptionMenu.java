@@ -336,7 +336,7 @@ class OptionMenu extends MenuBar {
 
                 }
 
-                ResultsOfOneGame a = new ResultsOfOneGame(pointsInBH, pointsContract, assumption, assumption2, fitWe, fitThey);
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBH, pointsContract, assumption, assumption2, fitWe, fitThey);
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContract + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
                      //   "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
             }
@@ -405,7 +405,7 @@ class OptionMenu extends MenuBar {
                 if(checkboxThey.getValue()) {
                     foo2[contractNumber] = -foo2[contractNumber];}
 
-                ResultsOfOneGame  a = new ResultsOfOneGame(pointsInBH, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBH, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
 
                 RubberScoring aa = new RubberScoring(footable[0],footable[1],footable[2],footable[3],foo2[0],foo2[1],foo2[2],foo2[3],checkboxFitWeTable[0],checkboxFitWeTable[1],checkboxFitWeTable[2],checkboxFitWeTable[3],checkboxFitTheyTable[0],checkboxFitTheyTable[1],checkboxFitTheyTable[2],checkboxFitTheyTable[3]);
@@ -516,7 +516,7 @@ descriprionOf4play=s.toString()+"\n"+aa.getRubberScoringAsString();
             try {
                 float foo = Float.parseFloat(pointsInBothHands.getValue());
                 int foo2 = Integer.parseInt(pointsForContract.getValue());
-                ResultsOfOneGame a = new ResultsOfOneGame(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
             } catch (NumberFormatException | InvalidNumberOfPointsException | PointsDiferentLessThenZeroException e) {
                 String message = (e instanceof NumberFormatException) ?

@@ -12,9 +12,9 @@ import pl.waw.rubach.points.bridgeExeption.BridgeException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResultsOfOneGameAdvanceTest {
+public class CalculatedImpPointsForOneDealAdvanceTest {
 
-    private static Logger logger = LoggerFactory.getLogger(ResultsOfOneGameAdvanceTest.class);
+    private static Logger logger = LoggerFactory.getLogger(CalculatedImpPointsForOneDealAdvanceTest.class);
 
     protected boolean weBeforeAfter = false;
     protected boolean theyBeforeAfter = false;
@@ -51,10 +51,10 @@ public class ResultsOfOneGameAdvanceTest {
     @Test
     public void testCountingPointsA() throws BridgeException {
 
-        ResultsOfOneGame a = new ResultsOfOneGame(20f,3,9,"nt",false,false,false,false,false,false);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(20f,3,9,"nt",false,false,false,false,false,false);
         Assert.assertEquals(a.getResults(), 9);
 
-        ResultsOfOneGame a2 = new ResultsOfOneGame(20f,3,9,"nt",false,false,false,false,false,false);
+        CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(20f,3,9,"nt",false,false,false,false,false,false);
         Assert.assertEquals(a2.getResults(), 9);
 
     }
@@ -68,11 +68,11 @@ public class ResultsOfOneGameAdvanceTest {
             int contractLevel = entry.getKey().getKey(1);
             int numberOfTricksTaken = entry.getKey().getKey(2);
 
-  ResultsOfOneGame roog = new ResultsOfOneGame(pointsInBothHands,contractLevel,numberOfTricksTaken,"nt",false,false,weBeforeAfter,theyBeforeAfter,false,false);
+  CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(pointsInBothHands,contractLevel,numberOfTricksTaken,"nt",false,false,weBeforeAfter,theyBeforeAfter,false,false);
 
-//             ResultsOfOneGame roog = new ResultsOfOneGame(pointsInBothHands,400,false,false,false,false);
+//             CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(pointsInBothHands,400,false,false,false,false);
             Integer res = roog.getResults();
-            //    Integer res = new ResultsOfOneGame(28f, contractLevel,"nt",numberOfTricksTaken, false, false, false, false).getResults();
+            //    Integer res = new CalculatedImpPointsForOneDeal(28f, contractLevel,"nt",numberOfTricksTaken, false, false, false, false).getResults();
            logger.info("Dla "+ pointsInBothHands+" pkt.   przy kontrakcie " + contractLevel + "NT i zebranych "+numberOfTricksTaken+ " lewach - wynik jest " + res + " impów. Obie przed, obie bez fitu");
             Assert.assertEquals( testCountingPointsNTBothBeforeBothNoFit.get(pointsInBothHands,contractLevel, numberOfTricksTaken), res);
           //  Assert.assertEquals(roog.getPointsForContract(),400 );

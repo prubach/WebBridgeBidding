@@ -36,7 +36,7 @@ public class RubberScoring {
     /**
      * Map number of game with scorring for one game
      */
-    private Map<Integer, ResultsOfOneGame> scorringForOneGame = new HashMap<>();
+    private Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
 
     /**
      * Result of 4 games
@@ -108,11 +108,11 @@ public class RubberScoring {
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
         fillAssumption(contractNumber);
-        ResultsOfOneGame a = new ResultsOfOneGame(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         scorringForOneGame.put(contractNumber, a);
     }
 
-    public void fillOneContractFrom4GameSet(int contractNumber, ResultsOfOneGame rooG)
+    public void fillOneContractFrom4GameSet(int contractNumber, CalculatedImpPointsForOneDeal rooG)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         fillAssumption(contractNumber);
         scorringForOneGame.put(contractNumber, rooG);
@@ -125,7 +125,7 @@ public class RubberScoring {
 
         fillAssumption(contractNumber);
         description = description + pFC.getShortDescription() + "\n";
-        ResultsOfOneGame a = new ResultsOfOneGame(pointsInBothHands, pFC.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
         scorringForOneGame.put(contractNumber, a);
     }
@@ -138,7 +138,7 @@ public class RubberScoring {
         fillAssumption(contractNumber);
         DuplicateBridgeScorring pFC = new DuplicateBridgeScorring(gameLevel, suit, doub, redouble, auctionAssumptionWe, numberOfTricksTaken);
         description = description + pFC.getShortDescription() + "\n";
-        ResultsOfOneGame rooG = new ResultsOfOneGame(pointsInBothHands, pFC.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        CalculatedImpPointsForOneDeal rooG = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
         scorringForOneGame.put(contractNumber, rooG);
     }
@@ -160,7 +160,7 @@ public class RubberScoring {
     public String getRubberScoringAsString() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + this.getGameID() + ".  ***  \n");
 
-        Map<Integer, ResultsOfOneGame> map = this.scorringForOneGame;
+        Map<Integer, CalculatedImpPointsForOneDeal> map = this.scorringForOneGame;
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
         s.append("\n").append(this.getDescription());
 
@@ -208,7 +208,7 @@ public class RubberScoring {
         return description;
     }
 
-    public Map<Integer, ResultsOfOneGame> getScorringForOneGame() {
+    public Map<Integer, CalculatedImpPointsForOneDeal> getScorringForOneGame() {
         return scorringForOneGame;
     }
 

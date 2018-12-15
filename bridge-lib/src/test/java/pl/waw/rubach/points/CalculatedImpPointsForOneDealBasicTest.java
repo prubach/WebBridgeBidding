@@ -12,9 +12,9 @@ import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
 
 import java.util.Map;
 
-public class ResultsOfOneGameBasicTest {
+public class CalculatedImpPointsForOneDealBasicTest {
 
-    private static Logger logger = LoggerFactory.getLogger(ResultsOfOneGameBasicTest.class);
+    private static Logger logger = LoggerFactory.getLogger(CalculatedImpPointsForOneDealBasicTest.class);
 
 
     private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
@@ -104,7 +104,7 @@ public class ResultsOfOneGameBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, false, false, false, false).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, false, false, false, false).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie przed, obie bez fitu");
             Assert.assertEquals(testCountingPointsBothBeforNoFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -123,7 +123,7 @@ public class ResultsOfOneGameBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, true, false).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, true, false).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, My Fit");
             Assert.assertEquals(testCountingPointsBothAfterFitWeMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -139,7 +139,7 @@ public class ResultsOfOneGameBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, false, true).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, false, true).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, Oni Fit");
             Assert.assertEquals(testCountingPointsBothAfterFitTheyMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -155,7 +155,7 @@ public class ResultsOfOneGameBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, true, true).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, true, true).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, My Fit");
             Assert.assertEquals(testCountingPointsBothAfterFitBoth.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -170,7 +170,7 @@ public class ResultsOfOneGameBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new ResultsOfOneGame(pointsInBothHands, pointsOfContract, true, true, false, false).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, false, false).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, Obe bez fitu");
             Assert.assertEquals(testCountingPointsBothAfterNoFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -184,37 +184,37 @@ public class ResultsOfOneGameBasicTest {
     public void testCountingPoints() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         // System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, false,true) + " oczekiwane.");
 
-        ResultsOfOneGame a = new ResultsOfOneGame(24, 500, true, false, true, false);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(24, 500, true, false, true, false);
         System.out.println("Wynik gry dla 24PC i ugranych 500 pkt przy założeniach po i Fit jest: " + a.getResults());
         Assert.assertEquals(2, a.getResults());
 
-        ResultsOfOneGame b = new ResultsOfOneGame(24, 300, true, false, true, false);
+        CalculatedImpPointsForOneDeal b = new CalculatedImpPointsForOneDeal(24, 300, true, false, true, false);
         System.out.println("Wynik gry dla 24PC i ugranych 300 pkt przy założeniach po i Fit jest: " + b.getResults());
         Assert.assertEquals(-4, b.getResults());
 
-        ResultsOfOneGame c = new ResultsOfOneGame(24, 100, true, false, true, false);
+        CalculatedImpPointsForOneDeal c = new CalculatedImpPointsForOneDeal(24, 100, true, false, true, false);
         System.out.println("Wynik gry dla 24PC i ugranych +100 pkt przy założeniach po i Fit jest: " + c.getResults());
         Assert.assertEquals(-8, c.getResults());
 
-        ResultsOfOneGame d = new ResultsOfOneGame(24, -100, true, false, true, false);
+        CalculatedImpPointsForOneDeal d = new CalculatedImpPointsForOneDeal(24, -100, true, false, true, false);
         System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + d.getResults());
         Assert.assertEquals(-11, d.getResults());
 
-        ResultsOfOneGame e = new ResultsOfOneGame(24, -500, true, false, true, false);
+        CalculatedImpPointsForOneDeal e = new CalculatedImpPointsForOneDeal(24, -500, true, false, true, false);
         System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + e.getResults());
         Assert.assertEquals(-14, e.getResults());
 
 
-        ResultsOfOneGame f = new ResultsOfOneGame(20, 0, true, false, true, false);
+        CalculatedImpPointsForOneDeal f = new CalculatedImpPointsForOneDeal(20, 0, true, false, true, false);
         System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i my Fit jest: " + f.getResults());
         Assert.assertEquals(-2, f.getResults());
 
-        ResultsOfOneGame g = new ResultsOfOneGame(20, 0, true, false, false, true);
+        CalculatedImpPointsForOneDeal g = new CalculatedImpPointsForOneDeal(20, 0, true, false, false, true);
         System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i oni Fit jest: " + g.getResults());
         Assert.assertEquals(2, g.getResults());
 
 
-        ResultsOfOneGame h = new ResultsOfOneGame(10, -660, true, true, false, false);
+        CalculatedImpPointsForOneDeal h = new CalculatedImpPointsForOneDeal(10, -660, true, true, false, false);
         System.out.println("Wynik gry dla 10PC i ugranych -660 pkt przy założeniach po i oni bez fit jest: " + h.getResults());
         Assert.assertEquals(0, h.getResults());
 
