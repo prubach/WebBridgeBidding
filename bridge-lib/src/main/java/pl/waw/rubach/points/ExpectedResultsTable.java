@@ -29,9 +29,9 @@ public class ExpectedResultsTable {
 
     private ExpectedResultsTable() {
         pointsMap.put(true,false,fillMap(BEFORE_FIT));
-        pointsMap.put(true,true,fillMap(AFTER_FIT));
+        pointsMap.put(true,true,  fillMap(AFTER_FIT));
         pointsMap.put(false,false,fillMap(BEFORE_NOFIT));
-        pointsMap.put(false,true,fillMap(AFTER_NOFIT));
+        pointsMap.put(false,true, fillMap(AFTER_NOFIT));
     }
 
     /**
@@ -52,35 +52,57 @@ public class ExpectedResultsTable {
     /**
      * Calculate the bonus points for a certain contract
      *
-     * @param points - points in hand
-     * @param fitInOlderColor - if fit in older color (beginning with 30 points any color)
+     * @param points - points in both hands
+     * @param fitInOlderColorWe - if fit in older color (beginning with 30 points any color)
+     * @param fitInOlderColorThey
      * @param auctionAssumptionWe - assumption After (true) or Before (false)
      * @return bonus points
      */
-    public int getPoints(float points, boolean fitInOlderColor, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
+    public int getPoints(float points, boolean fitInOlderColorWe, boolean fitInOlderColorThey, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
             throws InvalidNumberOfPointsException {
 
         //test if points value is correct if not print Exeption
         if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
 
         //if 1 we  so points are for us, if -1 they and points for us is minus that for they
-        int howShoudPlayIndicator =1;
+        int whoShoudPlayIndicator =1;
         boolean auctionAssumption = auctionAssumptionWe;
+        boolean fit = fitInOlderColorWe;
         if (points<20 ) {
             points = (40 - points);
-            howShoudPlayIndicator = -1;
+            whoShoudPlayIndicator = -1;
             auctionAssumption = auctionAssumptionThey;
+            fit = fitInOlderColorThey;
 
         }
 
-        Map<Integer,Integer> map = getPtsMap(fitInOlderColor, auctionAssumption);
+        Map<Integer,Integer> map = getPtsMap(fit, auctionAssumption);
         int pointsInt = Math.round(points*2);
         if (pointsInt % 2==0) {
-            return howShoudPlayIndicator*map.get(pointsInt / 2);
+            return whoShoudPlayIndicator*map.get(pointsInt / 2);
         } else {
             int up = Math.round((pointsInt/2)+0.5f);
             int down = Math.round((pointsInt/2)-0.5f);
-            return howShoudPlayIndicator*((map.get(up) + map.get(down))/2);
+            return whoShoudPlayIndicator*((map.get(up) + map.get(down))/2);
+        }
+    }
+
+    public int getPoints(float points, boolean fit, boolean auctionAssumption)
+            throws InvalidNumberOfPointsException {
+
+        //test if points value is correct if not print Exeption
+        if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
+
+        //if 1 we  so points are for us, if -1 they and points for us is minus that for they
+
+        Map<Integer,Integer> map = getPtsMap(fit, auctionAssumption);
+        int pointsInt = Math.round(points*2);
+        if (pointsInt % 2==0) {
+            return map.get(pointsInt / 2);
+        } else {
+            int up = Math.round((pointsInt/2)+0.5f);
+            int down = Math.round((pointsInt/2)-0.5f);
+            return ((map.get(up) + map.get(down))/2);
         }
     }
 
