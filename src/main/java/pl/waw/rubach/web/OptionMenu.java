@@ -328,9 +328,9 @@ class OptionMenu extends MenuBar {
                     assumption2 =checkbox1AssumptionWe.getValue();
                 }
                // tricksTaken=tricksTaken-6;
-                PointsForContract pointsForContract=     new PointsForContract(Integer.parseInt(contractLevel.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption, tricksTaken);
-                String des = pointsForContract.getDescription();
-                int pointsContract =pointsForContract.getCalculatedPointsForContract();
+                DuplicateBridgeScorring duplicateBridgeScorring =     new DuplicateBridgeScorring(Integer.parseInt(contractLevel.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption, tricksTaken);
+                String des = duplicateBridgeScorring.getDescription();
+                int pointsContract = duplicateBridgeScorring.getCalculatedPointsForContract();
                 if(checkboxThey.getValue()) {
                     pointsContract = -pointsContract;
 
@@ -398,7 +398,7 @@ class OptionMenu extends MenuBar {
                 }
                 footable[contractNumber]= pointsInBH;
 
-                PointsForContract foo22=     new PointsForContract(Integer.parseInt(contractLevel.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption, trickTaken);
+                DuplicateBridgeScorring foo22=     new DuplicateBridgeScorring(Integer.parseInt(contractLevel.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption, trickTaken);
                 descriptionTable[contractNumber] = descriptionTable[contractNumber]+ foo22.getShortDescription();
                 foo2[contractNumber] =foo22.getCalculatedPointsForContract();
 

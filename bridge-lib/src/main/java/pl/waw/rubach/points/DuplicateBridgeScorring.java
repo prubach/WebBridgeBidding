@@ -5,7 +5,7 @@ import pl.waw.rubach.points.bridgeExeption.InvalidContractSuitException;
 import pl.waw.rubach.points.bridgeExeption.InvalidNormalDoubleRedoubleSignature;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfTrickTakenException;
 
-public class PointsForContract {
+public class DuplicateBridgeScorring {
 
     //CONTRACT PARAMETER - arguments of constructor
     /**
@@ -77,12 +77,12 @@ public class PointsForContract {
     //todo zmienić nazwę może na  DuplicateBridgeScorring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
     //po polsku było by po prostu zapis międzynarodowy (w odróżnieniu od zapisu polskiego
 
-    public PointsForContract(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
+    public DuplicateBridgeScorring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionPlaingPair, numberOfTrickTakenByDeclarer);
     }
 
-    public PointsForContract(int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
+    public DuplicateBridgeScorring(int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
         //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (normalDoubleRedubleSingnature == 2), normalDoubleRedubleSingnature == 4, auctionAssumptionPlaingPair);
 
