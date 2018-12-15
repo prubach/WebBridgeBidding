@@ -21,9 +21,6 @@ public class ResultsOfOneGame {
      */
     private int normalDoubleRedubleSingnature;
 
-
-
-
     /**
      * Numnber of tricks taken in game
      */
@@ -78,10 +75,10 @@ public class ResultsOfOneGame {
 
         if (pointDifferent < 0)
             throw new PointsDiferentLessThenZeroException();
-        int resutl = ImpTable.getInstance().getPoints(pointDifferent);
+        int result = ImpTable.getInstance().getPoints(pointDifferent);
 
-        if (expectedPoints <= pointsForContract) this.results = resutl;
-        else this.results = -resutl;
+        if (expectedPoints <= pointsForContract) this.results = result;
+        else this.results = -result;
     }
 
     public ResultsOfOneGame(float pointsInBothHands, int contractLevel,int numberOfTrickTaken, String contractSuit,
