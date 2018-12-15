@@ -49,26 +49,32 @@ public class ResultsOfOneGame {
     private int results; //= 0;     //pyt dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w PointsForContract i ono ma dwa razy i działa a tu nie ?
 
     //todo ogólne: to się ma zmienić na ImpPoints  albo CalculatedImpPointsForOneDeal czy coś pomiędzy i rozumiem że tego nie rozbudowywać bo klasę Game chcesz robić w Androidzie od razu?
-
-    public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe,
-                            boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    public ResultsOfOneGame(boolean wePlay, float pointsInBothHandsPP, int pointsForContractPP, boolean auctionAssumptionPlaingPair,
+                            boolean auctionAssumptionOponens, boolean fitInOlderColorPlayingPair, boolean fitInOlderColorOponens)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         this.results = 0;
-        this.pointsInBothHands = pointsInBothHands;
-        this.pointsForContract = pointsForContract;
+
+        if(!wePlay) {
+            this.pointsInBothHands  = 40-pointsInBothHandsPP;
+            this.pointsForContract  = - pointsForContractPP;
+        }
+        if(wePlay) {
+            this.pointsInBothHands = pointsInBothHandsPP;
+            this.pointsForContract = pointsForContractPP;
+        }
         int expectedPoints;
         if (pointsInBothHands == 20) {
-            if (fitInOlderColorWe) {
-                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe, auctionAssumptionThey);
-            } else if (fitInOlderColorThey) {
-                expectedPoints = -ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe, auctionAssumptionThey);
+            if (fitInOlderColorPlayingPair) {
+                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionPlaingPair, auctionAssumptionOponens);
+            } else if (fitInOlderColorOponens) {
+                expectedPoints = -ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionPlaingPair, auctionAssumptionOponens);
             } else
-                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false, auctionAssumptionWe, auctionAssumptionThey);
+                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false, auctionAssumptionPlaingPair, auctionAssumptionOponens);
 
         } else if (pointsInBothHands < 20) {
-            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey);
+            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorOponens, auctionAssumptionPlaingPair, auctionAssumptionOponens);
         } else {
-            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe, auctionAssumptionThey);
+            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorPlayingPair, auctionAssumptionPlaingPair, auctionAssumptionOponens);
         }
         if (expectedPoints <= pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
         else this.pointDifferent = expectedPoints - pointsForContract;
@@ -81,9 +87,17 @@ public class ResultsOfOneGame {
         else this.results = -result;
     }
 
-    public ResultsOfOneGame(float pointsInBothHands, int contractLevel,int numberOfTrickTaken, String contractSuit,
-                            boolean doubleGame, boolean redoubleGame, boolean auctionAssumptionWe,
-                            boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+
+    public ResultsOfOneGame(float pointsInBothHands,
+                            int pointsForContract,
+                            boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    this(true,pointsInBothHands,pointsForContract,auctionAssumptionWe,auctionAssumptionThey,fitInOlderColorWe,fitInOlderColorThey);
+    }
+
+    public ResultsOfOneGame(float pointsInBothHands,
+                            int contractLevel,int numberOfTrickTaken, String contractSuit, boolean doubleGame, boolean redoubleGame,
+                            boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
         this(pointsInBothHands,
@@ -91,12 +105,13 @@ public class ResultsOfOneGame {
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         this.contractLevel = contractLevel;
         this.contractSuit= contractSuit;
+        this.normalDoubleRedubleSingnature = redoubleGame ? 4 : (doubleGame ? 2 :1);
         this.numberOfTrickTaken =numberOfTrickTaken;
     }
 
-    public ResultsOfOneGame(float pointsInBothHands, int contractLevel,int numberOfTrickTaken, String contractSuit,
-                            int normalDoubleRedubleSingnature , boolean auctionAssumptionWe,
-                            boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    public ResultsOfOneGame(float pointsInBothHands,
+                            int contractLevel,int numberOfTrickTaken, String contractSuit,int normalDoubleRedubleSingnature,
+                            boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
         this(pointsInBothHands,
@@ -106,7 +121,7 @@ public class ResultsOfOneGame {
         this.contractSuit= contractSuit;
         this.normalDoubleRedubleSingnature = normalDoubleRedubleSingnature;
         this.numberOfTrickTaken =numberOfTrickTaken;
-    }
+        }
 
     //getteres and setteres
 
