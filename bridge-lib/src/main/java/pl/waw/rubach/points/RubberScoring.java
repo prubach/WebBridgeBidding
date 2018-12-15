@@ -10,10 +10,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class RubberScoring {
-
-
-    //TODO Trzeba to przerobić tak, aby nie przyjmował wszystkiego w konstruktorze tylko krok po kroku po każdym rozdaniu inaczej nie ma to sensu...
-
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
      * date and time
@@ -24,12 +20,10 @@ public class RubberScoring {
      */
     private int gameID;
 
-
     /**
      * description describe parameter of game - if accesible
      */
     private String description;
-
 
     /**
      * Auction Assumption for PlaingPair means if pair is  vulnerable or not vulnerable
@@ -49,25 +43,21 @@ public class RubberScoring {
      */
     private int summ;
 
-
-
-
-
     //todo powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...
+    //odp jeżeli już to FourGameImpPoints, ale np. przy robrze niekoniecznie będą 4 gry, więc może GameImpPoints
     //po polsku mogło by być Punkty/ZapisPorównawczy i drugi ZapisRobrowy
 
-    public RubberScoring(){
-        this.gameID = gameID + 1;  //todo how to change number to one plus before?
-        //to do add other field - like time, place etc .
-        this.description = " Tworzę nową serię 4 gier z kolejnym numerem:  "+ gameID + ". \n";
-        this.summ =0;
+    public RubberScoring() {
+        this(1);
+        //this.gameID = gameID + 1;  //todo how to change number to one plus before?
+        //odp Tak się nie da to będzie zawsze 1
     }
 
     //create special number scorring
     public RubberScoring(int gameID) {
         this.gameID = gameID;
-        this.description = " Tworzę nową serię 4 gier z konkertnym numerem:  "+ gameID  + ". \n";
-        this.summ =0;
+        this.description = " Tworzę nową serię 4 gier z konkertnym numerem:  " + gameID + ". \n";
+        this.summ = 0;
     }
 
 
@@ -78,14 +68,14 @@ public class RubberScoring {
             throws BridgeException {
         this();
         setSumm(result1 + result2 + result3 + result4);
-        System.out.println("Końcowy wynik gry numer:"+ getGameID()+" z podanymi wynikami "+ result1+" " + result2 + " "+result3 +" " + result4 +" jest: " + getSumm() + " \n");
+        System.out.println("Końcowy wynik gry numer:" + getGameID() + " z podanymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
     }
 
 
     public RubberScoring(float piH1, float piH2, float piH3, float piH4, int pfC1, int pfC2, int pfC3, int pfC4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
-       this();
+        this();
 
         fillOneContractFrom4GameSet(1, piH1, pfC1, fW1, fT1);
         fillOneContractFrom4GameSet(2, piH2, pfC2, fW2, fT2);
@@ -102,8 +92,7 @@ public class RubberScoring {
                          boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
-       this();
-
+        this();
 
         fillOneContractFrom4GameSet(1, piH1, lev1, color1, ntt1, d1, r1, fW1, fT1);
         fillOneContractFrom4GameSet(2, piH2, lev2, color2, ntt2, d2, r2, fW2, fT2);
@@ -112,7 +101,6 @@ public class RubberScoring {
 
         this.summ = getSumm();
     }
-
 
 
     public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, int pointsForContract,
@@ -124,10 +112,10 @@ public class RubberScoring {
         scorringForOneGame.put(contractNumber, a);
     }
 
-    public void fillOneContractFrom4GameSet(int contractNumber,ResultsOfOneGame rooG)
+    public void fillOneContractFrom4GameSet(int contractNumber, ResultsOfOneGame rooG)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         fillAssumption(contractNumber);
-        scorringForOneGame.put(contractNumber,rooG);
+        scorringForOneGame.put(contractNumber, rooG);
     }
 
 
@@ -155,22 +143,19 @@ public class RubberScoring {
         scorringForOneGame.put(contractNumber, rooG);
     }
 
-    private void fillAssumption(int contractNumber){
+    private void fillAssumption(int contractNumber) {
 
-                if (contractNumber == 1) {
-                auctionAssumptionWe = false;
-                auctionAssumptionThey = false;
-                } else if (contractNumber == 2) {
-                auctionAssumptionWe = true;
-                auctionAssumptionThey = false;
-                } else if (contractNumber == 3) {
-                auctionAssumptionWe = false;
-                auctionAssumptionThey = true;
-                } else if (contractNumber == 4){
-                auctionAssumptionWe=true;
-                auctionAssumptionThey=true;
-                }
-                }
+        auctionAssumptionWe = false;
+        auctionAssumptionThey = false;
+        if (contractNumber == 2) {
+            auctionAssumptionWe = true;
+        } else if (contractNumber == 3) {
+            auctionAssumptionThey = true;
+        } else if (contractNumber == 4) {
+            auctionAssumptionWe = true;
+            auctionAssumptionThey = true;
+        }
+    }
 
     public String getRubberScoringAsString() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + this.getGameID() + ".  ***  \n");
@@ -206,15 +191,12 @@ public class RubberScoring {
             if (scorringForOneGame.get(key).getPointsInBothHands() != 0)
                 s = s + scorringForOneGame.get(key).getResults();
             if (print) {
-                System.out.println("Wynik rozdania "+key+" jest: " + scorringForOneGame.get(key).getResults() + " \n");
-
+                System.out.println("Wynik rozdania " + key + " jest: " + scorringForOneGame.get(key).getResults() + " \n");
                 System.out.println("Do tej pory  wynik jest: " + s + " \n");
-
-            }}
+            }
+        }
         return s;
     }
-
-
 
     //getters
 
@@ -230,13 +212,10 @@ public class RubberScoring {
         return scorringForOneGame;
     }
 
-
     //For easier tests
     public static void main(String[] args) {
-
-
         try {
-           RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
+            RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
             System.out.println(a.getRubberScoringAsString());
             System.out.println("Końcowy wynik jest: " + a.getSumm(true) + " \n");
 /*
@@ -251,11 +230,11 @@ public class RubberScoring {
 
       //      new RubberScoring(3,-5,5,3);*/
 
-       RubberScoring rooG = new RubberScoring(15);
-            rooG.fillOneContractFrom4GameSet(1,20,110,false,false);
-            rooG.fillOneContractFrom4GameSet(2,21,110,false,false);
-            rooG.fillOneContractFrom4GameSet(3,22,110,false,false);
-            rooG.fillOneContractFrom4GameSet(4,23,110,false,false);
+            RubberScoring rooG = new RubberScoring(15);
+            rooG.fillOneContractFrom4GameSet(1, 20, 110, false, false);
+            rooG.fillOneContractFrom4GameSet(2, 21, 110, false, false);
+            rooG.fillOneContractFrom4GameSet(3, 22, 110, false, false);
+            rooG.fillOneContractFrom4GameSet(4, 23, 110, false, false);
 
             System.out.println(rooG.getRubberScoringAsString());
             System.out.println("Końcowy wynik jest: " + rooG.getSumm(true) + " \n");
@@ -266,7 +245,6 @@ public class RubberScoring {
         }
 
     }
-
 
 
 }
