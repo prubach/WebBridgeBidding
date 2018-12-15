@@ -366,8 +366,8 @@ public class PointsForGameTestBefore {
     @Test
     public void testMajorContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMajorContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, false, beforeAfter, p+6).getCalculatedPointsForContract();
-            Integer resA = new DuplicateBridgeScorring(p, "s", 1, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, false, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer resA = new DuplicateBridgeScoring(p, "s", 1, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym wynik jest: " + res +"/" + resA +" punktów.");
             Assert.assertEquals(testPointsForMajorContract.get(p), res);
             Assert.assertEquals(testPointsForMajorContract.get(p), resA);
@@ -376,7 +376,7 @@ public class PointsForGameTestBefore {
   //  @Test
   //  public void testMajorDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMajorDoubleContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", 2, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", 2, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym z kontrą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajorDoubleContract.get(p), res);
         }
@@ -384,7 +384,7 @@ public class PointsForGameTestBefore {
   //  @Test
   //  public void testMajorReDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMajorReDoubleContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", 4, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", 4, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym z rekontrą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajorReDoubleContract.get(p), res);
         }
@@ -393,7 +393,7 @@ public class PointsForGameTestBefore {
     @Test
     public void testMinorContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMinorContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "d", false, false, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "d", false, false, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMinorContract.get(p), res);
         }
@@ -401,7 +401,7 @@ public class PointsForGameTestBefore {
  //   @Test
  //   public void testMinorDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMinorDoubleContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "d", true, false, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "d", true, false, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z kotrą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMinorDoubleContract.get(p), res);
         }
@@ -409,7 +409,7 @@ public class PointsForGameTestBefore {
  //   @Test
  //   public void testMinorReDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForMinorReDoubleContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "d", false, true, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "d", false, true, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z rekotrą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMinorReDoubleContract.get(p), res);
         }
@@ -418,7 +418,7 @@ public class PointsForGameTestBefore {
     @Test
     public void testNoTrumphContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForNoTrumphContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "n", false, false, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "n", false, false, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bez atu wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForNoTrumphContract.get(p), res);
         }
@@ -426,7 +426,7 @@ public class PointsForGameTestBefore {
 //    @Test
 //    public void testNoTrumphDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForNoTrumphDoubleContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "n", true, false, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "n", true, false, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bez atu z kontrą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForNoTrumphDoubleContract.get(p), res);
         }
@@ -434,7 +434,7 @@ public class PointsForGameTestBefore {
 //    @Test
 //    public void testNoTrumphReDoubleContract() throws BridgeException {
         for (int p : new TreeSet<Integer>(testPointsForNoTrumphReDoubleContract.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "n", false, true, beforeAfter, p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "n", false, true, beforeAfter, p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bez atu z rekontrą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForNoTrumphReDoubleContract.get(p), res);
         }
@@ -447,7 +447,7 @@ public class PointsForGameTestBefore {
     public void testMinorContractOneMore() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMinorContractOneMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "d", false, false, beforeAfter, p + 1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "d", false, false, beforeAfter, p + 1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym  z jedną nadróbką wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMinorContractOneMore.get(p), res);
             //   }
@@ -458,7 +458,7 @@ public class PointsForGameTestBefore {
     public void testMinorContractOneMoreDouble() throws BridgeException {
     //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMinorContractOneMoreDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "d", true, false, beforeAfter, p+1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "d", true, false, beforeAfter, p+1+6).getCalculatedPointsForContract();
                  logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z kotrą  z jedną nadróbką  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMinorContractOneMoreDouble.get(p), res);
       //  }
@@ -467,7 +467,7 @@ public class PointsForGameTestBefore {
     public void testNoTrumphContractOneMoreDouble()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsOneMoreDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "nt", true, false, beforeAfter, p+1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "nt", true, false, beforeAfter, p+1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bezatu z kotrą  z jedną nadróbką  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testNoTrumphContractPointsOneMoreDouble.get(p), res);
             //  }
@@ -476,7 +476,7 @@ public class PointsForGameTestBefore {
     public void testMajorContractOneMoreDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajorContractOneMoreDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", true, false, beforeAfter, p + 1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", true, false, beforeAfter, p + 1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym  z kontrą i jedną nadróbką wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajorContractOneMoreDouble.get(p), res);
             //   }
@@ -489,7 +489,7 @@ public class PointsForGameTestBefore {
     public void testMinorContractOneMoreReDouble() throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMinorContractOneMoreReDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "d", false, true, beforeAfter, p+1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "d", false, true, beforeAfter, p+1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze młodszym z rekotrą  z jedną nadróbką  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMinorContractOneMoreReDouble.get(p), res);
             //  }
@@ -498,7 +498,7 @@ public class PointsForGameTestBefore {
     public void testNoTrumphContractOneMoreReDouble()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsOneMoreReDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "nt", false, true, beforeAfter, p+1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "nt", false, true, beforeAfter, p+1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bezatu z rekotrą  z jedną nadróbką  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testNoTrumphContractPointsOneMoreReDouble.get(p), res);
             //  }
@@ -507,7 +507,7 @@ public class PointsForGameTestBefore {
     public void testMajorContractOneMoreReDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajorContractOneMoreReDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, true, beforeAfter, p + 1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, true, beforeAfter, p + 1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym  z rekontrą i jedną nadróbką wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajorContractOneMoreReDouble.get(p), res);
             //   }
@@ -519,7 +519,7 @@ public class PointsForGameTestBefore {
   //  public void testMajorContractOneMore() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajorContractOneMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, false, beforeAfter, p + 1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, false, beforeAfter, p + 1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym  z jedną nadróbką wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajorContractOneMore.get(p), res);
             //   }
@@ -529,7 +529,7 @@ public class PointsForGameTestBefore {
  //   public void testMajorContractTwoMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsTwoMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, false, beforeAfter, p+2 +6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, false, beforeAfter, p+2 +6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w starszy  z dwiema nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testMajorContractPointsTwoMore.get(p), res);
             //  }
@@ -539,7 +539,7 @@ public class PointsForGameTestBefore {
 //    public void testMajorContractThreeMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsThreeMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, false, beforeAfter, p+3+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, false, beforeAfter, p+3+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w starszy  z trzema nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testMajorContractPointsThreeMore.get(p), res);
             //  }
@@ -549,7 +549,7 @@ public class PointsForGameTestBefore {
 //    public void testMajorContractFourMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsFourMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, false, beforeAfter, p+4 +6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, false, beforeAfter, p+4 +6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w starszy  z czterema nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testMajorContractPointsFourMore.get(p), res);
             //  }
@@ -559,7 +559,7 @@ public class PointsForGameTestBefore {
 //    public void testMajorContractFiveMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsFiveMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, false, beforeAfter, p+5 +6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, false, beforeAfter, p+5 +6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w starszy z pięcioma nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testMajorContractPointsFiveMore.get(p), res);
             //  }
@@ -569,7 +569,7 @@ public class PointsForGameTestBefore {
 //    public void testMajorContractSixMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testMajorContractPointsSixMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, false, beforeAfter, p+6 +6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, false, beforeAfter, p+6 +6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w starszy   z sześcioma nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testMajorContractPointsSixMore.get(p), res);
             //  }
@@ -582,7 +582,7 @@ public class PointsForGameTestBefore {
  //   public void testNoTrumphContractOneMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsOneMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "nt", false, false, beforeAfter, p+1 +6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "nt", false, false, beforeAfter, p+1 +6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bezatu z jedną nadróbką  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testNoTrumphContractPointsOneMore.get(p), res);
             //  }
@@ -592,7 +592,7 @@ public class PointsForGameTestBefore {
  //   public void testNoTrumphContractTwoMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsTwoMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "nt", false, false, beforeAfter, p+2 +6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "nt", false, false, beforeAfter, p+2 +6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z dwiema nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testNoTrumphContractPointsTwoMore.get(p), res);
             //  }
@@ -602,7 +602,7 @@ public class PointsForGameTestBefore {
 //    public void testNoTrumphContractThreeMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsThreeMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "nt", false, false, beforeAfter, p+3+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "nt", false, false, beforeAfter, p+3+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z trzema nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testNoTrumphContractPointsThreeMore.get(p), res);
             //  }
@@ -612,7 +612,7 @@ public class PointsForGameTestBefore {
 //    public void testNoTrumphContractFourMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsFourMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "nt", false, false, beforeAfter, p+4+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "nt", false, false, beforeAfter, p+4+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z czterema nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testNoTrumphContractPointsFourMore.get(p), res);
             //  }
@@ -622,7 +622,7 @@ public class PointsForGameTestBefore {
 //    public void testNoTrumphContractFiveMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsFiveMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "nt", false, false, beforeAfter, p+5+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "nt", false, false, beforeAfter, p+5+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z pięcioma nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testNoTrumphContractPointsFiveMore.get(p), res);
             //  }
@@ -632,7 +632,7 @@ public class PointsForGameTestBefore {
 //    public void testNoTrumphContractSixMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testNoTrumphContractPointsSixMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "nt", false, false, beforeAfter, p+6 +6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "nt", false, false, beforeAfter, p+6 +6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bezatu  z sześcioma nadróbkami  wynik jest: " + res + " punktów.");
             Assert.assertEquals(testNoTrumphContractPointsSixMore.get(p), res);
             //  }
@@ -646,7 +646,7 @@ public class PointsForGameTestBefore {
     public void testMajorContractMinusOne() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajorContractMinusOne.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "s", false, false, beforeAfter, p - 1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "s", false, false, beforeAfter, p - 1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w kolorze starszym  bez jednej wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajorContractMinusOne.get(p), res);
             //   }
@@ -657,7 +657,7 @@ public class PointsForGameTestBefore {
     public void testNoTrumphContractMinusOneDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForNoTrumphContractMinusOneDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(p, "n", true, false, beforeAfter, p - 1+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(p, "n", true, false, beforeAfter, p - 1+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości " + p + " w bez atu  bez jednej z kontą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForNoTrumphContractMinusOneDouble.get(p), res);
             //   }
@@ -668,7 +668,7 @@ public class PointsForGameTestBefore {
     public void testMajor3ContractMinusMore() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(3, "s", false, false, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(3, "s", false, false, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości 3 w kolorze starszym  bez " + p +" wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajor3ContractMinusMore.get(p), res);
             //   }
@@ -678,7 +678,7 @@ public class PointsForGameTestBefore {
     public void testMajor3ContractMinusMoreDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMoreDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(3, "nt", true, false, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(3, "nt", true, false, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości 3 w starszym  bez  "+ p+ "  z kontą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajor3ContractMinusMoreDouble.get(p), res);
             //   }
@@ -688,7 +688,7 @@ public class PointsForGameTestBefore {
     public void testMajor3ContractMinusMoreReDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsForMajor3ContractMinusMoreReDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(3, "nt", true, true, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(3, "nt", true, true, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości 3 w starszym  bez  "+ p+ "  z rekontą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsForMajor3ContractMinusMoreReDouble.get(p), res);
             //   }
@@ -699,7 +699,7 @@ public class PointsForGameTestBefore {
     public void testNoTrumph3ContractMinusMore() throws  BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsFor3NTContractMinusMore.keySet())) {
-            Integer res = new DuplicateBridgeScorring(3, "s", false, false, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(3, "s", false, false, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości 3 w bez Atu  bez " + p +" wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsFor3NTContractMinusMore.get(p), res);
             //   }
@@ -709,7 +709,7 @@ public class PointsForGameTestBefore {
     public void testNoTrumph3ContractMinusMoreDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsFor3NTContractMinusMoreDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(3, "nt", true, false, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(3, "nt", true, false, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości 3 w bez Atu bez  "+ p+ "  z kontą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsFor3NTContractMinusMoreDouble.get(p), res);
             //   }
@@ -719,7 +719,7 @@ public class PointsForGameTestBefore {
     public void testNoTrumph3ContractMinusMoreReDouble() throws BridgeException {
         //for(int i=1; i<2; i++){
         for (int p : new TreeSet<Integer>(testPointsFor3NTContractMinusMoreReDouble.keySet())) {
-            Integer res = new DuplicateBridgeScorring(3, "nt", true, true, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
+            Integer res = new DuplicateBridgeScoring(3, "nt", true, true, beforeAfter, 3 - p+6).getCalculatedPointsForContract();
             logger.info("Dla kontraktu o wysokości 3 w bez Atu  bez  "+ p+ "  z rekontą wynik jest: " + res + " punktów.");
             Assert.assertEquals(testPointsFor3NTContractMinusMoreReDouble.get(p), res);
             //   }

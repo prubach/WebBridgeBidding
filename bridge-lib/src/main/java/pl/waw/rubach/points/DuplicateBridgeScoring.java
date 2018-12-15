@@ -6,7 +6,7 @@ import pl.waw.rubach.points.bridgeExeption.InvalidNormalDoubleRedoubleSignature;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfTrickTakenException;
 
 //TO BYŁO PointsForContract
-public class DuplicateBridgeScorring {
+public class DuplicateBridgeScoring {
 
     //CONTRACT PARAMETER - arguments of constructor
     /**
@@ -40,7 +40,7 @@ public class DuplicateBridgeScorring {
     private boolean auctionAssumptionPlaingPair;
 
     /**
-     * Numnber of tricks taken in game  by declarer (oponenst takes 13 - numberOfTrickTakenByDeclarer)
+     * Number of tricks taken in game  by declarer (opponent takes 13 - numberOfTrickTakenByDeclarer)
      */
     private int numberOfTrickTakenByDeclarer;
 
@@ -64,7 +64,7 @@ public class DuplicateBridgeScorring {
     private String description = "Punkty za kontrakt: ";
 
     /**
-     * Points for contract calculated with modyfy bridge rulles according to 4 play scoring
+     * Points for contract calculated with modify bridge rules according to 4 play scoring
      */
     private int calculatedPointsForContract = 0; //pyt tu powinno być zerowanie czy w konstruktorze? jest tu i tu :)
 
@@ -72,16 +72,16 @@ public class DuplicateBridgeScorring {
 //pyt czy to tak? Bo jakoś mam wrażenie że ta pierwsza wersja była dużo czytelniejsza a oszczędność dwóch liniek (tam gdzie było mnożenie)...  i mniej czytelnie - na razie zostawiam zmienne a nie s?
 // No i nie chce mi się zmieniać testów wiec ten drugi konstruktor i tak musi zostać ...
 // kombinowałam w testach z mnożnikami żeby np samo się generowało z kontrą i rekontrką ale nie da się chyba bo za dużo się zmienia...
-//DuplicateBridgeScorring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
+//DuplicateBridgeScoring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
 
 
     //TO BYŁO PointsForContract
-    public DuplicateBridgeScorring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
+    public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionPlaingPair, numberOfTrickTakenByDeclarer);
     }
 
-    public DuplicateBridgeScorring(int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
+    public DuplicateBridgeScoring(int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
         //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (normalDoubleRedubleSingnature == 2), normalDoubleRedubleSingnature == 4, auctionAssumptionPlaingPair);
 
@@ -175,6 +175,7 @@ public class DuplicateBridgeScorring {
      * @return scorring for overtricks
      * @throws InvalidContractSuitException if contract suits is not correct
      */
+
     private int getOvertrickPoints() throws InvalidContractSuitException {
         // getOvertrickPoints(contractLevel,oddTricks,auctionAssumptionPlaingPair,s==2,s==4,contractSuit);
         int overtricksPoints = 0;

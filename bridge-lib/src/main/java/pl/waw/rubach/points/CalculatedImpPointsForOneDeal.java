@@ -29,7 +29,7 @@ public class CalculatedImpPointsForOneDeal {
 
     /**
      * Points  achved by playng contract with some additiona or lacking triks (calculated from duplicate bridge scoring)
-     * calculated by DuplicateBridgeScorring
+     * calculated by DuplicateBridgeScoring
      */
     private int pointsForContract;
 
@@ -47,9 +47,8 @@ public class CalculatedImpPointsForOneDeal {
     /**
      * Number of Imp Point  if 0 is equal, if -1 is one less etc ...
      */
-    private int results; //= 0;     //pyt dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w DuplicateBridgeScorring i ono ma dwa razy i działa a tu nie ?
+    private int results; //= 0;     //pyt dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w DuplicateBridgeScoring i ono ma dwa razy i działa a tu nie ?
 
-    //todo ogólne: to się ma zmienić na ImpPoints  albo CalculatedImpPointsForOneDeal czy coś pomiędzy i rozumiem że tego nie rozbudowywać bo klasę Game chcesz robić w Androidzie od razu?
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsPP, int pointsForContractPP, boolean auctionAssumptionPlaingPair,
                                          boolean auctionAssumptionOponens, boolean fitInOlderColorPlayingPair, boolean fitInOlderColorOponens)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
@@ -102,7 +101,7 @@ public class CalculatedImpPointsForOneDeal {
             throws BridgeException {
 
         this(pointsInBothHands,
-                new DuplicateBridgeScorring(contractLevel, contractSuit, doubleGame, redoubleGame, auctionAssumptionWe, numberOfTrickTakenByDeclarer).getCalculatedPointsForContract(),
+                new DuplicateBridgeScoring(contractLevel, contractSuit, doubleGame, redoubleGame, auctionAssumptionWe, numberOfTrickTakenByDeclarer).getCalculatedPointsForContract(),
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         this.contractLevel = contractLevel;
         this.contractSuit= contractSuit;
@@ -116,7 +115,7 @@ public class CalculatedImpPointsForOneDeal {
             throws BridgeException {
 
         this(pointsInBothHands,
-                new DuplicateBridgeScorring(contractLevel, contractSuit, normalDoubleRedubleSingnature, auctionAssumptionWe, numberOfTrickTakenByDeclarer).getCalculatedPointsForContract(),
+                new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, auctionAssumptionWe, numberOfTrickTakenByDeclarer).getCalculatedPointsForContract(),
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         this.contractLevel = contractLevel;
         this.contractSuit= contractSuit;

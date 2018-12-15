@@ -119,7 +119,7 @@ public class RubberScoring {
     }
 
 
-    public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, DuplicateBridgeScorring pFC,
+    public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, DuplicateBridgeScoring pFC,
                                             boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
@@ -136,7 +136,7 @@ public class RubberScoring {
             throws BridgeException {
 
         fillAssumption(contractNumber);
-        DuplicateBridgeScorring pFC = new DuplicateBridgeScorring(gameLevel, suit, doub, redouble, auctionAssumptionWe, numberOfTricksTaken);
+        DuplicateBridgeScoring pFC = new DuplicateBridgeScoring(gameLevel, suit, doub, redouble, auctionAssumptionWe, numberOfTricksTaken);
         description = description + pFC.getShortDescription() + "\n";
         CalculatedImpPointsForOneDeal rooG = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
