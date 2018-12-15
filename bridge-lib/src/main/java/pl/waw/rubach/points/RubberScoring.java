@@ -136,7 +136,7 @@ public class RubberScoring {
             throws BridgeException {
 
         fillAssumption(contractNumber);
-        PointsForContract pFC = new PointsForContract(gameLevel, numberOfTricksTaken, suit, doub, redouble, auctionAssumptionWe);
+        PointsForContract pFC = new PointsForContract(gameLevel, suit, doub, redouble, auctionAssumptionWe, numberOfTricksTaken);
         description = description + pFC.getShortDescription() + "\n";
         ResultsOfOneGame rooG = new ResultsOfOneGame(pointsInBothHands, pFC.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 

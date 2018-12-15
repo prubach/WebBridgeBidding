@@ -39,9 +39,9 @@ public class PointsForContract {
     private boolean auctionAssumptionPlaingPair;
 
     /**
-     * Numnber of tricks taken in game
+     * Numnber of tricks taken in game  by declarer (oponenst takes 13 - numberOfTrickTakenByDeclarer)
      */
-    private int numberOfTrickTaken;
+    private int numberOfTrickTakenByDeclarer;
 
 
     /**
@@ -73,19 +73,18 @@ public class PointsForContract {
 // kombinowałam w testach z mnożnikami żeby np samo się generowało z kontrą i rekontrką ale nie da się chyba bo za dużo się zmienia...
 
 
-    //    * @param contractSuit  Cards suits [denomination or strain] that denotes the proposed trump suit or notrump. Thus, there are five denominations – notrump, spades, hearts, diamonds and clubs.
 
     //todo zmienić nazwę może na  DuplicateBridgeScorring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
     //po polsku było by po prostu zapis międzynarodowy (w odróżnieniu od zapisu polskiego
 
-    public PointsForContract(int contractLevel, int numberOfTrickTaken, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair)
+    public PointsForContract(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
-        this(contractLevel, numberOfTrickTaken, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionPlaingPair);
+        this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionPlaingPair, numberOfTrickTakenByDeclarer);
     }
 
-    public PointsForContract(int contractLevel, int numberOfTrickTaken, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionPlaingPair)
+    public PointsForContract(int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
-        //this(contractLevel, numberOfTrickTaken, contractSuit, (normalDoubleRedubleSingnature == 2), normalDoubleRedubleSingnature == 4, auctionAssumptionPlaingPair);
+        //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (normalDoubleRedubleSingnature == 2), normalDoubleRedubleSingnature == 4, auctionAssumptionPlaingPair);
 
         //checking if contractLevel is correct
         if (contractLevel > 7 || contractLevel < 1)
@@ -94,9 +93,9 @@ public class PointsForContract {
         this.contractSuit = contractSuit;
 
         //checking if number of tricks is corect
-        if (numberOfTrickTaken > 13 || numberOfTrickTaken < 0)
-            throw new InvalidNumberOfTrickTakenException(numberOfTrickTaken);
-        this.numberOfTrickTaken = numberOfTrickTaken;
+        if (numberOfTrickTakenByDeclarer > 13 || numberOfTrickTakenByDeclarer < 0)
+            throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
+        this.numberOfTrickTakenByDeclarer = numberOfTrickTakenByDeclarer;
 
         if (!(normalDoubleRedubleSingnature == 1 || normalDoubleRedubleSingnature == 2 || normalDoubleRedubleSingnature == 4))
             throw new InvalidNormalDoubleRedoubleSignature(normalDoubleRedubleSingnature);
@@ -112,7 +111,7 @@ public class PointsForContract {
 
         //  Begin of calculation
         this.calculatedPointsForContract = 0;       // zerowanie?
-        this.oddTricks = numberOfTrickTaken - 6;    //trics above 6
+        this.oddTricks = numberOfTrickTakenByDeclarer - 6;    //trics above 6
         this.made = oddTricks >= contractLevel;  //condition if game is made or not
 
         if (made) {
@@ -179,54 +178,52 @@ public class PointsForContract {
      */
     private int getOvertrickPoints() throws InvalidContractSuitException {
         // getOvertrickPoints(contractLevel,oddTricks,auctionAssumptionPlaingPair,s==2,s==4,contractSuit);
-        int aditionalTricksPoints = 0;
+        int overtricksPoints = 0;
+        int overtricks = oddTricks -contractLevel;
         if (oddTricks > contractLevel) {
 
-            // Overtrick points
+            //  if (!isContractDouble && !isContractRedouble) {
             if (normalDoubleRedubleSingnature == 1) {
-                //  if (!isContractDouble && !isContractRedouble) {
-                aditionalTricksPoints = getContractPoints(oddTricks - contractLevel);  //bez kontry i rekontry - tak samo jak lewa
+                overtricksPoints = getContractPoints(overtricks);  //bez kontry i rekontry - tak samo jak lewa
                 if (contractSuit.equals("nt") || contractSuit.equals("n") || contractSuit.equals("N") || contractSuit.equals("NT"))
-                    aditionalTricksPoints = aditionalTricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
+                    overtricksPoints = overtricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
             }
             //if (isContractDouble && !auctionAssumptionPlaingPair)
             if (normalDoubleRedubleSingnature == 2 && !auctionAssumptionPlaingPair)
-                aditionalTricksPoints = (oddTricks - contractLevel) * 100;   //z kontrą przed partią - za 100
+                overtricksPoints = overtricks * 100;   //z kontrą przed partią - za 100
             //if (isContractDouble && auctionAssumptionPlaingPair)
             if (normalDoubleRedubleSingnature == 2 && auctionAssumptionPlaingPair)
-                aditionalTricksPoints = (oddTricks - contractLevel) * 200;    // z kontrą po partii za 200
+                overtricksPoints = overtricks * 200;    // z kontrą po partii za 200
 
             //if (isContractRedouble && !auctionAssumptionPlaingPair)
             if (normalDoubleRedubleSingnature == 4 && !auctionAssumptionPlaingPair)
-                aditionalTricksPoints = (oddTricks - contractLevel) * 200;     // z rekontrą przed partią za 200
+                overtricksPoints = overtricks * 200;     // z rekontrą przed partią za 200
             //if (isContractRedouble && auctionAssumptionPlaingPair)
             if (normalDoubleRedubleSingnature == 4 && auctionAssumptionPlaingPair)
-                aditionalTricksPoints = (oddTricks - contractLevel) * 400;     //z rekontrą po partii za 400
+                overtricksPoints = overtricks * 400;     //z rekontrą po partii za 400
 
-            description = description + "+  punkty z " + (oddTricks - contractLevel) + " nadróbek to: " + aditionalTricksPoints + "pkt,";
+            description = description + "+  punkty z " + overtricks + " nadróbek to: " + overtricksPoints + "pkt,";
         }
-        return aditionalTricksPoints;
+        return overtricksPoints;
     }
 
     /**
      * When a contract is defeated, penalty points are awarded to the defending side. The value of the penalty depends on the number of undertricks,
      * whether the declaring side is vulnerable or not vulnerable and whether the contract was undoubled, doubled or redoubled.    *
-     * @return scorring for under Tricks
+     * @return scoring for under Tricks
      */
     private int getPenaltyPoints() {
         int underTricks = contractLevel - oddTricks;
         int underTricksPoints = 0;
-        if (underTricks == 1) description = description + " punkty z " + underTricks + " wpadki. ";
-        else description = description + "Za nieugraną grę: punkty z " + underTricks + " wpadek. ";
 
         if (!auctionAssumptionPlaingPair && !isContractDouble && !isContractRedouble)
             underTricksPoints = -underTricks * 50;   //bez kontry przed partią 50
         if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks == 1)
             underTricksPoints = -underTricks * 100;  //z kontrą przed partią pierwsza za 100
-        else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks == 2)
+        else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && (underTricks == 2 || underTricks ==3))
             underTricksPoints = -underTricks * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
-        else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks == 3)
-            underTricksPoints = -underTricks * 200 + 100;
+    //    else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks == 3)
+     //       underTricksPoints = -underTricks * 200 + 100;
         else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks >= 4)
             underTricksPoints = -underTricks * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
 
@@ -238,6 +235,9 @@ public class PointsForContract {
             underTricksPoints = -underTricks * 300 + 100;  //z kontrą po partii kolejne za 300
 
         if (isContractRedouble) underTricksPoints = underTricksPoints * 2;
+
+        if (underTricks == 1) description = description + " Za nieugraną grę: punkty z " + underTricks + " wpadki: "+ underTricksPoints+ ". ";
+        else description = description + "Za nieugraną grę: punkty z " + underTricks + " wpadek: "+ underTricksPoints+ ". ";
 
         return underTricksPoints;
     }
@@ -251,11 +251,11 @@ public class PointsForContract {
      */
     private int getDoubleRedoubleBonus() {
         if (isContractDouble && made) {
-            description = description + " + kara za nieudaną kontrę, ";
+            description = description + " + 50 pkt. kara za nieudaną kontrę, ";
             return 50;
 
         } else if (isContractRedouble && made) {
-            description = description + " + kara za nieudaną rekontrę, ";
+            description = description + " + 100 pkt. kara za nieudaną rekontrę, ";
             return 100;
         } else return 0;
     }
@@ -290,7 +290,7 @@ public class PointsForContract {
     private int getSlamsBonusPoints() {
 
         if (oddTricks >= contractLevel) {
-            description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
+            //description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
             if (contractLevel == 6) return (auctionAssumptionPlaingPair) ? 750 : 500;
             else if (contractLevel == 7) return (auctionAssumptionPlaingPair) ? 1500 : 1000;
         }
@@ -303,11 +303,11 @@ public class PointsForContract {
      */
     private String getContractDescription() {
         if (isContractDouble)
-            return shortDescription + contractLevel + contractSuit + " z kontrą, zebrano " + numberOfTrickTaken + " lew.";
+            return shortDescription + contractLevel + contractSuit + " z kontrą, zebrano " + numberOfTrickTakenByDeclarer + " lew.";
         else if (isContractRedouble)
-            return shortDescription + contractLevel + contractSuit + " z rekontrą, zebrano " + numberOfTrickTaken + " lew.";
+            return shortDescription + contractLevel + contractSuit + " z rekontrą, zebrano " + numberOfTrickTakenByDeclarer + " lew.";
         else
-            return shortDescription + contractLevel + contractSuit + ", zebrano " + numberOfTrickTaken + " lew.";
+            return shortDescription + contractLevel + contractSuit + ", zebrano " + numberOfTrickTakenByDeclarer + " lew.";
     }
 
     //getter

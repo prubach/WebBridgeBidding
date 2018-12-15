@@ -24,7 +24,7 @@ public class ResultsOfOneGame {
     /**
      * Numnber of tricks taken in game
      */
-    private int numberOfTrickTaken;
+    private int numberOfTrickTakenByDeclarer;
 
     /**
      * Points  achved by playng contract with some additiona or lacking triks (calculated from duplicate bridge scoring)
@@ -96,31 +96,31 @@ public class ResultsOfOneGame {
     }
 
     public ResultsOfOneGame(float pointsInBothHands,
-                            int contractLevel,int numberOfTrickTaken, String contractSuit, boolean doubleGame, boolean redoubleGame,
+                            int contractLevel, int numberOfTrickTakenByDeclarer, String contractSuit, boolean doubleGame, boolean redoubleGame,
                             boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
         this(pointsInBothHands,
-                new PointsForContract(contractLevel, numberOfTrickTaken, contractSuit, doubleGame, redoubleGame, auctionAssumptionWe).getCalculatedPointsForContract(),
+                new PointsForContract(contractLevel, contractSuit, doubleGame, redoubleGame, auctionAssumptionWe, numberOfTrickTakenByDeclarer).getCalculatedPointsForContract(),
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         this.contractLevel = contractLevel;
         this.contractSuit= contractSuit;
         this.normalDoubleRedubleSingnature = redoubleGame ? 4 : (doubleGame ? 2 :1);
-        this.numberOfTrickTaken =numberOfTrickTaken;
+        this.numberOfTrickTakenByDeclarer = numberOfTrickTakenByDeclarer;
     }
 
     public ResultsOfOneGame(float pointsInBothHands,
-                            int contractLevel,int numberOfTrickTaken, String contractSuit,int normalDoubleRedubleSingnature,
+                            int contractLevel, int numberOfTrickTakenByDeclarer, String contractSuit, int normalDoubleRedubleSingnature,
                             boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
         this(pointsInBothHands,
-                new PointsForContract(contractLevel, numberOfTrickTaken, contractSuit, normalDoubleRedubleSingnature, auctionAssumptionWe).getCalculatedPointsForContract(),
+                new PointsForContract(contractLevel, contractSuit, normalDoubleRedubleSingnature, auctionAssumptionWe, numberOfTrickTakenByDeclarer).getCalculatedPointsForContract(),
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         this.contractLevel = contractLevel;
         this.contractSuit= contractSuit;
         this.normalDoubleRedubleSingnature = normalDoubleRedubleSingnature;
-        this.numberOfTrickTaken =numberOfTrickTaken;
+        this.numberOfTrickTakenByDeclarer = numberOfTrickTakenByDeclarer;
         }
 
     //getteres and setteres
@@ -169,12 +169,12 @@ public class ResultsOfOneGame {
         this.contractSuit = contractSuit;
     }
 
-    public int getNumberOfTrickTaken() {
-        return numberOfTrickTaken;
+    public int getNumberOfTrickTakenByDeclarer() {
+        return numberOfTrickTakenByDeclarer;
     }
 
-    public void setNumberOfTrickTaken(int numberOfTrickTaken) {
-        this.numberOfTrickTaken = numberOfTrickTaken;
+    public void setNumberOfTrickTakenByDeclarer(int numberOfTrickTakenByDeclarer) {
+        this.numberOfTrickTakenByDeclarer = numberOfTrickTakenByDeclarer;
     }
 
     public int getNormalDoubleRedubleSingnature() {
