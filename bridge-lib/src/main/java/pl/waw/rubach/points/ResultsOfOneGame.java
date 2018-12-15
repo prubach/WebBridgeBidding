@@ -18,14 +18,7 @@ public class ResultsOfOneGame {
     private int normalDoubleRedubleSingnature;
 
 
-    /**
-     * Auction Assumption for PlaingPair means if pair is  vulnerable or not vulnerable
-     */
-    private boolean auctionAssumptionOponenst;
-    /**
-     * Auction Assumption for PlaingPair means if pair is  vulnerable or not vulnerable
-     */
-    private boolean auctionAssumptionPlaingPair;
+
 
     /**
      * Numnber of tricks taken in game
