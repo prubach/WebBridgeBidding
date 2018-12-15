@@ -4,7 +4,7 @@ public class PointsForContract {
 
     //CONTRACT PARAMETER - arguments of constructor
     /**
-     * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken.
+     * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
      */
     private int contractLevel;
     /**
@@ -16,8 +16,12 @@ public class PointsForContract {
      * Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
      */
     private int normalDoubleRedubleSingnature;
+
+
+    //pyt wydaje mi się że dużo czytelniejsze jest jak jest isContractDouble a nie jak jest wskaźnik???? ale do przemyślenia
+    // było że tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
     /**
-     * Indicates if  contract is  double
+     * Indicates if  contract is  double -
      */
     private boolean isContractDouble;
     /**
@@ -29,6 +33,10 @@ public class PointsForContract {
      */
     private boolean auctionAssumptionPlaingPair;
 
+    /**
+     * Numnber of tricks taken in game
+     */
+    private int numberOfTrickTaken;
 
 
     /**
@@ -55,7 +63,6 @@ public class PointsForContract {
     private int calculatedPointsForContract = 0; //pyt tu powinno być zerowanie czy w konstruktorze? jest tu i tu :)
 
 
-//odp tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
 //pyt czy to tak? Bo jakoś mam wrażenie że ta pierwsza wersja była dużo czytelniejsza a oszczędność dwóch liniek (tam gdzie było mnożenie)...  i mniej czytelnie - na razie zostawiam zmienne a nie s?
 // No i nie chce mi się zmieniać testów wiec ten drugi konstruktor i tak musi zostać ...
 // kombinowałam w testach z mnożnikami żeby np samo się generowało z kontrą i rekontrką ale nie da się chyba bo za dużo się zmienia...
@@ -83,19 +90,19 @@ public class PointsForContract {
         //checking if number of tricks is corect
         if (numberOfTrickTaken > 13 || numberOfTrickTaken < 0)
             throw new InvalidNumberOfTrickTakenException(numberOfTrickTaken);
-
+        this.numberOfTrickTaken = numberOfTrickTaken;
 
         if (!(normalDoubleRedubleSingnature == 1 || normalDoubleRedubleSingnature == 2 || normalDoubleRedubleSingnature == 4))
             throw new InvalidNormalDoubleRedoubleSignature(normalDoubleRedubleSingnature);
         this.normalDoubleRedubleSingnature = normalDoubleRedubleSingnature;
         this.isContractDouble = normalDoubleRedubleSingnature == 2;
         this.isContractRedouble = normalDoubleRedubleSingnature == 4;
-
         //checking if double is false when redouble - not important because it could not be both
         //  if (isContractRedouble) isContractDouble = false;
 
         this.auctionAssumptionPlaingPair = auctionAssumptionPlaingPair;
-        this.shortDescription = getContractDescription(numberOfTrickTaken);
+
+        this.shortDescription = getContractDescription();
 
         //  Begin of calculation
         this.calculatedPointsForContract = 0;       // zerowanie?
@@ -290,7 +297,7 @@ public class PointsForContract {
      * @param numberOfTrickTaken The whole number of tricks  (not only above six) that are taken by declarer.
      * @return short description of contract
      */
-    private String getContractDescription(int numberOfTrickTaken) {
+    private String getContractDescription() {
         if (isContractDouble)
             return shortDescription + contractLevel + contractSuit + " z kontrą, zebrano " + numberOfTrickTaken + " lew.";
         else if (isContractRedouble)

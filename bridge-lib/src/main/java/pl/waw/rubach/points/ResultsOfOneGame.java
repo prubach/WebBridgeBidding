@@ -3,38 +3,46 @@ package pl.waw.rubach.points;
 public class ResultsOfOneGame {
 
     /**
-     * number of  Goren (PC) points of both hands
-     * user had to imput
-     * (in future could be astimatet from biding part not exactly)
-     */
-    private float pointsInBothHands;
-
-
-    /**
-     * biding height (you shoud take 6+ this triks to win game
-     * from other part of aplication - results of biding part or user imput
+     * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
+     * in future from other part of aplication - results of biding part or user imput
      */
     private int contractLevel;
-
     /**
-     * color atutowy
+     * Cards suits [denomination or strain] that denotes the proposed trump suit or notrump.
+     * Thus, there are five denominations – notrump, spades, hearts, diamonds and clubs.
      */
     private String contractSuit;
+    /**
+     *  Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
+     */
+    private int normalDoubleRedubleSingnature;
+
 
     /**
-     * numnber of tricks taken in game
+     * Auction Assumption for PlaingPair means if pair is  vulnerable or not vulnerable
      */
-    private int numberOfTricskTaken;
+    private boolean auctionAssumptionOponenst;
+    /**
+     * Auction Assumption for PlaingPair means if pair is  vulnerable or not vulnerable
+     */
+    private boolean auctionAssumptionPlaingPair;
 
     /**
-     * double =2, redouble -4, nothing =1
+     * Numnber of tricks taken in game
      */
-    private int nothingDoubleRedoube;
+    private int numberOfTrickTaken;
+
     /**
-     * point achved by playng contract with some additiona or lacking triks (calculated from normal bridge scoring)
-     * (could be also calculated by program in future)
+     * Points  achved by playng contract with some additiona or lacking triks (calculated from duplicate bridge scoring)
+     * calculated by PointsForContract
      */
     private int pointsForContract;
+
+    /**
+     * number of  Goren (PC) points of both hands
+     * (in future could be astimated from biding part not exactly)
+     */
+    private float pointsInBothHands;
 
     /**
      * diference betwenn assumpted result from ExpectedResults table and point reach playng contract (pointsForContract)
@@ -42,12 +50,11 @@ public class ResultsOfOneGame {
     private int pointDifferent;
 
     /**
-     * Number of Imp Point
-     * if 0 is equal, if -1 is one less etc ...
+     * Number of Imp Point  if 0 is equal, if -1 is one less etc ...
      */
     private int results; //= 0;     //pyt dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w PointsForContract i ono ma dwa razy i działa a tu nie ?
 
-    //todo ogólne: to się ma zmienić na ImpPoints  albo CalculatedImpPoints czy coś podobnego i rozumiem że tego nie rozbudowywać bo klasę Game chcesz robić w Androidzie od razu?
+    //todo ogólne: to się ma zmienić na ImpPoints  albo CalculatedImpPointsForOneDeal czy coś pomiędzy i rozumiem że tego nie rozbudowywać bo klasę Game chcesz robić w Androidzie od razu?
 
     public ResultsOfOneGame(float pointsInBothHands, int pointsForContract, boolean auctionAssumptionWe,
                             boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
@@ -90,8 +97,24 @@ public class ResultsOfOneGame {
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         this.contractLevel = contractLevel;
         this.contractSuit= contractSuit;
-        this.numberOfTricskTaken=numberOfTrickTaken;
+        this.numberOfTrickTaken =numberOfTrickTaken;
     }
+
+    public ResultsOfOneGame(float pointsInBothHands, int contractLevel,int numberOfTrickTaken, String contractSuit,
+                            int normalDoubleRedubleSingnature , boolean auctionAssumptionWe,
+                            boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+            throws BridgeException {
+
+        this(pointsInBothHands,
+                new PointsForContract(contractLevel, numberOfTrickTaken, contractSuit, normalDoubleRedubleSingnature, auctionAssumptionWe).getCalculatedPointsForContract(),
+                auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        this.contractLevel = contractLevel;
+        this.contractSuit= contractSuit;
+        this.normalDoubleRedubleSingnature = normalDoubleRedubleSingnature;
+        this.numberOfTrickTaken =numberOfTrickTaken;
+    }
+
+    //getteres and setteres
 
     public float getPointsInBothHands() {
         return pointsInBothHands;
@@ -137,20 +160,20 @@ public class ResultsOfOneGame {
         this.contractSuit = contractSuit;
     }
 
-    public int getNumberOfTricskTaken() {
-        return numberOfTricskTaken;
+    public int getNumberOfTrickTaken() {
+        return numberOfTrickTaken;
     }
 
-    public void setNumberOfTricskTaken(int numberOfTricskTaken) {
-        this.numberOfTricskTaken = numberOfTricskTaken;
+    public void setNumberOfTrickTaken(int numberOfTrickTaken) {
+        this.numberOfTrickTaken = numberOfTrickTaken;
     }
 
-    public int getNothingDoubleRedoube() {
-        return nothingDoubleRedoube;
+    public int getNormalDoubleRedubleSingnature() {
+        return normalDoubleRedubleSingnature;
     }
 
-    public void setNothingDoubleRedoube(int nothingDoubleRedoube) {
-        this.nothingDoubleRedoube = nothingDoubleRedoube;
+    public void setNormalDoubleRedubleSingnature(int normalDoubleRedubleSingnature) {
+        this.normalDoubleRedubleSingnature = normalDoubleRedubleSingnature;
     }
 
     public int getResults() {
@@ -164,10 +187,11 @@ public class ResultsOfOneGame {
     public static void main(String[] args) {
 
         try {
-            ResultsOfOneGame roog = new ResultsOfOneGame(20,3,9,"nt",false,false,false,false,false,false);
+            ResultsOfOneGame roog1 = new ResultsOfOneGame(20,3,9,"nt",false,false,false,false,false,false);
+            ResultsOfOneGame roog2 = new ResultsOfOneGame(20,3,9,"nt",1,false,false,false,false);
 
-
-            System.out.println("Końcowy wynik liczony od podstaw jest: " + roog.getResults() + " \n");
+            System.out.println("Końcowy wynik liczony od podstaw jest: " + roog1.getResults() + " \n");
+            System.out.println("Końcowy wynik liczony od podstaw jest: " + roog2.getResults() + " \n");
 
 
         } catch (BridgeException e) {

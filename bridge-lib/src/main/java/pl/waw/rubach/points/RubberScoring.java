@@ -39,6 +39,8 @@ public class RubberScoring {
     private Map<Integer, ResultsOfOneGame> scorringForOneGame = new HashMap<>();
 
 
+
+
     //todo - to co mówiłeś przez telefon czyli konstruktor taki który jeszcze nie ma tych parametrów tylko tworzy obiekt a potem zrobić fukncje tak żeby te kolejne wiersze
     //uzupełniało w czasie jak się liczy - wtedy będzie wiedziało co jest do tego rozdania a co nie - o to mi chodziło tylko się pogubiłam!!!
     //powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...
