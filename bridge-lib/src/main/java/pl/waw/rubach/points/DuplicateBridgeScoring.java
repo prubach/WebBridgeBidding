@@ -35,12 +35,15 @@ public class DuplicateBridgeScoring {
      */
     private boolean isContractRedouble;
     /**
-     * Auction Assumption for PlaingPair means if pair is  vulnerable or not vulnerable
+     *
+     * Auction Assumption for Plaing Pair means if pair is  vulnerable or not vulnerable
      */
-    private boolean auctionAssumptionPlaingPair;
+    private boolean auctionAssumptionDeclarer;
 
     /**
-     * Number of tricks taken in game  by declarer (opponent takes 13 - numberOfTrickTakenByDeclarer)
+     * Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
+     * and who must therefore play both their own hand and the exposed hand of the dummy.
+     * (opponent takes 13 - numberOfTrickTakenByDeclarer)
      */
     private int numberOfTrickTakenByDeclarer;
 
@@ -76,14 +79,14 @@ public class DuplicateBridgeScoring {
 
 
     //TO BYŁO PointsForContract
-    public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
+    public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
-        this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionPlaingPair, numberOfTrickTakenByDeclarer);
+        this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
 
-    public DuplicateBridgeScoring(int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionPlaingPair, int numberOfTrickTakenByDeclarer)
+    public DuplicateBridgeScoring(int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
-        //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (normalDoubleRedubleSingnature == 2), normalDoubleRedubleSingnature == 4, auctionAssumptionPlaingPair);
+        //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (normalDoubleRedubleSingnature == 2), normalDoubleRedubleSingnature == 4, auctionAssumptionDeclarer);
 
         //checking if contractLevel is correct
         if (contractLevel > 7 || contractLevel < 1)
@@ -99,12 +102,13 @@ public class DuplicateBridgeScoring {
         if (!(normalDoubleRedubleSingnature == 1 || normalDoubleRedubleSingnature == 2 || normalDoubleRedubleSingnature == 4))
             throw new InvalidNormalDoubleRedoubleSignature(normalDoubleRedubleSingnature);
         this.normalDoubleRedubleSingnature = normalDoubleRedubleSingnature;
+
         this.isContractDouble = normalDoubleRedubleSingnature == 2;
         this.isContractRedouble = normalDoubleRedubleSingnature == 4;
         //checking if double is false when redouble - not important because it could not be both
         //  if (isContractRedouble) isContractDouble = false;
 
-        this.auctionAssumptionPlaingPair = auctionAssumptionPlaingPair;
+        this.auctionAssumptionDeclarer = auctionAssumptionDeclarer;
 
         this.shortDescription = getContractDescription();
 
@@ -177,7 +181,7 @@ public class DuplicateBridgeScoring {
      */
 
     private int getOvertrickPoints() throws InvalidContractSuitException {
-        // getOvertrickPoints(contractLevel,oddTricks,auctionAssumptionPlaingPair,s==2,s==4,contractSuit);
+        // getOvertrickPoints(contractLevel,oddTricks,auctionAssumptionDeclarer,s==2,s==4,contractSuit);
         int overtricksPoints = 0;
         int overtricks = oddTricks -contractLevel;
         if (oddTricks > contractLevel) {
@@ -188,18 +192,18 @@ public class DuplicateBridgeScoring {
                 if (contractSuit.equals("nt") || contractSuit.equals("n") || contractSuit.equals("N") || contractSuit.equals("NT"))
                     overtricksPoints = overtricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
             }
-            //if (isContractDouble && !auctionAssumptionPlaingPair)
-            if (normalDoubleRedubleSingnature == 2 && !auctionAssumptionPlaingPair)
+            //if (isContractDouble && !auctionAssumptionDeclarer)
+            if (normalDoubleRedubleSingnature == 2 && !auctionAssumptionDeclarer)
                 overtricksPoints = overtricks * 100;   //z kontrą przed partią - za 100
-            //if (isContractDouble && auctionAssumptionPlaingPair)
-            if (normalDoubleRedubleSingnature == 2 && auctionAssumptionPlaingPair)
+            //if (isContractDouble && auctionAssumptionDeclarer)
+            if (normalDoubleRedubleSingnature == 2 && auctionAssumptionDeclarer)
                 overtricksPoints = overtricks * 200;    // z kontrą po partii za 200
 
-            //if (isContractRedouble && !auctionAssumptionPlaingPair)
-            if (normalDoubleRedubleSingnature == 4 && !auctionAssumptionPlaingPair)
+            //if (isContractRedouble && !auctionAssumptionDeclarer)
+            if (normalDoubleRedubleSingnature == 4 && !auctionAssumptionDeclarer)
                 overtricksPoints = overtricks * 200;     // z rekontrą przed partią za 200
-            //if (isContractRedouble && auctionAssumptionPlaingPair)
-            if (normalDoubleRedubleSingnature == 4 && auctionAssumptionPlaingPair)
+            //if (isContractRedouble && auctionAssumptionDeclarer)
+            if (normalDoubleRedubleSingnature == 4 && auctionAssumptionDeclarer)
                 overtricksPoints = overtricks * 400;     //z rekontrą po partii za 400
 
             description = description + "+  punkty z " + overtricks + " nadróbek to: " + overtricksPoints + "pkt,";
@@ -216,22 +220,22 @@ public class DuplicateBridgeScoring {
         int underTricks = contractLevel - oddTricks;
         int underTricksPoints = 0;
 
-        if (!auctionAssumptionPlaingPair && !isContractDouble && !isContractRedouble)
+        if (!auctionAssumptionDeclarer && !isContractDouble && !isContractRedouble)
             underTricksPoints = -underTricks * 50;   //bez kontry przed partią 50
-        if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks == 1)
+        if (!auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks == 1)
             underTricksPoints = -underTricks * 100;  //z kontrą przed partią pierwsza za 100
-        else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && (underTricks == 2 || underTricks ==3))
+        else if (!auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && (underTricks == 2 || underTricks ==3))
             underTricksPoints = -underTricks * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
-    //    else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks == 3)
+    //    else if (!auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks == 3)
      //       underTricksPoints = -underTricks * 200 + 100;
-        else if (!auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks >= 4)
+        else if (!auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks >= 4)
             underTricksPoints = -underTricks * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
 
-        if (auctionAssumptionPlaingPair && !isContractDouble && !isContractRedouble)
+        if (auctionAssumptionDeclarer && !isContractDouble && !isContractRedouble)
             underTricksPoints = -underTricks * 100;  //bez kontry po partii 100
-        if (auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks == 1)
+        if (auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks == 1)
             underTricksPoints = -underTricks * 200;  // z kontrą po partii pierwsza za 200
-        else if (auctionAssumptionPlaingPair && (isContractDouble || isContractRedouble) && underTricks >= 2)
+        else if (auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks >= 2)
             underTricksPoints = -underTricks * 300 + 100;  //z kontrą po partii kolejne za 300
 
         if (isContractRedouble) underTricksPoints = underTricksPoints * 2;
@@ -270,9 +274,9 @@ public class DuplicateBridgeScoring {
      */
     private int getGamePartGameBonus(int calculatedPointsForContract) {
 
-        if (calculatedPointsForContract >= 100 && oddTricks >= contractLevel) {
+        if (calculatedPointsForContract >= 100 && made) {
             description = description + " + punkty za ugraną końcówkę (zależnie od założeń).";
-            return (auctionAssumptionPlaingPair) ? 500 : 300;
+            return (auctionAssumptionDeclarer) ? 500 : 300;
         } else if (calculatedPointsForContract > 0) {
             description = description + " + 50 pkt za częściówkę.";
             return 50;
@@ -291,8 +295,8 @@ public class DuplicateBridgeScoring {
 
         if (oddTricks >= contractLevel) {
             //description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
-            if (contractLevel == 6) return (auctionAssumptionPlaingPair) ? 750 : 500;
-            else if (contractLevel == 7) return (auctionAssumptionPlaingPair) ? 1500 : 1000;
+            if (contractLevel == 6) return (auctionAssumptionDeclarer) ? 750 : 500;
+            else if (contractLevel == 7) return (auctionAssumptionDeclarer) ? 1500 : 1000;
         }
         return 0;
     }

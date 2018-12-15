@@ -12,19 +12,19 @@ import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
 
 import java.util.Map;
 
-public class CalculatedImpPointsForOneDealBasicTest {
+public class CalculatedImpPointsForOneDealBasicTestWePLay {
 
-    private static Logger logger = LoggerFactory.getLogger(CalculatedImpPointsForOneDealBasicTest.class);
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+    protected boolean whoPlay=true;
+
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitTheyMap = new MultiKeyMap<>();
+
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitBoth = new MultiKeyMap<>();
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterNoFitBothMap = new MultiKeyMap<>();
 
 
-    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
-    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitTheyMap = new MultiKeyMap<>();
-
-    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitBoth = new MultiKeyMap<>();
-    private MultiKeyMap<Float, Integer> testCountingPointsBothAfterNoFitBothMap = new MultiKeyMap<>();
-
-
-    private MultiKeyMap<Float, Integer> testCountingPointsBothBeforNoFitMap = new MultiKeyMap<>();
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothBeforNoFitMap = new MultiKeyMap<>();
   //
     //
 
@@ -104,7 +104,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, false, false, false, false).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(whoPlay, pointsInBothHands, pointsOfContract, false, false, false, false).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie przed, obie bez fitu");
             Assert.assertEquals(testCountingPointsBothBeforNoFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -123,7 +123,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, true, false).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(whoPlay,pointsInBothHands, pointsOfContract, true, true, true, false).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, My Fit");
             Assert.assertEquals(testCountingPointsBothAfterFitWeMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -139,7 +139,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, false, true).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(whoPlay,pointsInBothHands, pointsOfContract, true, true, false, true).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, Oni Fit");
             Assert.assertEquals(testCountingPointsBothAfterFitTheyMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -155,7 +155,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, true, true).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(whoPlay, pointsInBothHands, pointsOfContract, true, true, true, true).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, My Fit");
             Assert.assertEquals(testCountingPointsBothAfterFitBoth.get(pointsInBothHands, pointsOfContractFloat), res);
 
@@ -170,7 +170,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, false, false).getResults();
+            Integer res = new CalculatedImpPointsForOneDeal(whoPlay, pointsInBothHands, pointsOfContract, true, true, false, false).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, Obe bez fitu");
             Assert.assertEquals(testCountingPointsBothAfterNoFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
 

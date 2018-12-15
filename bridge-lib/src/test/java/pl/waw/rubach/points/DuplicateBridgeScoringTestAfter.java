@@ -2,7 +2,7 @@ package pl.waw.rubach.points;
 
 import org.junit.Before;
 
-public class PointsForGameTestAfter extends PointsForGameTestBefore {
+public class DuplicateBridgeScoringTestAfter extends DuplicateBridgeScoringTestBefore {
 
     @Before
     public void fillTestPointsMap() {

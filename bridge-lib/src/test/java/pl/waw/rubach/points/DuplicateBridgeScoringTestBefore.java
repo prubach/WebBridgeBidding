@@ -11,7 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class PointsForGameTestBefore {
+/**
+ * 20 test of diferent case of counting points for one deal according to duplicate bridge scorring
+ * with assumption unvunerability (befor)
+ */
+public class DuplicateBridgeScoringTestBefore {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
     protected boolean beforeAfter = false;

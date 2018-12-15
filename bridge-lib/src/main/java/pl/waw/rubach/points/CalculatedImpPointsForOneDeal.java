@@ -49,19 +49,29 @@ public class CalculatedImpPointsForOneDeal {
      */
     private int results; //= 0;     //pyt dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w DuplicateBridgeScoring i ono ma dwa razy i działa a tu nie ?
 
-    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsPP, int pointsForContractPP, boolean auctionAssumptionPlaingPair,
-                                         boolean auctionAssumptionOponens, boolean fitInOlderColorPlayingPair, boolean fitInOlderColorOponens)
+    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe, int pointsForContractWe,
+                                         boolean auctionAssumptionWe,  boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
         this.results = 0;
 
+        boolean auctionAssumptionPlaingPair=auctionAssumptionWe;
+        boolean auctionAssumptionOponens = auctionAssumptionThey;
+        boolean fitInOlderColorPlayingPair = fitInOlderColorWe;
+        boolean fitInOlderColorOponens = fitInOlderColorThey;
+        this.pointsInBothHands = pointsInBothHandsWe;
+        this.pointsForContract = pointsForContractWe;
+
         if(!wePlay) {
-            this.pointsInBothHands  = 40-pointsInBothHandsPP;
-            this.pointsForContract  = - pointsForContractPP;
+            this.pointsInBothHands  = 40-pointsInBothHandsWe;
+            this.pointsForContract  = - pointsForContractWe;
+            auctionAssumptionPlaingPair =auctionAssumptionThey;
+            auctionAssumptionOponens = auctionAssumptionWe;
+            fitInOlderColorPlayingPair = fitInOlderColorThey;
+            fitInOlderColorOponens = fitInOlderColorWe;
+
+
         }
-        if(wePlay) {
-            this.pointsInBothHands = pointsInBothHandsPP;
-            this.pointsForContract = pointsForContractPP;
-        }
+
         int expectedPoints;
         if (pointsInBothHands == 20) {
             if (fitInOlderColorPlayingPair) {
