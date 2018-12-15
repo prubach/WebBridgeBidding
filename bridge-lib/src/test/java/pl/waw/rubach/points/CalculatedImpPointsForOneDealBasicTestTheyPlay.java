@@ -1,6 +1,13 @@
 package pl.waw.rubach.points;
 
+import org.apache.commons.collections4.keyvalue.MultiKey;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
+import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
+
+import java.util.Map;
 
 public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedImpPointsForOneDealBasicTestWePLay{
 
@@ -21,13 +28,18 @@ public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedI
        //Fit only we - they no fit
         testCountingPointsBothAfterFitWeMap.put(20f, 0f, 2);
 
-        testCountingPointsBothAfterFitWeMap.put(24f, 500f, -2);
-        testCountingPointsBothAfterFitWeMap.put(24f, 300f, 4);
-        testCountingPointsBothAfterFitWeMap.put(24f, 100f, 8);
-        testCountingPointsBothAfterFitWeMap.put(24f, -100f, 11);
-        testCountingPointsBothAfterFitWeMap.put(24f, -500f, 14);
+  //   testCountingPointsBothAfterFitWeMap.put(24f, -500f, 14);
+  //      testCountingPointsBothAfterFitWeMap.put(24f, 500f, -2);
+ //       testCountingPointsBothAfterFitWeMap.put(24f, 300f, 4);
 
-        testCountingPointsBothAfterFitWeMap.put(30f, 100f, 12);
+  //     testCountingPointsBothAfterFitWeMap.put(10f, 100f, -12);
+
+       testCountingPointsBothAfterFitWeMap.put(16f, -100f, -1);
+       testCountingPointsBothAfterFitWeMap.put(24f, 100f, 1);
+
+       testCountingPointsBothAfterFitWeMap.put(16f, 100f, -6);
+       testCountingPointsBothAfterFitWeMap.put(24f, -100f, 6);
+
         testCountingPointsBothAfterFitWeMap.put(12f, -1660f, 14);
         testCountingPointsBothAfterFitWeMap.put(28f, 1660f, -14);
 
@@ -66,6 +78,20 @@ public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedI
         testCountingPointsBothAfterFitTheyMap.put(12f, 1660f, -20);
   }
 
+    @Test
+    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
+
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitWeMap.entrySet()) {
+
+            float pointsInBothHands = entry.getKey().getKey(0);
+            float pointsOfContractFloat = entry.getKey().getKey(1);
+            int pointsOfContract = Math.round(pointsOfContractFloat);
+            Integer res = new CalculatedImpPointsForOneDeal(whoPlay,pointsInBothHands, pointsOfContract, true, true, true, false).getResults();
+            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, My Fit");
+            Assert.assertEquals(testCountingPointsBothAfterFitWeMap.get(pointsInBothHands, pointsOfContractFloat), res);
+
+        }
+    }
 
 }

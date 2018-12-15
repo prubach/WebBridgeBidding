@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class CalculatedImpPointsForOneDealBasicTestWePLay {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
     protected boolean whoPlay=true;
 
     protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
@@ -65,6 +65,9 @@ public class CalculatedImpPointsForOneDealBasicTestWePLay {
 
         //both fit
       //  testCountingPointsBothAfterFitBoth.put(20f, 0f, 2);  //not such case if both have 20PC and fit in major color mark only spades (one have fit)
+      //  testCountingPointsBothAfterFitBoth.put(24f, -100f, -6);
+      //  testCountingPointsBothAfterFitBoth.put(16f, 100f, 6);
+
         testCountingPointsBothAfterFitBoth.put(30f, 750f, 0);
         testCountingPointsBothAfterFitBoth.put(10f, -750f, 0);
         testCountingPointsBothAfterFitBoth.put(30f, 1250f, 11);
@@ -179,47 +182,5 @@ public class CalculatedImpPointsForOneDealBasicTestWePLay {
 
     }
 
-/* dobre testy ale nieładnie zapisane (kopia wyżej)
-    @Test
-    public void testCountingPoints() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
-        // System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, false,true) + " oczekiwane.");
 
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(24, 500, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych 500 pkt przy założeniach po i Fit jest: " + a.getResults());
-        Assert.assertEquals(2, a.getResults());
-
-        CalculatedImpPointsForOneDeal b = new CalculatedImpPointsForOneDeal(24, 300, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych 300 pkt przy założeniach po i Fit jest: " + b.getResults());
-        Assert.assertEquals(-4, b.getResults());
-
-        CalculatedImpPointsForOneDeal c = new CalculatedImpPointsForOneDeal(24, 100, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych +100 pkt przy założeniach po i Fit jest: " + c.getResults());
-        Assert.assertEquals(-8, c.getResults());
-
-        CalculatedImpPointsForOneDeal d = new CalculatedImpPointsForOneDeal(24, -100, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + d.getResults());
-        Assert.assertEquals(-11, d.getResults());
-
-        CalculatedImpPointsForOneDeal e = new CalculatedImpPointsForOneDeal(24, -500, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + e.getResults());
-        Assert.assertEquals(-14, e.getResults());
-
-
-        CalculatedImpPointsForOneDeal f = new CalculatedImpPointsForOneDeal(20, 0, true, false, true, false);
-        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i my Fit jest: " + f.getResults());
-        Assert.assertEquals(-2, f.getResults());
-
-        CalculatedImpPointsForOneDeal g = new CalculatedImpPointsForOneDeal(20, 0, true, false, false, true);
-        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i oni Fit jest: " + g.getResults());
-        Assert.assertEquals(2, g.getResults());
-
-
-        CalculatedImpPointsForOneDeal h = new CalculatedImpPointsForOneDeal(10, -660, true, true, false, false);
-        System.out.println("Wynik gry dla 10PC i ugranych -660 pkt przy założeniach po i oni bez fit jest: " + h.getResults());
-        Assert.assertEquals(0, h.getResults());
-
-
-    }
-
-*/
 }

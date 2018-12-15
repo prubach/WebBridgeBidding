@@ -60,7 +60,7 @@ public class CalculatedImpPointsForOneDeal {
         boolean fitInOlderColorOponens = fitInOlderColorThey;
         this.pointsInBothHands = pointsInBothHandsWe;
         this.pointsForContract = pointsForContractWe;
-
+        int expectedPoints;
         if(!wePlay) {
             this.pointsInBothHands  = 40-pointsInBothHandsWe;
             this.pointsForContract  = - pointsForContractWe;
@@ -72,20 +72,27 @@ public class CalculatedImpPointsForOneDeal {
 
         }
 
-        int expectedPoints;
+
+      //  expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorPlayingPair, fitInOlderColorOponens, auctionAssumptionPlaingPair, auctionAssumptionOponens);
+
+        //fixme nadal coś jest źle ... ale nie wiem czy testy czy formuły czy jedno i drugie (co najbardziej prawdopodobne) na poniższym testy przechodzą ale formuły mi się nie podobają)
+
+
         if (pointsInBothHands == 20) {
             if (fitInOlderColorPlayingPair) {
-                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionPlaingPair, auctionAssumptionOponens);
+                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, fitInOlderColorOponens, auctionAssumptionPlaingPair, auctionAssumptionOponens);
             } else if (fitInOlderColorOponens) {
-                expectedPoints = -ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionPlaingPair, auctionAssumptionOponens);
+                expectedPoints = -ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, fitInOlderColorOponens, auctionAssumptionPlaingPair, auctionAssumptionOponens);
             } else
-                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false, auctionAssumptionPlaingPair, auctionAssumptionOponens);
+                expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false, fitInOlderColorOponens, auctionAssumptionPlaingPair, auctionAssumptionOponens);
 
         } else if (pointsInBothHands < 20) {
-            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorOponens, auctionAssumptionPlaingPair, auctionAssumptionOponens);
+            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe,fitInOlderColorThey,auctionAssumptionWe,auctionAssumptionThey);
         } else {
             expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorPlayingPair, auctionAssumptionPlaingPair, auctionAssumptionOponens);
         }
+//*/
+
         if (expectedPoints <= pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
         else this.pointDifferent = expectedPoints - pointsForContract;
 

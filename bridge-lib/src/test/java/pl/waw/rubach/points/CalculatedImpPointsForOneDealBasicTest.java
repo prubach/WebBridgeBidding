@@ -24,6 +24,9 @@ public class CalculatedImpPointsForOneDealBasicTest {
 
 
     protected MultiKeyMap<Float, Integer> testCountingPointsBothBeforNoFitMap = new MultiKeyMap<>();
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothBeforFitBothMap = new MultiKeyMap<>();
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothBeforFitWeMap = new MultiKeyMap<>();
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothBeforFitTheyMap = new MultiKeyMap<>();
   //
     //
 
@@ -35,16 +38,21 @@ public class CalculatedImpPointsForOneDealBasicTest {
     public void fillTestPointsMap() {
 //todo make copy of this for both before :) and one before the second after
         testCountingPointsBothBeforNoFitMap.put(28f, 990f, 11);
+        testCountingPointsBothBeforNoFitMap.put(28f, 100f, -7);
         testCountingPointsBothBeforNoFitMap.put(29f, -50f, -10);
         testCountingPointsBothBeforNoFitMap.put(11f, 50f, 10);
 
         testCountingPointsBothBeforNoFitMap.put(12f, -990f, -11);
+        testCountingPointsBothBeforNoFitMap.put(12f, -100f, 7);
         testCountingPointsBothBeforNoFitMap.put(20f, 400f, 9);
         testCountingPointsBothBeforNoFitMap.put(22f, 400f, 8);
         testCountingPointsBothBeforNoFitMap.put(23f, 400f, 7);
+        testCountingPointsBothBeforNoFitMap.put(24.5f, 400f, 6);
+        testCountingPointsBothBeforNoFitMap.put(25f, 400f, 5);
         testCountingPointsBothBeforNoFitMap.put(28f, 400f, 0);
 
-
+        testCountingPointsBothBeforFitBothMap.put(12f,-100f,8);
+        testCountingPointsBothBeforFitBothMap.put(28f,100f,-8);
 
         //Fit only we - they no fit
         testCountingPointsBothAfterFitWeMap.put(20f, 0f, -2);
@@ -55,7 +63,9 @@ public class CalculatedImpPointsForOneDealBasicTest {
         testCountingPointsBothAfterFitWeMap.put(24f, -100f, -11);
         testCountingPointsBothAfterFitWeMap.put(24f, -500f, -14);
 
+        testCountingPointsBothAfterFitWeMap.put(30f, -100f, -13);
         testCountingPointsBothAfterFitWeMap.put(30f, 100f, -12);
+
         testCountingPointsBothAfterFitWeMap.put(12f, -1660f, -14);
         testCountingPointsBothAfterFitWeMap.put(28f, 1660f, 14);
 
@@ -68,6 +78,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
         testCountingPointsBothAfterFitBoth.put(10f, -750f, 0);
         testCountingPointsBothAfterFitBoth.put(30f, 1250f, 11);
         testCountingPointsBothAfterFitBoth.put(10f, -1250f, -11);
+
 
         //both no fit
         testCountingPointsBothAfterNoFitBothMap.put(20f, 0f, 0);
@@ -87,6 +98,8 @@ public class CalculatedImpPointsForOneDealBasicTest {
         testCountingPointsBothAfterFitTheyMap.put(16f, 500f, 14);
 
         testCountingPointsBothAfterFitTheyMap.put(10f, -100f, 12);
+        testCountingPointsBothAfterFitTheyMap.put(10f, 100f, 13);
+
         testCountingPointsBothAfterFitTheyMap.put(28f, 1660f, 14);
         testCountingPointsBothAfterFitTheyMap.put(12f, -1660f, -14);
 
@@ -96,7 +109,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
 
 
     @Test
-    public void testCountingPointsBothBeforeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testCountingPointsBothBeforeResNoFit() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitMap.entrySet()) {
 
@@ -108,9 +121,24 @@ public class CalculatedImpPointsForOneDealBasicTest {
             Assert.assertEquals(testCountingPointsBothBeforNoFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
+    }
+    @Test
+    public void testCountingPointsBothBeforeResFitBoth() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforFitBothMap.entrySet()) {
+
+            float pointsInBothHands = entry.getKey().getKey(0);
+            float pointsOfContractFloat = entry.getKey().getKey(1);
+            int pointsOfContract = Math.round(pointsOfContractFloat);
+            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, false, false, true, true).getResults();
+            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie przed, obie bez fitu");
+            Assert.assertEquals(testCountingPointsBothBeforFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
+
+        }
 
 
     }
+
 
 
     @Test
