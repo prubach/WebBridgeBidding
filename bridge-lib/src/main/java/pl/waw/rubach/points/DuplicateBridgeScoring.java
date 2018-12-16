@@ -2,7 +2,7 @@ package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.bridgeExeption.*;
 
-//TO BYŁO PointsForContract
+//This was  PointsForContract(...)
 public class DuplicateBridgeScoring {
 
     public static final int IS_DOUBLE = 2;
@@ -22,18 +22,6 @@ public class DuplicateBridgeScoring {
      * Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
      */
     private int nDRSignature;
-
-
-    //pyt wydaje mi się że dużo czytelniejsze jest jak jest isContractDouble a nie jak jest wskaźnik???? ale do przemyślenia
-    // było że tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
-    /**
-     * Indicates if  contract is  double -
-     */
-    private boolean isContractDouble;
-    /**
-     * Indicates if  contract is redouble
-     */
-    private boolean isContractRedouble;
     /**
      *
      * Auction Assumption for Plaing Pair means if pair is  vulnerable or not vulnerable
@@ -72,13 +60,7 @@ public class DuplicateBridgeScoring {
     private int calculatedPointsForContract = 0; //pyt tu powinno być zerowanie czy w konstruktorze? jest tu i tu :)
 
 
-//pyt czy to tak? Bo jakoś mam wrażenie że ta pierwsza wersja była dużo czytelniejsza a oszczędność dwóch liniek (tam gdzie było mnożenie)...  i mniej czytelnie - na razie zostawiam zmienne a nie s?
-// No i nie chce mi się zmieniać testów wiec ten drugi konstruktor i tak musi zostać ...
-// kombinowałam w testach z mnożnikami żeby np samo się generowało z kontrą i rekontrką ale nie da się chyba bo za dużo się zmienia...
-//DuplicateBridgeScoring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
-
-
-    //TO BYŁO PointsForContract
+    //This was :  PointsForContract(...)
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
@@ -99,29 +81,22 @@ public class DuplicateBridgeScoring {
             throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
         this.numberOfTrickTakenByDeclarer = numberOfTrickTakenByDeclarer;
 
+        //checking if double/ redouble or undouble signature  is corect
         if (!(nDRSignature == 1 || nDRSignature == 2 || nDRSignature == 4))
             throw new InvalidParameterException(nDRSignature);
         this.nDRSignature = nDRSignature;
 
-      //  this.isContractDouble = nDRSignature == IS_DOUBLE;
-      //  this.isContractRedouble = nDRSignature == IS_REDOUBLE;
-        //checking if double is false when redouble - not important because it could not be both
-        //  if (isContractRedouble) isContractDouble = false;
-
         this.auctionAssumptionDeclarer = auctionAssumptionDeclarer;
-
         this.shortDescription = getContractDescription();
 
         //  Begin of calculation
-        this.calculatedPointsForContract = 0;       // zerowanie?
+        this.calculatedPointsForContract = 0;       // points equal zero at the beginging of calculation
         this.oddTricks = numberOfTrickTakenByDeclarer - 6;    //trics above 6
         this.made = oddTricks >= contractLevel;  //condition if game is made or not
 
         if (made) {
             calculatedPointsForContract = getContractPoints(contractLevel) * nDRSignature;
-            //    if (isContractDouble) calculatedPointsForContract = calculatedPointsForContract * 2;
-            //    if (isContractRedouble) calculatedPointsForContract = calculatedPointsForContract * 4;
-            description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + calculatedPointsForContract + "pkt. ";
+              description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + calculatedPointsForContract + "pkt. ";
         } else {
             calculatedPointsForContract = getPenaltyPoints();
         }

@@ -48,7 +48,7 @@ public class CalculatedImpPointsForOneDeal {
      * Number of Imp Point  if 0 is equal, if -1 is one less etc ...
      */
     private int results; //= 0;     //pyt dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w DuplicateBridgeScoring i ono ma dwa razy i działa a tu nie ?
-
+//TODO zrobić opcje oni grają innych konstruktorów bo nie ten zawsze jest używany
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe, int pointsForContractWe,
                                          boolean auctionAssumptionWe,  boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException,  InvalidParameterException {
@@ -60,8 +60,8 @@ public class CalculatedImpPointsForOneDeal {
 
 
 
-        //fixme nadal coś jest źle ... ale nie wiem czy testy czy formuły czy jedno i drugie (co najbardziej prawdopodobne) na poniższym testy przechodzą ale formuły mi się nie podobają)
-//na razie wywaliłam te testy co nie przechodzą to powinno być dobrze!!!
+ //chyba jest już dobrze (dodałam testy)-  nadal coś jest źle ... ale nie wiem czy testy czy formuły czy jedno i drugie (co najbardziej prawdopodobne) na poniższym testy przechodzą ale formuły mi się nie podobają)
+//to poniżej też dobrze - ale pewnie do wywalenia? - chyba lepiej jak to siedzi w tabeli ?
    /*    if (pointsInBothHands == 20) {
             if (fitInOlderColorWe) {
                 expectedPoints = 50; //ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe);
@@ -82,7 +82,7 @@ public class CalculatedImpPointsForOneDeal {
             this.pointsInBothHands = 40 - pointsInBothHandsWe;
             this.pointsForContract = -pointsForContractWe;
             expectedPoints = -expectedPoints;
-            //expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands,fitInOlderColorThey,fitInOlderColorWe,auctionAssumptionThey,auctionAssumptionWe);
+            //expectedPoints = ExpectedResultsTable.getInstance().getPoints(40-pointsInBothHands,fitInOlderColorThey,fitInOlderColorWe,auctionAssumptionThey,auctionAssumptionWe);
         }
 
         //}

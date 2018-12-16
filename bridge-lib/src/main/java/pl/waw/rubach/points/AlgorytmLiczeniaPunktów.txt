@@ -53,7 +53,7 @@ Liczenie punktów:
    a) jeżeli my mieliśmy ugrać i my graliśmy to :   wynik - ugrana = różnica    (może być dodatnia - impy dla nas/ może być ujemna impy dla nich) - pasuje wygraliśmy / przegraliśmy
    b) jeżeli oni mieli ugrać   i my graliśmy to :   wynik + ugrana = różnica    (
    c) jeżeli my mieliśmy ugrać a grali oni to   :   -wynik - ugrana = różnica   (
-   d) jeżeli oni mieli ugrać  i grali oni to    :   -wynik  + ugrana = różnica ?  /pyt pogubiłam się ... jak to powinno być ...
+   d) jeżeli oni mieli ugrać  i grali oni to    :   -wynik  + ugrana = różnica ?  /todo do sprawdzenia ale chyba ok /  pogubiłam się ... jak to powinno być ...
 
                                                   -
 Przykłady:
@@ -69,3 +69,31 @@ Przykłady:
 
 
  6. Odnajduje w tabeli impy dla danej róznicy i bez wachania przypisuje je jednej stronie ...
+
+
+
+
+Notatki luźne - wywalone z innych miejsc:
+DuplicateBridgeScoring:
+
+ //odp z tym stałymo jest ok - chyba można wywalić to co poniżej...  wydaje mi się że dużo czytelniejsze jest jak jest isContractDouble a nie jak jest wskaźnik???? ale do przemyślenia
+     // było że tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
+     /**
+      * Indicates if  contract is  double -
+      */
+     private boolean isContractDouble;
+     /**
+      * Indicates if  contract is redouble
+      */
+     private boolean isContractRedouble;
+//ze stałą może być  Bo jakoś mam wrażenie że ta pierwsza wersja była dużo czytelniejsza a oszczędność dwóch liniek (tam gdzie było mnożenie)...  i mniej czytelnie - na razie zostawiam zmienne a nie s?
+// No i nie chce mi się zmieniać testów wiec ten drugi konstruktor i tak musi zostać ...
+// kombinowałam w testach z mnożnikami żeby np samo się generowało z kontrą i rekontrką ale nie da się chyba bo za dużo się zmienia...
+//DuplicateBridgeScoring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
+//  this.isContractDouble = nDRSignature == IS_DOUBLE;
+      //  this.isContractRedouble = nDRSignature == IS_REDOUBLE;
+        //checking if double is false when redouble - not important because it could not be both
+        //  if (isContractRedouble) isContractDouble = false;
+
+           //    if (isContractDouble) calculatedPointsForContract = calculatedPointsForContract * 2;
+                    //    if (isContractRedouble) calculatedPointsForContract = calculatedPointsForContract * 4;

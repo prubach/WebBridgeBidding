@@ -96,9 +96,8 @@ public class ExpectedResultsTable {
         return map;
     }
 
-
     /**
-     * Calculate the bonus points for a certain contract //fixme probably ok, but not sure
+     * Calculate the bonus points for a certain contract
      *
      * @param points                - points in both our  (person who calulate points)  hands
      * @param fitInOlderColorWe     - if we hace  fit in older color (beginning with 30 points any color) true, else false
@@ -157,7 +156,7 @@ public class ExpectedResultsTable {
      * @param fit               - of pair who have more points
      * @param auctionAssumption of pair who have more points
      * @return expected number of points if other pair should play is less then zero
-     * @throws InvalidNumberOfPointsException
+     * @throws InvalidNumberOfPointsException if number of points is not correct
      */
     int getPoints(float points, boolean fit, boolean auctionAssumption) throws InvalidNumberOfPointsException {
         //test if points value is correct if not print Exeption
