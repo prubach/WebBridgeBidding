@@ -5,8 +5,8 @@ import pl.waw.rubach.points.bridgeExeption.*;
 //TO BYŁO PointsForContract
 public class DuplicateBridgeScoring {
 
-    private static final int IS_DOUBLE = 2;
-    private static final int IS_REDOUBLE =4;
+    public static final int IS_DOUBLE = 2;
+    public static final int IS_REDOUBLE = 4;
     public static final int IS_UNDOUBLE = 1;
     //CONTRACT PARAMETER - arguments of constructor
     /**
