@@ -16,7 +16,7 @@ Liczenie punktów:
                 - jeżeli punktów jest równo 20 to kto ma fit i do tego starszy (czyli piki)
 
 2. [tylko wersja porównawczego brydża - sportowa]
-  Sprawdza w tabeli oczekiwanych ile powinno być ugrane przez tych co mają wiecej      - sprawdza kto ma wiecej  (nie ważne kto grał?) gra pyt Kuba mówił że nie kto ma wiecej tylko kto rozgrywał - nie wiem jak powinno być!
+  Sprawdza w tabeli oczekiwanych ile powinno być ugrane przez tych co mają wiecej      - sprawdza kto ma wiecej  (zakładam że nie ważne kto grał (niezależnie od opini KubyG.)
     w odpowiedniej kolumnie tabeli                                                      - ustala założenia dla tych co mają wiecej PC: fit i po/przed
     ustala kto to powinien ugrać                                                                                     - sprawdza w tabeli
                                                   -> do tego miejsca nie obchodzi nas jaki kontrakt, kto grał i czy ugrany (rozważania są teoretyczne)

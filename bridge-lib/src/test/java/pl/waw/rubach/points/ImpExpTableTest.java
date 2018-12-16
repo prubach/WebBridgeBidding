@@ -28,7 +28,7 @@ public class ImpExpTableTest {
     @Before
     public void fillTestPointsMap() {
         //testPointsMap.put()
-        testImpPointsMap.put(-1, 0);
+        //  testImpPointsMap.put(-1, 0);
         testImpPointsMap.put(0, 0);
         testImpPointsMap.put(20, 1);
         testImpPointsMap.put(25, 1);
@@ -41,17 +41,19 @@ public class ImpExpTableTest {
         testImpPointsMap.put(6000, 24);
         testImpPointsMap.put(10000, 24);
         testImpPointsMap.put(430 + 50, 10);
-      //  testImpPointsMap.put(20000, 24);
+        //  testImpPointsMap.put(20000, 24);
 
 
 //test expected results if diferent assumption (fit/no fit)
+
+
         testExpResBeforeFitMap.put(0.5f, -1400);
         testExpResBeforeFitMap.put(10f, -550);
         testExpResBeforeFitMap.put(12f, -460);
         testExpResBeforeFitMap.put(15f, -350);
         testExpResBeforeFitMap.put(16.5f, -215);
         testExpResBeforeFitMap.put(19.5f, -60);
- //       testExpResBeforeFitMap.put(20f, 50);
+        testExpResBeforeFitMap.put(20f, 50);
         testExpResBeforeFitMap.put(20.5f, 60);
         testExpResBeforeFitMap.put(25f, 350);
         testExpResBeforeFitMap.put(23.5f, 215);
@@ -60,7 +62,11 @@ public class ImpExpTableTest {
         testExpResBeforeFitMap.put(39.5f, 1400);
         testExpResBeforeFitMap.put(40f, 1400);
 
+        testExpResBeforeNoFitMap.put(0.5f, -1400);
+        testExpResBeforeNoFitMap.put(5f, -1000);
+        testExpResBeforeNoFitMap.put(10f, -460);
         testExpResBeforeNoFitMap.put(11f, -430);
+        testExpResBeforeNoFitMap.put(19.5f, -25);
         testExpResBeforeNoFitMap.put(20f, 0);
         testExpResBeforeNoFitMap.put(20.5f, 25);
         testExpResBeforeNoFitMap.put(25f, 200);
@@ -68,12 +74,13 @@ public class ImpExpTableTest {
         testExpResBeforeNoFitMap.put(30f, 460);
         testExpResBeforeNoFitMap.put(35f, 1000);
         testExpResBeforeNoFitMap.put(39.5f, 1400);
+        testExpResBeforeNoFitMap.put(40f, 1400);
 
         testExpResAfterFitMap.put(10f, -750);
         testExpResAfterFitMap.put(15f, -520);
         testExpResAfterFitMap.put(16.5f, -285);
         testExpResAfterFitMap.put(19.5f, -60);
-  //      testExpResAfterFitMap.put(20f, 50);
+        testExpResAfterFitMap.put(20f, 50);
         testExpResAfterFitMap.put(20.5f, 60);
         testExpResAfterFitMap.put(25f, 520);
         testExpResAfterFitMap.put(23.5f, 285);
@@ -82,6 +89,8 @@ public class ImpExpTableTest {
         testExpResAfterFitMap.put(39.5f, 2100);
         testExpResAfterFitMap.put(40f, 2100);
 
+        testExpResAfterNoFitMap.put(0.5f, -2100);
+        testExpResAfterNoFitMap.put(5f, -1500);
         testExpResAfterNoFitMap.put(10f, -660);
         testExpResAfterNoFitMap.put(20f, 0);
         testExpResAfterNoFitMap.put(20.5f, 25);
@@ -110,7 +119,7 @@ public class ImpExpTableTest {
     public void testExpResSHORT() throws InvalidNumberOfPointsException {
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
             Integer res = ExpectedResultsTable.getInstance().getPoints(p, true, false);
-        //    else res = ExpectedResultsTable.getInstance().getPoints(p, true, false);
+            //    else res = ExpectedResultsTable.getInstance().getPoints(p, true, false);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Fit");
             Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
 
@@ -118,13 +127,13 @@ public class ImpExpTableTest {
 
         for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
             Integer res = ExpectedResultsTable.getInstance().getPoints(p, true, true);
-        //    else res = ExpectedResultsTable.getInstance().getPoints( p, true, true);
+            //    else res = ExpectedResultsTable.getInstance().getPoints( p, true, true);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Fit");
             Assert.assertEquals(testExpResAfterFitMap.get(p), res);
         }
 
         for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
-            Integer  res = ExpectedResultsTable.getInstance().getPoints(p, false, false);
+            Integer res = ExpectedResultsTable.getInstance().getPoints(p, false, false);
             // else  res = ExpectedResultsTable.getInstance().getPoints(p, false, false);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Bez Fitu");
             Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
@@ -141,23 +150,26 @@ public class ImpExpTableTest {
     }
 
 
-
     @Test
     public void testExpResFit() throws InvalidNumberOfPointsException, InvalidParameterException {
+        //p !=20 because for this case is not possible have both fit in major color - if so count only spades and hearst fit mark as no fit
+
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-            if (p != 20){
+            if (p != 20) {
                 Integer res;
-            res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false, false);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Przed, Obie Fit");
-            Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Przed, Obie Fit");
+                Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
+            }
         }
-        }}
-        @Test
-        public void testExpResFit1() throws InvalidNumberOfPointsException, InvalidParameterException {
+//    }
+//    @Test
+//    public void testExpResFit1() throws InvalidNumberOfPointsException, InvalidParameterException {
 
 
-            for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-                Integer res;
+        for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
+            Integer res;
+            if (p != 20) {
                 if (p > 20) {
                     res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false, true);
                     logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po,  Obie Fit");
@@ -170,31 +182,34 @@ public class ImpExpTableTest {
                 Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
             }
         }
-
-    @Test
-    public void testExpResFit2() throws InvalidNumberOfPointsException, InvalidParameterException {
+//    }
+//    @Test
+//    public void testExpResFit2() throws InvalidNumberOfPointsException, InvalidParameterException {
 
 
         for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
-            Integer res;
-            if(p>20) {
-                res = ExpectedResultsTable.getInstance().getPoints(p, true, true, true, false);
-                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed, Obie  Fit");
-            }
-                else {res = ExpectedResultsTable.getInstance().getPoints( p, true, true, false, true );
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed Oni Po, Obie Fit");
-            Assert.assertEquals(testExpResAfterFitMap.get(p), res);
-        }}
-    }
-    @Test
-    public void testExpResFit3() throws InvalidNumberOfPointsException, InvalidParameterException {
-
-        for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-            if(p!=20) {
+            if (p != 20) {
                 Integer res;
-                res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false, false);
-                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie  Przed, Obie  Fit");
-                Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
+                if (p > 20) {
+                    res = ExpectedResultsTable.getInstance().getPoints(p, true, true, true, false);
+                    logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed, Obie  Fit");
+                } else {
+                    res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false, true);
+                    logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed Oni Po, Obie Fit");
+                    Assert.assertEquals(testExpResAfterFitMap.get(p), res);
+                }
+            }
+        }
+//    }
+//    @Test
+//    public void testExpResFit3() throws InvalidNumberOfPointsException, InvalidParameterException {
+
+        for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
+            if (p != 20) {
+                Integer res;
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, true, true, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie  Po, Obie  Fit");
+                Assert.assertEquals(testExpResAfterFitMap.get(p), res);
             }
         }
     }
@@ -202,7 +217,7 @@ public class ImpExpTableTest {
     @Test
     public void testExpResNoFit() throws InvalidNumberOfPointsException, InvalidParameterException {
         for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
-            Integer  res;
+            Integer res;
             res = ExpectedResultsTable.getInstance().getPoints(p, false, false, false, false);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Przed, Bez Fitu");
             Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
@@ -210,20 +225,25 @@ public class ImpExpTableTest {
 
         for (float p : new TreeSet<Float>(testExpResAfterNoFitMap.keySet())) {
             Integer res;
-            if(p>=20) {
+            if (p >= 20) {
                 res = ExpectedResultsTable.getInstance().getPoints(p, false, false, true, false);
                 logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed, Bez Fitu");
-            }  else  {res =ExpectedResultsTable.getInstance().getPoints(p, false, false , false,true);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po, Bez Fitu");}
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, false, false, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po, Bez Fitu");
+            }
             Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
         }
 
         for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
-            Integer  res;
-            if(p>=20) {res = ExpectedResultsTable.getInstance().getPoints(p, false, false, false, true);
-                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po, Bez Fitu");}
-            else  {res = ExpectedResultsTable.getInstance().getPoints(p, false,  false, true,false);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed, Bez Fitu");}
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, false, false, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po, Bez Fitu");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, false, true, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed, Bez Fitu");
+            }
             Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
         }
 
@@ -231,6 +251,118 @@ public class ImpExpTableTest {
             Integer res;
             res = ExpectedResultsTable.getInstance().getPoints(p, false, false, true, true);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie  Po, Bez Fitu");
+            Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
+        }
+
+
+    }
+
+    @Test
+    public void testExpResOlnyOneFitBoth() throws InvalidNumberOfPointsException, InvalidParameterException {
+
+
+        for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, false, true, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Po, My Fit");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, true, true, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Po,  Oni Fit");
+            }
+            Assert.assertEquals(testExpResAfterFitMap.get(p), res);
+        }
+
+
+        for (float p : new TreeSet<Float>(testExpResAfterNoFitMap.keySet())) {
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, true, true, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Po, Oni Fit");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, false, true, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Po,  My Fit");
+            }
+            Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
+        }
+
+
+        for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, false, false, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Przed, My Fit");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, true, false, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Przed,  Oni Fit");
+            }
+            Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
+        }
+
+
+        for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, true, false, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Przed, Oni Fit");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, false, false, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Przed,  My Fit");
+            }
+            Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
+        }
+    }
+
+
+    @Test
+    public void testExpResOlnyOneFitMix() throws InvalidNumberOfPointsException, InvalidParameterException {
+        for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, false, false, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po, My Fit");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, true, true, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Oni Przed, My Po,  Oni Fit");
+            }
+            Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
+        }
+
+
+        for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, true, false, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po, Oni Fit");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, false, true, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Oni Przed, My Po,  My Fit");
+            }
+            Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
+        }
+
+        for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, false, true, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed, My Fit");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, true, false, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Oni Po, My Przed,  Oni Fit");
+            }
+            Assert.assertEquals(testExpResAfterFitMap.get(p), res);
+        }
+
+
+        for (float p : new TreeSet<Float>(testExpResAfterNoFitMap.keySet())) {
+            Integer res;
+            if (p >= 20) {
+                res = ExpectedResultsTable.getInstance().getPoints(p, false, true, true, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po,Oni Przed, Oni Fit");
+            } else {
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, false, false, true);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Oni Po, My Przed,  My Fit");
+            }
             Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
         }
 
@@ -297,7 +429,8 @@ public class ImpExpTableTest {
                 Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
             }
 
-        }}
+        }
+    }
 /*
     @Test
     public void printExpResTables() {

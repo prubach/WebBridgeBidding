@@ -87,7 +87,6 @@ public class ExpectedResultsTable {
 
     /**
      * SHORT VERSION of getPoints
-     * <p>
      * Attation - probably also good but ask for assumption and fit pair who have more points, and not the same as points etc
      *
      * @param points            - points in both hands
@@ -96,7 +95,7 @@ public class ExpectedResultsTable {
      * @return expected number of points if other pair should play is less then zero
      * @throws InvalidNumberOfPointsException
      */
-    public int getPoints(float points, boolean fit, boolean auctionAssumption) throws InvalidNumberOfPointsException {
+    int getPoints(float points, boolean fit, boolean auctionAssumption) throws InvalidNumberOfPointsException {
         //test if points value is correct if not print Exeption
         if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
 
@@ -120,13 +119,15 @@ public class ExpectedResultsTable {
     /**
      * Calculate the bonus points for a certain contract //fixme probably ok, but not sure
      *
-     * @param points              - points in both hands
-     * @param fitInOlderColorWe   - if fit in older color (beginning with 30 points any color)
-     * @param fitInOlderColorThey 0 if they have fit
+     * @param points              - points in both our  (person who calulate points)  hands
+     * @param fitInOlderColorWe   - if we hace  fit in older color (beginning with 30 points any color) true, else false
+     * @param fitInOlderColorThey -  if they have fit as above
+     *                            Attantion if both have exactly 20 points and both fit in older color mark only spades (for hearts mark no fit)
      * @param auctionAssumptionWe - assumption After (true) or Before (false)
+     * @param auctionAssumptionThey - vunerable or not as above
      * @return bonus points
      */
-    public int getPoints(float points, boolean fitInOlderColorWe, boolean fitInOlderColorThey, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
+    int getPoints(float points, boolean fitInOlderColorWe, boolean fitInOlderColorThey, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
             throws InvalidNumberOfPointsException, InvalidParameterException {
 
         //test if points value is correct if not print Exeption

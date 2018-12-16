@@ -53,19 +53,15 @@ public class CalculatedImpPointsForOneDeal {
                                          boolean auctionAssumptionWe,  boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException,  InvalidParameterException {
         this.results = 0;
-
-        boolean auctionAssumptionPlaingPair=auctionAssumptionWe;
-        boolean auctionAssumptionOponens = auctionAssumptionThey;
-        boolean fitInOlderColorPlayingPair = fitInOlderColorWe;
-        boolean fitInOlderColorOponens = fitInOlderColorThey;
+        //assumed that we play
         this.pointsInBothHands = pointsInBothHandsWe;
         this.pointsForContract = pointsForContractWe;
-        int expectedPoints;
+        int expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey);
+
 
 
         //fixme nadal coś jest źle ... ale nie wiem czy testy czy formuły czy jedno i drugie (co najbardziej prawdopodobne) na poniższym testy przechodzą ale formuły mi się nie podobają)
 //na razie wywaliłam te testy co nie przechodzą to powinno być dobrze!!!
-
    /*    if (pointsInBothHands == 20) {
             if (fitInOlderColorWe) {
                 expectedPoints = 50; //ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe);
@@ -80,17 +76,13 @@ public class CalculatedImpPointsForOneDeal {
             expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe);
         }
 //*/
-        expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorPlayingPair, fitInOlderColorOponens, auctionAssumptionPlaingPair, auctionAssumptionOponens);
 
 
         if(!wePlay) {
             this.pointsInBothHands = 40 - pointsInBothHandsWe;
             this.pointsForContract = -pointsForContractWe;
-            auctionAssumptionPlaingPair = auctionAssumptionThey;
-            auctionAssumptionOponens = auctionAssumptionWe;
-            fitInOlderColorPlayingPair = fitInOlderColorThey;
-            fitInOlderColorOponens = fitInOlderColorWe;
             expectedPoints = -expectedPoints;
+            //expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands,fitInOlderColorThey,fitInOlderColorWe,auctionAssumptionThey,auctionAssumptionWe);
         }
 
         //}
