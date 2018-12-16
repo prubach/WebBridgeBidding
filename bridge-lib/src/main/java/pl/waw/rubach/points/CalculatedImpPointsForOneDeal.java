@@ -2,8 +2,7 @@ package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.bridgeExeption.BridgeException;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.bridgeExeption.NotPosibleBothFitAnd20Exception;
-import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
+import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
 
 //TO było ResultsOfOneGame
 public class CalculatedImpPointsForOneDeal {
@@ -52,7 +51,7 @@ public class CalculatedImpPointsForOneDeal {
 
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe, int pointsForContractWe,
                                          boolean auctionAssumptionWe,  boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+            throws InvalidNumberOfPointsException,  InvalidParameterException {
         this.results = 0;
 
         boolean auctionAssumptionPlaingPair=auctionAssumptionWe;
@@ -100,7 +99,7 @@ public class CalculatedImpPointsForOneDeal {
         if (expectedPoints <= pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
         else this.pointDifferent = expectedPoints - pointsForContract;
 
-        if (pointDifferent < 0)  throw new PointsDiferentLessThenZeroException();
+        if (!ImpTable.getInstance().checkInputValue(0,10000,pointDifferent))  throw new InvalidParameterException();
         int result = ImpTable.getInstance().getPoints(pointDifferent);
 
         if (expectedPoints <= pointsForContract) this.results = result;
@@ -111,7 +110,7 @@ public class CalculatedImpPointsForOneDeal {
     public CalculatedImpPointsForOneDeal(float pointsInBothHands,
                                          int pointsForContract,
                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+            throws InvalidNumberOfPointsException, InvalidParameterException {
     this(true,pointsInBothHands,pointsForContract,auctionAssumptionWe,auctionAssumptionThey,fitInOlderColorWe,fitInOlderColorThey);
     }
 

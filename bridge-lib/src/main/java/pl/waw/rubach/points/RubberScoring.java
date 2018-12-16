@@ -2,8 +2,7 @@ package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.bridgeExeption.BridgeException;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.bridgeExeption.NotPosibleBothFitAnd20Exception;
-import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
+import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +105,7 @@ public class RubberScoring {
 
     public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, int pointsForContract,
                                             boolean fitInOlderColorWe, boolean fitInOlderColorThey)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+            throws InvalidNumberOfPointsException,  InvalidParameterException {
 
         fillAssumption(contractNumber);
         CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
@@ -114,7 +113,7 @@ public class RubberScoring {
     }
 
     public void fillOneContractFrom4GameSet(int contractNumber, CalculatedImpPointsForOneDeal rooG)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+            throws InvalidNumberOfPointsException, InvalidParameterException{
         fillAssumption(contractNumber);
         scorringForOneGame.put(contractNumber, rooG);
     }
@@ -158,7 +157,7 @@ public class RubberScoring {
         }
     }
 
-    public String getRubberScoringAsString() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public String getRubberScoringAsString() throws InvalidNumberOfPointsException, InvalidParameterException {
         StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + this.getGameID() + ".  ***  \n");
 
         Map<Integer, CalculatedImpPointsForOneDeal> map = this.scorringForOneGame;
@@ -175,7 +174,7 @@ public class RubberScoring {
         return s.toString();
     }
 
-    public int getSumm() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public int getSumm() throws InvalidNumberOfPointsException, InvalidParameterException {
         return getSumm(false);
     }
 
@@ -183,7 +182,7 @@ public class RubberScoring {
         this.summ = summ;
     }
 
-    public int getSumm(boolean print) throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public int getSumm(boolean print) throws InvalidNumberOfPointsException, InvalidParameterException {
 
         SortedSet<Integer> ptsMapSet = new TreeSet<>(scorringForOneGame.keySet());
         int s = 0;

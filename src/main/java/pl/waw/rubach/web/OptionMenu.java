@@ -518,10 +518,12 @@ descriprionOf4play=s.toString()+"\n"+aa.getRubberScoringAsString();
                 int foo2 = Integer.parseInt(pointsForContract.getValue());
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
-            } catch (NumberFormatException | InvalidNumberOfPointsException | PointsDiferentLessThenZeroException e) {
+            } catch (NumberFormatException | InvalidNumberOfPointsException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
                 resultsLabel.setValue("<font color=red>" + message + "</font>");
+            } catch (InvalidParameterException e) {
+                e.printStackTrace();
             }
         });
 

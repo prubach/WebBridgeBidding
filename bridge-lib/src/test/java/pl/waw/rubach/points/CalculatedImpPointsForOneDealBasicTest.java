@@ -8,8 +8,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.bridgeExeption.NotPosibleBothFitAnd20Exception;
-import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
+import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
 
 import java.util.Map;
 
@@ -110,7 +109,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
 
 
     @Test
-    public void testCountingPointsBothBeforeResNoFit() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+    public void testCountingPointsBothBeforeResNoFit() throws InvalidNumberOfPointsException, InvalidParameterException {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitMap.entrySet()) {
 
@@ -124,7 +123,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
         }
     }
     @Test
-    public void testCountingPointsBothBeforeResFitBoth() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+    public void testCountingPointsBothBeforeResFitBoth() throws InvalidNumberOfPointsException, InvalidParameterException {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforFitBothMap.entrySet()) {
 
@@ -143,7 +142,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
 
 
     @Test
-    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitWeMap.entrySet()) {
@@ -159,7 +158,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
     }
 
     @Test
-    public void testCountingPointsBothAfterFitTheyRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+    public void testCountingPointsBothAfterFitTheyRes() throws InvalidNumberOfPointsException, InvalidParameterException {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitTheyMap.entrySet()) {
@@ -175,7 +174,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
     }
 
     @Test
-    public void testCountingPointsBothAfterBothFitRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+    public void testCountingPointsBothAfterBothFitRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitBoth.entrySet()) {
@@ -191,7 +190,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
     }
 
     @Test
-    public void testCountingPointsBothNoFitAfterRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+    public void testCountingPointsBothNoFitAfterRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterNoFitBothMap.entrySet()) {
 
@@ -209,7 +208,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
 
 /* dobre testy ale nieładnie zapisane (kopia wyżej)
     @Test
-    public void testCountingPoints() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testCountingPoints() throws InvalidNumberOfPointsException, InvalidNumberOfPointsToCalculateImpException {
         // System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, false,true) + " oczekiwane.");
 
         CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(24, 500, true, false, true, false);

@@ -46,7 +46,7 @@ public abstract class AbstractTable {
      *
      * return boolean true if good false if wrong
      * */
-    public boolean checkImputValue(int begin, int end, int value) {
+    public boolean checkInputValue(int begin, int end, int value) {
 
         return value <= end && value >= begin;
     }

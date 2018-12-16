@@ -5,8 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.bridgeExeption.NotPosibleBothFitAnd20Exception;
-import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
+import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
 
 import java.util.Map;
 
@@ -79,7 +78,7 @@ public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedI
   }
 
     @Test
-    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
+    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException, InvalidParameterException {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitWeMap.entrySet()) {

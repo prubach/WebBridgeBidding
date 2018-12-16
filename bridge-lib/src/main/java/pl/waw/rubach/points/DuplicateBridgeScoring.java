@@ -1,9 +1,6 @@
 package pl.waw.rubach.points;
 
-import pl.waw.rubach.points.bridgeExeption.InvalidContractLevelException;
-import pl.waw.rubach.points.bridgeExeption.InvalidContractSuitException;
-import pl.waw.rubach.points.bridgeExeption.InvalidNormalDoubleRedoubleSignature;
-import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfTrickTakenException;
+import pl.waw.rubach.points.bridgeExeption.*;
 
 //TO BYŁO PointsForContract
 public class DuplicateBridgeScoring {
@@ -80,12 +77,12 @@ public class DuplicateBridgeScoring {
 
     //TO BYŁO PointsForContract
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
-            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
+            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
 
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
-            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidNormalDoubleRedoubleSignature {
+            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
         //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (normalDoubleRedubleSingnature == 2), normalDoubleRedubleSingnature == 4, auctionAssumptionDeclarer);
 
         //checking if contractLevel is correct
@@ -100,7 +97,7 @@ public class DuplicateBridgeScoring {
         this.numberOfTrickTakenByDeclarer = numberOfTrickTakenByDeclarer;
 
         if (!(normalDoubleRedubleSingnature == 1 || normalDoubleRedubleSingnature == 2 || normalDoubleRedubleSingnature == 4))
-            throw new InvalidNormalDoubleRedoubleSignature(normalDoubleRedubleSingnature);
+            throw new InvalidParameterException(normalDoubleRedubleSingnature);
         this.normalDoubleRedubleSingnature = normalDoubleRedubleSingnature;
 
         this.isContractDouble = normalDoubleRedubleSingnature == 2;
