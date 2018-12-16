@@ -1,0 +1,71 @@
+Postanowiłam spisać jak się liczy punkty, żeby spróbować znaleźć gdzie potencjalnie jest błąd.
+Poza tym można tu zapisać jakieś uwagi pomysły żeby nie zaśmiecać komentarzami plików z kodem?
+
+
+Liczenie punktów:
+
+
+ Realne                                                                                              Program
+0. Ustala założenia na początku rozgrywki, rozdaje karty, licytuje, rozgrywa :)         wczytuje założenia albo nic :)
+1. [tylko wersja porównawczego brydża - sportowa]
+ Policz ile jest punktów na obu rękach partnerów uwzględniając single albo nie,       wczytuje liczbę punktów PC - UI czy jak to tam
+ - Sprawdzć ile mają przeciwnicy i czy się zgadza - jeżeli nie to wróć do pkt 1. :)     oblicza liczbę punktów przeciwników 40-points   ????
+ - Sprawdzć kto ma fit a kto nie (w zależności od liczby puntków:                        [wczytuje dane o fitach]
+                - jeżeli punktów jest >30 to w dowolnym kolorze
+                - jeżeli punktów jest >20 a mniej niż 30 to w starszym
+                - jeżeli punktów jest równo 20 to kto ma fit i do tego starszy (czyli piki)
+
+2. [tylko wersja porównawczego brydża - sportowa]
+  Sprawdza w tabeli oczekiwanych ile powinno być ugrane przez tych co mają wiecej      - sprawdza kto ma wiecej  (nie ważne kto grał?) gra pyt Kuba mówił że nie kto ma wiecej tylko kto rozgrywał - nie wiem jak powinno być!
+    w odpowiedniej kolumnie tabeli                                                      - ustala założenia dla tych co mają wiecej PC: fit i po/przed
+    ustala kto to powinien ugrać                                                                                     - sprawdza w tabeli
+                                                  -> do tego miejsca nie obchodzi nas jaki kontrakt, kto grał i czy ugrany (rozważania są teoretyczne)
+                                                  -> program zapisuje wynik dla My
+                                                  -> wynik może być ujemny bo powinni grać przeciwnicy i zdobyć punkty
+
+3. Przypomina sobie założenia rozdania, rodzaj wylicytowanego kontraktu itp oraz wynik.  [wczytuje dane kontrakt, założenia i wynik, rozgrywa]  - UI czy jak to tam
+
+4. Oblicza liczbę punktów (zapis) rozdania                                              potrzebuje na wejściu danych z pkt 1 :
+   ile punktów za lewy, nadróbki wpadki i bonusy                                        - kontraktu(wysokość, miano (kolor), kontra itp), założenia pary która rozgrywa
+                                                                                        - liczby wziętych lew (wynik)    - Oblicza wyniki DuplicateBrigeScoring
+
+                                                  -> wynik może być ujemny gdy są wpadki    ugrane (+) / przegrane (-)
+
+    kto je ma (my czy przeciwnicy)                                                      - wczytuje kto grał i zmienia znak bądź nie       - my ugraliśmy na plus (przeciwnicy mają minus)
+                                                                                          [jak oni to zmienia]                            - my przegraliśmy (oni plus)
+   zapisuje po ich stronie lub naszej (robrowo)                                                                                           - oni grali i ugrali (my minus)
+   kombinuje i liczy dalej (porównawczo)                                                                                                  - oni przegrali (my plus)
+                                                         DOTĄD  DZIAŁA DOBRZE WG MNIE
+ *********************************************************************************************************************************************** *******
+*********************************************************************************************************************************************** *******
+                                                         TU JEST JAKIŚ PROBLEM ...
+
+5. RÓŻNICA punktów : Liczy róznice między oczekiwaną a ugraną dla konkretnej pary
+                                                                -> na tym etapie mamy ustalone:
+   realnie wiemy kto powinien ugrać                             - ile my powinniśmy ugrać [ może być dowolne] (oni to samo z minusem)
+    [zawsze dodatnie = ugrana]                                  - ile my punktów zdobyliśmy za rozdanie  [ może być dowolne] (oni to samo z minusem)
+   oraz ile punków mają rozgywający                            [niezależnie kto miał wiecej punktów i kto grał]
+      [plus/minus] =wynik                                       ->   komputer trzyma wynik my (tylko) ale można łatwo zmienić na drugi tylko chyba za wiele razy zmieniam ...
+                                                                ->   musimy znależć róznice między tym co powinniśmy ugrać a tym co ugraliśmy
+                                                                [czyli niby banalnie DBS - EXpexted, ale ]
+
+   obliczamy róznice i czasem się myli w którą stronę:)
+   a) jeżeli my mieliśmy ugrać i my graliśmy to :   wynik - ugrana = różnica    (może być dodatnia - impy dla nas/ może być ujemna impy dla nich) - pasuje wygraliśmy / przegraliśmy
+   b) jeżeli oni mieli ugrać   i my graliśmy to :   wynik + ugrana = różnica    (
+   c) jeżeli my mieliśmy ugrać a grali oni to   :   -wynik - ugrana = różnica   (
+   d) jeżeli oni mieli ugrać  i grali oni to    :   -wynik  + ugrana = różnica ?  /pyt pogubiłam się ... jak to powinno być ...
+
+                                                  -
+Przykłady:
+(zwykle tej co grała) : my: (mieliśmy wiecej punktów i graliśmy wynik może być plus/minus)
+                            ugraliśmy - powinniśmy     np ugraliśmy 300 powinniśmy 300
+                            nieugraliśmy - powinniśmy  np ugraliśmy -100 powinniśmy 300 razem -400
+                        oni grali mieli wiecej punktów
+                     nasze puntky:   minus( ugrali - powinni)
+                                     minus (nieugrali - powinni)
+
+                       my graliśmy oni mieli wiecej punktów powinni
+                     nasze punkty:   minus( ugraliśmy (czyli pewnie ujemne) - powinni) jeszcze bardziej ujemne zmieniamy znak - mamy dużo punktów
+
+
+ 6. Odnajduje w tabeli impy dla danej róznicy i bez wachania przypisuje je jednej stronie ...

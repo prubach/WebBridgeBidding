@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.bridgeExeption.NotPosibleBothFitAnd20Exception;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class ImpExpTableTest {
         testExpResBeforeFitMap.put(15f, -350);
         testExpResBeforeFitMap.put(16.5f, -215);
         testExpResBeforeFitMap.put(19.5f, -60);
-        testExpResBeforeFitMap.put(20f, 50);
+ //       testExpResBeforeFitMap.put(20f, 50);
         testExpResBeforeFitMap.put(20.5f, 60);
         testExpResBeforeFitMap.put(25f, 350);
         testExpResBeforeFitMap.put(23.5f, 215);
@@ -72,7 +73,7 @@ public class ImpExpTableTest {
         testExpResAfterFitMap.put(15f, -520);
         testExpResAfterFitMap.put(16.5f, -285);
         testExpResAfterFitMap.put(19.5f, -60);
-        testExpResAfterFitMap.put(20f, 50);
+  //      testExpResAfterFitMap.put(20f, 50);
         testExpResAfterFitMap.put(20.5f, 60);
         testExpResAfterFitMap.put(25f, 520);
         testExpResAfterFitMap.put(23.5f, 285);
@@ -142,31 +143,41 @@ public class ImpExpTableTest {
 
 
     @Test
-    public void testExpResFit() throws InvalidNumberOfPointsException {
+    public void testExpResFit() throws InvalidNumberOfPointsException, NotPosibleBothFitAnd20Exception {
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-            Integer res;
-            res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false,false);
+            if (p != 20){
+                Integer res;
+            res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false, false);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie Przed, Obie Fit");
             Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
-
         }
+        }}
+        @Test
+        public void testExpResFit1() throws InvalidNumberOfPointsException, NotPosibleBothFitAnd20Exception {
 
-        for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-            Integer res;
-            if(p>=20) {res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false,true);
-                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po,  Obie Fit");
+
+            for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
+                Integer res;
+                if (p > 20) {
+                    res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false, true);
+                    logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed, Oni Po,  Obie Fit");
+                }
+                //Mamy mniej punktów czyli trzeba sprawdzić dla nich - wynik będzie dla nich czyli jes odwrócony
+                else {
+                    res = ExpectedResultsTable.getInstance().getPoints(p, true, true, true, false);
+                    logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed,  Obie Fit");
+                }
+                Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
             }
-            //Mamy mniej punktów czyli trzeba sprawdzić dla nich - wynik będzie dla nich czyli jes odwrócony
-            else {res = ExpectedResultsTable.getInstance().getPoints(p, true, true,true, false);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed,  Obie Fit");}
-            Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
-
         }
+
+    @Test
+    public void testExpResFit2() throws InvalidNumberOfPointsException, NotPosibleBothFitAnd20Exception {
 
 
         for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
             Integer res;
-            if(p>=20) {
+            if(p>20) {
                 res = ExpectedResultsTable.getInstance().getPoints(p, true, true, true, false);
                 logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Po, Oni Przed, Obie  Fit");
             }
@@ -174,18 +185,22 @@ public class ImpExpTableTest {
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. My Przed Oni Po, Obie Fit");
             Assert.assertEquals(testExpResAfterFitMap.get(p), res);
         }}
+    }
+    @Test
+    public void testExpResFit3() throws InvalidNumberOfPointsException, NotPosibleBothFitAnd20Exception {
 
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-            Integer res;
-            res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false,false);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie  Przed, Obie  Fit");
-            Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
-
+            if(p!=20) {
+                Integer res;
+                res = ExpectedResultsTable.getInstance().getPoints(p, true, true, false, false);
+                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Obie  Przed, Obie  Fit");
+                Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
+            }
         }
     }
 
     @Test
-    public void testExpResNoFit() throws InvalidNumberOfPointsException {
+    public void testExpResNoFit() throws InvalidNumberOfPointsException, NotPosibleBothFitAnd20Exception {
         for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
             Integer  res;
             res = ExpectedResultsTable.getInstance().getPoints(p, false, false, false, false);

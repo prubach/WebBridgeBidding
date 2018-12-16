@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.bridgeExeption.NotPosibleBothFitAnd20Exception;
 import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedI
         testCountingPointsBothBeforNoFitMap.put(28f, 400f, 0);
 
        //Fit only we - they no fit
-        testCountingPointsBothAfterFitWeMap.put(20f, 0f, 2);
+   //     testCountingPointsBothAfterFitWeMap.put(20f, 0f, 2);
 
   //   testCountingPointsBothAfterFitWeMap.put(24f, -500f, 14);
   //      testCountingPointsBothAfterFitWeMap.put(24f, 500f, -2);
@@ -35,11 +36,10 @@ public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedI
   //     testCountingPointsBothAfterFitWeMap.put(10f, 100f, -12);
 
        testCountingPointsBothAfterFitWeMap.put(16f, -100f, -1);
-       testCountingPointsBothAfterFitWeMap.put(24f, 100f, 1);
+   //    testCountingPointsBothAfterFitWeMap.put(24f, 100f, 1);
 
        testCountingPointsBothAfterFitWeMap.put(16f, 100f, -6);
-       testCountingPointsBothAfterFitWeMap.put(24f, -100f, 6);
-
+  //     testCountingPointsBothAfterFitWeMap.put(24f, -100f, 11); czy 6
         testCountingPointsBothAfterFitWeMap.put(12f, -1660f, 14);
         testCountingPointsBothAfterFitWeMap.put(28f, 1660f, -14);
 
@@ -54,7 +54,7 @@ public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedI
         testCountingPointsBothAfterFitBoth.put(10f, -1250f, 11);
 
         //both no fit
-        testCountingPointsBothAfterNoFitBothMap.put(20f, 0f, 0);
+  //      testCountingPointsBothAfterNoFitBothMap.put(20f, 0f, 0);
 
         testCountingPointsBothAfterNoFitBothMap.put(10f, -660f, 0);
         testCountingPointsBothAfterNoFitBothMap.put(10f, -100f, -11);
@@ -62,7 +62,7 @@ public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedI
         testCountingPointsBothAfterNoFitBothMap.put(30f, 100f, 11);
 
         //Fit only they  - we not fit
-        testCountingPointsBothAfterFitTheyMap.put(20f, 0f, -2);
+     //   testCountingPointsBothAfterFitTheyMap.put(20f, 0f, -2);
 
         testCountingPointsBothAfterFitTheyMap.put(16f, -500f, 2);
         testCountingPointsBothAfterFitTheyMap.put(16f, -300f, -4);
@@ -79,7 +79,7 @@ public class CalculatedImpPointsForOneDealBasicTestTheyPlay extends  CalculatedI
   }
 
     @Test
-    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitWeMap.entrySet()) {

@@ -2,6 +2,7 @@ package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.bridgeExeption.BridgeException;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.bridgeExeption.NotPosibleBothFitAnd20Exception;
 import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
 
 import java.util.HashMap;
@@ -105,7 +106,7 @@ public class RubberScoring {
 
     public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, int pointsForContract,
                                             boolean fitInOlderColorWe, boolean fitInOlderColorThey)
-            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+            throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
 
         fillAssumption(contractNumber);
         CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);

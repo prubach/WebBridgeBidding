@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.bridgeExeption.NotPosibleBothFitAnd20Exception;
 import pl.waw.rubach.points.bridgeExeption.PointsDiferentLessThenZeroException;
 
 import java.util.Map;
@@ -82,7 +83,7 @@ public class CalculatedImpPointsForOneDealBasicTestWePLay {
         testCountingPointsBothAfterNoFitBothMap.put(30f, 100f, -11);
 
         //Fit only they  - we not fit
-        testCountingPointsBothAfterFitTheyMap.put(20f, 0f, 2);
+      //  testCountingPointsBothAfterFitTheyMap.put(20f, 0f, 2);
 
         testCountingPointsBothAfterFitTheyMap.put(16f, -500f, -2);
         testCountingPointsBothAfterFitTheyMap.put(16f, -300f, 4);
@@ -100,7 +101,7 @@ public class CalculatedImpPointsForOneDealBasicTestWePLay {
 
 
     @Test
-    public void testCountingPointsBothBeforeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testCountingPointsBothBeforeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitMap.entrySet()) {
 
@@ -118,7 +119,7 @@ public class CalculatedImpPointsForOneDealBasicTestWePLay {
 
 
     @Test
-    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitWeMap.entrySet()) {
@@ -134,7 +135,7 @@ public class CalculatedImpPointsForOneDealBasicTestWePLay {
     }
 
     @Test
-    public void testCountingPointsBothAfterFitTheyRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testCountingPointsBothAfterFitTheyRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitTheyMap.entrySet()) {
@@ -150,7 +151,7 @@ public class CalculatedImpPointsForOneDealBasicTestWePLay {
     }
 
     @Test
-    public void testCountingPointsBothAfterBothFitRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testCountingPointsBothAfterBothFitRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitBoth.entrySet()) {
@@ -166,7 +167,7 @@ public class CalculatedImpPointsForOneDealBasicTestWePLay {
     }
 
     @Test
-    public void testCountingPointsBothNoFitAfterRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException {
+    public void testCountingPointsBothNoFitAfterRes() throws InvalidNumberOfPointsException, PointsDiferentLessThenZeroException, NotPosibleBothFitAnd20Exception {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterNoFitBothMap.entrySet()) {
 
