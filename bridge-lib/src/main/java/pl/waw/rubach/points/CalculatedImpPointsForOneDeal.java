@@ -91,7 +91,7 @@ public class CalculatedImpPointsForOneDeal {
         if (expectedPoints <= pointsForContract) this.pointDifferent = pointsForContract - expectedPoints;
         else this.pointDifferent = expectedPoints - pointsForContract;
 
-        if (!ImpTable.getInstance().checkInputValue(0,10000,pointDifferent))  throw new InvalidParameterException();
+        if (!(ImpTable.getInstance().checkInputValue(0,10000,pointDifferent)))  throw new InvalidParameterException();
         int result = ImpTable.getInstance().getPoints(pointDifferent);
 
         if (expectedPoints <= pointsForContract) this.results = result;

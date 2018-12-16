@@ -28,7 +28,7 @@ public class ImpExpTableTest {
     @Before
     public void fillTestPointsMap() {
         //testPointsMap.put()
-        //  testImpPointsMap.put(-1, 0);
+        testImpPointsMap.put(-20, -1);
         testImpPointsMap.put(0, 0);
         testImpPointsMap.put(20, 1);
         testImpPointsMap.put(25, 1);
@@ -41,7 +41,7 @@ public class ImpExpTableTest {
         testImpPointsMap.put(6000, 24);
         testImpPointsMap.put(10000, 24);
         testImpPointsMap.put(430 + 50, 10);
-        //  testImpPointsMap.put(20000, 24);
+        testImpPointsMap.put(20000, 24);
 
 
 //test expected results if diferent assumption (fit/no fit)
@@ -53,7 +53,7 @@ public class ImpExpTableTest {
         testExpResBeforeFitMap.put(15f, -350);
         testExpResBeforeFitMap.put(16.5f, -215);
         testExpResBeforeFitMap.put(19.5f, -60);
-        testExpResBeforeFitMap.put(20f, 50);
+
         testExpResBeforeFitMap.put(20.5f, 60);
         testExpResBeforeFitMap.put(25f, 350);
         testExpResBeforeFitMap.put(23.5f, 215);
@@ -67,7 +67,6 @@ public class ImpExpTableTest {
         testExpResBeforeNoFitMap.put(10f, -460);
         testExpResBeforeNoFitMap.put(11f, -430);
         testExpResBeforeNoFitMap.put(19.5f, -25);
-        testExpResBeforeNoFitMap.put(20f, 0);
         testExpResBeforeNoFitMap.put(20.5f, 25);
         testExpResBeforeNoFitMap.put(25f, 200);
         testExpResBeforeNoFitMap.put(23.5f, 120);
@@ -80,7 +79,6 @@ public class ImpExpTableTest {
         testExpResAfterFitMap.put(15f, -520);
         testExpResAfterFitMap.put(16.5f, -285);
         testExpResAfterFitMap.put(19.5f, -60);
-        testExpResAfterFitMap.put(20f, 50);
         testExpResAfterFitMap.put(20.5f, 60);
         testExpResAfterFitMap.put(25f, 520);
         testExpResAfterFitMap.put(23.5f, 285);
@@ -92,7 +90,6 @@ public class ImpExpTableTest {
         testExpResAfterNoFitMap.put(0.5f, -2100);
         testExpResAfterNoFitMap.put(5f, -1500);
         testExpResAfterNoFitMap.put(10f, -660);
-        testExpResAfterNoFitMap.put(20f, 0);
         testExpResAfterNoFitMap.put(20.5f, 25);
         testExpResAfterNoFitMap.put(25f, 290);
         testExpResAfterNoFitMap.put(23.5f, 120);
@@ -101,17 +98,47 @@ public class ImpExpTableTest {
         testExpResAfterNoFitMap.put(39.5f, 2100);
         testExpResAfterNoFitMap.put(40f, 2100);
 
+
+
+
     }
+    @Test
+    public void testExpResSpecialCase20() throws InvalidNumberOfPointsException, InvalidParameterException {
+        check(true, true);
+        check(false , false);
+        check(true,false);
+        check(false,true);
+
+
+}
+
+    private void check(boolean asWe, boolean asThey) throws InvalidNumberOfPointsException, InvalidParameterException {
+        int p = 20, res1, res2, res3;
+        String a = asWe ? "My Po," : "My Przed,";
+        String b = asThey ? "Oni Po," : "Oni Przed, ";
+        res1 = ExpectedResultsTable.getInstance().getPoints(p, true, false, asWe, asThey);
+        logger.info("Dla " + p + " pkt: " + res1 + " oczekiwane. " +a+b +"  My Fit");
+        Assert.assertEquals(50, res1);
+
+        res2 = ExpectedResultsTable.getInstance().getPoints(p, false, true, asWe, asThey);
+        logger.info("Dla " + p + " pkt: " + res2 + " oczekiwane. " +a+b +"  Oni  Fit");
+        Assert.assertEquals(-50, res2);
+
+        res3 = ExpectedResultsTable.getInstance().getPoints(40 - p, false, false, asWe, asThey);
+        logger.info("Dla " + p + " pkt: " + res3 + " oczekiwane.  " +a+b +"  Oni  Fit");
+        Assert.assertEquals(0, res3);
+    }
+
 
     @Test
     public void testImpPoints() {
         for (int p : new TreeSet<Integer>(testImpPointsMap.keySet())) {
-            //   if(ImpTable.getInstance().checkInputValue(0,10000,p)){
+            if(ImpTable.getInstance().checkInputValue(0,10000,p)){
             Integer res = ImpTable.getInstance().getPoints(p);
             logger.info("Dla " + p + " pkt: " + res + " impów.");
             Assert.assertEquals(testImpPointsMap.get(p), res);
         }
-        //  }
+         }
     }
 
 
@@ -266,7 +293,7 @@ public class ImpExpTableTest {
     }
 
     @Test
-    public void testExpResOlnyOneFitBoth() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testExpResOnlyOneFitBoth() throws InvalidNumberOfPointsException, InvalidParameterException {
 
 
         for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
@@ -323,7 +350,7 @@ public class ImpExpTableTest {
 
 
     @Test
-    public void testExpResOlnyOneFitMix() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testExpResOnlyOneFitMix() throws InvalidNumberOfPointsException, InvalidParameterException {
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
             Integer res;
             if (p >= 20) {
@@ -377,68 +404,7 @@ public class ImpExpTableTest {
 
     }
 
-    @Test
-    public void testExpResFitOLD() throws InvalidNumberOfPointsException {
-        for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-            Integer res = ExpectedResultsTable.getInstance().getPoints(p, true, false, false);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Fit");
-            Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
-        }
 
-        for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
-            Integer res = ExpectedResultsTable.getInstance().getPoints(p, true, true, true);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Fit");
-            Assert.assertEquals(testExpResAfterFitMap.get(p), res);
-        }
-
-        //for they play (points is 40 -p and results is minus - excluding 20 pc because it is previour case)
-        for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
-            if (p != 20) {
-                Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, true, false, false);
-                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Fit");
-                Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
-            }
-        }
-        for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
-            if (p != 20) {
-                Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, true, true, true);
-                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Fit");
-                Assert.assertEquals(testExpResAfterFitMap.get(p), res);
-            }
-        }
-    }
-
-    @Test
-    public void testExpResNoFitOLD() throws InvalidNumberOfPointsException {
-        for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
-            Integer res = ExpectedResultsTable.getInstance().getPoints(p, false, false, false);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Bez Fitu");
-            Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
-        }
-
-        for (float p : new TreeSet<Float>(testExpResAfterNoFitMap.keySet())) {
-            Integer res = ExpectedResultsTable.getInstance().getPoints(p, false, true, true);
-            logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Bez Fitu");
-            Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
-        }
-        //for they play (points is 40 -p and results is minus - excluding 20 pc because it is previour case)
-        for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
-            if (p != 20) {
-                Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, false, false, false);
-                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Bez Fitu");
-                Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
-            }
-        }
-
-        for (float p : new TreeSet<Float>(testExpResAfterNoFitMap.keySet())) {
-            if (p != 20) {
-                Integer res = -ExpectedResultsTable.getInstance().getPoints(40 - p, false, true, true);
-                logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Bez Fitu");
-                Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
-            }
-
-        }
-    }
 /*
     @Test
     public void printExpResTables() {

@@ -126,7 +126,13 @@ public class ExpectedResultsTable {
             whoShoudPlayIndicator = -1;
             auctionAssumption = auctionAssumptionThey;
             fit = fitInOlderColorThey;
-
+        }
+        else if(points == 20) {
+            if(fitInOlderColorThey) {
+                whoShoudPlayIndicator = -1;
+                auctionAssumption = auctionAssumptionThey;
+                fit = fitInOlderColorThey;
+            }
         }
 
         Map<Integer, Integer> map = getPtsMap(fit, auctionAssumption);
@@ -174,43 +180,6 @@ public class ExpectedResultsTable {
         }
     }
 
-    /**
-     * OLD VERSION Calculate the bonus points for a certain contract
-     *
-     * @param points              - points in both hands
-     * @param fitInOlderColorWe   - if fit in older color (beginning with 30 points any color)
-     * @param auctionAssumptionWe - assumption After (true) or Before (false)
-     * @return bonus points
-     * @throws InvalidNumberOfPointsException
-     */
-    int getPoints(float points, boolean fitInOlderColorWe, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
-            throws InvalidNumberOfPointsException {
-
-        //test if points value is correct if not print Exeption
-        if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
-
-        //if 1 we  so points are for us, if -1 they and points for us is minus that for they
-        int whoShoudPlayIndicator = 1;
-        boolean auctionAssumption = auctionAssumptionWe;
-        boolean fit = fitInOlderColorWe;
-        if (points < 20) {
-            points = (40 - points);
-            whoShoudPlayIndicator = -1;
-            auctionAssumption = auctionAssumptionThey;
-            //fit = fitInOlderColorThey;
-
-        }
-
-        Map<Integer, Integer> map = getPtsMap(fit, auctionAssumption);
-        int pointsInt = Math.round(points * 2);
-        if (pointsInt % 2 == 0) {
-            return whoShoudPlayIndicator * map.get(pointsInt / 2);
-        } else {
-            int up = Math.round((pointsInt / 2) + 0.5f);
-            int down = Math.round((pointsInt / 2) - 0.5f);
-            return whoShoudPlayIndicator * ((map.get(up) + map.get(down)) / 2);
-        }
-    }
 
 
 }

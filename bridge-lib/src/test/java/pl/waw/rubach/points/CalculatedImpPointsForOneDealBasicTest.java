@@ -89,7 +89,7 @@ public class CalculatedImpPointsForOneDealBasicTest {
         testCountingPointsBothAfterNoFitBothMap.put(30f, 100f, -11);
 
         //Fit only they  - we not fit
-    //    testCountingPointsBothAfterFitTheyMap.put(20f, 0f, 2);
+        testCountingPointsBothAfterFitTheyMap.put(20f, 0f, 2);
 
         testCountingPointsBothAfterFitTheyMap.put(16f, -500f, -2);
         testCountingPointsBothAfterFitTheyMap.put(16f, -300f, 4);
