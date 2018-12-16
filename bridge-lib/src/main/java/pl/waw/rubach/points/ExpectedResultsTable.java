@@ -71,6 +71,17 @@ public class ExpectedResultsTable {
     }
 
     /**
+     * Helper method to enable printing the bonus points table as a string
+     *
+     * @param fitInOlderColor   - if fit in older color (beginning with 30 points any color)
+     * @param auctionAssumption - assumption After (true) or Before (false)
+     * @return map of points in hand to bonus points
+     */
+    public Map<Integer, Integer> getPtsMap(boolean fitInOlderColor, boolean auctionAssumption) {
+        return pointsMap.get(fitInOlderColor, auctionAssumption);
+    }
+
+    /**
      * Fill the map of bonus points with data from an array of ints and return it.
      * Points in hand start at 20 and finish at 40 (for all cases!)
      *
@@ -84,6 +95,53 @@ public class ExpectedResultsTable {
         }
         return map;
     }
+
+
+    /**
+     * Calculate the bonus points for a certain contract //fixme probably ok, but not sure
+     *
+     * @param points                - points in both our  (person who calulate points)  hands
+     * @param fitInOlderColorWe     - if we hace  fit in older color (beginning with 30 points any color) true, else false
+     * @param fitInOlderColorThey   -  if they have fit as above
+     *                              Attantion if both have exactly 20 points and both fit in older color mark only spades (for hearts mark no fit)
+     * @param auctionAssumptionWe   - assumption After (true) or Before (false)
+     * @param auctionAssumptionThey - vunerable or not as above
+     * @return bonus points
+     */
+    int getPoints(float points, boolean fitInOlderColorWe, boolean fitInOlderColorThey, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
+            throws InvalidNumberOfPointsException, InvalidParameterException {
+
+        //test if points value is correct if not print Exeption
+        if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
+
+        if (points == 20 && fitInOlderColorThey && fitInOlderColorWe)
+            throw new InvalidParameterException(points, fitInOlderColorWe, fitInOlderColorThey);
+
+        //if 1 we  so points are for us, if -1 they and points for us is minus that for they
+        int whoShoudPlayIndicator = 1;
+        boolean auctionAssumption = auctionAssumptionWe;
+        boolean fit = fitInOlderColorWe;
+        if (points < 20) {
+            points = (40 - points);
+            whoShoudPlayIndicator = -1;
+            auctionAssumption = auctionAssumptionThey;
+            fit = fitInOlderColorThey;
+
+        }
+
+        Map<Integer, Integer> map = getPtsMap(fit, auctionAssumption);
+        int pointsInt = Math.round(points * 2);
+        if (pointsInt % 2 == 0) {
+            return whoShoudPlayIndicator * map.get(pointsInt / 2);
+        } else {
+            int up = Math.round((pointsInt / 2) + 0.5f);
+            int down = Math.round((pointsInt / 2) - 0.5f);
+            return whoShoudPlayIndicator * ((map.get(up) + map.get(down)) / 2);
+        }
+    }
+
+
+    //******************************************************************************************************************
 
     /**
      * SHORT VERSION of getPoints
@@ -117,56 +175,15 @@ public class ExpectedResultsTable {
     }
 
     /**
-     * Calculate the bonus points for a certain contract //fixme probably ok, but not sure
-     *
-     * @param points              - points in both our  (person who calulate points)  hands
-     * @param fitInOlderColorWe   - if we hace  fit in older color (beginning with 30 points any color) true, else false
-     * @param fitInOlderColorThey -  if they have fit as above
-     *                            Attantion if both have exactly 20 points and both fit in older color mark only spades (for hearts mark no fit)
-     * @param auctionAssumptionWe - assumption After (true) or Before (false)
-     * @param auctionAssumptionThey - vunerable or not as above
-     * @return bonus points
-     */
-    int getPoints(float points, boolean fitInOlderColorWe, boolean fitInOlderColorThey, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
-            throws InvalidNumberOfPointsException, InvalidParameterException {
-
-        //test if points value is correct if not print Exeption
-        if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
-
-        if(points ==20 && fitInOlderColorThey && fitInOlderColorWe) throw new InvalidParameterException(points,fitInOlderColorWe,fitInOlderColorThey);
-
-        //if 1 we  so points are for us, if -1 they and points for us is minus that for they
-        int whoShoudPlayIndicator = 1;
-        boolean auctionAssumption = auctionAssumptionWe;
-        boolean fit = fitInOlderColorWe;
-        if (points < 20) {
-            points = (40 - points);
-            whoShoudPlayIndicator = -1;
-            auctionAssumption = auctionAssumptionThey;
-            fit = fitInOlderColorThey;
-
-        }
-
-        Map<Integer, Integer> map = getPtsMap(fit, auctionAssumption);
-        int pointsInt = Math.round(points * 2);
-        if (pointsInt % 2 == 0) {
-            return whoShoudPlayIndicator * map.get(pointsInt / 2);
-        } else {
-            int up = Math.round((pointsInt / 2) + 0.5f);
-            int down = Math.round((pointsInt / 2) - 0.5f);
-            return whoShoudPlayIndicator * ((map.get(up) + map.get(down)) / 2);
-        }
-    }
-
-    /**
      * OLD VERSION Calculate the bonus points for a certain contract
      *
      * @param points              - points in both hands
      * @param fitInOlderColorWe   - if fit in older color (beginning with 30 points any color)
      * @param auctionAssumptionWe - assumption After (true) or Before (false)
      * @return bonus points
+     * @throws InvalidNumberOfPointsException
      */
-    public int getPoints(float points, boolean fitInOlderColorWe, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
+    int getPoints(float points, boolean fitInOlderColorWe, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
             throws InvalidNumberOfPointsException {
 
         //test if points value is correct if not print Exeption
@@ -195,15 +212,5 @@ public class ExpectedResultsTable {
         }
     }
 
-    /**
-     * Helper method to enable printing the bonus points table as a string
-     *
-     * @param fitInOlderColor   - if fit in older color (beginning with 30 points any color)
-     * @param auctionAssumption - assumption After (true) or Before (false)
-     * @return map of points in hand to bonus points
-     */
-    public Map<Integer, Integer> getPtsMap(boolean fitInOlderColor, boolean auctionAssumption) {
-        return pointsMap.get(fitInOlderColor, auctionAssumption);
-    }
 
 }
