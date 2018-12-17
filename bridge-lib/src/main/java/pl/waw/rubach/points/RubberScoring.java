@@ -137,6 +137,8 @@ public class RubberScoring {
             throws BridgeException {
 
         fillAssumption(contractNumber);
+
+        //todo check if is good with number of tricks - shoudl be taken by declarer and imput is we !!!
         DuplicateBridgeScoring pFC = new DuplicateBridgeScoring(gameLevel, suit, doub, redouble, auctionAssumptionWe, numberOfTricksTaken);
         description = description + pFC.getShortDescription() + "\n";
         CalculatedImpPointsForOneDeal rooG = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
@@ -189,7 +191,7 @@ public class RubberScoring {
         int s = 0;
         for (Integer key : ptsMapSet) {
 
-            if (scorringForOneGame.get(key).getPointsInBothHands() != 0)
+            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
                 s = s + scorringForOneGame.get(key).getResults();
             if (print) {
                 System.out.println("Wynik rozdania " + key + " jest: " + scorringForOneGame.get(key).getResults() + " \n");
@@ -213,12 +215,28 @@ public class RubberScoring {
         return scorringForOneGame;
     }
 
-    //For easier tests
+
+
+
+    //For easier tests of description etc
     public static void main(String[] args) {
         try {
+            DuplicateBridgeScoring dbs = new DuplicateBridgeScoring(3,"nt",1,false,9);
+            System.out.print(dbs.getShortDescription());
+            System.out.print(dbs.getDescription());
+
+            CalculatedImpPointsForOneDeal roog1 = new CalculatedImpPointsForOneDeal(20,3, "nt", false, false, 9, false,false,false,false);
+            CalculatedImpPointsForOneDeal roog2 = new CalculatedImpPointsForOneDeal(20,3, "nt", 1, 9, false,false,false,false);
+
+      //      System.out.println("Końcowy wynik jednego rozdania  liczony od podstaw jest: " + roog1.getResults() + " \n");
+      //      System.out.println("Końcowy wynik jednego rozdania liczony od podstaw jest: " + roog2.getResults() + " \n");
+
+
+            //*******************************************
+
             RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
-            System.out.println(a.getRubberScoringAsString());
-            System.out.println("Końcowy wynik jest: " + a.getSumm(true) + " \n");
+       //     System.out.println(a.getRubberScoringAsString());
+       //     System.out.println("Końcowy wynik jest: " + a.getSumm(true) + " \n");
 /*
             RubberScoring a2 = new RubberScoring(20, 19, 18, 17, -110, -110, -110, -110, false, false, false, false, false, false, false, false);
             System.out.println(a2.getRubberScoringAsString());
@@ -237,8 +255,8 @@ public class RubberScoring {
             rooG.fillOneContractFrom4GameSet(3, 22, 110, false, false);
             rooG.fillOneContractFrom4GameSet(4, 23, 110, false, false);
 
-            System.out.println(rooG.getRubberScoringAsString());
-            System.out.println("Końcowy wynik jest: " + rooG.getSumm(true) + " \n");
+         //   System.out.println(rooG.getRubberScoringAsString());
+         //   System.out.println("Końcowy wynik jest: " + rooG.getSumm(true) + " \n");
 
 
         } catch (BridgeException e) {

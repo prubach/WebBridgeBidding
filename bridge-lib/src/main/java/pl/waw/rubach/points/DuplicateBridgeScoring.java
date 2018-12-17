@@ -3,69 +3,46 @@ package pl.waw.rubach.points;
 import pl.waw.rubach.points.bridgeExeption.*;
 
 //This was  PointsForContract(...)
-public class DuplicateBridgeScoring {
+public class DuplicateBridgeScoring extends PointsForOneDeal{
 
-    public static final int IS_DOUBLE = 2;
-    public static final int IS_REDOUBLE = 4;
-    public static final int IS_UNDOUBLE = 1;
-    //CONTRACT PARAMETER - arguments of constructor
-    /**
-     * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
-     */
-    private int contractLevel;
-    /**
-     * Cards suits [denomination or strain] that denotes the proposed trump suit or notrump.
-     * Thus, there are five denominations – notrump, spades, hearts, diamonds and clubs.
-     */
-    private String contractSuit;
-    /**
-     * Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
-     */
-    private int nDRSignature;
-    /**
-     *
-     * Auction Assumption for Plaing Pair means if pair is  vulnerable or not vulnerable
-     */
-    private boolean auctionAssumptionDeclarer;
-
-    /**
-     * Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
-     * and who must therefore play both their own hand and the exposed hand of the dummy.
-     * (opponent takes 13 - numberOfTrickTakenByDeclarer)
-     */
-    private int numberOfTrickTakenByDeclarer;
 
 
     /**
      * The number of tricks above six (the book) that are taken by declarer.
      */
     private int oddTricks;
+    //pyt czy te parametry tu zostają czy przechodzą wyżej - wg mnie dalej się z tego nie korzysta tylko tu?
     /**
      * Indicates if contract is made  which means  take at least as many tricks as a contract calls for.
      */
     private boolean made;
 
     /**
-     * shortDescription -  only with contract main parameter
-     */
-    private String shortDescription = " Kontrakt jest: ";
-    /**
-     * description - Long description explain how points are calculating
+     * description - Long description explain how points are calculating - set here so no setter need!
      */
     private String description = "Punkty za kontrakt: ";
 
-    /**
-     * Points for contract calculated with modify bridge rules according to 4 play scoring
-     */
-    private int contractScoringPoints;
-
 
     //This was :  PointsForContract(...)
-    public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
-            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
-        this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
-    }
-
+    /**
+     * Constructor of scorring for duplicate Bridge game seting contract parameter and calculated PoinstForContract
+     * @param contractLevel The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
+     * in future from other part of aplication - results of biding part or user imput
+     * @param contractSuit Cards suits [denomination or strain] that denotes the proposed trump suit or notrump.
+     * Thus, there are five denominations – notrump, spades, hearts, diamonds and clubs.
+     * @param nDRSignature Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
+     * @param auctionAssumptionDeclarer ATTENTION Auction assumption declarer not we!!!
+     * Auction Assumption for Plaing Pair means if pair is  vulnerable or unvulnerable
+     * @param numberOfTrickTakenByDeclarer TTENTION : Numnber of tricks taken in game by we !!!(Pair who make scoring not always plaing pair)
+     *
+     * Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
+     * and who must therefore play both their own hand and the exposed hand of the dummy.
+     * (opponent takes 13 - numberOfTrickTakenByDeclarer)
+     * @throws InvalidContractLevelException if level is not beteween 1 to 7 (according bridge rulles
+     * @throws InvalidContractSuitException     if suit is no one of 5 bridge strain (colors + nt)
+     * @throws InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
+     * @throws InvalidParameterException other parameter inproprieter value ...
+     */
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
         //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (nDRSignature == 2), nDRSignature == 4, auctionAssumptionDeclarer);
@@ -73,39 +50,45 @@ public class DuplicateBridgeScoring {
         //checking if contractLevel is correct
         if (contractLevel > 7 || contractLevel < 1)
             throw new InvalidContractLevelException(contractLevel);
-        this.contractLevel = contractLevel;
-        this.contractSuit = contractSuit;
+        setContractLevel(contractLevel);
+        setContractSuit(contractSuit);
 
         //checking if number of tricks is corect
         if (numberOfTrickTakenByDeclarer > 13 || numberOfTrickTakenByDeclarer < 0)
             throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
-        this.numberOfTrickTakenByDeclarer = numberOfTrickTakenByDeclarer;
+        setNumberOfTrickTakenDeclarer(numberOfTrickTakenByDeclarer);
 
         //checking if double/ redouble or undouble signature  is corect
         if (!(nDRSignature == 1 || nDRSignature == 2 || nDRSignature == 4))
             throw new InvalidParameterException(nDRSignature);
-        this.nDRSignature = nDRSignature;
+        setNorDoubleReSingnature(nDRSignature);
 
-        this.auctionAssumptionDeclarer = auctionAssumptionDeclarer;
-        this.shortDescription = getContractDescription();
+        setDeclarerVulnerable(auctionAssumptionDeclarer);
+        setShortDescription(getContractDescription());
 
         //  Begin of calculation
-        this.contractScoringPoints = 0;       // points equal zero at the beginging of calculation
+        setContractScoringPoints(0);       // points equal zero at the beginging of calculation
         this.oddTricks = numberOfTrickTakenByDeclarer - 6;    //trics above 6
         this.made = oddTricks >= contractLevel;  //condition if game is made or not
 
         if (made) {
-            contractScoringPoints = getContractPoints(contractLevel) * nDRSignature;
-              description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + contractScoringPoints + "pkt. ";
+            setContractScoringPoints(getContractPoints(contractLevel) * nDRSignature);
+              description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + getContractScoringPoints() + "pkt. ";
         } else {
-            contractScoringPoints = getPenaltyPoints();
+            setContractScoringPoints(getPenaltyPoints());
         }
 
-        contractScoringPoints = contractScoringPoints
-                + getGamePartGameBonus(contractScoringPoints)
+        setContractScoringPoints(getContractScoringPoints()
+                + getGamePartGameBonus(getContractScoringPoints())
                 + getOvertrickPoints()
                 + getDoubleRedoubleBonus()
-                + getSlamsBonusPoints();
+                + getSlamsBonusPoints());
+    }
+
+    //OLD constructor with boolean double redouble - exist in all test so cant be delated
+    public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
+            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
+        this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
 
 
@@ -123,7 +106,7 @@ public class DuplicateBridgeScoring {
      */
     private int getContractPoints(int numberOfTricksForWhichArePointsCalculated) throws InvalidContractSuitException {
 
-        switch (contractSuit) {
+        switch (getContractSuit()) {
             case "s":
             case "S":
             case "h":
@@ -154,31 +137,33 @@ public class DuplicateBridgeScoring {
      * @return scorring for overtricks
      * @throws InvalidContractSuitException if contract suits is not correct
      */
-
     private int getOvertrickPoints() throws InvalidContractSuitException {
         // getOvertrickPoints(contractLevel,oddTricks,auctionAssumptionDeclarer,s==2,s==4,contractSuit);
         int overtricksPoints = 0;
-        int overtricks = oddTricks -contractLevel;
-        if (oddTricks > contractLevel) {
+        int overtricks = oddTricks -getContractLevel();
+
+       // pyt jaki warunek lepie - to jest to samo :
+        // if (oddTricks > getContractLevel()) {
+        if (made && overtricks>0) {
 
             //  if (!isContractDouble && !isContractRedouble) {
-            if (nDRSignature == 1) {
+            if (getNorDoubleReSingnature() == IS_UNDOUBLE) {
                 overtricksPoints = getContractPoints(overtricks);  //bez kontry i rekontry - tak samo jak lewa
-                if (contractSuit.equals("nt") || contractSuit.equals("n") || contractSuit.equals("N") || contractSuit.equals("NT"))
+                if (getContractSuit().equals("nt") || getContractSuit().equals("n") || getContractSuit().equals("N") || getContractSuit().equals("NT"))
                     overtricksPoints = overtricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
             }
             //if (isContractDouble && !auctionAssumptionDeclarer)
-            if (nDRSignature == IS_DOUBLE && !auctionAssumptionDeclarer)
+            if (getNorDoubleReSingnature() == IS_DOUBLE && !isDeclarerVulnerable())
                 overtricksPoints = overtricks * 100;   //z kontrą przed partią - za 100
             //if (isContractDouble && auctionAssumptionDeclarer)
-            if (nDRSignature == IS_DOUBLE && auctionAssumptionDeclarer)
+            if (getNorDoubleReSingnature() == IS_DOUBLE && isDeclarerVulnerable())
                 overtricksPoints = overtricks * 200;    // z kontrą po partii za 200
 
             //if (isContractRedouble && !auctionAssumptionDeclarer)
-            if (nDRSignature == IS_REDOUBLE && !auctionAssumptionDeclarer)
+            if (getNorDoubleReSingnature() == IS_REDOUBLE && !isDeclarerVulnerable())
                 overtricksPoints = overtricks * 200;     // z rekontrą przed partią za 200
             //if (isContractRedouble && auctionAssumptionDeclarer)
-            if (nDRSignature == IS_REDOUBLE && auctionAssumptionDeclarer)
+            if (getNorDoubleReSingnature() == IS_REDOUBLE && isDeclarerVulnerable())
                 overtricksPoints = overtricks * 400;     //z rekontrą po partii za 400
 
             description = description + "+  punkty z " + overtricks + " nadróbek to: " + overtricksPoints + "pkt,";
@@ -192,35 +177,34 @@ public class DuplicateBridgeScoring {
      * @return scoring for under Tricks
      */
     private int getPenaltyPoints() {
-        int underTricks = contractLevel - oddTricks;
+        int underTricks = getContractLevel() - oddTricks;
         int underTricksPoints = 0;
 
-        if (!auctionAssumptionDeclarer && !(nDRSignature == IS_DOUBLE) && !(nDRSignature == IS_REDOUBLE))
+        if (!isDeclarerVulnerable() && !(getNorDoubleReSingnature() == IS_DOUBLE) && !(getNorDoubleReSingnature() == IS_REDOUBLE))
             underTricksPoints = -underTricks * 50;   //bez kontry przed partią 50
-        if (!auctionAssumptionDeclarer && ((nDRSignature == IS_DOUBLE) || (nDRSignature == IS_REDOUBLE)) && underTricks == 1)
+        if (!isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && underTricks == 1)
             underTricksPoints = -underTricks * 100;  //z kontrą przed partią pierwsza za 100
-        else if (!auctionAssumptionDeclarer && ((nDRSignature == IS_DOUBLE) || (nDRSignature == IS_REDOUBLE)) && (underTricks == 2 || underTricks ==3))
+        else if (!isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && (underTricks == 2 || underTricks ==3))
             underTricksPoints = -underTricks * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
     //    else if (!auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks == 3)
      //       underTricksPoints = -underTricks * 200 + 100;
-        else if (!auctionAssumptionDeclarer && ((nDRSignature == IS_DOUBLE) || (nDRSignature == IS_REDOUBLE)) && underTricks >= 4)
+        else if (!isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && underTricks >= 4)
             underTricksPoints = -underTricks * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
 
-        if (auctionAssumptionDeclarer && !(nDRSignature == IS_DOUBLE) && !(nDRSignature == IS_REDOUBLE))
+        if (isDeclarerVulnerable() && !(getNorDoubleReSingnature() == IS_DOUBLE) && !(getNorDoubleReSingnature() == IS_REDOUBLE))
             underTricksPoints = -underTricks * 100;  //bez kontry po partii 100
-        if (auctionAssumptionDeclarer && ((nDRSignature == IS_DOUBLE) || (nDRSignature == IS_REDOUBLE)) && underTricks == 1)
+        if (isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && underTricks == 1)
             underTricksPoints = -underTricks * 200;  // z kontrą po partii pierwsza za 200
-        else if (auctionAssumptionDeclarer && ((nDRSignature == IS_DOUBLE) || (nDRSignature == IS_REDOUBLE)) && underTricks >= 2)
+        else if (isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && underTricks >= 2)
             underTricksPoints = -underTricks * 300 + 100;  //z kontrą po partii kolejne za 300
 
-        if ((nDRSignature ==IS_REDOUBLE)) underTricksPoints = underTricksPoints * 2;
+        if ((getNorDoubleReSingnature()==IS_REDOUBLE)) underTricksPoints = underTricksPoints * 2;
 
         if (underTricks == 1) description = description + " Za nieugraną grę: punkty z " + underTricks + " wpadki: "+ underTricksPoints+ ". ";
         else description = description + "Za nieugraną grę: punkty z " + underTricks + " wpadek: "+ underTricksPoints+ ". ";
 
         return underTricksPoints;
     }
-
 
     /**
      * When a doubled or redoubled contract is made, a bonus is awarded to the declaring side. It is colloquially referred to as a bonus for "insult",
@@ -229,11 +213,11 @@ public class DuplicateBridgeScoring {
      * @return  double or redouble bonus
      */
     private int getDoubleRedoubleBonus() {
-        if (nDRSignature == IS_DOUBLE && made) {
+        if (getNorDoubleReSingnature() == IS_DOUBLE && made) {
             description = description + " + 50 pkt. kara za nieudaną kontrę, ";
             return 50;
 
-        } else if (nDRSignature == IS_REDOUBLE && made) {
+        } else if (getNorDoubleReSingnature() == IS_REDOUBLE && made) {
             description = description + " + 100 pkt. kara za nieudaną rekontrę, ";
             return 100;
         } else return 0;
@@ -251,7 +235,7 @@ public class DuplicateBridgeScoring {
 
         if (calculatedPointsForContract >= 100 && made) {
             description = description + " + punkty za ugraną końcówkę (zależnie od założeń).";
-            return (auctionAssumptionDeclarer) ? 500 : 300;
+            return (isDeclarerVulnerable()) ? 500 : 300;
         } else if (calculatedPointsForContract > 0) {
             description = description + " + 50 pkt za częściówkę.";
             return 50;
@@ -268,37 +252,20 @@ public class DuplicateBridgeScoring {
      */
     private int getSlamsBonusPoints() {
 
-        if (oddTricks >= contractLevel) {
-            //description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
-            if (contractLevel == 6) return (auctionAssumptionDeclarer) ? 750 : 500;
-            else if (contractLevel == 7) return (auctionAssumptionDeclarer) ? 1500 : 1000;
+        if (oddTricks >= getContractLevel()) {
+            //pyt czy można dodać opis tak żeby został zapis ze znakami zapytania? Uważam że może być bez opisu bo o premi szlemikowej mało kto zapomina  description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
+            if (getContractLevel() == 6) return (isDeclarerVulnerable()) ? 750 : 500;
+            else if (getContractLevel() == 7) return (isDeclarerVulnerable()) ? 1500 : 1000;
         }
         return 0;
     }
 
-    /**
-     * Description of contract
-     * @return short description of contract
-     */
-    private String getContractDescription() {
-        if (nDRSignature == IS_DOUBLE)
-            return shortDescription + contractLevel + contractSuit + " z kontrą, zebrano " + numberOfTrickTakenByDeclarer + " lew.";
-        else if (nDRSignature == IS_REDOUBLE)
-            return shortDescription + contractLevel + contractSuit + " z rekontrą, zebrano " + numberOfTrickTakenByDeclarer + " lew.";
-        else
-            return shortDescription + contractLevel + contractSuit + ", zebrano " + numberOfTrickTakenByDeclarer + " lew.";
-    }
+
 
     //getter
-    public int getContractScoringPoints() {
-        return contractScoringPoints;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
-    }
+
 }

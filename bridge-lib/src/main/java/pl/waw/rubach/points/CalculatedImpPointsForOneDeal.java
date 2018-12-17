@@ -7,24 +7,27 @@ import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
 //TO było ResultsOfOneGame
 public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
 
-    //pyt przeniosłam to tu z powrotem - to jest specyficzny parametr dla liczenia impów (może wogóle nie potrzebny jako parametr klasy - ewentualnie tylko do wyciągnięcia i sprawdzenia jak było liczone...
+    //pyt przeniosłam to tu z powrotem - to jest specyficzny parametr dla liczenia impów (może wogóle nie potrzebny jako parametr klasy
+    // - ewentualnie tylko do wyciągnięcia i sprawdzenia jak było liczone... ale może wobec tego też co powinno być ?
     /**
      * diference betwenn assumpted result from ExpectedResults table and point reach playng contract (contractScoringPoints)
      */
     private int pointDifferent;
 
 
+    private int expectedPoints;
 
 
-    //TODO zrobić opcje oni grają innych konstruktorów bo nie ten zawsze jest używany
+    //TODO sprawdzić - uprościłam chyba oni grają już przy przypisaniu ale nie jestem pewna .. testy przechodzą ale do tego nie ma dobrych testów...
     //constructors  when both play
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe, int pointsForContractWe,
                                          boolean auctionAssumptionWe,  boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException,  InvalidParameterException {
         //assumed that we play
-        setPointsInBothHands(pointsInBothHandsWe);
-        setContractScoringPoints(pointsForContractWe);
-        int expectedPoints = ExpectedResultsTable.getInstance().getPoints(getPointsInBothHands(), fitInOlderColorWe, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey);
+        setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : 40-pointsInBothHandsWe);
+        setContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
+        setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
+                fitInOlderColorWe, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey));
 
  //chyba jest już dobrze (dodałam testy)-  nadal coś jest źle ... ale nie wiem czy testy czy formuły czy jedno i drugie (co najbardziej prawdopodobne) na poniższym testy przechodzą ale formuły mi się nie podobają)
 //to poniżej też dobrze - ale pewnie do wywalenia? - chyba lepiej jak to siedzi w tabeli ?
@@ -43,41 +46,43 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
 //        }
 //*/
         //if they play parameters should change because as imput we have points for we and scoring for we
-        if(!wePlay) {
-            setPointsInBothHands(40 - pointsInBothHandsWe);
-            setContractScoringPoints(-pointsForContractWe);
-            expectedPoints = -expectedPoints;
-            //expectedPoints = ExpectedResultsTable.getInstance().getPoints(40-pointsInBothHands,fitInOlderColorThey,fitInOlderColorWe,auctionAssumptionThey,auctionAssumptionWe);
-        }
+        if(!wePlay)  setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
+                fitInOlderColorThey,fitInOlderColorWe,auctionAssumptionThey,auctionAssumptionWe));
+
+ // {
+          //  setPointsInBothDeclarerHands(40 - pointsInBothHandsWe);
+          //  setContractScoringPoints(-pointsForContractWe);
+       //     expectedPoints = -expectedPoints;
+       // }
 
 
 
-        if (expectedPoints <= getContractScoringPoints()) setPointDifferent(getContractScoringPoints()- expectedPoints);
-        else setPointDifferent(expectedPoints - getContractScoringPoints());
+        if (getExpectedPoints() <= getContractScoringPoints()) setPointDifferent(getContractScoringPoints()- getExpectedPoints());
+        else setPointDifferent(getExpectedPoints() - getContractScoringPoints());
 
         if (!(ImpTable.getInstance().checkInputValue(0,10000,getPointDifferent())))  throw new InvalidParameterException();
         int result = ImpTable.getInstance().getPoints(getPointDifferent());
 
-        if (expectedPoints <= getContractScoringPoints()) setResults(result);
+        if (getExpectedPoints() <= getContractScoringPoints()) setResults(result);
         else setResults(-result);
     }
 
 
-
-
-    //TODO sprawdzić czy dobrze poprawiony konsturktor!!! - ma wszędzie  uwzględniać kto
+    //TODO sprawdzić czy dobrze poprawiony konsturktor!!! - ma wszędzie  uwzględniać kto - nie jestem pewna tego po new...
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, int numberOfTrickTakenByWe,
                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
-        this(wePlay, pointsInBothHandsWe,
-                new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey, numberOfTrickTakenByWe).getContractScoringPoints(),
+        this(wePlay, wePlay ? pointsInBothHandsWe: 40-pointsInBothHandsWe,
+                new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
+                        wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe).getContractScoringPoints(),
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
-        setNormalDoubleRedubleSingnature(normalDoubleRedubleSingnature);
-        setNumberOfTrickTaken(numberOfTrickTakenByWe);
+        setNorDoubleReSingnature(normalDoubleRedubleSingnature);
+        setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
+        setNumberOfTrickTakenDeclarer(wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe);
     }
 
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
@@ -119,8 +124,8 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
                 auctionAssumptionDeclarer,auctionAssumptionOponenst,fitInOlderColorDeclarer,fitInOlderColorOponents);
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
-        setNormalDoubleRedubleSingnature(normalDoubleRedubleSingnature);
-        setNumberOfTrickTaken(numberOfTrickTakenByDeclarer);
+        setNorDoubleReSingnature(normalDoubleRedubleSingnature);
+        setNumberOfTrickTakenDeclarer(numberOfTrickTakenByDeclarer);
     }
 
 
@@ -135,24 +140,11 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
         this.pointDifferent = pointDifferent;
     }
 
-
-
-
-    public static void main(String[] args) {
-
-        try {
-            CalculatedImpPointsForOneDeal roog1 = new CalculatedImpPointsForOneDeal(20,3, "nt", false, false, 9, false,false,false,false);
-            CalculatedImpPointsForOneDeal roog2 = new CalculatedImpPointsForOneDeal(20,3, "nt", 1, 9, false,false,false,false);
-
-            System.out.println("Końcowy wynik liczony od podstaw jest: " + roog1.getResults() + " \n");
-            System.out.println("Końcowy wynik liczony od podstaw jest: " + roog2.getResults() + " \n");
-
-
-        } catch (BridgeException e) {
-            e.printStackTrace();
-        }
-
+    public int getExpectedPoints() {
+        return expectedPoints;
     }
 
-
+    public void setExpectedPoints(int expectedPoints) {
+        this.expectedPoints = expectedPoints;
+    }
 }
