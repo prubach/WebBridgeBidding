@@ -20,6 +20,7 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
     protected boolean theyBeforeAfter = false;
 
     private MultiKeyMap<Integer, Integer> testCountingPointsNTBothBeforeBothNoFit = new MultiKeyMap<>();
+    private MultiKeyMap<Integer, Integer> testCountingPointsNTBothBeforeBothNoFitThey = new MultiKeyMap<>();
     private Map<Integer, Integer> testCountingPoints3NTBothBeforeBothNoFit = new HashMap<>();
 
    // private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitBothMap = new MultiKeyMap<>();
@@ -33,20 +34,52 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
     /*  private MultiKeyMap<MultiKeyMap,Integer> testCountingPointsAssumptionNoFitMap = new MultiKeyMap<>();
     testCountingPointsAssumptionNoFitMap.put(testCountingPointsAssumptionNoFitMap, testCountingPointsAssumptionNoFitMap,11); */
 //pyt czy można zrobić mapę której jednym kluczem jest boolean a kolejnymi tak jak jest wtedy można by zrobic jeden test i tylko zmieniać założenia przy wartościach?
-// czy np mapa map i czy to się opłaca
+// czy np mapa map i czy to się opłaca może lepiej tak jak było w CalculatedImpPointsForOneDealBeforWePlay
+
 
 
     @Before
     public void fillTestPointsMap() {
         //                          key1: liczba puntków  key2: wysokość key3 liczba lew
+
+        testCountingPointsNTBothBeforeBothNoFit.put( 20, 3,9, 9); //400
+        testCountingPointsNTBothBeforeBothNoFit.put( 20,6,12, 14); //990
         testCountingPointsNTBothBeforeBothNoFit.put( 29,6,11, -10); //990
         testCountingPointsNTBothBeforeBothNoFit.put( 28,6,12, 11); //990
-        testCountingPointsNTBothBeforeBothNoFit.put( 20,6,12, 14); //990
-        testCountingPointsNTBothBeforeBothNoFit.put( 20, 3,9, 9); //400
         testCountingPointsNTBothBeforeBothNoFit.put( 22,3,9, 8); //400
         testCountingPointsNTBothBeforeBothNoFit.put( 26,3,9, 3); //400
 
+
     }
+
+    @Test
+    public void testCountingPointsBothBeforeResBoth() throws BridgeException {
+
+
+
+        for (Map.Entry<MultiKey<? extends Integer>, Integer> entry :  testCountingPointsNTBothBeforeBothNoFit.entrySet()) {
+
+            int pointsInBothHands = entry.getKey().getKey(0);
+            int contractLevel = entry.getKey().getKey(1);
+            int numberOfTricksTaken = entry.getKey().getKey(2);
+
+            CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(true,pointsInBothHands,contractLevel, "nt", 1, numberOfTricksTaken, weBeforeAfter,theyBeforeAfter,false,false);
+            Integer res = roog.getResults();
+
+            CalculatedImpPointsForOneDeal roogR = new CalculatedImpPointsForOneDeal(false,40-pointsInBothHands,contractLevel, "nt", 1, 13-numberOfTricksTaken,  theyBeforeAfter,weBeforeAfter,false,false);
+            Integer resR = roogR.getResults();
+
+            logger.info("Dla "+ pointsInBothHands+" pkt.   przy kontrakcie " + contractLevel + "NT i zebranych "+numberOfTricksTaken+ " lewach - wynik jest " + res + " impów. Obie przed, obie bez fitu");
+            Assert.assertEquals( testCountingPointsNTBothBeforeBothNoFit.get(pointsInBothHands,contractLevel, numberOfTricksTaken), res);
+
+            Assert.assertEquals( res, resR);
+
+        }
+
+
+
+    }
+
 
     @Test
     public void testCountingPointsA() throws BridgeException {

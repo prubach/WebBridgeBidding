@@ -4,6 +4,8 @@ import pl.waw.rubach.points.bridgeExeption.BridgeException;
 import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
 import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
 
+import static java.lang.Math.abs;
+
 //TO było ResultsOfOneGame
 public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
 
@@ -20,7 +22,7 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
     private int expectedPoints;
 
 
-    //TODO sprawdzić - uprościłam chyba oni grają już przy przypisaniu ale nie jestem pewna .. testy przechodzą ale do tego nie ma dobrych testów...
+    //pyt pozmieniałam na tak jak wydaje się bardziej elegancko (stare zostało w komentarzach-  chyba jest ok nie jestem pewna .. testy już są chyba ok..
     //constructors  when both play - there are tests
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe, int pointsForContractWe,
                                          boolean auctionAssumptionWe,  boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
@@ -31,56 +33,47 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
         setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
                 fitInOlderColorWe, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey));
 
- //chyba jest już dobrze (dodałam testy)-  nadal coś jest źle ... ale nie wiem czy testy czy formuły czy jedno i drugie (co najbardziej prawdopodobne) na poniższym testy przechodzą ale formuły mi się nie podobają)
-//to poniżej też dobrze - ale pewnie do wywalenia? - chyba lepiej jak to siedzi w tabeli ?
-//   /*    if (pointsInBothHands == 20) {
-//            if (fitInOlderColorWe) {
-//                expectedPoints = 50; //ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe);
-//            } else if (fitInOlderColorThey) {
-//                expectedPoints = -50; //ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true,  auctionAssumptionThey);
-//            } else
-//                expectedPoints = 0;// ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false,auctionAssumptionWe);
-//
-//        } else if (pointsInBothHands < 20) {
-//            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorThey,auctionAssumptionThey);
-//        } else {
-//            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe);
-//        }
-//*/
+
         //if they play parameters should change because as imput we have points for we and scoring for we
         if(!wePlay)  setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
                 fitInOlderColorThey,fitInOlderColorWe,auctionAssumptionThey,auctionAssumptionWe));
-
  // {
-          //  setPointsInBothDeclarerHands(40 - pointsInBothHandsWe);
-          //  setContractScoringPoints(-pointsForContractWe);
-       //     expectedPoints = -expectedPoints;
-       // }
+ //  setPointsInBothDeclarerHands(40 - pointsInBothHandsWe);
+ //  setContractScoringPoints(-pointsForContractWe);
+ //     expectedPoints = -expectedPoints;
+ // }
+        boolean winWe = getExpectedPoints() <=getContractScoringPoints();
+        setPointDifferent(abs(getContractScoringPoints()- getExpectedPoints()));
 
 
-
-        if (getExpectedPoints() <= getContractScoringPoints()) setPointDifferent(getContractScoringPoints()- getExpectedPoints());
-        else setPointDifferent(getExpectedPoints() - getContractScoringPoints());
+       // if (getExpectedPoints() <= getContractScoringPoints()) setPointDifferent(getContractScoringPoints()- getExpectedPoints());
+       // else setPointDifferent(getExpectedPoints() - getContractScoringPoints());
 
         if (!(ImpTable.getInstance().checkInputValue(0,10000,getPointDifferent())))  throw new InvalidParameterException();
-        int result = ImpTable.getInstance().getPoints(getPointDifferent());
+      //  int results = ImpTable.getInstance().getPoints(getPointDifferent());
+        setResults(ImpTable.getInstance().getPoints(getPointDifferent()));
 
-        if (getExpectedPoints() <= getContractScoringPoints()) setResults(result);
-        else setResults(-result);
+        if(!winWe) setResults(-getResults());
+      //  if (getExpectedPoints() <= getContractScoringPoints()) setResults(result);
+      //  else setResults(-result);
     }
 
 
     //TODO sprawdzić czy dobrze poprawiony konsturktor!!! - ma wszędzie  uwzględniać kto - nie jestem pewna tego po new... do tego nie ma testów jeszcze ...
-
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, int numberOfTrickTakenByWe,
                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
-        this(wePlay, wePlay ? pointsInBothHandsWe: 40-pointsInBothHandsWe,
-                new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
+        this(wePlay, pointsInBothHandsWe,
+                (wePlay? 1:-1)*new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
                         wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe).getContractScoringPoints(),
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+  //to jest zle bo się dwa razy zmienia - przeciez w konsturktorze właściwym też się zmieni
+        //      this(wePlay, wePlay ? pointsInBothHandsWe: 40-pointsInBothHandsWe,
+  //              new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
+  //                      wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe).getContractScoringPoints(),
+  //              auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
         setNorDoubleReSingnature(normalDoubleRedubleSingnature);

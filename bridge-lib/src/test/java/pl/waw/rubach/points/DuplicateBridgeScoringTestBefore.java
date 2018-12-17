@@ -200,7 +200,7 @@ public class DuplicateBridgeScoringTestBefore {
         testPointsForMajorContractOneMoreDouble.put(4, 2*120+ nadrobkaZKontra+ karaZaKontre + premiaZaKoncowke);
         testPointsForMajorContractOneMoreDouble.put(5, 2* 150+ nadrobkaZKontra+ karaZaKontre + premiaZaKoncowke);
         testPointsForMajorContractOneMoreDouble.put(6, 2*180+ nadrobkaZKontra+ karaZaKontre + premiaZaKoncowke +premiaZaSzlemika);
-        // testPointsForMinorContractOneMoreDouble.put(7, 240+50+300); nie ma sensu - nie może być 7 i jedna lepiej!!!
+        // testPointsForMajorContractOneMoreDouble.put(7, 240+50+300); nie ma sensu - nie może być 7 i jedna lepiej!!!
 
         testPointsForMinorContractOneMoreDouble.put(1, 2*20+ nadrobkaZKontra + karaZaKontre +premiaZaCzesciowke); //kontrakt np 1karo + 1 lewa z kontrą (20)*2 +100 za nadróbkę + 50 nieudaną kontrę + 300 premi za końcówkę
         testPointsForMinorContractOneMoreDouble.put(2, 2*40+ nadrobkaZKontra + karaZaKontre + premiaZaCzesciowke);
@@ -224,7 +224,7 @@ public class DuplicateBridgeScoringTestBefore {
         testPointsForMajorContractOneMoreReDouble.put(4, 4*120+ 2*nadrobkaZKontra+ 2*karaZaKontre + premiaZaKoncowke);
         testPointsForMajorContractOneMoreReDouble.put(5, 4* 150+ 2*nadrobkaZKontra+ 2*karaZaKontre + premiaZaKoncowke);
         testPointsForMajorContractOneMoreReDouble.put(6, 4*180+ 2*nadrobkaZKontra+ 2*karaZaKontre + premiaZaKoncowke +premiaZaSzlemika);
-        // testPointsForMinorContractOneMoreDouble.put(7, 240+50+300); nie ma sensu - nie może być 7 i jedna lepiej!!!
+        // testPointsForMajorContractOneMoreDouble.put(7, 240+50+300); nie ma sensu - nie może być 7 i jedna lepiej!!!
 
         testPointsForMinorContractOneMoreReDouble.put(1, 4*20+ 2*nadrobkaZKontra + 2*karaZaKontre +premiaZaCzesciowke); //kontrakt np 1karo + 1 lewa z kontrą (20)*2 +100 za nadróbkę + 50 nieudaną kontrę + 300 premi za końcówkę
         testPointsForMinorContractOneMoreReDouble.put(2, 4*40+ 2*nadrobkaZKontra + 2*karaZaKontre + premiaZaKoncowke);
@@ -253,7 +253,7 @@ public class DuplicateBridgeScoringTestBefore {
 
 
 
-//todo add double and redouble example (and minor/major  ew.
+//todo add double and redouble example (and minor  ew.)
 
         //example of nt more more only on nt
         testNoTrumphContractPointsThreeMore.put(1, 40       +90 + premiaZaCzesciowke);

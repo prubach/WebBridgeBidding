@@ -2,7 +2,6 @@ package pl.waw.rubach.points;
 
 import org.junit.Before;
 
-//TODO dealate it probably - test not sure and not work all
 public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPointsForOneDealBeforWePLay {
 
    @Before
@@ -43,8 +42,6 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
        testCountingPointsFitBothMap.put(10f, -750f, 0);
        testCountingPointsFitBothMap.put(30f, 1250f, 11);
        testCountingPointsFitBothMap.put(10f, -1250f, -11);
-
-
 
        //Fit only they  - we not fit
        testCountingPointsFitTheyMap.put(10f, -100f, 12);

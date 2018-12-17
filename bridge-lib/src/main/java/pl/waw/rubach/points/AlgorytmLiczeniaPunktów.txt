@@ -145,3 +145,21 @@ odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  
     }
 
 */
+
+
+//chyba jest już dobrze (dodałam testy)-  nadal coś jest źle ... ale nie wiem czy testy czy formuły czy jedno i drugie (co najbardziej prawdopodobne) na poniższym testy przechodzą ale formuły mi się nie podobają)
+//to poniżej też dobrze - ale pewnie do wywalenia? - chyba lepiej jak to siedzi w tabeli ?
+//   /*    if (pointsInBothHands == 20) {
+//            if (fitInOlderColorWe) {
+//                expectedPoints = 50; //ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe);
+//            } else if (fitInOlderColorThey) {
+//                expectedPoints = -50; //ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true,  auctionAssumptionThey);
+//            } else
+//                expectedPoints = 0;// ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false,auctionAssumptionWe);
+//
+//        } else if (pointsInBothHands < 20) {
+//            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorThey,auctionAssumptionThey);
+//        } else {
+//            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe);
+//        }
+//*/

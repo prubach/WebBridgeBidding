@@ -38,7 +38,6 @@ public class CalculatedImpPointsForOneDealFirstTest {
 
     @Before
     public void fillTestPointsMap() {
-//todo make copy of this for both before :) and one before the second after
         testCountingPointsBothBeforNoFitMap.put(28f, 990f, 11);
         testCountingPointsBothBeforNoFitMap.put(28f, 100f, -7);
         testCountingPointsBothBeforNoFitMap.put(29f, -50f, -10);

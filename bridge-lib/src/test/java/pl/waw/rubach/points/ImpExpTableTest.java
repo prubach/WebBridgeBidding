@@ -44,7 +44,7 @@ public class ImpExpTableTest {
         testImpPointsMap.put(20000, 24);
 
 
-        //test expected results if diferent assumption (fit/no fit)
+        //test expected results if diferent assumption (fit/no fit) without 20 pc - special case!!
         testExpResBeforeFitMap.put(0.5f, -1400);
         testExpResBeforeFitMap.put(10f, -550);
         testExpResBeforeFitMap.put(12f, -460);
@@ -77,6 +77,7 @@ public class ImpExpTableTest {
         testExpResAfterFitMap.put(16.5f, -285);
         testExpResAfterFitMap.put(19.5f, -60);
         testExpResAfterFitMap.put(20.5f, 60);
+        testExpResAfterFitMap.put(23.5f, 285);
         testExpResAfterFitMap.put(25f, 520);
         testExpResAfterFitMap.put(23.5f, 285);
         testExpResAfterFitMap.put(30f, 750);
@@ -87,6 +88,7 @@ public class ImpExpTableTest {
         testExpResAfterNoFitMap.put(0.5f, -2100);
         testExpResAfterNoFitMap.put(5f, -1500);
         testExpResAfterNoFitMap.put(10f, -660);
+        testExpResAfterNoFitMap.put(19.5f, -25);
         testExpResAfterNoFitMap.put(20.5f, 25);
         testExpResAfterNoFitMap.put(25f, 290);
         testExpResAfterNoFitMap.put(23.5f, 120);

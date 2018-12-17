@@ -122,6 +122,8 @@ public class CalculatedImpPointsForOneDealBeforWePLay {
     }
 
 
+
+
     @Test
     public void testCountingPointsRes() throws InvalidNumberOfPointsException, InvalidParameterException {
         testFunction1(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
@@ -148,7 +150,7 @@ public class CalculatedImpPointsForOneDealBeforWePLay {
 
     }
 
-//pyt - zamiast tej pustej klasy- lepiej tak
+//pyt - zamiast tej pustej klasy- lepiej tak: jakoś to mi się wydaje mało eleganckie :) ale z tą pustą klasą to trochę bez sensu...
     @Test
     public void testCountingPointsResThey() throws InvalidNumberOfPointsException, InvalidParameterException {
     wePlay = false;
