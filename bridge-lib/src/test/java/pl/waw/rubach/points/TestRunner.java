@@ -9,7 +9,7 @@ public class TestRunner {
     public static void main(String[] args) {
 
 //=================================Points counting first:   Imp and Expected Points test
-        Result resultImpExpTest = JUnitCore.runClasses(CalculatedImpPointsForOneDealBeforeWePLay.class);
+        Result resultImpExpTest = JUnitCore.runClasses(CalculatedImpPointsForOneDealBeforWePLay.class);
         for (Failure failureGameModelCards : resultImpExpTest.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
@@ -17,11 +17,11 @@ public class TestRunner {
 
 //=======================================Points counting Basic - taking points in both hands and points for contract giving ipm points
 
-        Result resultCountingPointsTest = JUnitCore.runClasses(CalculatedImpPointsForOneDealBeforeWePLay.class);
+        Result resultCountingPointsTest = JUnitCore.runClasses(CalculatedImpPointsForOneDealBeforWePLay.class);
         for (Failure failureGameModelCards : resultCountingPointsTest.getFailures()) {
             System.out.println(failureGameModelCards.toString());
         }
-        System.out.println("CalculatedImpPointsForOneDealBeforeWePLay test: " + resultCountingPointsTest.wasSuccessful());
+        System.out.println("CalculatedImpPointsForOneDealBeforWePLay test: " + resultCountingPointsTest.wasSuccessful());
 
 //=======================================Points counting BothPlay - taking points in both hands and points for contract giving ipm points
 

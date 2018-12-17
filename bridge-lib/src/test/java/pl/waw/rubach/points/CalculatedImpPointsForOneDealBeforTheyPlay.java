@@ -2,7 +2,7 @@ package pl.waw.rubach.points;
 
 import org.junit.Before;
 
-public class CalculatedImpPointsForOneDealAfterTheyPlay extends CalculatedImpPointsForOneDealAfterWePlay {
+public class CalculatedImpPointsForOneDealBeforTheyPlay extends CalculatedImpPointsForOneDealBeforWePLay {
 
     @Before
     public void fillTestPointsMap() {

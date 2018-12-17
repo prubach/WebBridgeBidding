@@ -71,8 +71,8 @@ public class PointsForOneDeal {
      */
     protected String getContractDescription() {
         String assumption = isDeclarerVulnerable() ? ": po parti, " : ": przed partią, ";
-
         String lew =getNumberOfTrickTakenDeclarer()==1 ? " tylko lewę. ": getNumberOfTrickTakenDeclarer()>1 && getNumberOfTrickTakenDeclarer() <5 ? " lewy." : " lew.";
+
         if (getNorDoubleReSingnature() == IS_DOUBLE)
             return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption +" z kontrą, rozgrywający zebrał " + getNumberOfTrickTakenDeclarer() + lew;
         else if (getNorDoubleReSingnature() == IS_REDOUBLE)

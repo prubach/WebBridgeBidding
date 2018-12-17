@@ -14,12 +14,14 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
      */
     private int pointDifferent;
 
-
+    /**
+     * expected Points number acording assumption and fit of those who have more poinst. If the same those who have fit in major suit. If both those who have fit in spades.
+     */
     private int expectedPoints;
 
 
     //TODO sprawdzić - uprościłam chyba oni grają już przy przypisaniu ale nie jestem pewna .. testy przechodzą ale do tego nie ma dobrych testów...
-    //constructors  when both play
+    //constructors  when both play - there are tests
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe, int pointsForContractWe,
                                          boolean auctionAssumptionWe,  boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException,  InvalidParameterException {
@@ -68,7 +70,8 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
     }
 
 
-    //TODO sprawdzić czy dobrze poprawiony konsturktor!!! - ma wszędzie  uwzględniać kto - nie jestem pewna tego po new...
+    //TODO sprawdzić czy dobrze poprawiony konsturktor!!! - ma wszędzie  uwzględniać kto - nie jestem pewna tego po new... do tego nie ma testów jeszcze ...
+
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int contractLevel, String contractSuit, int normalDoubleRedubleSingnature, int numberOfTrickTakenByWe,
                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
@@ -85,6 +88,7 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
         setNumberOfTrickTakenDeclarer(wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe);
     }
 
+    //old constructor with double / redouble
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int contractLevel, String contractSuit, boolean doubleGame, boolean redoubleGame, int numberOfTrickTakenByDeclarer,
                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
