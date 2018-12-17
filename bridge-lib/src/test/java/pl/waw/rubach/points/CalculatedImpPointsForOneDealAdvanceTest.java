@@ -51,10 +51,10 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
     @Test
     public void testCountingPointsA() throws BridgeException {
 
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(20f,3,9,"nt",false,false,false,false,false,false);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(20f,3, "nt", false, false, 9, false,false,false,false);
         Assert.assertEquals(a.getResults(), 9);
 
-        CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(20f,3,9,"nt",false,false,false,false,false,false);
+        CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(20f,3, "nt", false, false, 9, false,false,false,false);
         Assert.assertEquals(a2.getResults(), 9);
 
     }
@@ -68,14 +68,14 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
             int contractLevel = entry.getKey().getKey(1);
             int numberOfTricksTaken = entry.getKey().getKey(2);
 
-  CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(pointsInBothHands,contractLevel,numberOfTricksTaken,"nt",false,false,weBeforeAfter,theyBeforeAfter,false,false);
+  CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(pointsInBothHands,contractLevel, "nt", false, false, numberOfTricksTaken, weBeforeAfter,theyBeforeAfter,false,false);
 
 //             CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(pointsInBothHands,400,false,false,false,false);
             Integer res = roog.getResults();
             //    Integer res = new CalculatedImpPointsForOneDeal(28f, contractLevel,"nt",numberOfTricksTaken, false, false, false, false).getResults();
            logger.info("Dla "+ pointsInBothHands+" pkt.   przy kontrakcie " + contractLevel + "NT i zebranych "+numberOfTricksTaken+ " lewach - wynik jest " + res + " impów. Obie przed, obie bez fitu");
             Assert.assertEquals( testCountingPointsNTBothBeforeBothNoFit.get(pointsInBothHands,contractLevel, numberOfTricksTaken), res);
-          //  Assert.assertEquals(roog.getPointsForContract(),400 );
+          //  Assert.assertEquals(roog.getContractScoringPoints(),400 );
 
 
         }

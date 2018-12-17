@@ -126,7 +126,7 @@ public class RubberScoring {
 
         fillAssumption(contractNumber);
         description = description + pFC.getShortDescription() + "\n";
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
         scorringForOneGame.put(contractNumber, a);
     }
@@ -139,7 +139,7 @@ public class RubberScoring {
         fillAssumption(contractNumber);
         DuplicateBridgeScoring pFC = new DuplicateBridgeScoring(gameLevel, suit, doub, redouble, auctionAssumptionWe, numberOfTricksTaken);
         description = description + pFC.getShortDescription() + "\n";
-        CalculatedImpPointsForOneDeal rooG = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getCalculatedPointsForContract(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        CalculatedImpPointsForOneDeal rooG = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
 
         scorringForOneGame.put(contractNumber, rooG);
     }
@@ -167,7 +167,7 @@ public class RubberScoring {
 
         for (Integer key : ptsMapSet) {
 
-            s.append("\n dla ").append(key).append(" gry jest ").append(map.get(key).getPointsForContract()).append(" punktów i wynik jest ").append(map.get(key).getResults()).append(" impów");
+            s.append("\n dla ").append(key).append(" gry jest ").append(map.get(key).getContractScoringPoints()).append(" punktów i wynik jest ").append(map.get(key).getResults()).append(" impów");
 
         }
 

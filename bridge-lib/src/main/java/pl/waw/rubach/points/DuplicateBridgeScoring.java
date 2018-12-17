@@ -57,7 +57,7 @@ public class DuplicateBridgeScoring {
     /**
      * Points for contract calculated with modify bridge rules according to 4 play scoring
      */
-    private int calculatedPointsForContract = 0; //pyt tu powinno być zerowanie czy w konstruktorze? jest tu i tu :)
+    private int contractScoringPoints;
 
 
     //This was :  PointsForContract(...)
@@ -90,19 +90,19 @@ public class DuplicateBridgeScoring {
         this.shortDescription = getContractDescription();
 
         //  Begin of calculation
-        this.calculatedPointsForContract = 0;       // points equal zero at the beginging of calculation
+        this.contractScoringPoints = 0;       // points equal zero at the beginging of calculation
         this.oddTricks = numberOfTrickTakenByDeclarer - 6;    //trics above 6
         this.made = oddTricks >= contractLevel;  //condition if game is made or not
 
         if (made) {
-            calculatedPointsForContract = getContractPoints(contractLevel) * nDRSignature;
-              description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + calculatedPointsForContract + "pkt. ";
+            contractScoringPoints = getContractPoints(contractLevel) * nDRSignature;
+              description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + contractScoringPoints + "pkt. ";
         } else {
-            calculatedPointsForContract = getPenaltyPoints();
+            contractScoringPoints = getPenaltyPoints();
         }
 
-        calculatedPointsForContract = calculatedPointsForContract
-                + getGamePartGameBonus(calculatedPointsForContract)
+        contractScoringPoints = contractScoringPoints
+                + getGamePartGameBonus(contractScoringPoints)
                 + getOvertrickPoints()
                 + getDoubleRedoubleBonus()
                 + getSlamsBonusPoints();
@@ -290,8 +290,8 @@ public class DuplicateBridgeScoring {
     }
 
     //getter
-    public int getCalculatedPointsForContract() {
-        return calculatedPointsForContract;
+    public int getContractScoringPoints() {
+        return contractScoringPoints;
     }
 
     public String getDescription() {

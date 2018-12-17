@@ -330,7 +330,7 @@ class OptionMenu extends MenuBar {
                // tricksTaken=tricksTaken-6;
                 DuplicateBridgeScoring duplicateBridgeScoring =     new DuplicateBridgeScoring(Integer.parseInt(contractLevel.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption, tricksTaken);
                 String des = duplicateBridgeScoring.getDescription();
-                int pointsContract = duplicateBridgeScoring.getCalculatedPointsForContract();
+                int pointsContract = duplicateBridgeScoring.getContractScoringPoints();
                 if(checkboxThey.getValue()) {
                     pointsContract = -pointsContract;
 
@@ -400,7 +400,7 @@ class OptionMenu extends MenuBar {
 
                 DuplicateBridgeScoring foo22=     new DuplicateBridgeScoring(Integer.parseInt(contractLevel.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption, trickTaken);
                 descriptionTable[contractNumber] = descriptionTable[contractNumber]+ foo22.getShortDescription();
-                foo2[contractNumber] =foo22.getCalculatedPointsForContract();
+                foo2[contractNumber] =foo22.getContractScoringPoints();
 
                 if(checkboxThey.getValue()) {
                     foo2[contractNumber] = -foo2[contractNumber];}

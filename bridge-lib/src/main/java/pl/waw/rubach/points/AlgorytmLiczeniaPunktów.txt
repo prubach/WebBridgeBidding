@@ -76,7 +76,7 @@ Przykłady:
 Notatki luźne - wywalone z innych miejsc:
 DuplicateBridgeScoring:
 
- //odp z tym stałymo jest ok - chyba można wywalić to co poniżej...  wydaje mi się że dużo czytelniejsze jest jak jest isContractDouble a nie jak jest wskaźnik???? ale do przemyślenia
+odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  wydaje mi się że dużo czytelniejsze jest jak jest isContractDouble a nie jak jest wskaźnik???? ale do przemyślenia
      // było że tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
      /**
       * Indicates if  contract is  double -
@@ -97,3 +97,6 @@ DuplicateBridgeScoring:
 
            //    if (isContractDouble) calculatedPointsForContract = calculatedPointsForContract * 2;
                     //    if (isContractRedouble) calculatedPointsForContract = calculatedPointsForContract * 4;
+
+//= 0;     //dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w DuplicateBridgeScoring i ono ma dwa razy i działa a tu nie ?
+    /odpowiedź: nie potrzeba zerowania - zmienna typu int ma domyślną wartość 0, inaczej jest z Integer, bo to obiekt, więc byłby null
