@@ -18,6 +18,7 @@ import java.util.TreeSet;
 public class DuplicateBridgeScoringTestBefore {
 
     //pyt czemu to wszystko jest protected jak idea proponuje żeby było bez niczego (package-private) - niby tylko ta druga klasa z pakietu z tego korzysta? Może Idea ma rację? Próbowałam i było ok.
+    //odp protected to dostęp dla wszystkich klas dziedziczących bez względu na to w jakim są pakiecie, więc de facto to jeszcze węższy poziom niż package-private
     private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
     protected boolean beforeAfter = false;
     protected int karaZaKontre = 50;
