@@ -15,20 +15,16 @@ import java.util.Map;
 public class CalculatedImpPointsForOneDealBeforeWePLay {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
-    protected boolean whoPlay=true;
+
+    protected boolean wePlay = true;
     protected boolean[] assumption = {false, false};
-    protected int a = whoPlay ? 1 :-1;
+    protected int a = wePlay ? 1 : -1;
 
     protected MultiKeyMap<Float, Integer> testCountingPointsFitWeMap = new MultiKeyMap<>();
     protected MultiKeyMap<Float, Integer> testCountingPointsFitTheyMap = new MultiKeyMap<>();
-
     protected MultiKeyMap<Float, Integer> testCountingPointsFitBothMap = new MultiKeyMap<>();
-
-
     protected MultiKeyMap<Float, Integer> testCountingPointsNoFitBothMap = new MultiKeyMap<>();
-    protected MultiKeyMap<Float, Integer> testCountingPointsBothBeforFitBothMap = new MultiKeyMap<>();
-  //
-    //
+
 
     /*  private MultiKeyMap<MultiKeyMap,Integer> testCountingPointsAssumptionNoFitMap = new MultiKeyMap<>();
     testCountingPointsAssumptionNoFitMap.put(testCountingPointsAssumptionNoFitMap, testCountingPointsAssumptionNoFitMap,11); */
@@ -50,80 +46,62 @@ public class CalculatedImpPointsForOneDealBeforeWePLay {
         testCountingPointsNoFitBothMap.put(25f, 400f, 5);
         testCountingPointsNoFitBothMap.put(28f, 400f, 0);
 
+//todo add more example
+        testCountingPointsFitBothMap.put(12f, -100f, 8);
+        testCountingPointsFitBothMap.put(28f, 100f, -8);
 
-        testCountingPointsBothBeforFitBothMap.put(12f,-100f,8);
-        testCountingPointsBothBeforFitBothMap.put(28f,100f,-8);
+        testCountingPointsFitWeMap.put(20f, 0f, -2);
+        testCountingPointsFitWeMap.put(20f, 50f, 0);
 
-
-
-
+        testCountingPointsFitTheyMap.put(20f, 0f, 2);
+        testCountingPointsFitTheyMap.put(20f, -50f, 0);
     }
+
+
     protected String printAssumtion(boolean[] a) {
-        String des;
-        if (a[0] && a[1]) des =" Obie Po, ";
-        else if( a[0] && !a[1]) des = " My Po, Oni Przed, ";
-        else if( !a[0] && a[1]) des = " My Przed, Oni Po, ";
-        else if( !a[0] && !a[1]) des = " Obie Przed, ";
-        else des = " Jakiś błąd" ;
-        return des;
+        return (a[0] && a[1]) ? " Obie Po " : (a[0] ? " My Po, Oni Przed " : (a[1] ? " My Przed, Oni Po " : " Obie Przed "));
+    }
+
+    protected String printFit(boolean fitWe, boolean fitThey) {
+        return (fitWe && fitThey) ? " Obie Fit " : (fitWe ? " My Fit" : (fitThey ? " Oni Fit " : " Obie bez fitu "));
     }
 
 
+    protected void testFunction(MultiKeyMap<Float, Integer> map, int a, boolean whoPlay, boolean[] assumption, boolean fitWe, boolean fitThey) throws InvalidNumberOfPointsException, InvalidParameterException {
 
-    @Test
-    public void testCountingPointsRes() throws InvalidNumberOfPointsException, InvalidParameterException {
-
-        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsNoFitBothMap.entrySet()) {
+        String des2 = printFit(fitWe, fitThey);
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : map.entrySet()) {
 
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
-            int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = a* new CalculatedImpPointsForOneDeal(whoPlay, pointsInBothHands, pointsOfContract,  assumption[0],  assumption[1], false, false).getResults();
-            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. " + printAssumtion(assumption) +", Obie bez fitu");
-            Assert.assertEquals(testCountingPointsNoFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
+            int contractScoringPoints = Math.round(pointsOfContractFloat);
+            Integer res = a * new CalculatedImpPointsForOneDeal(whoPlay, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getResults();
+            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + contractScoringPoints + " wynik jest " + res + " impów. " + printAssumtion(assumption) + des2);
+            Assert.assertEquals(map.get(pointsInBothHands, pointsOfContractFloat), res);
         }
+    }
+
+    @Test
+    public void testCountingPointsRes() throws InvalidNumberOfPointsException, InvalidParameterException {
+        testFunction(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
     }
 
     @Test
     public void testCountingPointsFitWeRes() throws InvalidNumberOfPointsException, InvalidParameterException {
-
-
-        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsFitWeMap.entrySet()) {
-            float pointsInBothHands = entry.getKey().getKey(0);
-            float pointsOfContractFloat = entry.getKey().getKey(1);
-            int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res =a* new CalculatedImpPointsForOneDeal(whoPlay,pointsInBothHands, pointsOfContract, assumption[0],  assumption[1], true, false).getResults();
-            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest -" + res + " impów. " + printAssumtion(assumption) +",My Fit");
-            Assert.assertEquals(testCountingPointsFitWeMap.get(pointsInBothHands, pointsOfContractFloat), res);
-        }
+        testFunction(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
     }
 
 
     @Test
     public void testCountingPointsFitTheyRes() throws InvalidNumberOfPointsException, InvalidParameterException {
-
-        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsFitTheyMap.entrySet()) {
-            float pointsInBothHands = entry.getKey().getKey(0);
-            float pointsOfContractFloat = entry.getKey().getKey(1);
-            int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = a* new CalculatedImpPointsForOneDeal(whoPlay,pointsInBothHands, pointsOfContract,  assumption[0],  assumption[1], false, true).getResults();
-            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. " + printAssumtion(assumption) +", Oni Fit");
-            Assert.assertEquals(testCountingPointsFitTheyMap.get(pointsInBothHands, pointsOfContractFloat), res);
-        }
+        testFunction(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
     }
 
     @Test
-    public void testCountingPointsBothFitRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
-
-        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsFitBothMap.entrySet()) {
-            float pointsInBothHands = entry.getKey().getKey(0);
-            float pointsOfContractFloat = entry.getKey().getKey(1);
-            int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = a*new CalculatedImpPointsForOneDeal(whoPlay, pointsInBothHands, pointsOfContract,  assumption[0],  assumption[1], true, true).getResults();
-            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. " + printAssumtion(assumption) +",, My Fit");
-            Assert.assertEquals(testCountingPointsFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
-        }
+    public void testCountingPointsBothFitRes() throws InvalidNumberOfPointsException, InvalidParameterException {
+        testFunction(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
     }
+
 
 
 }

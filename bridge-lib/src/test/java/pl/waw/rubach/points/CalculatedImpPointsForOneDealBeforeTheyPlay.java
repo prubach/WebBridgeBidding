@@ -1,18 +1,12 @@
 package pl.waw.rubach.points;
 
 import org.junit.Before;
-//TODO dealate it probably - test not sure and not work all
+//TODO could be not separet class? - :)   test are good I think
 public class CalculatedImpPointsForOneDealBeforeTheyPlay extends CalculatedImpPointsForOneDealBeforeWePLay {
 
    @Before
     public void fillTestPointsMap() {
-       whoPlay=false;
+       wePlay =false;
    // super.fillTestPointsMap();
-
-
-
-
    }
-
-
 }

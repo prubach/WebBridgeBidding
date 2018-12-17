@@ -7,7 +7,7 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
 
    @Before
     public void fillTestPointsMap() {
-       whoPlay=true;
+       wePlay =true;
        assumption[0] = true;
        assumption[1] = true;
 
@@ -33,6 +33,7 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
        testCountingPointsFitWeMap.put(28f, 1660f, 14);
        testCountingPointsFitWeMap.put(28f, 1660f, 14);
        testCountingPointsFitWeMap.put(12f, -1660f, -14);
+       testCountingPointsFitWeMap.put(20f, 50f, 0);
 
        //both fit
        //  testCountingPointsBothAfterFitBothMap.put(20f, 0f, 2);  //not such case if both have 20PC and fit in major color mark only spades (one have fit)
@@ -44,20 +45,29 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
        testCountingPointsFitBothMap.put(10f, -1250f, -11);
 
 
+
        //Fit only they  - we not fit
+       testCountingPointsFitTheyMap.put(10f, -100f, 12);
+       testCountingPointsFitTheyMap.put(10f, 100f, 13);
+
+       testCountingPointsFitTheyMap.put(12f, -1660f, -14);
+       testCountingPointsFitTheyMap.put(12f, 1660f, 20);
+
+       testCountingPointsFitTheyMap.put(20f, -50f, 0);
        testCountingPointsFitTheyMap.put(20f, 0f, 2);
+       testCountingPointsFitTheyMap.put(20f,  50f, 3);  //I thout that it should be 2 but it count better - they have fit so they should play 50, We have 50 so we have 100 more
+
        testCountingPointsFitTheyMap.put(16f, -500f, -2);
        testCountingPointsFitTheyMap.put(16f, -300f, 4);
        testCountingPointsFitTheyMap.put(16f, -100f, 8);
        testCountingPointsFitTheyMap.put(16f, 100f, 11);
        testCountingPointsFitTheyMap.put(16f, 500f, 14);
-       testCountingPointsFitTheyMap.put(10f, -100f, 12);
-       testCountingPointsFitTheyMap.put(10f, 100f, 13);
+
        testCountingPointsFitTheyMap.put(28f, 1660f, 14);
-       testCountingPointsFitTheyMap.put(12f, -1660f, -14);
-       testCountingPointsFitTheyMap.put(30f, -100f, -13);
        testCountingPointsFitTheyMap.put(28f, -1660f, -20);
-       testCountingPointsFitTheyMap.put(12f, 1660f, 20);
+       testCountingPointsFitTheyMap.put(30f, -100f, -13);
+       testCountingPointsFitTheyMap.put(30f, 100f, -11);
+
 
 
    }
