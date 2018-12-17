@@ -100,3 +100,48 @@ odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  
 
 //= 0;     //dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w DuplicateBridgeScoring i ono ma dwa razy i działa a tu nie ?
     /odpowiedź: nie potrzeba zerowania - zmienna typu int ma domyślną wartość 0, inaczej jest z Integer, bo to obiekt, więc byłby null
+
+
+/* dobre testy ale nieładnie zapisane (kopia wyżej)
+    @Test
+    public void testCountingPoints() throws InvalidNumberOfPointsException, InvalidNumberOfPointsToCalculateImpException {
+        // System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, false,true) + " oczekiwane.");
+
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(24, 500, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych 500 pkt przy założeniach po i Fit jest: " + a.getResults());
+        Assert.assertEquals(2, a.getResults());
+
+        CalculatedImpPointsForOneDeal b = new CalculatedImpPointsForOneDeal(24, 300, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych 300 pkt przy założeniach po i Fit jest: " + b.getResults());
+        Assert.assertEquals(-4, b.getResults());
+
+        CalculatedImpPointsForOneDeal c = new CalculatedImpPointsForOneDeal(24, 100, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych +100 pkt przy założeniach po i Fit jest: " + c.getResults());
+        Assert.assertEquals(-8, c.getResults());
+
+        CalculatedImpPointsForOneDeal d = new CalculatedImpPointsForOneDeal(24, -100, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + d.getResults());
+        Assert.assertEquals(-11, d.getResults());
+
+        CalculatedImpPointsForOneDeal e = new CalculatedImpPointsForOneDeal(24, -500, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + e.getResults());
+        Assert.assertEquals(-14, e.getResults());
+
+
+        CalculatedImpPointsForOneDeal f = new CalculatedImpPointsForOneDeal(20, 0, true, false, true, false);
+        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i my Fit jest: " + f.getResults());
+        Assert.assertEquals(-2, f.getResults());
+
+        CalculatedImpPointsForOneDeal g = new CalculatedImpPointsForOneDeal(20, 0, true, false, false, true);
+        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i oni Fit jest: " + g.getResults());
+        Assert.assertEquals(2, g.getResults());
+
+
+        CalculatedImpPointsForOneDeal h = new CalculatedImpPointsForOneDeal(10, -660, true, true, false, false);
+        System.out.println("Wynik gry dla 10PC i ugranych -660 pkt przy założeniach po i oni bez fit jest: " + h.getResults());
+        Assert.assertEquals(0, h.getResults());
+
+
+    }
+
+*/

@@ -21,18 +21,15 @@ public class RubberScoring {
     private int gameID;
 
     /**
-     * description describe parameter of game - if accesible
+     * rubberDescription describe parameter of game - if accesible
      */
-    private String description;
+    private String rubberDescription, resultsDescription;
 
     /**
-     * Auction Assumption for PlaingPair means if pair is  vulnerable or not vulnerable
+     * Pair of Auction Assumption according contract number (1 none, 2, we, 3, they, 4 both)
      */
-    private boolean auctionAssumptionWe;
-    /**
-     * Auction Assumption for Oponens means if pair is  vulnerable or not vulnerable
-     */
-    private boolean auctionAssumptionThey;
+    private boolean[] auctionAssumption={false, false};
+
     /**
      * Map number of game with scorring for one game
      */
@@ -57,7 +54,8 @@ public class RubberScoring {
     //create special number scorring
     public RubberScoring(int gameID) {
         this.gameID = gameID;
-        this.description = " Tworzę nową serię 4 gier z konkertnym numerem:  " + gameID + ". \n";
+        this.rubberDescription = " Tworzę nową serię 4 gier z konkertnym numerem:  " + gameID + ". \n";
+        this.resultsDescription = " Wyniki: \n";
         this.summ = 0;
     }
 
@@ -109,7 +107,7 @@ public class RubberScoring {
             throws InvalidNumberOfPointsException,  InvalidParameterException {
 
         fillAssumption(contractNumber);
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsForContract, auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsForContract, auctionAssumption[0], auctionAssumption[1], fitInOlderColorWe, fitInOlderColorThey);
         scorringForOneGame.put(contractNumber, a);
     }
 
@@ -125,8 +123,8 @@ public class RubberScoring {
             throws BridgeException {
 
         fillAssumption(contractNumber);
-        description = description + pFC.getShortDescription() + "\n";
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        rubberDescription = rubberDescription + pFC.getShortDescription() + "\n";
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumption[0], auctionAssumption[1], fitInOlderColorWe, fitInOlderColorThey);
 
         scorringForOneGame.put(contractNumber, a);
     }
@@ -138,25 +136,25 @@ public class RubberScoring {
 
         fillAssumption(contractNumber);
 
-        //todo check if is good with number of tricks - shoudl be taken by declarer and imput is we !!!
-        DuplicateBridgeScoring pFC = new DuplicateBridgeScoring(gameLevel, suit, doub, redouble, auctionAssumptionWe, numberOfTricksTaken);
-        description = description + pFC.getShortDescription() + "\n";
-        CalculatedImpPointsForOneDeal rooG = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        //todo check if is good with number of tricks - shoudl be taken by declarer and imput is we !!! also assumtpto to check
+        DuplicateBridgeScoring pFC = new DuplicateBridgeScoring(gameLevel, suit, doub, redouble, auctionAssumption[0], numberOfTricksTaken);
+        rubberDescription = rubberDescription + pFC.getShortDescription() + "\n";
+        CalculatedImpPointsForOneDeal rooG = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumption[0], auctionAssumption[1], fitInOlderColorWe, fitInOlderColorThey);
 
         scorringForOneGame.put(contractNumber, rooG);
     }
 
     private void fillAssumption(int contractNumber) {
 
-        auctionAssumptionWe = false;
-        auctionAssumptionThey = false;
+        auctionAssumption[0] = false;
+        auctionAssumption[1] = false;
         if (contractNumber == 2) {
-            auctionAssumptionWe = true;
+            auctionAssumption[0]  = true;
         } else if (contractNumber == 3) {
-            auctionAssumptionThey = true;
+            auctionAssumption[1] = true;
         } else if (contractNumber == 4) {
-            auctionAssumptionWe = true;
-            auctionAssumptionThey = true;
+            auctionAssumption[0] = true;
+            auctionAssumption[1]  = true;
         }
     }
 
@@ -165,7 +163,7 @@ public class RubberScoring {
 
         Map<Integer, CalculatedImpPointsForOneDeal> map = this.scorringForOneGame;
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
-        s.append("\n").append(this.getDescription());
+        s.append("\n").append(this.getRubberDescription());
 
         for (Integer key : ptsMapSet) {
 
@@ -177,15 +175,11 @@ public class RubberScoring {
         return s.toString();
     }
 
-    public int getSumm() throws InvalidNumberOfPointsException, InvalidParameterException {
-        return getSumm(false);
-    }
-
     public void setSumm(int summ) {
         this.summ = summ;
     }
 
-    public int getSumm(boolean print) throws InvalidNumberOfPointsException, InvalidParameterException {
+    public int getSumm() throws InvalidNumberOfPointsException, InvalidParameterException {
 
         SortedSet<Integer> ptsMapSet = new TreeSet<>(scorringForOneGame.keySet());
         int s = 0;
@@ -193,50 +187,73 @@ public class RubberScoring {
 
             if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
                 s = s + scorringForOneGame.get(key).getResults();
-            if (print) {
-                System.out.println("Wynik rozdania " + key + " jest: " + scorringForOneGame.get(key).getResults() + " \n");
-                System.out.println("Do tej pory  wynik jest: " + s + " \n");
-            }
+
+               setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + scorringForOneGame.get(key).getResults() + " \t Do tej pory  wynik jest: " + s + " \n");
+
         }
         return s;
     }
 
-    //getters
+
+
 
     public int getGameID() {
         return gameID;
     }
 
-    public String getDescription() {
-        return description;
+    public String getRubberDescription() {
+        return rubberDescription;
     }
 
     public Map<Integer, CalculatedImpPointsForOneDeal> getScorringForOneGame() {
         return scorringForOneGame;
     }
 
+    public void setRubberDescription(String rubberDescription) {
+        this.rubberDescription = rubberDescription;
+    }
+
+    public String getResultsDescription() {
+        return resultsDescription;
+    }
+
+    public void setResultsDescription(String resultsDescription) {
+        this.resultsDescription = resultsDescription;
+    }
 
 
 
-    //For easier tests of description etc
+    //**********************************************************
+    //      For easier tests of rubberDescription etc
     public static void main(String[] args) {
         try {
             DuplicateBridgeScoring dbs = new DuplicateBridgeScoring(3,"nt",1,false,9);
             System.out.print(dbs.getShortDescription());
             System.out.print(dbs.getDescription());
+            System.out.print("Za powżysze rodzanie uzyskano: "+dbs.getContractScoringPoints());
 
-            CalculatedImpPointsForOneDeal roog1 = new CalculatedImpPointsForOneDeal(20,3, "nt", false, false, 9, false,false,false,false);
-            CalculatedImpPointsForOneDeal roog2 = new CalculatedImpPointsForOneDeal(20,3, "nt", 1, 9, false,false,false,false);
+            CalculatedImpPointsForOneDeal ipr2 = new CalculatedImpPointsForOneDeal(true,20, dbs.getContractScoringPoints(),false, false, false, false);
+            CalculatedImpPointsForOneDeal ipr1 = new CalculatedImpPointsForOneDeal(true,20,400,false, false, false, false);
+            CalculatedImpPointsForOneDeal ipr0 = new CalculatedImpPointsForOneDeal(true,20,3, "nt", 1, 9, false,false,false,false);
 
-      //      System.out.println("Końcowy wynik jednego rozdania  liczony od podstaw jest: " + roog1.getResults() + " \n");
-      //      System.out.println("Końcowy wynik jednego rozdania liczony od podstaw jest: " + roog2.getResults() + " \n");
+            System.out.println("\n 1Końcowy wynik jednego rozdania jest: " + ipr2.getResults() + " \n");
+            System.out.println("Końcowy wynik jednego rozdania dla ustalonej liczby punktów za rodanie jest: " + ipr1.getResults() + " \n");
+            System.out.println("Końcowy wynik jednego rozdania liczony od podstaw jest: " + ipr0.getResults() + " \n");
 
 
+
+            CalculatedImpPointsForOneDeal ipr22 = new CalculatedImpPointsForOneDeal(false,20, dbs.getContractScoringPoints(),false, false, false, false);
+            CalculatedImpPointsForOneDeal ipr12 = new CalculatedImpPointsForOneDeal(false,20,400,false, false, false, false);
+            CalculatedImpPointsForOneDeal ipr02 = new CalculatedImpPointsForOneDeal(false,20,3, "nt", 1, 4, false,false,false,false);
+
+            System.out.println("\n Końcowy wynik jednego rozdania jest: " + ipr22.getResults() + " \n");
+            System.out.println("\nKońcowy wynik jednego rozdania dla ustalonej liczby punktów za rodanie jest: " + ipr12.getResults() + " \n");
+            System.out.println("\nKońcowy wynik jednego rozdania liczony od podstaw jest: " + ipr02.getResults() + " \n");
             //*******************************************
 
             RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
-       //     System.out.println(a.getRubberScoringAsString());
-       //     System.out.println("Końcowy wynik jest: " + a.getSumm(true) + " \n");
+     //       System.out.println(a.getRubberScoringAsString());
+     //       System.out.println("Końcowy wynik jest: " + a.getSumm() + " \n");
 /*
             RubberScoring a2 = new RubberScoring(20, 19, 18, 17, -110, -110, -110, -110, false, false, false, false, false, false, false, false);
             System.out.println(a2.getRubberScoringAsString());
@@ -256,7 +273,7 @@ public class RubberScoring {
             rooG.fillOneContractFrom4GameSet(4, 23, 110, false, false);
 
          //   System.out.println(rooG.getRubberScoringAsString());
-         //   System.out.println("Końcowy wynik jest: " + rooG.getSumm(true) + " \n");
+         //  System.out.println(rooG.getResultsDescription());
 
 
         } catch (BridgeException e) {

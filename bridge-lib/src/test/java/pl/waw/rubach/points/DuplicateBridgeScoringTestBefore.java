@@ -13,7 +13,7 @@ import java.util.TreeSet;
 
 /**
  * 20 test of diferent case of counting points for one deal according to duplicate bridge scorring
- * with assumption unvunerability (befor)
+ * with assumption unvunerability (befor) - to see afrer - class before :)
  */
 public class DuplicateBridgeScoringTestBefore {
 

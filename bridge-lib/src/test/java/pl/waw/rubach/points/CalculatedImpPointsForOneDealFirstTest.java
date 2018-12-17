@@ -12,14 +12,16 @@ import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
 
 import java.util.Map;
 
-public class CalculatedImpPointsForOneDealBasicTest {
+/**
+ * TEST which use points on both our hands and our scorring for contract calculate imps for one deal
+ */
+public class CalculatedImpPointsForOneDealFirstTest {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
 
     protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
     protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitTheyMap = new MultiKeyMap<>();
-
-    protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitBoth = new MultiKeyMap<>();
+    protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitBothMap = new MultiKeyMap<>();
     protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterNoFitBothMap = new MultiKeyMap<>();
 
 
@@ -73,11 +75,13 @@ public class CalculatedImpPointsForOneDealBasicTest {
         testCountingPointsBothAfterFitWeMap.put(12f, -1660f, -14);
 
         //both fit
-      //  testCountingPointsBothAfterFitBoth.put(20f, 0f, 2);  //not such case if both have 20PC and fit in major color mark only spades (one have fit)
-        testCountingPointsBothAfterFitBoth.put(30f, 750f, 0);
-        testCountingPointsBothAfterFitBoth.put(10f, -750f, 0);
-        testCountingPointsBothAfterFitBoth.put(30f, 1250f, 11);
-        testCountingPointsBothAfterFitBoth.put(10f, -1250f, -11);
+      //  testCountingPointsBothAfterFitBothMap.put(20f, 0f, 2);  //not such case if both have 20PC and fit in major color mark only spades (one have fit)
+        testCountingPointsBothAfterFitBothMap.put(24f, -100f, -11);
+        testCountingPointsBothAfterFitBothMap.put(16f, 100f, 11);
+        testCountingPointsBothAfterFitBothMap.put(30f, 750f, 0);
+        testCountingPointsBothAfterFitBothMap.put(10f, -750f, 0);
+        testCountingPointsBothAfterFitBothMap.put(30f, 1250f, 11);
+        testCountingPointsBothAfterFitBothMap.put(10f, -1250f, -11);
 
 
         //both no fit
@@ -103,13 +107,55 @@ public class CalculatedImpPointsForOneDealBasicTest {
         testCountingPointsBothAfterFitTheyMap.put(28f, 1660f, 14);
         testCountingPointsBothAfterFitTheyMap.put(12f, -1660f, -14);
 
+        testCountingPointsBothAfterFitTheyMap.put(30f, -100f, -13);
         testCountingPointsBothAfterFitTheyMap.put(28f, -1660f, -20);
         testCountingPointsBothAfterFitTheyMap.put(12f, 1660f, 20);
     }
+    @Test
+    public void testCountingPointsBothPlay() throws InvalidNumberOfPointsException, InvalidParameterException {
 
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitMap.entrySet()) {
+
+            float pointsInBothHands = entry.getKey().getKey(0);
+            float pointsOfContractFloat = entry.getKey().getKey(1);
+            int pointsOfContract = Math.round(pointsOfContractFloat);
+            Integer res = new CalculatedImpPointsForOneDeal(true,pointsInBothHands, pointsOfContract, false, false, false, false).getResults();
+            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie przed, obie bez fitu");
+            Assert.assertEquals(testCountingPointsBothBeforNoFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
+            Integer resT = -new CalculatedImpPointsForOneDeal(false,pointsInBothHands, pointsOfContract, false, false, false, false).getResults();
+            Assert.assertEquals(testCountingPointsBothBeforNoFitMap.get(pointsInBothHands, pointsOfContractFloat), resT);
+        }
+
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterNoFitBothMap.entrySet()) {
+
+            float pointsInBothHands = entry.getKey().getKey(0);
+            float pointsOfContractFloat = entry.getKey().getKey(1);
+            int pointsOfContract = Math.round(pointsOfContractFloat);
+            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, false, false).getResults();
+            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, Obe bez fitu");
+            Assert.assertEquals(testCountingPointsBothAfterNoFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
+            Integer resT = -new CalculatedImpPointsForOneDeal(false,pointsInBothHands, pointsOfContract, true, true, false, false).getResults();
+            Assert.assertEquals(testCountingPointsBothAfterNoFitBothMap.get(pointsInBothHands, pointsOfContractFloat), resT);
+        }
+
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitBothMap.entrySet()) {
+
+            float pointsInBothHands = entry.getKey().getKey(0);
+            float pointsOfContractFloat = entry.getKey().getKey(1);
+            int pointsOfContract = Math.round(pointsOfContractFloat);
+            Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, true, true).getResults();
+            logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, My Fit");
+            Assert.assertEquals(testCountingPointsBothAfterFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
+            Integer resT = -new CalculatedImpPointsForOneDeal(false,pointsInBothHands, pointsOfContract, true, true, true, true).getResults();
+            Assert.assertEquals(testCountingPointsBothAfterFitBothMap.get(pointsInBothHands, pointsOfContractFloat), resT);
+        }
+
+
+    }
 
     @Test
-    public void testCountingPointsBothBeforeResNoFit() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testCountingPointsWePlayOLD() throws InvalidNumberOfPointsException, InvalidParameterException {
+        //   public void testCountingPointsBothBeforeResNoFit() throws InvalidNumberOfPointsException, InvalidParameterException {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitMap.entrySet()) {
 
@@ -121,9 +167,9 @@ public class CalculatedImpPointsForOneDealBasicTest {
             Assert.assertEquals(testCountingPointsBothBeforNoFitMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
-    }
-    @Test
-    public void testCountingPointsBothBeforeResFitBoth() throws InvalidNumberOfPointsException, InvalidParameterException {
+ //   }
+ //   @Test
+ //   public void testCountingPointsBothBeforeResFitBoth() throws InvalidNumberOfPointsException, InvalidParameterException {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforFitBothMap.entrySet()) {
 
@@ -135,14 +181,9 @@ public class CalculatedImpPointsForOneDealBasicTest {
             Assert.assertEquals(testCountingPointsBothBeforFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
-
-
-    }
-
-
-
-    @Test
-    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
+//    }
+//    @Test
+//    public void testCountingPointsBothAfterFitWeRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitWeMap.entrySet()) {
@@ -155,10 +196,10 @@ public class CalculatedImpPointsForOneDealBasicTest {
             Assert.assertEquals(testCountingPointsBothAfterFitWeMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
-    }
+ //   }
 
-    @Test
-    public void testCountingPointsBothAfterFitTheyRes() throws InvalidNumberOfPointsException, InvalidParameterException {
+   // @Test
+   // public void testCountingPointsBothAfterFitTheyRes() throws InvalidNumberOfPointsException, InvalidParameterException {
 
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitTheyMap.entrySet()) {
@@ -171,26 +212,24 @@ public class CalculatedImpPointsForOneDealBasicTest {
             Assert.assertEquals(testCountingPointsBothAfterFitTheyMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
-    }
+//    }
+//    @Test
+//    public void testCountingPointsBothAfterBothFitRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
 
-    @Test
-    public void testCountingPointsBothAfterBothFitRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
 
-
-        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitBoth.entrySet()) {
+        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterFitBothMap.entrySet()) {
 
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
             Integer res = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, true, true, true, true).getResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie po, My Fit");
-            Assert.assertEquals(testCountingPointsBothAfterFitBoth.get(pointsInBothHands, pointsOfContractFloat), res);
+            Assert.assertEquals(testCountingPointsBothAfterFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
 
         }
-    }
-
-    @Test
-    public void testCountingPointsBothNoFitAfterRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
+ //   }
+//    @Test
+//    public void testCountingPointsBothNoFitAfterRes() throws InvalidNumberOfPointsException,  InvalidParameterException {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothAfterNoFitBothMap.entrySet()) {
 
@@ -206,47 +245,5 @@ public class CalculatedImpPointsForOneDealBasicTest {
 
     }
 
-/* dobre testy ale nieładnie zapisane (kopia wyżej)
-    @Test
-    public void testCountingPoints() throws InvalidNumberOfPointsException, InvalidNumberOfPointsToCalculateImpException {
-        // System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, false,true) + " oczekiwane.");
 
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(24, 500, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych 500 pkt przy założeniach po i Fit jest: " + a.getResults());
-        Assert.assertEquals(2, a.getResults());
-
-        CalculatedImpPointsForOneDeal b = new CalculatedImpPointsForOneDeal(24, 300, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych 300 pkt przy założeniach po i Fit jest: " + b.getResults());
-        Assert.assertEquals(-4, b.getResults());
-
-        CalculatedImpPointsForOneDeal c = new CalculatedImpPointsForOneDeal(24, 100, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych +100 pkt przy założeniach po i Fit jest: " + c.getResults());
-        Assert.assertEquals(-8, c.getResults());
-
-        CalculatedImpPointsForOneDeal d = new CalculatedImpPointsForOneDeal(24, -100, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + d.getResults());
-        Assert.assertEquals(-11, d.getResults());
-
-        CalculatedImpPointsForOneDeal e = new CalculatedImpPointsForOneDeal(24, -500, true, false, true, false);
-        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + e.getResults());
-        Assert.assertEquals(-14, e.getResults());
-
-
-        CalculatedImpPointsForOneDeal f = new CalculatedImpPointsForOneDeal(20, 0, true, false, true, false);
-        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i my Fit jest: " + f.getResults());
-        Assert.assertEquals(-2, f.getResults());
-
-        CalculatedImpPointsForOneDeal g = new CalculatedImpPointsForOneDeal(20, 0, true, false, false, true);
-        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i oni Fit jest: " + g.getResults());
-        Assert.assertEquals(2, g.getResults());
-
-
-        CalculatedImpPointsForOneDeal h = new CalculatedImpPointsForOneDeal(10, -660, true, true, false, false);
-        System.out.println("Wynik gry dla 10PC i ugranych -660 pkt przy założeniach po i oni bez fit jest: " + h.getResults());
-        Assert.assertEquals(0, h.getResults());
-
-
-    }
-
-*/
 }

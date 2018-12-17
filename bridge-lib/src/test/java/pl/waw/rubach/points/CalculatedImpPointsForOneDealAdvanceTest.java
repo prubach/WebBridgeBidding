@@ -22,11 +22,11 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
     private MultiKeyMap<Integer, Integer> testCountingPointsNTBothBeforeBothNoFit = new MultiKeyMap<>();
     private Map<Integer, Integer> testCountingPoints3NTBothBeforeBothNoFit = new HashMap<>();
 
-   // private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitBoth = new MultiKeyMap<>();
+   // private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitBothMap = new MultiKeyMap<>();
   //  private MultiKeyMap<Float, Integer> testCountingPointsBothAfterNoFitBothMap = new MultiKeyMap<>();
 
 
-  //  private MultiKeyMap<Float, Integer> testCountingPointsBothBeforNoFitMap = new MultiKeyMap<>();
+  //  private MultiKeyMap<Float, Integer> testCountingPointsNoFitBothMap = new MultiKeyMap<>();
   //
     //
 
