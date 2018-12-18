@@ -2,11 +2,11 @@ package pl.waw.rubach.points;
 
 import org.junit.Before;
 
-public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPointsForOneDealBeforWePLay {
+public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPointsForOneDealBeforeWePlay {
 
    @Before
     public void fillTestPointsMap() {
-       wePlay =true;
+       wePlay = true;
        assumption[0] = true;
        assumption[1] = true;
 
@@ -64,10 +64,5 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
        testCountingPointsFitTheyMap.put(28f, -1660f, -20);
        testCountingPointsFitTheyMap.put(30f, -100f, -13);
        testCountingPointsFitTheyMap.put(30f, 100f, -11);
-
-
-
    }
-
-
 }

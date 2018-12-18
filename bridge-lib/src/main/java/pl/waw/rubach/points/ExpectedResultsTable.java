@@ -1,8 +1,8 @@
 package pl.waw.rubach.points;
 
 import org.apache.commons.collections4.map.MultiKeyMap;
-import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
+import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.exceptions.InvalidParameterException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -150,7 +150,7 @@ public class ExpectedResultsTable {
 
     /**
      * SHORT VERSION of getPoints
-     * Attation - probably also good but ask for assumption and fit pair who have more points, and not the same as points etc
+     * Attention - probably also good but ask for assumption and fit pair who have more points, and not the same as points etc
      *
      * @param points            - points in both hands
      * @param fit               - of pair who have more points

@@ -1,7 +1,41 @@
 package pl.waw.rubach;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BidHelper {
 
+
+    private static final Map<String , String> bidSymbols = new HashMap<String , String>() {{
+        put("C","\u2663");
+        put("D","\u2666");
+        put("H","\u2665");
+        put("S", "\u2660");
+        put("NT", "BA");
+    }};
+
+
+    private static final Map<String , String> bidColors = new HashMap<String , String>() {{
+        put("C","black");
+        put("D","red");
+        put("H","red");
+        put("S", "black");
+        put("NT", "black");
+    }};
+
+    private static final Map<String , String> bidDescs = new HashMap<String , String>() {{
+        put("kier","H");
+        put("kiery","H");
+        put("kierów","H");
+        put("karo", "D");
+        put("kara", "D");
+        put("trefl", "C");
+        put("trefle", "C");
+        put("trefli", "C");
+        put("pik", "S");
+        put("piki", "S");
+        put("pików", "S");
+    }};
 
     /**
      * Automatically replace the text that means Suits in the descriptions with Suit symbols and color them
@@ -11,23 +45,9 @@ public class BidHelper {
      */
     public static String replaceSuitsInDesc(String desc) {
         if (desc == null) return null;
-        desc = desc.replaceAll("kier", " <font color=\"red\">\u2665</font> ");
-        desc = desc.replaceAll("karo", " <font color=\"red\">\u2666</font> ");
-        desc = desc.replaceAll("trefl", " <font color=\"black\">\u2663</font> ");
-        desc = desc.replaceAll("pik", " <font color=\"black\">\u2660</font> ");
-
-        desc = desc.replaceAll("kiery", " <font color=\"red\">\u2665</font> ");
-        desc = desc.replaceAll("kara", " <font color=\"red\">\u2666</font> ");
-        desc = desc.replaceAll("trefle", " <font color=\"black\">\u2663</font> ");
-        desc = desc.replaceAll("piki", " <font color=\"black\">\u2660</font> ");
-
-        desc = desc.replaceAll("kierów", " <font color=\"red\">\u2665</font> ");
-        //  desc = desc.replaceAll("kar", " <font color=\"red\">\u2666</font> ");
-        desc = desc.replaceAll("trefli", " <font color=\"black\">\u2663</font> ");
-        desc = desc.replaceAll("pików", " <font color=\"black\">\u2660</font> ");
-
-        //desc = desc.replaceAll("SK", "<font color=\"black\">\u2660</font>");
-
+        for (String bidSuit : bidDescs.keySet()) {
+            desc = desc.replaceAll(bidSuit, " " + getBidSuit(bidDescs.get(bidSuit)));
+        }
         return desc;
     }
 
@@ -38,17 +58,7 @@ public class BidHelper {
      * @return
      */
     public static String getBidSuit(String bidSuit) {
-        switch (bidSuit) {
-            case "C":
-            case "S":
-                return "<font color=\"black\">" + getBidSuitSymbol(bidSuit) + "</font>";
-            case "D":
-            case "H":
-                return "<font color=\"red\">" + getBidSuitSymbol(bidSuit) + "</font>";
-            case "NT":
-                return "BA";
-        }
-        return "";
+        return "<font color=\"" + bidColors.get(bidSuit.toUpperCase()) + "\">" + getBidSuitSymbol(bidSuit) + "</font>";
     }
 
     /**
@@ -58,19 +68,7 @@ public class BidHelper {
      * @return
      */
     public static String getBidSuitSymbol(String bidSuit) {
-        switch (bidSuit) {
-            case "C":
-                return "\u2663";
-            case "D":
-                return "\u2666";
-            case "H":
-                return "\u2665";
-            case "S":
-                return "\u2660";
-            case "NT":
-                return "BA";
-        }
-        return "";
+        return bidSymbols.get(bidSuit.toUpperCase());
     }
 
     /**

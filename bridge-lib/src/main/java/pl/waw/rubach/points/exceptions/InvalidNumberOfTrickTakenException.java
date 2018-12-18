@@ -1,4 +1,4 @@
-package pl.waw.rubach.points.bridgeExeption;
+package pl.waw.rubach.points.exceptions;
 
 public class InvalidNumberOfTrickTakenException extends BridgeException {
     private int numberOfTricksTaken;

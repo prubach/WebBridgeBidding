@@ -1,8 +1,8 @@
 package pl.waw.rubach.points;
 
-import pl.waw.rubach.points.bridgeExeption.BridgeException;
-import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
+import pl.waw.rubach.points.exceptions.BridgeException;
+import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.exceptions.InvalidParameterException;
 
 import static java.lang.Math.abs;
 

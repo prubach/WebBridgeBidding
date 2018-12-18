@@ -1,8 +1,8 @@
 package pl.waw.rubach.points;
 
-import pl.waw.rubach.points.bridgeExeption.BridgeException;
-import pl.waw.rubach.points.bridgeExeption.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.bridgeExeption.InvalidParameterException;
+import pl.waw.rubach.points.exceptions.BridgeException;
+import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
+import pl.waw.rubach.points.exceptions.InvalidParameterException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +44,7 @@ public class RubberScoring {
     //odp jeżeli już to FourGameImpPoints, ale np. przy robrze niekoniecznie będą 4 gry, więc może GameImpPoints
     //odp :2  ale jak rober to nie będą impy - wydaje mi się ze wtedy to będzie musiało być inne ?
     //po polsku mogło by być Punkty/ZapisPorównawczy i drugi ZapisRobrowy
+    //
 
     public RubberScoring() {
         this(1);

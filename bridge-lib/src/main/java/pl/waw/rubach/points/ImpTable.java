@@ -53,15 +53,6 @@ public class ImpTable extends AbstractTable{
     }
 
     public static String getTableAsString() {
-        String s=("*** Tabela impów *** \n");
-
-        Map<Integer, Integer> map = ImpTable.getInstance().getPtsMap();
-        SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
-        int prev = 0;
-        for (Integer key : ptsMapSet) {
-            s = s+"\n "+(map.get(key)+ " imp " + (prev > 0 ? prev + 10 : 0)  + "-" + key);
-            prev = key;
-        }
-        return s;
+        return ImpTable.getInstance().toString();
     }
 }

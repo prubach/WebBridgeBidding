@@ -1,11 +1,9 @@
 package pl.waw.rubach.points;
 
-import pl.waw.rubach.points.bridgeExeption.*;
+import pl.waw.rubach.points.exceptions.*;
 
 //This was  PointsForContract(...)
 public class DuplicateBridgeScoring extends PointsForOneDeal{
-
-
 
     /**
      * The number of tricks above six (the book) that are taken by declarer.
@@ -106,22 +104,16 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
      */
     private int getContractPoints(int numberOfTricksForWhichArePointsCalculated) throws InvalidContractSuitException {
 
-        switch (getContractSuit()) {
-            case "s":
+        switch (getContractSuit().toUpperCase()) {
             case "S":
-            case "h":
             case "H":
                 return numberOfTricksForWhichArePointsCalculated * 30;
 
-            case "d":
             case "D":
-            case "c":
             case "C":
                 return numberOfTricksForWhichArePointsCalculated * 20;
 
-            case "n":
             case "N":
-            case "nt":
             case "NT":
                 return numberOfTricksForWhichArePointsCalculated * 30 + 10;
 
@@ -254,6 +246,8 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
 
         if (oddTricks >= getContractLevel()) {
             //pyt czy można dodać opis tak żeby został zapis ze znakami zapytania? Uważam że może być bez opisu bo o premi szlemikowej mało kto zapomina  description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
+            //odp nie rozumiem w jakim sensie ze znakami zapytania? Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
+            // nieużywany znak np. "%" a potem wykonująć replace
             if (getContractLevel() == 6) return (isDeclarerVulnerable()) ? 750 : 500;
             else if (getContractLevel() == 7) return (isDeclarerVulnerable()) ? 1500 : 1000;
         }

@@ -1,8 +1,6 @@
 package pl.waw.rubach.points;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NavigableSet;
+import java.util.*;
 
 public abstract class AbstractTable {
 
@@ -51,4 +49,20 @@ public abstract class AbstractTable {
         return value <= end && value >= begin;
     }
 
+    /**
+     *
+     * @return string with the description of the table
+     */
+    public String toString() {
+        String s=("*** Tabela impów *** \n");
+
+        Map<Integer, Integer> map = getPtsMap();
+        SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
+        int prev = 0;
+        for (Integer key : ptsMapSet) {
+            s = s+"\n "+(map.get(key)+ " imp " + (prev > 0 ? prev + 10 : 0)  + "-" + key);
+            prev = key;
+        }
+        return s;
+    }
 }

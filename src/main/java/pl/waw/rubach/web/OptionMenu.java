@@ -4,7 +4,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.*;
-import pl.waw.rubach.points.bridgeExeption.*;
+import pl.waw.rubach.points.exceptions.*;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 
