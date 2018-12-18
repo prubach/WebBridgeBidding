@@ -33,6 +33,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
 
     @Before
     public void fillTestPointsMap() {
+        a = wePlay ? 1 : -1;
         testCountingPointsNoFitBothMap.put(11f, 50f, 10);
         testCountingPointsNoFitBothMap.put(12f, -990f, -11);
         testCountingPointsNoFitBothMap.put(12f, -100f, 7);
@@ -108,14 +109,15 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : map.entrySet()) {
 
             float pointsInBothHands = entry.getKey().getKey(0);
-            if (pointsInBothHands != 20 && fitWe && fitThey) {
+            if (wePlay && (pointsInBothHands != 20) || !fitWe || !fitThey) {
                 float contractScoringPointsFloat = entry.getKey().getKey(1);
                 int contractScoringPoints = Math.round(contractScoringPointsFloat);
                 Integer res = new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getResults();
                 logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + contractScoringPoints + " wynik jest " + res + " impów. " + printAssumtion(assumption) + des2);
                 Assert.assertEquals(map.get(pointsInBothHands, contractScoringPointsFloat), res);
-                Integer resT = -new CalculatedImpPointsForOneDeal(!wePlay, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getResults();
-                Assert.assertEquals(map.get(pointsInBothHands, contractScoringPointsFloat), resT);
+                Integer resR = -new CalculatedImpPointsForOneDeal(!wePlay, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getResults();
+                logger.info(" Oni grają: Dla " + pointsInBothHands + " pkt:  oraz ugranych " + contractScoringPoints + " wynik jest " + res + " impów. " + printAssumtion(assumption) + des2);
+                Assert.assertEquals(map.get(pointsInBothHands, contractScoringPointsFloat), resR);
             }
         }
 
@@ -145,7 +147,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
 
     @Test
     public void testCountingPointsBothFitRes() throws InvalidNumberOfPointsException, InvalidParameterException {
-        testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
+       testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
         testFunction2(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
 
     }
@@ -161,6 +163,10 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         testFunction1(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
         testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
 
+//        testFunction2(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
+     //   testFunction2(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
+       // testFunction2(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
+        //     testFunction2(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
 
     }
 

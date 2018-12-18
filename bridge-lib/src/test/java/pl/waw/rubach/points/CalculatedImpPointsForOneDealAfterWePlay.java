@@ -7,6 +7,7 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
    @Before
     public void fillTestPointsMap() {
        wePlay = true;
+       //a = wePlay ? 1 : -1;
        assumption[0] = true;
        assumption[1] = true;
 

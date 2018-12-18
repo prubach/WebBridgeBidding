@@ -7,6 +7,7 @@ public class CalculatedImpPointsForOneDealAfterTheyPlay extends CalculatedImpPoi
     @Before
     public void fillTestPointsMap() {
         wePlay = false;
+       // a = wePlay ? 1 : -1;
         super.fillTestPointsMap();
     }
 }
