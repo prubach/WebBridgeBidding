@@ -19,7 +19,7 @@ public class PointsForOneDeal {
     /**
      *  Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
      */
-    private int norDoubleReSingnature;
+    private int noDoubleReSignature;
 
     /**
      * ATTENTION Auction assumption declarer not we!!!
@@ -35,7 +35,7 @@ public class PointsForOneDeal {
      * (opponent takes 13 - numberOfTrickTakenByDeclarer)
 
      */
-    private int numberOfTrickTakenDeclarer;
+    private int declarerNumberOfTrickTaken;
 
     /**
      * shortDescription -  only with contract main parameter
@@ -71,14 +71,14 @@ public class PointsForOneDeal {
      */
     protected String getContractDescription() {
         String assumption = isDeclarerVulnerable() ? ": po parti, " : ": przed partią, ";
-        String lew =getNumberOfTrickTakenDeclarer()==1 ? " tylko lewę. ": getNumberOfTrickTakenDeclarer()>1 && getNumberOfTrickTakenDeclarer() <5 ? " lewy." : " lew.";
+        String lew = getDeclarerNumberOfTrickTaken()==1 ? " tylko lewę. ": getDeclarerNumberOfTrickTaken()>1 && getDeclarerNumberOfTrickTaken() <5 ? " lewy." : " lew.";
 
-        if (getNorDoubleReSingnature() == IS_DOUBLE)
-            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption +" z kontrą, rozgrywający zebrał " + getNumberOfTrickTakenDeclarer() + lew;
-        else if (getNorDoubleReSingnature() == IS_REDOUBLE)
-            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " z rekontrą, rozgrywający zebrał " + getNumberOfTrickTakenDeclarer() + lew;
+        if (getNoDoubleReSignature() == IS_DOUBLE)
+            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption +" z kontrą, rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
+        else if (getNoDoubleReSignature() == IS_REDOUBLE)
+            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " z rekontrą, rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
         else
-            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " rozgrywający zebrał " + getNumberOfTrickTakenDeclarer() + lew;
+            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
     }
 
 
@@ -100,12 +100,12 @@ public class PointsForOneDeal {
         this.contractSuit = contractSuit;
     }
 
-    public int getNorDoubleReSingnature() {
-        return norDoubleReSingnature;
+    public int getNoDoubleReSignature() {
+        return noDoubleReSignature;
     }
 
-    public void setNorDoubleReSingnature(int norDoubleReSingnature) {
-        this.norDoubleReSingnature = norDoubleReSingnature;
+    public void setNoDoubleReSignature(int noDoubleReSignature) {
+        this.noDoubleReSignature = noDoubleReSignature;
     }
 
     public boolean isDeclarerVulnerable() {
@@ -117,12 +117,12 @@ public class PointsForOneDeal {
     }
 
 
-    public int getNumberOfTrickTakenDeclarer() {
-        return numberOfTrickTakenDeclarer;
+    public int getDeclarerNumberOfTrickTaken() {
+        return declarerNumberOfTrickTaken;
     }
 
-    public void setNumberOfTrickTakenDeclarer(int numberOfTrickTakenDeclarer) {
-        this.numberOfTrickTakenDeclarer = numberOfTrickTakenDeclarer;
+    public void setDeclarerNumberOfTrickTaken(int declarerNumberOfTrickTaken) {
+        this.declarerNumberOfTrickTaken = declarerNumberOfTrickTaken;
     }
 
     public String getShortDescription() {

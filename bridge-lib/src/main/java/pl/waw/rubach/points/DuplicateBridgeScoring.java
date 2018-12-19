@@ -5,18 +5,18 @@ import pl.waw.rubach.points.exceptions.*;
 //This was  PointsForContract(...)
 public class DuplicateBridgeScoring extends PointsForOneDeal{
 
+    //pyt czy te parametry tu zostają czy przechodzą wyżej - wg mnie dalej się z tego nie korzysta tylko tu - czyli powinny zostać?
     /**
      * The number of tricks above six (the book) that are taken by declarer.
      */
     private int oddTricks;
-    //pyt czy te parametry tu zostają czy przechodzą wyżej - wg mnie dalej się z tego nie korzysta tylko tu?
     /**
      * Indicates if contract is made  which means  take at least as many tricks as a contract calls for.
      */
     private boolean made;
 
     /**
-     * description - Long description explain how points are calculating - set here so no setter need!
+     * Long description explain how points are calculating - is setting in time of calculation, so no setter need!
      */
     private String description = "Punkty za kontrakt: ";
 
@@ -31,7 +31,7 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
      * @param nDRSignature Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
      * @param auctionAssumptionDeclarer ATTENTION Auction assumption declarer not we!!!
      * Auction Assumption for Plaing Pair means if pair is  vulnerable or unvulnerable
-     * @param numberOfTrickTakenByDeclarer TTENTION : Numnber of tricks taken in game by we !!!(Pair who make scoring not always plaing pair)
+     * @param numberOfTrickTakenByDeclarer ATTENTION : Numnber of tricks taken in game by we !!!(Pair who make scoring not always plaing pair)
      *
      * Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
      * and who must therefore play both their own hand and the exposed hand of the dummy.
@@ -41,7 +41,8 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
      * @throws InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
      * @throws InvalidParameterException other parameter inproprieter value ...
      */
-    public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
+    public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
+                                  boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
         //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (nDRSignature == 2), nDRSignature == 4, auctionAssumptionDeclarer);
 
@@ -54,12 +55,12 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
         //checking if number of tricks is corect
         if (numberOfTrickTakenByDeclarer > 13 || numberOfTrickTakenByDeclarer < 0)
             throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
-        setNumberOfTrickTakenDeclarer(numberOfTrickTakenByDeclarer);
+        setDeclarerNumberOfTrickTaken(numberOfTrickTakenByDeclarer);
 
         //checking if double/ redouble or undouble signature  is corect
         if (!(nDRSignature == 1 || nDRSignature == 2 || nDRSignature == 4))
             throw new InvalidParameterException(nDRSignature);
-        setNorDoubleReSingnature(nDRSignature);
+        setNoDoubleReSignature(nDRSignature);
 
         setDeclarerVulnerable(auctionAssumptionDeclarer);
         setShortDescription(getContractDescription());
@@ -84,7 +85,8 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
     }
 
     //OLD constructor with boolean double redouble - exist in all test so cant be delated
-    public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
+    public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
+                                  boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
@@ -118,7 +120,7 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
                 return numberOfTricksForWhichArePointsCalculated * 30 + 10;
 
             default:
-                throw new InvalidContractSuitException("Nie ma takiego koloru wpisz jeszcze raz.");
+                throw new InvalidContractSuitException("Nie ma takiego koloru - wpisz jeszcze raz.");
         }
     }
 
@@ -134,28 +136,28 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
         int overtricksPoints = 0;
         int overtricks = oddTricks -getContractLevel();
 
-       // pyt jaki warunek lepie - to jest to samo :
+       // pyt jaki warunek lepiej (bardziej elegancko) - to chyba jest to samo :
         // if (oddTricks > getContractLevel()) {
         if (made && overtricks>0) {
 
             //  if (!isContractDouble && !isContractRedouble) {
-            if (getNorDoubleReSingnature() == IS_UNDOUBLE) {
+            if (getNoDoubleReSignature() == IS_UNDOUBLE) {
                 overtricksPoints = getContractPoints(overtricks);  //bez kontry i rekontry - tak samo jak lewa
                 if (getContractSuit().equals("nt") || getContractSuit().equals("n") || getContractSuit().equals("N") || getContractSuit().equals("NT"))
                     overtricksPoints = overtricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
             }
             //if (isContractDouble && !auctionAssumptionDeclarer)
-            if (getNorDoubleReSingnature() == IS_DOUBLE && !isDeclarerVulnerable())
+            if (getNoDoubleReSignature() == IS_DOUBLE && !isDeclarerVulnerable())
                 overtricksPoints = overtricks * 100;   //z kontrą przed partią - za 100
             //if (isContractDouble && auctionAssumptionDeclarer)
-            if (getNorDoubleReSingnature() == IS_DOUBLE && isDeclarerVulnerable())
+            if (getNoDoubleReSignature() == IS_DOUBLE && isDeclarerVulnerable())
                 overtricksPoints = overtricks * 200;    // z kontrą po partii za 200
 
             //if (isContractRedouble && !auctionAssumptionDeclarer)
-            if (getNorDoubleReSingnature() == IS_REDOUBLE && !isDeclarerVulnerable())
+            if (getNoDoubleReSignature() == IS_REDOUBLE && !isDeclarerVulnerable())
                 overtricksPoints = overtricks * 200;     // z rekontrą przed partią za 200
             //if (isContractRedouble && auctionAssumptionDeclarer)
-            if (getNorDoubleReSingnature() == IS_REDOUBLE && isDeclarerVulnerable())
+            if (getNoDoubleReSignature() == IS_REDOUBLE && isDeclarerVulnerable())
                 overtricksPoints = overtricks * 400;     //z rekontrą po partii za 400
 
             description = description + "+  punkty z " + overtricks + " nadróbek to: " + overtricksPoints + "pkt,";
@@ -172,25 +174,25 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
         int underTricks = getContractLevel() - oddTricks;
         int underTricksPoints = 0;
 
-        if (!isDeclarerVulnerable() && !(getNorDoubleReSingnature() == IS_DOUBLE) && !(getNorDoubleReSingnature() == IS_REDOUBLE))
+        if (!isDeclarerVulnerable() && !(getNoDoubleReSignature() == IS_DOUBLE) && !(getNoDoubleReSignature() == IS_REDOUBLE))
             underTricksPoints = -underTricks * 50;   //bez kontry przed partią 50
-        if (!isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && underTricks == 1)
+        if (!isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && underTricks == 1)
             underTricksPoints = -underTricks * 100;  //z kontrą przed partią pierwsza za 100
-        else if (!isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && (underTricks == 2 || underTricks ==3))
+        else if (!isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && (underTricks == 2 || underTricks ==3))
             underTricksPoints = -underTricks * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
     //    else if (!auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks == 3)
      //       underTricksPoints = -underTricks * 200 + 100;
-        else if (!isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && underTricks >= 4)
+        else if (!isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && underTricks >= 4)
             underTricksPoints = -underTricks * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
 
-        if (isDeclarerVulnerable() && !(getNorDoubleReSingnature() == IS_DOUBLE) && !(getNorDoubleReSingnature() == IS_REDOUBLE))
+        if (isDeclarerVulnerable() && !(getNoDoubleReSignature() == IS_DOUBLE) && !(getNoDoubleReSignature() == IS_REDOUBLE))
             underTricksPoints = -underTricks * 100;  //bez kontry po partii 100
-        if (isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && underTricks == 1)
+        if (isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && underTricks == 1)
             underTricksPoints = -underTricks * 200;  // z kontrą po partii pierwsza za 200
-        else if (isDeclarerVulnerable() && ((getNorDoubleReSingnature() == IS_DOUBLE) || (getNorDoubleReSingnature() == IS_REDOUBLE)) && underTricks >= 2)
+        else if (isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && underTricks >= 2)
             underTricksPoints = -underTricks * 300 + 100;  //z kontrą po partii kolejne za 300
 
-        if ((getNorDoubleReSingnature()==IS_REDOUBLE)) underTricksPoints = underTricksPoints * 2;
+        if ((getNoDoubleReSignature()==IS_REDOUBLE)) underTricksPoints = underTricksPoints * 2;
 
         if (underTricks == 1) description = description + " Za nieugraną grę: punkty z " + underTricks + " wpadki: "+ underTricksPoints+ ". ";
         else description = description + "Za nieugraną grę: punkty z " + underTricks + " wpadek: "+ underTricksPoints+ ". ";
@@ -205,11 +207,11 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
      * @return  double or redouble bonus
      */
     private int getDoubleRedoubleBonus() {
-        if (getNorDoubleReSingnature() == IS_DOUBLE && made) {
+        if (getNoDoubleReSignature() == IS_DOUBLE && made) {
             description = description + " + 50 pkt. kara za nieudaną kontrę, ";
             return 50;
 
-        } else if (getNorDoubleReSingnature() == IS_REDOUBLE && made) {
+        } else if (getNoDoubleReSignature() == IS_REDOUBLE && made) {
             description = description + " + 100 pkt. kara za nieudaną rekontrę, ";
             return 100;
         } else return 0;
@@ -245,8 +247,10 @@ public class DuplicateBridgeScoring extends PointsForOneDeal{
     private int getSlamsBonusPoints() {
 
         if (oddTricks >= getContractLevel()) {
-            //pyt czy można dodać opis tak żeby został zapis ze znakami zapytania? Uważam że może być bez opisu bo o premi szlemikowej mało kto zapomina  description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
-            //odp nie rozumiem w jakim sensie ze znakami zapytania? Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
+            //czy można dodać opis tak żeby został zapis ze znakami zapytania? Uważam że może być bez opisu bo o premi szlemikowej mało kto zapomina  description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
+            //odp nie rozumiem w jakim sensie ze znakami zapytania?
+            //pyt chodzi o to że podoba mi się jak nie ma if tylko ? . Ale wtedy nie umiem dopisać drugiego polecenia np :  description = description + " + premia szlemikowa.";
+            // Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
             // nieużywany znak np. "%" a potem wykonująć replace
             if (getContractLevel() == 6) return (isDeclarerVulnerable()) ? 750 : 500;
             else if (getContractLevel() == 7) return (isDeclarerVulnerable()) ? 1500 : 1000;

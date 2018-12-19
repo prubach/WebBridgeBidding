@@ -87,17 +87,17 @@ public class RubberScoring {
     }
 
 
-    public RubberScoring(int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
+    public RubberScoring(boolean wp1, boolean wp2, boolean wp3, boolean wp4, int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
                          int piH1, int piH2, int piH3, int piH4, int ntt1, int ntt2, int ntt3, int ntt4,
                          boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
         this();
 
-        fillOneContractFrom4GameSet(1, piH1, lev1, color1, ntt1, d1, r1, fW1, fT1);
-        fillOneContractFrom4GameSet(2, piH2, lev2, color2, ntt2, d2, r2, fW2, fT2);
-        fillOneContractFrom4GameSet(3, piH3, lev3, color3, ntt3, d3, r3, fW3, fT3);
-        fillOneContractFrom4GameSet(4, piH4, lev4, color4, ntt4, d4, r4, fW4, fT4);
+        fillOneContractFrom4GameSet(1, wp1, piH1, lev1, color1, ntt1, d1, r1, fW1, fT1);
+        fillOneContractFrom4GameSet(2, wp2, piH2, lev2, color2, ntt2, d2, r2, fW2, fT2);
+        fillOneContractFrom4GameSet(3, wp3, piH3, lev3, color3, ntt3, d3, r3, fW3, fT3);
+        fillOneContractFrom4GameSet(4, wp4, piH4, lev4, color4, ntt4, d4, r4, fW4, fT4);
 
         this.summ = getSumm();
     }
@@ -119,18 +119,18 @@ public class RubberScoring {
     }
 
 
-    public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, DuplicateBridgeScoring pFC,
+    public void fillOneContractFrom4GameSet( int contractNumber, boolean whoPlay, float pointsInBothHands, DuplicateBridgeScoring pFC,
                                             boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
         fillAssumption(contractNumber);
         rubberDescription = rubberDescription + pFC.getShortDescription() + "\n";
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumption[0], auctionAssumption[1], fitInOlderColorWe, fitInOlderColorThey);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(whoPlay,pointsInBothHands, pFC.getContractScoringPoints(), auctionAssumption[0], auctionAssumption[1], fitInOlderColorWe, fitInOlderColorThey);
 
         scorringForOneGame.put(contractNumber, a);
     }
 
-    public void fillOneContractFrom4GameSet(int contractNumber, float pointsInBothHands, int gameLevel, String suit,
+    public void fillOneContractFrom4GameSet(int contractNumber, boolean whoPlay, float pointsInBothHands, int gameLevel, String suit,
                                             int numberOfTricksTaken, boolean doub, boolean redouble,
                                             boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
@@ -252,7 +252,7 @@ public class RubberScoring {
             System.out.println("\nKońcowy wynik jednego rozdania liczony od podstaw jest: " + ipr02.getResults() + " \n");
             //*******************************************
 
-            RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
+        //    RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
      //       System.out.println(a.getRubberScoringAsString());
      //       System.out.println("Końcowy wynik jest: " + a.getSumm() + " \n");
 /*

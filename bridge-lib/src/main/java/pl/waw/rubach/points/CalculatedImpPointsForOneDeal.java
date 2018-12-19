@@ -24,7 +24,8 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
 
     //pyt pozmieniałam na tak jak wydaje się bardziej elegancko (stare zostało w komentarzach-  chyba jest ok nie jestem pewna .. testy już są chyba ok..
     //constructors  when both play - there are tests
-    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe, int pointsForContractWe,
+    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
+                                         int pointsForContractWe,
                                          boolean auctionAssumptionWe,  boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws InvalidNumberOfPointsException,  InvalidParameterException {
         //assumed that we play
@@ -76,9 +77,9 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
   //              auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
-        setNorDoubleReSingnature(normalDoubleRedubleSingnature);
+        setNoDoubleReSignature(normalDoubleRedubleSingnature);
         setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
-        setNumberOfTrickTakenDeclarer(wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe);
+        setDeclarerNumberOfTrickTaken(wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe);
     }
 
     //old constructor with double / redouble
@@ -121,8 +122,8 @@ public class CalculatedImpPointsForOneDeal extends PointsForOneDeal {
                 auctionAssumptionDeclarer,auctionAssumptionOponenst,fitInOlderColorDeclarer,fitInOlderColorOponents);
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
-        setNorDoubleReSingnature(normalDoubleRedubleSingnature);
-        setNumberOfTrickTakenDeclarer(numberOfTrickTakenByDeclarer);
+        setNoDoubleReSignature(normalDoubleRedubleSingnature);
+        setDeclarerNumberOfTrickTaken(numberOfTrickTakenByDeclarer);
     }
 
 

@@ -14,8 +14,8 @@ class OptionMenu extends MenuBar {
     private VaadinUI ui;
 
     private String descriprionOf4play;
-    private CheckBox checkbox1AssumptionWe = new CheckBox("Czy jesteście po partii (ustawiane w głównej aplikacji albo tutaj)? ");
-    private CheckBox checkbox1AssumptionThey = new CheckBox("Czy przeciwnicy są  po partii (ustawiane w głównej aplikacji albo tutaj)? ");
+    private CheckBox checkboxAssumptionWe = new CheckBox("Czy jesteście po partii (ustawiane w głównej aplikacji albo tutaj)? ");
+    private CheckBox checkboxAssumptionThey = new CheckBox("Czy przeciwnicy są  po partii (ustawiane w głównej aplikacji albo tutaj)? ");
 
     private CheckBox checkboxFitWe = new CheckBox("Czy  macie fit (domyślnie tak - ustawiane tutaj)?");
     private CheckBox checkboxFitThey = new CheckBox("Czy  jest fit u przeciwników (domyślnie nie - ustawiane tutaj)?");
@@ -24,43 +24,42 @@ class OptionMenu extends MenuBar {
     private CheckBox checkboxReDouble = new CheckBox("Czy  była rekontra (domyślnie nie - ustawiane tutaj)?");
 
 
-    private CheckBox checkboxMinorColor = new CheckBox(" kara / trefle");
-    private CheckBox checkboxMajorColor = new CheckBox(" kiery / piki");
-    private CheckBox checkboxNtColor = new CheckBox(" bez atu");
+    private TextField contractLevelField ,numberOfTricksField ,pointsInBothHandsField, colorOfContractField;
+    private TextField contractLevelField4 ,numberOfTricksField4 ,pointsInBothHandsField4, colorOfContractField4;
 
 
     private CheckBox checkboxWe = new CheckBox(" My rozgrywamy - domyślnie");
-    private CheckBox checkboxThey = new CheckBox(" Oni rozgrywaja - zmień! ");
     private MenuBar.Command comandToSetAssumptionNo = (MenuBar.Command) selectedItem -> {
-        checkbox1AssumptionWe.setValue(false);
-        ui.getAuctionAssumptionLabel().setValue("Założenia: " + (checkbox1AssumptionWe.getValue() ? "Po parti" : "Przed partią"));
+        checkboxAssumptionWe.setValue(false);
+        ui.getAuctionAssumptionLabel().setValue("Założenia: " + (checkboxAssumptionWe.getValue() ? "Po parti" : "Przed partią"));
         ui.setAssumption(false);
         ui.refreshBidGrids();
-        // if (checkbox1AssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
+        // if (checkboxAssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
         // else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command comandToSetAssumptionYes = (MenuBar.Command) selectedItem -> {
-        checkbox1AssumptionWe.setValue(true);
-        ui.getAuctionAssumptionLabel().setValue("Założenia: " + (checkbox1AssumptionWe.getValue() ? "Po parti" : "Przed partią"));
+        checkboxAssumptionWe.setValue(true);
+        ui.getAuctionAssumptionLabel().setValue("Założenia: " + (checkboxAssumptionWe.getValue() ? "Po parti" : "Przed partią"));
         ui.setAssumption(true);
         ui.refreshBidGrids();
-        //  if (checkbox1AssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
+        //  if (checkboxAssumptionWe.getValue()) ui.getAuctionAssumptionLabel().setValue("Założenia: Po parti");
         //  else ui.getAuctionAssumptionLabel().setValue("Założenia: Przed partią");
     };
     private MenuBar.Command commandToOpenLegend = (MenuBar.Command) selectedItem -> actionOpenWindowWithLegend(ui);
     private MenuBar.Command commandToOpenDescription = (MenuBar.Command) selectedItem -> actionOpenWindowWithDescription(ui);
     private MenuBar.Command commandToCalculatePoints = (MenuBar.Command) selectedItem -> actionCalculetePoints(ui);
-    private MenuBar.Command commandToManualCalculatePoints = (MenuBar.Command) selectedItem -> actionManualCalculetePoints(ui);
+    private MenuBar.Command commandToCalculatePointsOneDeal = (MenuBar.Command) selectedItem -> actionCalculetePointsOneDeal(ui);
+    private MenuBar.Command commandToOldCalculatePoints = (MenuBar.Command) selectedItem -> actionManualCalculetePoints(ui);
     private MenuBar.Command commandToDisplanyPointsTable = (MenuBar.Command) selectedItem -> actionDisplayPointsTable(ui);
 
     OptionMenu(VaadinUI ui) {
         this.ui = ui;
-        checkbox1AssumptionWe.setValue(false);
+        checkboxAssumptionWe.setValue(false);
 
         // First left top-level item
-        this.addItem("Oblicz punkty", null, commandToCalculatePoints);
-
-        this.addItem("Oblicz punkty ręcznie", null, commandToManualCalculatePoints);
+        this.addItem("Oblicz punkty (nowe) ", null, commandToCalculatePoints);
+        this.addItem("Oblicz punkty jednego rozdania", null, commandToCalculatePointsOneDeal);
+        this.addItem("Oblicz punkty ręcznie (stare):", null, commandToOldCalculatePoints);
 
 
         // A top-level menu item that opens a submenu
@@ -210,22 +209,131 @@ class OptionMenu extends MenuBar {
         // sample.getUI().getUI().addWindow(window);
     }
 
-    private void actionCalculetePoints(VaadinUI ui) {
-        final Window window = new Window("Okienko do liczenia punktów.");
+    private void actionDisplayPointsTable(VaadinUI ui) {
+        final Window window = new Window("Okienko z tabelkami do liczenia punktów.");
         window.setWidth("100%");
         window.addStyleName("window");
         final FormLayout content = new FormLayout();
         content.setMargin(true);
-        content.addComponent(new Label("Wersja 1.1 - podaj jaki był kontrakt i co ugraliście:)"));
+        content.addComponent(new Label("Wersja wstępna - tabelki do liczenia punktów dla wariantów podaj wszystkie parametry (potem może będzie je brało z innego miejsca) :)"));
 
         content.addStyleName("window");
 
-        content.addComponent(checkbox1AssumptionWe);
-        content.addComponent(checkbox1AssumptionThey);
-        TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu swoich rękach (wraz z punktami układowymi):");
-        content.addComponent(pointsInBothHands);
+        //   checkboxAssumptionWe.setValue(true); //move to create menu?
+        checkboxFitWe.setValue(true);
 
-        //   checkbox1AssumptionWe.setValue(true); //move to create menu?
+        content.addComponent(checkboxAssumptionWe);
+        content.addComponent(checkboxFitWe);
+        content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy dowolny kolor jest sfitowany, jeżeli mniej to tylko starszy."));
+        //  checkboxAssumptionWe.addValueChangeListener(event ->
+        //         checkboxFitWe.setValue(! checkboxAssumptionWe.getValue()));
+
+        Button displayExpectedResults = new Button("Wyświetl tabelkę  oczekiwanych punktów dla  danych założeń! ", clickEvent -> {
+            TextArea a = new TextArea();
+            a.setWidth("100%");
+            a.setValue(ExpectedResultsTable.getTableAsString(checkboxFitWe.getValue(), checkboxAssumptionWe.getValue()));
+            content.addComponent(a);
+        });
+
+        Button displayImpTable = new Button("Wyświetl tabelkę impów! ", clickEvent -> {
+            TextArea b = new TextArea();
+            b.setWidth("100%");
+            b.setValue(ImpTable.getTableAsString());
+            content.addComponent(b);
+        });
+        content.addComponent(displayImpTable);
+        content.addComponent(displayExpectedResults);
+        window.setContent(content);
+        ui.addWindow(window);
+    }
+
+
+
+    private void actionCalculetePointsOneDeal(VaadinUI ui) {
+        final Window window = new Window("Okienko do liczenia punktów za jeden kontrakt.");
+        window.setWidth("100%");
+        window.addStyleName("window");
+        final FormLayout content = new FormLayout();
+        content.setMargin(true);
+        content.addComponent(new Label("Wersja 1.2 - podaj jaki był kontrakt i co ugraliście - liczone dla pary rozgrywającej! :)"));
+        content.addStyleName("window");
+
+        content.addComponent(checkboxAssumptionWe);
+        content.addComponent(checkboxAssumptionThey);
+
+        pointsInBothHandsField = new TextField("Podaj liczbę punktów na obu swoich rękach (wraz z punktami układowymi):");
+        content.addComponent(pointsInBothHandsField);
+
+        content.addComponent(checkboxFitWe);
+        content.addComponent(checkboxFitThey);
+        content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze."));
+
+        contractLevelField = new TextField("Podaj wysokość granego kontraktu:");
+        content.addComponent(contractLevelField);
+
+        colorOfContractField = new TextField("Wybierz kolor granego kontraktu: (bez atu  [nt], piki [s], trefle [c], kiery [h], kara [d]");
+        content.addComponent(colorOfContractField);
+
+         content.addComponent(checkboxDouble);
+         content.addComponent(checkboxReDouble);
+
+
+         numberOfTricksField = new TextField("Podaj liczbę zebranych  lew:");
+         content.addComponent(numberOfTricksField);
+
+        Label resultsLabel = new Label("");
+        resultsLabel.setContentMode(ContentMode.HTML);
+
+       // fillZeroData();
+        contractLevelField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        pointsInBothHandsField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        numberOfTricksField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        colorOfContractField.addValueChangeListener(event -> resultsLabel.setValue(""));
+
+
+       fillExampleData();
+        Button calculateImpPoints = new Button("Oblicz punkty i impy! ", clickEvent -> {
+            try {
+
+                DuplicateBridgeScoring duplicateBridgeScoring = new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
+                        checkboxDouble.getValue(), checkboxReDouble.getValue(), checkboxAssumptionWe.getValue(), Integer.parseInt(numberOfTricksField.getValue()));
+
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(!checkboxWe.getValue(),
+                        Float.parseFloat(pointsInBothHandsField.getValue()), duplicateBridgeScoring.getContractScoringPoints(),
+                        checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + duplicateBridgeScoring.getContractScoringPoints() + " punktów za kontrakt, (" + duplicateBridgeScoring.getDescription() + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
+
+            } catch (NumberFormatException | BridgeException e) {
+                String message = (e instanceof NumberFormatException) ?
+                        "Nieprawidłowo podana liczba punktów spróbuj jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>" + message + "</font>");
+            }
+        });
+
+
+        content.addComponent(calculateImpPoints);
+        content.addComponent(resultsLabel);
+        window.setContent(content);
+        ui.addWindow(window);
+    }
+
+
+
+    private void actionCalculetePoints(VaadinUI ui) {
+        final Window window = new Window("Okienko do liczenia punktów za jeden kontrakt.");
+        window.setWidth("100%");
+        window.addStyleName("window");
+        final FormLayout content = new FormLayout();
+        content.setMargin(true);
+        content.addComponent(new Label("Wersja 1.3 - podaj jaki był kontrakt i co ugraliście:)"));
+
+        content.addStyleName("window");
+
+        pointsInBothHandsField4 = new TextField("Podaj liczbę punktów na obu swoich rękach (wraz z punktami układowymi):");
+        content.addComponent(pointsInBothHandsField4);
+
+        //   checkboxAssumptionWe.setValue(true); //move to create menu?
         checkboxFitWe.setValue(true);
         content.addComponent(checkboxFitWe);
 
@@ -233,112 +341,61 @@ class OptionMenu extends MenuBar {
         content.addComponent(checkboxFitThey);
         content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze."));
 
-
-        TextField contractLevel = new TextField("Podaj wysokość granego kontraktu:");
-        content.addComponent(contractLevel);
-
-        TextField colorOfContract = new TextField("Wybierz kolor granego kontraktu:");
-        //content.addComponent(colorOfContract);
-
-        //   checkboxNtColor.setValue(false);
-        //   content.addComponent(checkboxNtColor);
-
-
-
-        checkboxMajorColor.setValue(false);
-        content.addComponent(checkboxMajorColor);
-
-        checkboxMinorColor.setValue(false);
-        content.addComponent(checkboxMinorColor);
-
-
         checkboxDouble.setValue(false);
         content.addComponent(checkboxDouble);
 
         checkboxReDouble.setValue(false);
         content.addComponent(checkboxReDouble);
 
-        TextField numberOfTricks = new TextField("Podaj liczbę zebranych  lew:"); //przez rozgrywających
-        content.addComponent(numberOfTricks);
+        contractLevelField4 = new TextField("Podaj wysokość granego kontraktu:");
+        content.addComponent(contractLevelField4);
+
+        colorOfContractField4 = new TextField("Wybierz kolor granego kontraktu:");
+        content.addComponent(colorOfContractField4);
+
+        numberOfTricksField4 = new TextField("Podaj liczbę zebranych  lew:"); //przez rozgrywających
+        content.addComponent(numberOfTricksField4);
 
 
         checkboxWe.setValue(true);
         content.addComponent(checkboxWe);
-        checkboxThey.setValue(false);
-        content.addComponent(checkboxThey);
-
-
-        checkboxWe.addValueChangeListener(event ->
-                checkboxThey.setValue(!checkboxWe.getValue()));
-
-
-        checkboxThey.addValueChangeListener(event ->
-                checkboxWe.setValue(!checkboxThey.getValue()));
 
 
         Label resultsLabel = new Label("");
         Label resultsLabelFor4Game = new Label("");
         resultsLabel.setContentMode(ContentMode.HTML);
         resultsLabelFor4Game.setContentMode(ContentMode.HTML);
-        pointsInBothHands.addValueChangeListener(event -> resultsLabel.setValue(""));
-        numberOfTricks.addValueChangeListener(event -> resultsLabel.setValue(""));
-        contractLevel.addValueChangeListener(event -> resultsLabel.setValue(""));
+        pointsInBothHandsField4.addValueChangeListener(event -> resultsLabel.setValue(""));
+        numberOfTricksField4.addValueChangeListener(event -> resultsLabel.setValue(""));
+        contractLevelField4.addValueChangeListener(event -> resultsLabel.setValue(""));
 
-        //  checkbox1AssumptionWe.addValueChangeListener(event ->
-        //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
+        checkboxDouble.setValue(!checkboxReDouble.getValue());
 
-        checkboxMajorColor.addValueChangeListener(event ->
-                // checkboxMinorColor.setValue(! checkboxMajorColor.getValue()) );
-                checkboxMinorColor.setValue(false));
-
-        checkboxMinorColor.addValueChangeListener(event ->
-                // checkboxMajorColor.setValue(! checkboxMinorColor.getValue()));
-                checkboxMajorColor.setValue(false));
-
-
-      //  checkboxDouble.addValueChangeListener(event ->
-       //         checkboxReDouble.setValue(!checkboxDouble.getValue()));
-
-      //  checkboxReDouble.addValueChangeListener(event ->
-       //         checkboxDouble.setValue(!checkboxReDouble.getValue()));
+        TextField numberOfContract = new TextField("Podaj które to rozdanie (tylko dla zapisu 4 rozdań):");
+        content.addComponent(numberOfContract);
+        numberOfContract.addValueChangeListener(event -> resultsLabel.setValue(""));
 
 
         Button calculateImpPoints = new Button("Oblicz punkty i impy! ", clickEvent -> {
             try {
 
-                String suit = "n";
-                if (checkboxMajorColor.getValue()) suit = "s";
-                else if (checkboxMinorColor.getValue()) suit = "d";
+                checkboxDouble.setValue(!checkboxReDouble.getValue());
+                String suit = colorOfContractField4.getValue().toUpperCase();
+                int tricksTakenWe = Integer.parseInt(numberOfTricksField.getValue());
+                float pointsInBHWe = Float.parseFloat(pointsInBothHandsField.getValue());
+                boolean assumptionWe = fillAssumption(Integer.parseInt(numberOfContract.getValue()) - 1)[0];
+                boolean assumptionThey = fillAssumption(Integer.parseInt(numberOfContract.getValue()) - 1)[1];
 
-                int tricksTaken = Integer.parseInt(numberOfTricks.getValue());
-                if(tricksTaken >13 || tricksTaken <0) throw new InvalidNumberOfTrickTakenException(tricksTaken);
-
-                boolean assumption = checkbox1AssumptionWe.getValue();
-                boolean assumption2 = checkbox1AssumptionThey.getValue();
-                boolean fitWe = checkboxFitWe.getValue();
-                boolean fitThey = checkboxFitThey.getValue();
-                float pointsInBH = Float.parseFloat(pointsInBothHands.getValue());
-
-                if (checkboxThey.getValue()) {
-                    pointsInBH = 40 - pointsInBH;
-                    tricksTaken = 13 - tricksTaken;
-                    assumption=checkbox1AssumptionThey.getValue();
-                    fitThey = checkboxFitWe.getValue();
-                    fitWe = checkboxFitThey.getValue();
-                    assumption2 =checkbox1AssumptionWe.getValue();
-                }
-               // tricksTaken=tricksTaken-6;
-                DuplicateBridgeScoring duplicateBridgeScoring =     new DuplicateBridgeScoring(Integer.parseInt(contractLevel.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption, tricksTaken);
+                DuplicateBridgeScoring duplicateBridgeScoring = new DuplicateBridgeScoring(Integer.parseInt(contractLevelField4.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(),
+                        checkboxWe.getValue() ? assumptionWe : assumptionThey, checkboxWe.getValue() ? tricksTakenWe : 13 - tricksTakenWe);
                 String des = duplicateBridgeScoring.getDescription();
-                int pointsContract = duplicateBridgeScoring.getContractScoringPoints();
-                if(checkboxThey.getValue()) {
-                    pointsContract = -pointsContract;
 
-                }
+                int pointsContractWe = checkboxWe.getValue() ? duplicateBridgeScoring.getContractScoringPoints() : -duplicateBridgeScoring.getContractScoringPoints();
 
-                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBH, pointsContract, assumption, assumption2, fitWe, fitThey);
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContract + " punktów za kontrakt, ("+ des + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
-                     //   "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
+                        pointsInBHWe, pointsContractWe, assumptionWe, assumptionThey, checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
+
             }
             //pyt cz1: czy lepiej tak jak jest instance of ale w jednej linijce (i raz kolorowane)
             catch (NumberFormatException | BridgeException e) {
@@ -349,88 +406,59 @@ class OptionMenu extends MenuBar {
         });
 
 
-        TextField numberOfContract = new TextField("Podaj które to rozdanie (tylko dla zapisu 4 rozdań):");
-        content.addComponent(numberOfContract);
-        numberOfContract.addValueChangeListener(event -> resultsLabel.setValue(""));
+        boolean[] checkboxFitWeTable = {false, false, false, false};
+        boolean[] checkboxFitTheyTable = {false, false, false, false};
 
-        boolean[] checkboxFitWeTable =  {false,false,false,false};
-        boolean[] checkboxFitTheyTable =  {false,false,false,false};
-        String[] descriptionTable = {"pierwszy kontrakt:","drugi kontrakt","trzeci kontrakt","czwarty kontrakt"};
-        float footable[] = {0,0,0,0};
-        int foo2[] ={0,0,0,0};
-
-        //Fill example date:
-        numberOfContract.setValue("1");
-        pointsInBothHands.setValue("28");
-        contractLevel.setValue("6");
-        numberOfTricks.setValue("12");
+        String[] descriptionTable = {"pierwszy kontrakt:", "drugi kontrakt", "trzeci kontrakt", "czwarty kontrakt"};
+        float poinsInBHTable[] = {0, 0, 0, 0};
+        int scoringTable[] = {0, 0, 0, 0};
+        int tricskTakenTable[] = {0, 0, 0, 0};
 
 
-
-    Button prowadzZapis = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
-
-
+        Button prowadzZapis = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
             try {
-
-                int contractNumber = Integer.parseInt(numberOfContract.getValue())-1; //bo liczy od zera
-                if (contractNumber>4 || contractNumber<0) throw new InvalidNumberOfGamesInRuber(contractNumber);
-
-                 checkboxFitWeTable[contractNumber] = checkboxFitWe.getValue();
-                 checkboxFitTheyTable[contractNumber] = checkboxFitThey.getValue();
-
-                String suit = "n";
-                if (checkboxMajorColor.getValue()) suit = "s";
-                else if (checkboxMinorColor.getValue()) suit = "d";
-
-                int trickTaken = Integer.parseInt(numberOfTricks.getValue()); //-6 tu był problem
-
-                if(trickTaken>13 || trickTaken<0) throw new InvalidNumberOfTrickTakenException(trickTaken);
-
-                boolean assumption = checkbox1AssumptionWe.getValue();
-                boolean assumption2 = checkbox1AssumptionThey.getValue();
-                boolean fitWe = checkboxFitWe.getValue();
-                float pointsInBH = Float.parseFloat(pointsInBothHands.getValue());
-
-                if (checkboxThey.getValue()) {
-                    pointsInBH = 40 - pointsInBH;
-                    trickTaken = 13 - trickTaken;
-                    assumption=checkbox1AssumptionThey.getValue();
-                }
-                footable[contractNumber]= pointsInBH;
-
-                DuplicateBridgeScoring foo22=     new DuplicateBridgeScoring(Integer.parseInt(contractLevel.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), assumption, trickTaken);
-                descriptionTable[contractNumber] = descriptionTable[contractNumber]+ foo22.getShortDescription();
-                foo2[contractNumber] =foo22.getContractScoringPoints();
-
-                if(checkboxThey.getValue()) {
-                    foo2[contractNumber] = -foo2[contractNumber];}
-
-                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(pointsInBH, foo2[contractNumber], checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                int contractNumber = Integer.parseInt(numberOfContract.getValue()) - 1; //bo liczy od zera
+                if (contractNumber > 4 || contractNumber < 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
 
 
-                RubberScoring aa = new RubberScoring(footable[0],footable[1],footable[2],footable[3],foo2[0],foo2[1],foo2[2],foo2[3],checkboxFitWeTable[0],checkboxFitWeTable[1],checkboxFitWeTable[2],checkboxFitWeTable[3],checkboxFitTheyTable[0],checkboxFitTheyTable[1],checkboxFitTheyTable[2],checkboxFitTheyTable[3]);
+                checkboxFitWeTable[contractNumber] = checkboxFitWe.getValue();
+                checkboxFitTheyTable[contractNumber] = checkboxFitThey.getValue();
 
-              //  System.out.println("Akuku"+ RubberScoring.getRubberScoringAsString(aa));
+                String suit = colorOfContractField.getValue().toUpperCase();
+                int trickTaken = Integer.parseInt(numberOfTricksField.getValue());
+                tricskTakenTable[contractNumber]=trickTaken;
+
+                float pointsInBH = Float.parseFloat(pointsInBothHandsField.getValue());
+                poinsInBHTable[contractNumber] = pointsInBH;
+
+                DuplicateBridgeScoring scoring = new DuplicateBridgeScoring(Integer.parseInt(contractLevelField4.getValue()), suit, checkboxDouble.getValue(), checkboxReDouble.getValue(), fillAssumption(contractNumber)[0], trickTaken);
+                descriptionTable[contractNumber] = descriptionTable[contractNumber] + scoring.getShortDescription();
+                scoringTable[contractNumber] = checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoringTable[contractNumber];
 
 
-               
-                resultsLabel.setValue("<B>To "+ numberOfContract.getValue() + "  rozdanie i uzyskaliście " + foo2[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów. " +
-                        " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach "+ aa.getSumm() +" impy. ");
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),poinsInBHTable[contractNumber], scoringTable[contractNumber], checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
-                StringBuilder s = new StringBuilder("\n*** Zapis gier numer: "+aa.getGameID()+".  ***  \n");
-                for(int i=0;i<4;i++){
+                RubberScoring aa = new RubberScoring();
+                aa.fillOneContractFrom4GameSet(contractNumber,a);
+                //RubberScoring aa = new RubberScoring(poinsInBHTable[0], poinsInBHTable[1], poinsInBHTable[2], poinsInBHTable[3], scoringTable[0], scoringTable[1], scoringTable[2], scoringTable[3], checkboxFitWeTable[0], checkboxFitWeTable[1], checkboxFitWeTable[2], checkboxFitWeTable[3], checkboxFitTheyTable[0], checkboxFitTheyTable[1], checkboxFitTheyTable[2], checkboxFitTheyTable[3]);
+
+                resultsLabel.setValue("<B>To " + numberOfContract.getValue() + "  rozdanie i uzyskaliście " + scoringTable[contractNumber] + " punktów za kontrakt, czyli " + a.getResults() + " impów. " +
+                        " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + " impy. ");
+
+                StringBuilder s = new StringBuilder("\n*** Zapis gier numer: " + aa.getGameID() + ".  ***  \n");
+                for (int i = 0; i < 4; i++)
                     s.append("\n").append(descriptionTable[i]);
-                }
+
                 s.append("\n\n \t \t***\n");
-descriprionOf4play=s.toString()+"\n"+aa.getRubberScoringAsString();
+                descriprionOf4play = s.toString() + "\n" + aa.getRubberScoringAsString();
 
 //pyt: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
             } catch (BridgeException e) {
                 String mes1 = e.getMessage();
                 //e.getContractLevel();
                 resultsLabel.setValue("<font color=red>" + mes1 + "</font>");
-            } catch (NumberFormatException  e) {
-                String mes1 = "Nieprawidłowy format liczby-  spróbuj jeszcze raz!" ;
+            } catch (NumberFormatException e) {
+                String mes1 = "Nieprawidłowy format liczby-  spróbuj jeszcze raz!";
                 resultsLabel.setValue("<font color=red>" + mes1 + "</font>");
             }
 
@@ -451,6 +479,27 @@ descriprionOf4play=s.toString()+"\n"+aa.getRubberScoringAsString();
         ui.addWindow(window);
     }
 
+    private void fillExampleData() {
+        contractLevelField.setValue("3");
+        colorOfContractField.setValue("NT");
+        numberOfTricksField.setValue("9");
+        pointsInBothHandsField.setValue("25");
+
+    }
+
+    private boolean[] fillAssumption(int contractNumber) {
+        boolean[] auctionAssumption = {false, false};
+        if (contractNumber == 2) {
+            auctionAssumption[0]  = true;
+        } else if (contractNumber == 3) {
+            auctionAssumption[1] = true;
+        } else if (contractNumber == 4) {
+            auctionAssumption[0] = true;
+            auctionAssumption[1]  = true;
+        }
+        return auctionAssumption;
+    }
+
     private void actionDisplayResultsOf4GameWindow(VaadinUI ui) {
         final Window window = new Window("Okienko z wynikami ostatnich czterech rozdań.");
         window.setWidth("50%");
@@ -459,8 +508,8 @@ descriprionOf4play=s.toString()+"\n"+aa.getRubberScoringAsString();
         final FormLayout content = new FormLayout();
         content.setMargin(true);
         content.addComponent(new Label("Wersja wstępna - wyniki ostatnich zapisanych rozdań :)"));
-       // content.addComponent(new Label("Uwaga na razie nie ma możliwości zapisu edytowanego tekstu"));
-        TextArea a =  new TextArea();
+        // content.addComponent(new Label("Uwaga na razie nie ma możliwości zapisu edytowanego tekstu"));
+        TextArea a = new TextArea();
         a.setWidth("100%");
         a.setHeight("400%");
         a.setValue(descriprionOf4play);
@@ -476,47 +525,41 @@ descriprionOf4play=s.toString()+"\n"+aa.getRubberScoringAsString();
     }
 
 
+
     private void actionManualCalculetePoints(VaadinUI ui) {
-        final Window window = new Window("Okienko do ręcznego liczenia punktów.");
+        final Window window = new Window("Stare okienko do ręcznego liczenia punktów.");
         window.setWidth("100%");
         window.addStyleName("window");
         final FormLayout content = new FormLayout();
         content.setMargin(true);
-        content.addComponent(new Label("Wersja wstępna - podaj wszystkie parametry (potem może będzie je brało z innego miejsca) :)"));
-
+        content.addComponent(new Label("Wersja wstępna 1.1- podaj wszystkie parametry (potem może będzie je brało z innego miejsca) :)"));
         content.addStyleName("window");
 
-        content.addComponent(checkbox1AssumptionWe);
-        content.addComponent(checkbox1AssumptionThey);
-        TextField pointsInBothHands = new TextField("Podaj liczbę punktów na obu swoich rękach (wraz z punktami układowymi):");
-        content.addComponent(pointsInBothHands);
+        content.addComponent(checkboxAssumptionWe);
+        content.addComponent(checkboxAssumptionThey);
 
-        //   checkbox1AssumptionWe.setValue(true); //move to create menu?
-        checkboxFitWe.setValue(true);
+        TextField pointsInBothHandsField = new TextField("Podaj liczbę punktów na obu swoich rękach (wraz z punktami układowymi):");
+        content.addComponent(pointsInBothHandsField);
+
         content.addComponent(checkboxFitWe);
-
-        checkboxFitThey.setValue(false);
         content.addComponent(checkboxFitThey);
         content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze."));
 
-
-        TextField pointsForContract = new TextField("Podaj liczbę punktów uzyskanych przy rozgrywaniu kontraktu:");
-        content.addComponent(pointsForContract);
-
+        TextField pointsForContractField = new TextField("Podaj liczbę punktów uzyskanych przy rozgrywaniu kontraktu:");
+        content.addComponent(pointsForContractField);
 
         Label resultsLabel = new Label("");
         resultsLabel.setContentMode(ContentMode.HTML);
-        pointsInBothHands.addValueChangeListener(event -> resultsLabel.setValue(""));
-        pointsForContract.addValueChangeListener(event -> resultsLabel.setValue(""));
+        pointsInBothHandsField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        pointsForContractField.addValueChangeListener(event -> resultsLabel.setValue(""));
 
-        //  checkbox1AssumptionWe.addValueChangeListener(event ->
-        //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
+
 
         Button calculateImp = new Button("Oblicz punkty! ", clickEvent -> {
             try {
-                float foo = Float.parseFloat(pointsInBothHands.getValue());
-                int foo2 = Integer.parseInt(pointsForContract.getValue());
-                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(foo, foo2, checkbox1AssumptionWe.getValue(), checkbox1AssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                float foo = Float.parseFloat(pointsInBothHandsField.getValue());
+                int foo2 = Integer.parseInt(pointsForContractField.getValue());
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(foo, foo2, checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
             } catch (NumberFormatException | InvalidNumberOfPointsException e) {
                 String message = (e instanceof NumberFormatException) ?
@@ -533,41 +576,5 @@ descriprionOf4play=s.toString()+"\n"+aa.getRubberScoringAsString();
         ui.addWindow(window);
     }
 
-    private void actionDisplayPointsTable(VaadinUI ui) {
-        final Window window = new Window("Okienko z tabelkami do liczenia punktów.");
-        window.setWidth("100%");
-        window.addStyleName("window");
-        final FormLayout content = new FormLayout();
-        content.setMargin(true);
-        content.addComponent(new Label("Wersja wstępna - tabelki do liczenia punktów dla wariantów podaj wszystkie parametry (potem może będzie je brało z innego miejsca) :)"));
 
-        content.addStyleName("window");
-
-        //   checkbox1AssumptionWe.setValue(true); //move to create menu?
-        checkboxFitWe.setValue(true);
-
-        content.addComponent(checkbox1AssumptionWe);
-        content.addComponent(checkboxFitWe);
-        content.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy dowolny kolor jest sfitowany, jeżeli mniej to tylko starszy."));
-        //  checkbox1AssumptionWe.addValueChangeListener(event ->
-        //         checkboxFitWe.setValue(! checkbox1AssumptionWe.getValue()));
-
-        Button displayExpectedResults = new Button("Wyświetl tabelkę  oczekiwanych punktów dla  danych założeń! ", clickEvent -> {
-            TextArea a = new TextArea();
-            a.setWidth("100%");
-            a.setValue(ExpectedResultsTable.getTableAsString(checkboxFitWe.getValue(), checkbox1AssumptionWe.getValue()));
-            content.addComponent(a);
-        });
-
-        Button displayImpTable = new Button("Wyświetl tabelkę impów! ", clickEvent -> {
-            TextArea b = new TextArea();
-            b.setWidth("100%");
-            b.setValue(ImpTable.getTableAsString());
-            content.addComponent(b);
-        });
-        content.addComponent(displayImpTable);
-        content.addComponent(displayExpectedResults);
-        window.setContent(content);
-        ui.addWindow(window);
-    }
 }
