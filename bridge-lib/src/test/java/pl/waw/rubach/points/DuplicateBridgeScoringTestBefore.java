@@ -61,6 +61,8 @@ public class DuplicateBridgeScoringTestBefore {
     protected Map<Integer, Integer>  testNoTrumphContractPointsFiveMore = new HashMap<>();
     protected Map<Integer, Integer>  testNoTrumphContractPointsSixMore = new HashMap<>();
 
+    protected Map<Integer, Integer>  testNoTrumphContractPointsThreeMoreDouble = new HashMap<>();
+
     protected Map<Integer, Integer> testPointsForMajorContractOneMoreDouble = new HashMap<>();
     protected Map<Integer, Integer> testPointsForMinorContractOneMoreDouble = new HashMap<>();
     protected Map<Integer, Integer> testNoTrumphContractPointsOneMoreDouble = new HashMap<>();
@@ -271,6 +273,22 @@ public class DuplicateBridgeScoringTestBefore {
 
         testNoTrumphContractPointsSixMore.put(1, 40        +180 + premiaZaCzesciowke);
 
+        //example of nt more more only on nt
+        testNoTrumphContractPointsThreeMoreDouble.put(1, 2*40       + 3* nadrobkaZKontra+  karaZaKontre + premiaZaCzesciowke);
+        testNoTrumphContractPointsThreeMoreDouble.put(2, 2*(40+30)    + 3* nadrobkaZKontra+  karaZaKontre +  premiaZaKoncowke);
+        testNoTrumphContractPointsThreeMoreDouble.put(3, 2*(40+2*30)   + 3* nadrobkaZKontra+  karaZaKontre + premiaZaKoncowke);
+        testNoTrumphContractPointsThreeMoreDouble.put(4, 2*(40+3*30)   + 3* nadrobkaZKontra+  karaZaKontre + + premiaZaKoncowke);
+        //   testNoTrumphContractPointsThreeMore.put(5, 40+4*30  +90 + premiaZaKoncowke); - not possible only 13 trics
+
+        testNoTrumphContractPointsFourMore.put(1, 40       +120 + premiaZaCzesciowke);
+        testNoTrumphContractPointsFourMore.put(2, 40+30    +120 + premiaZaCzesciowke);
+        testNoTrumphContractPointsFourMore.put(3, 40+2*30  +120 + premiaZaKoncowke);
+
+        testNoTrumphContractPointsFiveMore.put(1, 40       +150 + premiaZaCzesciowke);
+        testNoTrumphContractPointsFiveMore.put(2, 40+30    +150 + premiaZaCzesciowke);
+
+        testNoTrumphContractPointsSixMore.put(1, 40        +180 + premiaZaCzesciowke);
+
 // major more more
         testMajorContractPointsThreeMore.put(1, 30    +90 + premiaZaCzesciowke);
         testMajorContractPointsThreeMore.put(2, 2*30  +90 + premiaZaCzesciowke);
@@ -286,7 +304,7 @@ public class DuplicateBridgeScoringTestBefore {
         testMajorContractPointsFiveMore.put(2, 2*30    +150 + premiaZaCzesciowke);
 
         testMajorContractPointsSixMore.put(1, 30        +180 + premiaZaCzesciowke);
-//todo minor more more
+
 
         //TESTS WPADKI
         //example test jedna wpadka
@@ -614,7 +632,13 @@ public class DuplicateBridgeScoringTestBefore {
             Assert.assertEquals(testNoTrumphContractPointsThreeMore.get(p), res);
             //  }
         }
-//    }
+        for (int p : new TreeSet<Integer>(testNoTrumphContractPointsThreeMoreDouble.keySet())) {
+            Integer res = new DuplicateBridgeScoring(p, "nt", true, false, beforeAfter, p+3+6).getContractScoringPoints();
+            logger.info("Dla kontraktu o wysokości " + p + " w bezatu z kontrą i  z trzema nadróbkami  wynik jest: " + res + " punktów.");
+            Assert.assertEquals(testNoTrumphContractPointsThreeMoreDouble.get(p), res);
+            //  }
+        }
+        //    }
 //    @Test
 //    public void testNoTrumphContractFourMore()  throws BridgeException {
         //    for(int i=1; i<2; i++){

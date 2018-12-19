@@ -27,10 +27,6 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
     protected MultiKeyMap<Float, Integer> testCountingPointsNoFitBothMap = new MultiKeyMap<>();
 
 
-    /*  private MultiKeyMap<MultiKeyMap,Integer> testCountingPointsAssumptionNoFitMap = new MultiKeyMap<>();
-    testCountingPointsAssumptionNoFitMap.put(testCountingPointsAssumptionNoFitMap, testCountingPointsAssumptionNoFitMap,11); */
-
-
     @Before
     public void fillTestPointsMap() {
         a = wePlay ? 1 : -1;
@@ -80,16 +76,16 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
     }
 
 
-    protected String printAssumtion(boolean[] a) {
+    private String printAssumtion(boolean[] a) {
         return (a[0] && a[1]) ? " Obie Po " : (a[0] ? " My Po, Oni Przed " : (a[1] ? " My Przed, Oni Po " : " Obie Przed "));
     }
 
-    protected String printFit(boolean fitWe, boolean fitThey) {
+    private String printFit(boolean fitWe, boolean fitThey) {
         return (fitWe && fitThey) ? " Obie Fit " : (fitWe ? " My Fit" : (fitThey ? " Oni Fit " : " Obie bez fitu "));
     }
 
 
-    protected void testFunction1(MultiKeyMap<Float, Integer> map, int a, boolean wePlay, boolean[] assumption, boolean fitWe, boolean fitThey) throws InvalidNumberOfPointsException, InvalidParameterException {
+    private void testFunction1(MultiKeyMap<Float, Integer> map, int a, boolean wePlay, boolean[] assumption, boolean fitWe, boolean fitThey) throws InvalidNumberOfPointsException, InvalidParameterException {
 
         String des2 = printFit(fitWe, fitThey);
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : map.entrySet()) {
@@ -103,19 +99,19 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         }
     }
 
-    protected void testFunction2(MultiKeyMap<Float, Integer> map, int a, boolean wePlay, boolean[] assumption, boolean fitWe, boolean fitThey) throws InvalidNumberOfPointsException, InvalidParameterException {
+    private void testFunction2(MultiKeyMap<Float, Integer> map, boolean[] assumption, boolean fitWe, boolean fitThey) throws InvalidNumberOfPointsException, InvalidParameterException {
 
         String des2 = printFit(fitWe, fitThey);
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : map.entrySet()) {
 
             float pointsInBothHands = entry.getKey().getKey(0);
-            if (wePlay && (pointsInBothHands != 20) || !fitWe || !fitThey) {
+            if ((pointsInBothHands != 20) || !fitWe || !fitThey) {
                 float contractScoringPointsFloat = entry.getKey().getKey(1);
                 int contractScoringPoints = Math.round(contractScoringPointsFloat);
-                Integer res = new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getResults();
+                Integer res = new CalculatedImpPointsForOneDeal(true, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getResults();
                 logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + contractScoringPoints + " wynik jest " + res + " impów. " + printAssumtion(assumption) + des2);
                 Assert.assertEquals(map.get(pointsInBothHands, contractScoringPointsFloat), res);
-                Integer resR = -new CalculatedImpPointsForOneDeal(!wePlay, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getResults();
+                Integer resR = -new CalculatedImpPointsForOneDeal(false, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getResults();
                 logger.info(" Oni grają: Dla " + pointsInBothHands + " pkt:  oraz ugranych " + contractScoringPoints + " wynik jest " + res + " impów. " + printAssumtion(assumption) + des2);
                 Assert.assertEquals(map.get(pointsInBothHands, contractScoringPointsFloat), resR);
             }
@@ -124,31 +120,37 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
     }
 
 
-
+    @Test
+    public void testMirror() throws InvalidNumberOfPointsException, InvalidParameterException {
+        testFunction2(testCountingPointsNoFitBothMap, assumption, false, false);
+        testFunction2(testCountingPointsFitWeMap,  assumption, true, false);
+        testFunction2(testCountingPointsFitTheyMap,  assumption, false, true);
+        testFunction2(testCountingPointsFitBothMap,  assumption, true, true);
+    }
 
     @Test
     public void testCountingPointsRes() throws InvalidNumberOfPointsException, InvalidParameterException {
         testFunction1(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
-        testFunction2(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
+
     }
 
     @Test
     public void testCountingPointsFitWeRes() throws InvalidNumberOfPointsException, InvalidParameterException {
         testFunction1(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
-        testFunction2(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
+
     }
 
 
     @Test
     public void testCountingPointsFitTheyRes() throws InvalidNumberOfPointsException, InvalidParameterException {
         testFunction1(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
-        testFunction2(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
+
     }
 
     @Test
     public void testCountingPointsBothFitRes() throws InvalidNumberOfPointsException, InvalidParameterException {
        testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
-        testFunction2(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
+
 
     }
 
@@ -163,12 +165,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         testFunction1(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
         testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
 
-//        testFunction2(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
-     //   testFunction2(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
-       // testFunction2(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
-        //     testFunction2(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
-
-    }
+           }
 
 
 
