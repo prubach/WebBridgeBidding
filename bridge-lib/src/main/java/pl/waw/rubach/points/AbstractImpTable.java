@@ -2,7 +2,7 @@ package pl.waw.rubach.points;
 
 import java.util.*;
 
-public abstract class AbstractTable {
+public abstract class AbstractImpTable {
 
 
     /**

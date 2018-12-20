@@ -1,11 +1,9 @@
 package pl.waw.rubach.points;
 
-import java.util.Map;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 //Original IMP table, 1949 -1962
-public class OrginalImpTable extends AbstractTable{
+public class OrginalImpTable extends AbstractImpTable {
 
     /**
      * one instance of ImpTable (as Singleton)??

@@ -2,7 +2,7 @@ package pl.waw.rubach.points;
 
 import java.util.*;
 
-public class ImpTable extends AbstractTable{
+public class ImpTable extends AbstractImpTable {
 
     /**
      * one instance of ImpTable (as Singleton)??

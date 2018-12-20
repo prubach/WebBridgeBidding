@@ -22,7 +22,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
     private int expectedPoints;
 
 
-    //pyt pozmieniałam na tak jak wydaje się bardziej elegancko (stare zostało w komentarzach-  chyba jest ok nie jestem pewna .. testy już są chyba ok..
+    //pyt proszę rzuć okiem czy tak lepie -  pozmieniałam na tak jak wydaje się bardziej elegancko (stare zostało w komentarzach-  chyba jest ok nie jestem pewna .. testy już są chyba ok..
     //constructors  when both play - there are tests
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int pointsForContractWe,
@@ -31,7 +31,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
         //assumed that we play
         setWePlay(wePlay);
         setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
-        setOpponensVulnerable(wePlay ? auctionAssumptionThey : auctionAssumptionWe);
+        setOpponentVulnerable(wePlay ? auctionAssumptionThey : auctionAssumptionWe);
         setDeclarerFit(wePlay ?fitWe: fitThey);
         setOpponensFit(wePlay ? fitThey : fitWe);
         setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe);

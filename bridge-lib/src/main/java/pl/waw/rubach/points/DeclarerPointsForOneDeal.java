@@ -8,18 +8,18 @@ public class DeclarerPointsForOneDeal {
     public static final int IS_UNDOUBLE = 1;
 
     /**
-     * indicatats who is Declarer - but all value here for declarer
+     * indicates who is Declarer - but all value here for declarer
       */
     private boolean wePlay;
 
     /**
      * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
-     * in future from other part of aplication - results of biding part or user imput
+     * in future from other part of application - results of biding part or user input
      */
     private int contractLevel;
     /**
-     * Cards suits [denomination or strain] that denotes the proposed trump suit or notrump.
-     * Thus, there are five denominations – notrump, spades, hearts, diamonds and clubs.
+     * Cards suits [denomination or strain] that denotes the proposed trump suit or no trump.
+     * Thus, there are five denominations – no trump, spades, hearts, diamonds and clubs.
      */
     private String contractSuit;
     /**
@@ -28,8 +28,8 @@ public class DeclarerPointsForOneDeal {
     private int noDoubleReSignature;
 
     /**
-     * ATTENTION fit opponens not they!!!
-     * Fit for  opponenes Plaing Pair means if they have 8 cards in suit (major or all depending of poinst)
+     * ATTENTION fit opponents not they!!!
+     * Fit for  opponents of playing Pair means if they have 8 cards in suit (major or all depending of points)
      */
     private boolean opponensFit;
     /**
@@ -42,7 +42,7 @@ public class DeclarerPointsForOneDeal {
      * ATTENTION Auction assumption opponents  not they!!
      * Auction Assumption for opponens of Plaing Pair means if pair is  vulnerable or unvulnerable
      */
-    private boolean opponensVulnerable;
+    private boolean opponentVulnerable;
 
     /**
      * ATTENTION Auction assumption declarer not we!!!
@@ -107,7 +107,7 @@ public class DeclarerPointsForOneDeal {
     public String getFullDescriprtion(){
         String fitDes = isDeclarerFit() ? " z fitem. " : " bez fitu. ";
         String fitODes = isOpponensFit() ? " Przeciwnicy mają fit i są : " :" Przeciwnicy nie mają fitu i są" ;
-        String assOp = isOpponensVulnerable() ? " przed partią. " : " po partii.";
+        String assOp = isOpponentVulnerable() ? " przed partią. " : " po partii.";
         return getContractDescription() + "Rozgrywający mieli " +getPointsInBothDeclarerHands()+ " punkty  "+ fitDes + fitODes + assOp ;
     }
 
@@ -167,8 +167,8 @@ public class DeclarerPointsForOneDeal {
         this.declarerVulnerable = declarerVulnerable;
     }
 
-    public boolean isOpponensVulnerable() {
-        return opponensVulnerable;
+    public boolean isOpponentVulnerable() {
+        return opponentVulnerable;
     }
 
     public boolean isOpponensFit() {
@@ -187,8 +187,8 @@ public class DeclarerPointsForOneDeal {
         this.declarerFit = declarerFit;
     }
 
-    public void setOpponensVulnerable(boolean opponensVulnerable) {
-        this.opponensVulnerable = opponensVulnerable;
+    public void setOpponentVulnerable(boolean opponentVulnerable) {
+        this.opponentVulnerable = opponentVulnerable;
     }
 
     public int getDeclarerNumberOfTrickTaken() {

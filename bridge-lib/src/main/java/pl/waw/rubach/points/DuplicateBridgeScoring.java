@@ -23,23 +23,26 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
     //This was :  PointsForContract(...)
     /**
-     * Constructor of scorring for duplicate Bridge game seting contract parameter and calculated PoinstForContract
+     * Constructor of scoring for duplicate Bridge game for Declarer hand  -  setting contract parameter and calculated scoring points for Contract
+     * extended DealerPointsForOneDeal class where are field for all parameter for declarer.
+     * Contract parameter:
      * @param contractLevel The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
-     * in future from other part of aplication - results of biding part or user imput
-     * @param contractSuit Cards suits [denomination or strain] that denotes the proposed trump suit or notrump.
-     * Thus, there are five denominations – notrump, spades, hearts, diamonds and clubs.
+     * in future from other part of application - results of biding part or user input
+     * @param contractSuit Cards suits [denomination or strain] that denotes the proposed trump suit or no trump.
+     * Thus, there are five denominations – no trump, spades, hearts, diamonds and clubs.
      * @param nDRSignature Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
      * @param auctionAssumptionDeclarer ATTENTION Auction assumption declarer not we!!!
-     * Auction Assumption for Plaing Pair means if pair is  vulnerable or unvulnerable
-     * @param numberOfTrickTakenByDeclarer ATTENTION : Numnber of tricks taken in game by we !!!(Pair who make scoring not always plaing pair)
+     * Auction Assumption for playing Pair means if pair is  vulnerable or unvulnerable
+     *
+     * @param numberOfTrickTakenByDeclarer ATTENTION : Number of tricks taken in game by we !!!(Pair who make scoring not always playing pair)
      *
      * Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
      * and who must therefore play both their own hand and the exposed hand of the dummy.
      * (opponent takes 13 - numberOfTrickTakenByDeclarer)
-     * @throws InvalidContractLevelException if level is not beteween 1 to 7 (according bridge rulles
+     * @throws InvalidContractLevelException if level is not between 1 to 7 (according bridge rules
      * @throws InvalidContractSuitException     if suit is no one of 5 bridge strain (colors + nt)
      * @throws InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
-     * @throws InvalidParameterException other parameter inproprieter value ...
+     * @throws InvalidParameterException other parameter incorrect value ...
      */
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
@@ -52,12 +55,12 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
 
-        //checking if number of tricks is corect
+        //checking if number of tricks is correct
         if (numberOfTrickTakenByDeclarer > 13 || numberOfTrickTakenByDeclarer < 0)
             throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
         setDeclarerNumberOfTrickTaken(numberOfTrickTakenByDeclarer);
 
-        //checking if double/ redouble or undouble signature  is corect
+        //checking if double/ redouble or undouble signature  is correct
         if (!(nDRSignature == 1 || nDRSignature == 2 || nDRSignature == 4))
             throw new InvalidParameterException(nDRSignature);
         setNoDoubleReSignature(nDRSignature);
@@ -66,8 +69,8 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
         setShortDescription(getContractDescription());
 
         //  Begin of calculation
-        setContractScoringPoints(0);       // points equal zero at the beginging of calculation
-        this.oddTricks = numberOfTrickTakenByDeclarer - 6;    //trics above 6
+        setContractScoringPoints(0);       // points equal zero at the beginning of calculation
+        this.oddTricks = numberOfTrickTakenByDeclarer - 6;    //tricks above 6
         this.made = oddTricks >= contractLevel;  //condition if game is made or not
 
         if (made) {
@@ -84,7 +87,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
                 + getSlamsBonusPoints());
     }
 
-    //OLD constructor with boolean double redouble - exist in all test so cant be delated
+    //OLD constructor with boolean double redouble - exist in all test so cant be delayed
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
@@ -94,14 +97,14 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
     /**
      * Contract points, assigned to each odd trick bid and made:
-     * Their values depend on the suit (or notrump) and whether the contract is doubled or redoubled; they are not affected by vulnerability.
-     * Tricks won beyond that necessary to fulfill the contract are referred to as overtricks and their scoring points are accounted
+     * Their values depend on the suit (or no trump) and whether the contract is doubled or redoubled; they are not affected by vulnerability.
+     * Tricks won beyond that necessary to fulfill the contract are referred to as overtrick and their scoring points are accounted
      * for separately because their values are dependent upon declarer's vulnerability.
      *
      * @param numberOfTricksForWhichArePointsCalculated The number of tricks for which points are calculated
-     *                                                  in normal calse that is contract level = (when added to the book of six tricks) a bid or contract states will be taken.
-     *                                                  but could be number of overtricks!!!
-     * @return Scorring  for this part of contract
+     *                                                  in normal case that is contract level = (when added to the book of six tricks) a bid or contract states will be taken.
+     *                                                  but could be number of overtrick!!!
+     * @return Scoring  for this part of contract
      * @throws InvalidContractSuitException if contract suits is not correct
      */
     private int getContractPoints(int numberOfTricksForWhichArePointsCalculated) throws InvalidContractSuitException {
@@ -125,10 +128,10 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
     }
 
     /**
-     * When declarer makes overtricks, their score value depends upon the contract denomination, declarer's vulnerability and whether or not the contract is undoubled, doubled or redoubled.
-     * In an undoubled contract each overtrick earns the same as in contract points (30 for notrump and major suit contracts, 20 for minor suit contracts);
+     * When declarer makes overtrick, their score value depends upon the contract denomination, declarer's vulnerability and whether or not the contract is undouble, doubled or redoubled.
+     * In an undouble contract each overtrick earns the same as in contract points (30 for no trump and major suit contracts, 20 for minor suit contracts);
      * values increase significantly when the contract has been doubled or redoubled, especially when vulnerable.
-     * @return scorring for overtricks
+     * @return scoring for overtricks
      * @throws InvalidContractSuitException if contract suits is not correct
      */
     private int getOvertrickPoints() throws InvalidContractSuitException {
@@ -148,17 +151,17 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
             }
             //if (isContractDouble && !auctionAssumptionDeclarer)
             if (getNoDoubleReSignature() == IS_DOUBLE && !isDeclarerVulnerable())
-                overtricksPoints = overtricks * 100;   //z kontrą przed partią - za 100
+                overtricksPoints = overtricks * 100;   //doubled, not vulnerable - each for 100
             //if (isContractDouble && auctionAssumptionDeclarer)
             if (getNoDoubleReSignature() == IS_DOUBLE && isDeclarerVulnerable())
-                overtricksPoints = overtricks * 200;    // z kontrą po partii za 200
+                overtricksPoints = overtricks * 200;    // doubled, vulnerable - each for 200
 
             //if (isContractRedouble && !auctionAssumptionDeclarer)
             if (getNoDoubleReSignature() == IS_REDOUBLE && !isDeclarerVulnerable())
-                overtricksPoints = overtricks * 200;     // z rekontrą przed partią za 200
+                overtricksPoints = overtricks * 200;     //  redoubled, not vulnerable - each for 200
             //if (isContractRedouble && auctionAssumptionDeclarer)
             if (getNoDoubleReSignature() == IS_REDOUBLE && isDeclarerVulnerable())
-                overtricksPoints = overtricks * 400;     //z rekontrą po partii za 400
+                overtricksPoints = overtricks * 400;     //redoubled, vulnerable - each for 400
 
             description = description + "+  punkty z " + overtricks + " nadróbek to: " + overtricksPoints + "pkt,";
         }
@@ -222,7 +225,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
      * any partial contract, i.e. one scoring less than 100 contract points, scores a bonus of 50 points, and
      * any game contract, i.e. one scoring 100 or more points, scores a game bonus of 300 if not vulnerable and 500 if vulnerable.
      *
-     * @param calculatedPointsForContract - are points for Contract - not overtrics included - so to know is is more then 100.
+     * @param calculatedPointsForContract - are points for Contract - not overtricks included - so to know is is more then 100.
      * @return game/ part game or slam bonnus
      */
     private int getGamePartGameBonus(int calculatedPointsForContract) {
@@ -248,8 +251,8 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
         if (oddTricks >= getContractLevel()) {
             //czy można dodać opis tak żeby został zapis ze znakami zapytania? Uważam że może być bez opisu bo o premi szlemikowej mało kto zapomina  description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
-            //odp nie rozumiem w jakim sensie ze znakami zapytania?
-            //pyt chodzi o to że podoba mi się jak nie ma if tylko ? . Ale wtedy nie umiem dopisać drugiego polecenia np :  description = description + " + premia szlemikowa.";
+            //nie rozumiem w jakim sensie ze znakami zapytania?
+            //pyt chodzi o to że podoba mi się jak nie ma if tylko ? . Ale wtedy nie umiem dopisać drugiego polecenia bo musiałby być nawias np :  description = description + " + premia szlemikowa.";
             // Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
             // nieużywany znak np. "%" a potem wykonująć replace
             if (getContractLevel() == 6) return (isDeclarerVulnerable()) ? 750 : 500;

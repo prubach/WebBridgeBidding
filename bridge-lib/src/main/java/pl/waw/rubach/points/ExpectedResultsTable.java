@@ -28,7 +28,7 @@ public class ExpectedResultsTable {
     private final int[] AFTER_NOFIT = new int[]{0, 50, 70, 110, 130, 290, 440, 520, 600, 630, 660, 720, 800, 1050,
             1350, 1500, 1650, 1800, 2100, 2100, 2100};
     // Keep Maps of points to Imp Points, for Fit (true|false), After (true|false)
-    private MultiKeyMap<Boolean, Map> pointsMap = new MultiKeyMap<>();
+    private final MultiKeyMap<Boolean, Map> pointsMap = new MultiKeyMap<>();
 
     private ExpectedResultsTable() {
         pointsMap.put(true, false, fillMap(BEFORE_FIT));
@@ -77,7 +77,7 @@ public class ExpectedResultsTable {
      * @param auctionAssumption - assumption After (true) or Before (false)
      * @return map of points in hand to bonus points
      */
-    public Map<Integer, Integer> getPtsMap(boolean fitInOlderColor, boolean auctionAssumption) {
+    private Map<Integer, Integer> getPtsMap(boolean fitInOlderColor, boolean auctionAssumption) {
         return pointsMap.get(fitInOlderColor, auctionAssumption);
     }
 
@@ -102,19 +102,19 @@ public class ExpectedResultsTable {
      * @param points                - points in both our  (person who calulate points)  hands
      * @param fitInOlderColorWe     - if we hace  fit in older color (beginning with 30 points any color) true, else false
      * @param fitInOlderColorThey   -  if they have fit as above
-     *                              Attantion if both have exactly 20 points and both fit in older color mark only spades (for hearts mark no fit)
+     *                              Attention if both have exactly 20 points and both fit in older color mark only spades (for hearts mark no fit)
      * @param auctionAssumptionWe   - assumption After (true) or Before (false)
-     * @param auctionAssumptionThey - vunerable or not as above
+     * @param auctionAssumptionThey - vulnerable or not as above
      * @return bonus points
      */
     int getPoints(float points, boolean fitInOlderColorWe, boolean fitInOlderColorThey, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
             throws InvalidNumberOfPointsException, InvalidParameterException {
 
-        //test if points value is correct if not print Exeption
+        //test if points value is correct if not print Exception
         if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
 
         if (points == 20 && fitInOlderColorThey && fitInOlderColorWe)
-            throw new InvalidParameterException(points, fitInOlderColorWe, fitInOlderColorThey);
+            throw new InvalidParameterException(points, true, true);
 
         //if 1 we  so points are for us, if -1 they and points for us is minus that for they
         int whoShouldPlay= 1;
@@ -130,6 +130,7 @@ public class ExpectedResultsTable {
             if(fitInOlderColorThey) {
                 whoShouldPlay = -1;
                 auctionAssumption = auctionAssumptionThey;
+                //noinspection ConstantConditions
                 fit = fitInOlderColorThey;
             }
         }
@@ -152,7 +153,7 @@ public class ExpectedResultsTable {
      */
     int getPoints(float points, boolean fit, boolean auctionAssumption) throws InvalidNumberOfPointsException {
 
-        //test if points value is correct if not print Exeption
+        //test if points value is correct if not print Exception
         if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
         int whoShouldPlay = 1;
         if (points < 20) {
@@ -163,7 +164,7 @@ public class ExpectedResultsTable {
       return  calculateExpectedPoins(points,whoShouldPlay,fit,auctionAssumption);
     }
 
- private int calculateExpectedPoins(float points, int whoShouldPlay, boolean fit, boolean auctionAssumption) throws InvalidNumberOfPointsException{
+ private int calculateExpectedPoins(float points, int whoShouldPlay, boolean fit, boolean auctionAssumption){
 
      Map<Integer, Integer> map = getPtsMap(fit, auctionAssumption);
      int pointsInt = Math.round(points * 2);
