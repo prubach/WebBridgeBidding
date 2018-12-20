@@ -71,7 +71,7 @@ public class RubberScoring {
 
     //0ld no very usefull  but in tests ...
     public RubberScoring(boolean wp1, boolean wp2, boolean wp3, boolean wp4,
-                         int piH1, int piH2, int piH3, int piH4,
+                         float piH1, float piH2, float piH3, float piH4,
                          int sp1, int sp2, int sp3, int sp4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
@@ -90,7 +90,7 @@ public class RubberScoring {
 
     //0ld no very usefull  but in tests ...
     public RubberScoring(boolean wp1, boolean wp2, boolean wp3, boolean wp4, int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
-                         int piH1, int piH2, int piH3, int piH4, int ntt1, int ntt2, int ntt3, int ntt4,
+                         float piH1, float piH2, float piH3, float piH4, int ntt1, int ntt2, int ntt3, int ntt4,
                          boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
                          boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {

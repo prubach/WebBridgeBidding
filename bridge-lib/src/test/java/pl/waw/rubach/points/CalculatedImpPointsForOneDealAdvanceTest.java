@@ -25,14 +25,9 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
 
     // private MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitBothMap = new MultiKeyMap<>();
     //  private MultiKeyMap<Float, Integer> testCountingPointsBothAfterNoFitBothMap = new MultiKeyMap<>();
-
-
     //  private MultiKeyMap<Float, Integer> testCountingPointsNoFitBothMap = new MultiKeyMap<>();
-    //
-    //
-
-    /*  private MultiKeyMap<MultiKeyMap,Integer> testCountingPointsAssumptionNoFitMap = new MultiKeyMap<>();
-    testCountingPointsAssumptionNoFitMap.put(testCountingPointsAssumptionNoFitMap, testCountingPointsAssumptionNoFitMap,11); */
+    //  private MultiKeyMap<MultiKeyMap,Integer> testCountingPointsAssumptionNoFitMap = new MultiKeyMap<>();
+    // testCountingPointsAssumptionNoFitMap.put(testCountingPointsAssumptionNoFitMap, testCountingPointsAssumptionNoFitMap,11);
 //pyt czy można zrobić mapę której jednym kluczem jest boolean a kolejnymi tak jak jest wtedy można by zrobic jeden test i tylko zmieniać założenia przy wartościach?
 // czy np mapa map i czy to się opłaca może lepiej tak jak było w CalculatedImpPointsForOneDealBeforWePlay
 
@@ -40,15 +35,47 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
     @Before
     public void fillTestPointsMap() {
         //                          key1: liczba puntków  key2: wysokość key3 liczba lew
-
         testCountingPointsNTBothBeforeBothNoFit.put(20, 3, 9, 9); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(21, 3, 9, 8); //990
+        testCountingPointsNTBothBeforeBothNoFit.put(22, 3, 9, 8); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(23, 3, 9, 7); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(24, 3, 9, 7); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(24, 3, 9, 7); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(25, 3, 9, 5); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(26, 3, 9, 3); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(27, 3, 9, 2); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(28, 3, 9, 0); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(29, 3, 9, -1); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(30, 3, 9, -2); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(31, 3, 9, -3); //400
+        testCountingPointsNTBothBeforeBothNoFit.put(32, 3, 9, -5); //400
+
         testCountingPointsNTBothBeforeBothNoFit.put(20, 6, 12, 14); //990
         testCountingPointsNTBothBeforeBothNoFit.put(29, 6, 11, -10); //990
         testCountingPointsNTBothBeforeBothNoFit.put(28, 6, 12, 11); //990
-        testCountingPointsNTBothBeforeBothNoFit.put(22, 3, 9, 8); //400
-        testCountingPointsNTBothBeforeBothNoFit.put(26, 3, 9, 3); //400
+
+        testCountingPointsNTBothBeforeBothNoFit.put(21, 1, 7, 1); //90
+        testCountingPointsNTBothBeforeBothNoFit.put(24, 1, 7, -1); //90
+        testCountingPointsNTBothBeforeBothNoFit.put(27, 1, 7, -6); //90
+        testCountingPointsNTBothBeforeBothNoFit.put(21, 1, 8, 2); //140
+    }
+
+    @Test
+    public void testCountingPointsBothBeforeRes() throws BridgeException {
+
+        for (Map.Entry<MultiKey<? extends Integer>, Integer> entry : testCountingPointsNTBothBeforeBothNoFit.entrySet()) {
+
+            int pointsInBothHands = entry.getKey().getKey(0);
+            int contractLevel = entry.getKey().getKey(1);
+            int numberOfTricksTaken = entry.getKey().getKey(2);
+
+            CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(true, pointsInBothHands, contractLevel, "nt", 1, numberOfTricksTaken, weBeforeAfter, theyBeforeAfter, false, false);
+            Integer res = roog.getResults();
+            logger.info("My gramy: Dla " + pointsInBothHands + " pkt.   przy kontrakcie " + contractLevel + "NT i zebranych " + numberOfTricksTaken + " lewach - wynik jest " + res + " impów. Obie przed, obie bez fitu");
+            Assert.assertEquals(testCountingPointsNTBothBeforeBothNoFit.get(pointsInBothHands, contractLevel, numberOfTricksTaken), res);
 
 
+        }
     }
 
     @Test
@@ -81,37 +108,16 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
     @Test
     public void testCountingPointsA() throws BridgeException {
 
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(20f, 3, "nt", false, false, 9, false, false, false, false);
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(true,20f, 3, "nt", 1, 9, false, false, false, false);
         Assert.assertEquals(a.getResults(), 9);
 
-        CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(20f, 3, "nt", false, false, 9, false, false, false, false);
+        CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(true,20f, 3, "nt", 1, 9, false, false, false, false);
         Assert.assertEquals(a2.getResults(), 9);
-
-    }
-
-    @Test
-    public void testCountingPointsBothBeforeRes() throws BridgeException {
-
-        for (Map.Entry<MultiKey<? extends Integer>, Integer> entry : testCountingPointsNTBothBeforeBothNoFit.entrySet()) {
-
-            int pointsInBothHands = entry.getKey().getKey(0);
-            int contractLevel = entry.getKey().getKey(1);
-            int numberOfTricksTaken = entry.getKey().getKey(2);
-
-            CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(pointsInBothHands, contractLevel, "nt", false, false, numberOfTricksTaken, weBeforeAfter, theyBeforeAfter, false, false);
-
-//             CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(pointsInBothHands,400,false,false,false,false);
-            Integer res = roog.getResults();
-            //    Integer res = new CalculatedImpPointsForOneDeal(28f, contractLevel,"nt",numberOfTricksTaken, false, false, false, false).getResults();
-            logger.info("My gramy: Dla " + pointsInBothHands + " pkt.   przy kontrakcie " + contractLevel + "NT i zebranych " + numberOfTricksTaken + " lewach - wynik jest " + res + " impów. Obie przed, obie bez fitu");
-            Assert.assertEquals(testCountingPointsNTBothBeforeBothNoFit.get(pointsInBothHands, contractLevel, numberOfTricksTaken), res);
-            //  Assert.assertEquals(roog.getContractScoringPoints(),400 );
-
-
-        }
-
 
     }
 
 
 }
+
+
+

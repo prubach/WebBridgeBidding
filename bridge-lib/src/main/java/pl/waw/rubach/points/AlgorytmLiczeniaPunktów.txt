@@ -194,3 +194,10 @@ odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  
         int res2 = c2.getSumm();
         logger.info("Wynik dla całego robra z podanych wyników rozdań jest: "+ res2 +" \n");
         Assert.assertEquals(res2, 0);
+
+
+         // private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+               // DuplicateBridgeScoring dbs = new DuplicateBridgeScoring(3, "nt", 1, false, 9);
+               // CalculatedImpPointsForOneDeal ipr2 = new CalculatedImpPointsForOneDeal(true, 20, dbs.getContractScoringPoints(), false, false, false, false);
+               // CalculatedImpPointsForOneDeal ipr1 = new CalculatedImpPointsForOneDeal(true, 20, 400, false, false, false, false);
+               // CalculatedImpPointsForOneDeal ipr0 = new CalculatedImpPointsForOneDeal(true, 20, 3, "nt", 1, 9, false, false, false, false);
