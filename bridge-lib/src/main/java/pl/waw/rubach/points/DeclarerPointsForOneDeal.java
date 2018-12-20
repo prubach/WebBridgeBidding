@@ -6,6 +6,12 @@ public class DeclarerPointsForOneDeal {
     public static final int IS_DOUBLE = 2;
     public static final int IS_REDOUBLE = 4;
     public static final int IS_UNDOUBLE = 1;
+
+    /**
+     * indicatats who is Declarer - but all value here for declarer
+      */
+    private boolean wePlay;
+
     /**
      * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
      * in future from other part of aplication - results of biding part or user imput
@@ -20,6 +26,23 @@ public class DeclarerPointsForOneDeal {
      *  Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
      */
     private int noDoubleReSignature;
+
+    /**
+     * ATTENTION fit opponens not they!!!
+     * Fit for  opponenes Plaing Pair means if they have 8 cards in suit (major or all depending of poinst)
+     */
+    private boolean opponensFit;
+    /**
+     * ATTENTION fit declarer not we!!!
+     * Fit for Plaing Pair means if they have 8 cards in suit (major or all depending of poinst)
+     */
+    private boolean declarerFit;
+
+    /**
+     * ATTENTION Auction assumption opponents  not they!!
+     * Auction Assumption for opponens of Plaing Pair means if pair is  vulnerable or unvulnerable
+     */
+    private boolean opponensVulnerable;
 
     /**
      * ATTENTION Auction assumption declarer not we!!!
@@ -81,8 +104,36 @@ public class DeclarerPointsForOneDeal {
             return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
     }
 
+    public String getFullDescriprtion(){
+        String fitDes = isDeclarerFit() ? " z fitem. " : " bez fitu. ";
+        String fitODes = isOpponensFit() ? " Przeciwnicy mają fit i są : " :" Przeciwnicy nie mają fitu i są" ;
+        String assOp = isOpponensVulnerable() ? " przed partią. " : " po partii.";
+        return getContractDescription() + "Rozgrywający mieli " +getPointsInBothDeclarerHands()+ " punkty  "+ fitDes + fitODes + assOp ;
+    }
 
+
+    public int getNumberOfTricksTakenWe() {
+        if (isWePlay()) return getDeclarerNumberOfTrickTaken();
+        else return 13-getDeclarerNumberOfTrickTaken();
+    }
+
+    public float getPoinsOnHandsWe() {
+        if (isWePlay()) return getPointsInBothDeclarerHands();
+        else return 40-getPointsInBothDeclarerHands();
+            }
+
+     public int getContractScoringPointsWe(){
+        if(isWePlay()) return getContractScoringPoints();
+        else return -getContractScoringPoints();
+    }
     //getteres and setteres
+    public boolean isWePlay() {
+        return wePlay;
+    }
+
+    public void setWePlay(boolean wePlay) {
+        this.wePlay = wePlay;
+    }
 
     public int getContractLevel() {
         return contractLevel;
@@ -116,6 +167,29 @@ public class DeclarerPointsForOneDeal {
         this.declarerVulnerable = declarerVulnerable;
     }
 
+    public boolean isOpponensVulnerable() {
+        return opponensVulnerable;
+    }
+
+    public boolean isOpponensFit() {
+        return opponensFit;
+    }
+
+    public void setOpponensFit(boolean opponensFit) {
+        this.opponensFit = opponensFit;
+    }
+
+    public boolean isDeclarerFit() {
+        return declarerFit;
+    }
+
+    public void setDeclarerFit(boolean declarerFit) {
+        this.declarerFit = declarerFit;
+    }
+
+    public void setOpponensVulnerable(boolean opponensVulnerable) {
+        this.opponensVulnerable = opponensVulnerable;
+    }
 
     public int getDeclarerNumberOfTrickTaken() {
         return declarerNumberOfTrickTaken;

@@ -243,13 +243,13 @@ public class RubberScoring {
 
 
 
-            CalculatedImpPointsForOneDeal ipr22 = new CalculatedImpPointsForOneDeal(false,20, dbs.getContractScoringPoints(),false, false, false, false);
-            CalculatedImpPointsForOneDeal ipr12 = new CalculatedImpPointsForOneDeal(false,20,400,false, false, false, false);
-            CalculatedImpPointsForOneDeal ipr02 = new CalculatedImpPointsForOneDeal(false,20,3, "nt", 1, 4, false,false,false,false);
+        //    CalculatedImpPointsForOneDeal ipr22 = new CalculatedImpPointsForOneDeal(false,20, dbs.getContractScoringPoints(),false, false, false, false);
+       //     CalculatedImpPointsForOneDeal ipr12 = new CalculatedImpPointsForOneDeal(false,20,400,false, false, false, false);
+       //     CalculatedImpPointsForOneDeal ipr02 = new CalculatedImpPointsForOneDeal(false,20,3, "nt", 1, 4, false,false,false,false);
 
-            System.out.println("\n Końcowy wynik jednego rozdania jest: " + ipr22.getResults() + " \n");
-            System.out.println("\nKońcowy wynik jednego rozdania dla ustalonej liczby punktów za rodanie jest: " + ipr12.getResults() + " \n");
-            System.out.println("\nKońcowy wynik jednego rozdania liczony od podstaw jest: " + ipr02.getResults() + " \n");
+         //   System.out.println("\n Końcowy wynik jednego rozdania jest: " + ipr22.getResults() + " \n");
+         //   System.out.println("\nKońcowy wynik jednego rozdania dla ustalonej liczby punktów za rodanie jest: " + ipr12.getResults() + " \n");
+        //    System.out.println("\nKońcowy wynik jednego rozdania liczony od podstaw jest: " + ipr02.getResults() + " \n");
             //*******************************************
 
         //    RubberScoring a = new RubberScoring(20, 21, 22, 23, 110, 110, 110, 110, false, false, false, false, false, false, false, false);
@@ -273,8 +273,9 @@ public class RubberScoring {
             rooG.fillOneContractFrom4GameSet(3, 22, 110, false, false);
             rooG.fillOneContractFrom4GameSet(4, 23, 110, false, false);
 
-         //   System.out.println(rooG.getRubberScoringAsString());
-         //  System.out.println(rooG.getResultsDescription());
+            System.out.println(rooG.getRubberScoringAsString());
+            System.out.println("Akuku: "+rooG.getSumm());
+           System.out.println(rooG.getResultsDescription());
 
 
         } catch (BridgeException e) {

@@ -26,17 +26,22 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
     //constructors  when both play - there are tests
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int pointsForContractWe,
-                                         boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+                                         boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitWe, boolean fitThey)
             throws InvalidNumberOfPointsException, InvalidParameterException {
         //assumed that we play
+        setWePlay(wePlay);
+        setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
+        setOpponensVulnerable(wePlay ? auctionAssumptionThey : auctionAssumptionWe);
+        setDeclarerFit(wePlay ?fitWe: fitThey);
+        setOpponensFit(wePlay ? fitThey : fitWe);
         setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe);
         setContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
         setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
-                fitInOlderColorWe, fitInOlderColorThey, auctionAssumptionWe, auctionAssumptionThey));
+                fitWe, fitThey, auctionAssumptionWe, auctionAssumptionThey));
 
         //if they play parameters should change because as imput we have points for we and scoring for we
         if (!wePlay) setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
-               fitInOlderColorThey, fitInOlderColorWe, auctionAssumptionThey, auctionAssumptionWe));
+               fitThey, fitWe, auctionAssumptionThey, auctionAssumptionWe));
         // {
         //  setPointsInBothDeclarerHands(40 - pointsInBothHandsWe);
         //  setContractScoringPoints(-pointsForContractWe);
