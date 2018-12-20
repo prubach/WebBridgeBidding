@@ -53,7 +53,7 @@ Liczenie punktów:
    a) jeżeli my mieliśmy ugrać i my graliśmy to :   wynik - ugrana = różnica    (może być dodatnia - impy dla nas/ może być ujemna impy dla nich) - pasuje wygraliśmy / przegraliśmy
    b) jeżeli oni mieli ugrać   i my graliśmy to :   wynik + ugrana = różnica    (
    c) jeżeli my mieliśmy ugrać a grali oni to   :   -wynik - ugrana = różnica   (
-   d) jeżeli oni mieli ugrać  i grali oni to    :   -wynik  + ugrana = różnica ?  /todo do sprawdzenia ale chyba ok /  pogubiłam się ... jak to powinno być ...
+   d) jeżeli oni mieli ugrać  i grali oni to    :   -wynik  + ugrana = różnica ?  /
 
                                                   -
 Przykłady:

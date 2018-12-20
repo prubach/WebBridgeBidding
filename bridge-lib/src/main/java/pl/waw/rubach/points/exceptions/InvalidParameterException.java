@@ -44,7 +44,7 @@ public class InvalidParameterException extends BridgeException {
      */
     public InvalidParameterException(int numberGiven) {
         super("Nieprawidłowy parametr gry-  podano: " + numberGiven + " a powinna 1, 2, lub 4- spróbuj jeszcze raz!");
-        //todo opisać instrukcje co jest co?
+
         this.numberGiven = numberGiven;}
 
     public float getContractLevel() {
