@@ -318,7 +318,7 @@ public class VaadinUI extends UI {
     }
 
     /**
-     * Add extra header to grid and group columns
+     * Add extra header to grid and suitGroup columns
      *
      * @param grid to which to add header
      * @return reference to the header Cell

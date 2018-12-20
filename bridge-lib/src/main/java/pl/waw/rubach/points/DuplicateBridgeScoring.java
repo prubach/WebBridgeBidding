@@ -3,7 +3,7 @@ package pl.waw.rubach.points;
 import pl.waw.rubach.points.exceptions.*;
 
 //This was  PointsForContract(...)
-public class DuplicateBridgeScoring extends PointsForOneDeal{
+public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
     //pyt czy te parametry tu zostają czy przechodzą wyżej - wg mnie dalej się z tego nie korzysta tylko tu - czyli powinny zostać?
     /**

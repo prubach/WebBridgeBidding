@@ -117,32 +117,24 @@ public class ExpectedResultsTable {
             throw new InvalidParameterException(points, fitInOlderColorWe, fitInOlderColorThey);
 
         //if 1 we  so points are for us, if -1 they and points for us is minus that for they
-        int whoShoudPlayIndicator = 1;
+        int whoShouldPlay= 1;
         boolean auctionAssumption = auctionAssumptionWe;
         boolean fit = fitInOlderColorWe;
         if (points < 20) {
             points = (40 - points);
-            whoShoudPlayIndicator = -1;
+            whoShouldPlay = -1;
             auctionAssumption = auctionAssumptionThey;
             fit = fitInOlderColorThey;
         }
         else if(points == 20) {
             if(fitInOlderColorThey) {
-                whoShoudPlayIndicator = -1;
+                whoShouldPlay = -1;
                 auctionAssumption = auctionAssumptionThey;
                 fit = fitInOlderColorThey;
             }
         }
 
-        Map<Integer, Integer> map = getPtsMap(fit, auctionAssumption);
-        int pointsInt = Math.round(points * 2);
-        if (pointsInt % 2 == 0) {
-            return whoShoudPlayIndicator * map.get(pointsInt / 2);
-        } else {
-            int up = Math.round((pointsInt / 2) + 0.5f);
-            int down = Math.round((pointsInt / 2) - 0.5f);
-            return whoShoudPlayIndicator * ((map.get(up) + map.get(down)) / 2);
-        }
+        return  calculateExpectedPoins(points,whoShouldPlay,fit,auctionAssumption);
     }
 
 
@@ -152,33 +144,37 @@ public class ExpectedResultsTable {
      * SHORT VERSION of getPoints
      * Attention - probably also good but ask for assumption and fit pair who have more points, and not the same as points etc
      *
-     * @param points            - points in both hands
+     * @param points            - points in both hands for those who have more
      * @param fit               - of pair who have more points
      * @param auctionAssumption of pair who have more points
      * @return expected number of points if other pair should play is less then zero
      * @throws InvalidNumberOfPointsException if number of points is not correct
      */
     int getPoints(float points, boolean fit, boolean auctionAssumption) throws InvalidNumberOfPointsException {
+
         //test if points value is correct if not print Exeption
         if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
-
         int whoShouldPlay = 1;
         if (points < 20) {
             points = 40 - points;
             whoShouldPlay = -1;
         }
 
-        Map<Integer, Integer> map = getPtsMap(fit, auctionAssumption);
-        int pointsInt = Math.round(points * 2);
-        if (pointsInt % 2 == 0) {
-            return whoShouldPlay * map.get(pointsInt / 2);
-        } else {
-            int up = Math.round((pointsInt / 2) + 0.5f);
-            int down = Math.round((pointsInt / 2) - 0.5f);
-            return whoShouldPlay * ((map.get(up) + map.get(down)) / 2);
-        }
+      return  calculateExpectedPoins(points,whoShouldPlay,fit,auctionAssumption);
     }
 
+ private int calculateExpectedPoins(float points, int whoShouldPlay, boolean fit, boolean auctionAssumption) throws InvalidNumberOfPointsException{
+
+     Map<Integer, Integer> map = getPtsMap(fit, auctionAssumption);
+     int pointsInt = Math.round(points * 2);
+     if (pointsInt % 2 == 0) {
+         return whoShouldPlay * map.get(pointsInt / 2);
+     } else {
+         int up = Math.round((pointsInt / 2) + 0.5f);
+         int down = Math.round((pointsInt / 2) - 0.5f);
+         return whoShouldPlay * ((map.get(up) + map.get(down)) / 2);
+     }
+ }
 
 
 }

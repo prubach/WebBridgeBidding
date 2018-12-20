@@ -163,3 +163,20 @@ odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  
 //            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe);
 //        }
 //*/
+
+
+
+/*old constructor with double / redouble
+    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
+                                         int contractLevel, String contractSuit, boolean doubleGame, boolean redoubleGame, int numberOfTrickTakenByDeclarer,
+                                         boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+            throws BridgeException {
+
+        this(wePlay, pointsInBothHandsWe, contractLevel, contractSuit, redoubleGame ? 4 : (doubleGame ? 2 : 1), numberOfTrickTakenByDeclarer,
+                auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+    }*/
+     //to jest zle bo się dwa razy zmienia - przeciez w konsturktorze właściwym też się zmieni
+        //      this(wePlay, wePlay ? pointsInBothHandsWe: 40-pointsInBothHandsWe,
+        //              new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
+        //                      wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe).getContractScoringPoints(),
+        //              auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);

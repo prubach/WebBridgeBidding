@@ -103,7 +103,7 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
 //             CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(pointsInBothHands,400,false,false,false,false);
             Integer res = roog.getResults();
             //    Integer res = new CalculatedImpPointsForOneDeal(28f, contractLevel,"nt",numberOfTricksTaken, false, false, false, false).getResults();
-            logger.info("Dla " + pointsInBothHands + " pkt.   przy kontrakcie " + contractLevel + "NT i zebranych " + numberOfTricksTaken + " lewach - wynik jest " + res + " impów. Obie przed, obie bez fitu");
+            logger.info("My gramy: Dla " + pointsInBothHands + " pkt.   przy kontrakcie " + contractLevel + "NT i zebranych " + numberOfTricksTaken + " lewach - wynik jest " + res + " impów. Obie przed, obie bez fitu");
             Assert.assertEquals(testCountingPointsNTBothBeforeBothNoFit.get(pointsInBothHands, contractLevel, numberOfTricksTaken), res);
             //  Assert.assertEquals(roog.getContractScoringPoints(),400 );
 

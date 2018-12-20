@@ -1,7 +1,7 @@
 package pl.waw.rubach.points;
 
 
-public class PointsForOneDeal {
+public class DeclarerPointsForOneDeal {
 
     public static final int IS_DOUBLE = 2;
     public static final int IS_REDOUBLE = 4;

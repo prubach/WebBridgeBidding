@@ -130,7 +130,7 @@ public class ImpExpTableTest {
         Assert.assertEquals(-50, res2);
 
         res3 = ExpectedResultsTable.getInstance().getPoints(40 - p, false, false, asWe, asThey);
-        logger.info("Dla " + p + " pkt: " + res3 + " oczekiwane.  " + a + b + "  Oni  Fit");
+        logger.info("Dla " + p + " pkt: " + res3 + " oczekiwane.  " + a + b + " Obie bez fitu");
         Assert.assertEquals(0, res3);
     }
 
