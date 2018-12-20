@@ -28,7 +28,8 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
                                          int pointsForContractWe,
                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitWe, boolean fitThey)
             throws InvalidNumberOfPointsException, InvalidParameterException {
-        //assumed that we play
+
+        //pyt czy to jest potrzebne - myślałam że lepiej żeby przechowywało w jedym miejscu
         setWePlay(wePlay);
         setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
         setOpponentVulnerable(wePlay ? auctionAssumptionThey : auctionAssumptionWe);

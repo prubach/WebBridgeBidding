@@ -180,3 +180,17 @@ odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  
         //              new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
         //                      wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe).getContractScoringPoints(),
         //              auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+   RubberScoring c = new RubberScoring(1,2,3,4);
+        int res = c.getSumm();
+        logger.info("Wynik dla całego robra z podanych wyników rozdań jest: "+ res +" \n");
+        Assert.assertEquals(10, res);
+
+        RubberScoring c1 = new RubberScoring(6,10,-5,-3);
+        int res1 = c1.getSumm();
+        logger.info("Wynik dla całego robra z następujących wyników rozdań:  jest: "+ res1 +" \n");
+        Assert.assertEquals(res1, 8);
+
+        RubberScoring c2 = new RubberScoring(3,-5,5,-3);
+        int res2 = c2.getSumm();
+        logger.info("Wynik dla całego robra z podanych wyników rozdań jest: "+ res2 +" \n");
+        Assert.assertEquals(res2, 0);
