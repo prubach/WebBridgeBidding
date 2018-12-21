@@ -61,7 +61,7 @@ public class RubberScoringTest {
     @Test
     public void testRubberScoringFromInputDataMirrorFloat() throws BridgeException {
 
-        for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testRubberFromPointsFloat.entrySet()) {
+           for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testRubberFromPointsFloat.entrySet()) {
            float ph1 = entry.getKey().getKey(0);
             float ph2 = entry.getKey().getKey(1);
             float ph3 = entry.getKey().getKey(2);
@@ -172,15 +172,22 @@ public class RubberScoringTest {
             RubberScoring rooG = new RubberScoring(15);
             int a = rooG.fillOneContractFrom4GameSet(1, true, 28, 400, false, false);
             Assert.assertEquals(a, 0);
-
+            int i=  new CalculatedImpPointsForOneDeal(true,28,400,false,false,false,false).getResults();
+             Assert.assertEquals(a,i);
             int b = rooG.fillOneContractFrom4GameSet(2, true, 25, 400, false, false);
             Assert.assertEquals(b, 3);
+            int ib=  new CalculatedImpPointsForOneDeal(true,25,400,true,false,false,false).getResults();
+            Assert.assertEquals(b,ib);
 
             int c = rooG.fillOneContractFrom4GameSet(3, true, 28, 400, false, false);
             Assert.assertEquals(c, 0);
+            int ic=  new CalculatedImpPointsForOneDeal(true,28,400,false,true,false,false).getResults();
+            Assert.assertEquals(c,ic);
 
             int d = rooG.fillOneContractFrom4GameSet(4, true, 27, 400, false, false);
             Assert.assertEquals(d, -3);
+            int id=  new CalculatedImpPointsForOneDeal(true,27,400,true,true,false,false).getResults();
+            Assert.assertEquals(d,id);
 
             int sum = rooG.getSumm();
             logger.info("Wynik dla całego robra wpisanego ręcznie (punkty i wyniki) rozdanie po rozdaniu jest:  " + sum + ". ");

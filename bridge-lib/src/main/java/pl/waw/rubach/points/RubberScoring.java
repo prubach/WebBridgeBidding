@@ -34,6 +34,8 @@ public class RubberScoring {
      * Map number of game with scorring for one game
      */
     private Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
+//pyt być może to w jednej mapie siedzieć, ale nie umiem chyba łatwo (bez zmieniania miliona miejsc) wiec na razie będzie tak (ta nowa mapa trzyma tylko wynik żeby sprawdzić czy już był sumowany czy nie
+    private Map<Integer, Integer> calculatedImpPointsForOneGame = new HashMap<>();
 
     /**
      * Result of 4 games
@@ -120,7 +122,8 @@ public class RubberScoring {
             throws InvalidNumberOfPointsException, InvalidParameterException {
 
         scorringForOneGame.put(contractNumber, cIPfoDforWe);
-        setSumm(getSumm()+cIPfoDforWe.getResults());
+        calculatedImpPointsForOneGame.put(contractNumber,cIPfoDforWe.getResults());
+        setSumm();
         return cIPfoDforWe.getResults();
     }
 
@@ -150,11 +153,11 @@ public class RubberScoring {
 
 
     public int fillOneContractFrom4GameSet(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
-                                           int gameLevel, String suit, int numberOfTricksTakenWe, boolean iddouble, boolean redouble,
+                                           int gameLevel, String suit, int numberOfTricksTakenWe, boolean isdouble, boolean isredouble,
                                            boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
         return fillOneContractFrom4GameSet(contractNumber, whoPlay, pointsInBothHandsWe,
-                new DuplicateBridgeScoring(gameLevel, suit, iddouble, redouble, (whoPlay) ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1], whoPlay ? numberOfTricksTakenWe : 13 - numberOfTricksTakenWe),
+                new DuplicateBridgeScoring(gameLevel, suit, isdouble, isredouble, (whoPlay) ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1], whoPlay ? numberOfTricksTakenWe : 13 - numberOfTricksTakenWe),
                 fitInOlderColorWe, fitInOlderColorThey);
 
 
@@ -209,6 +212,15 @@ public class RubberScoring {
 
         }
         return s;
+    }
+
+    public void setSumm() {
+        int summ=0;
+        for (int p : new TreeSet<Integer>(calculatedImpPointsForOneGame.keySet())) {
+            summ= summ+calculatedImpPointsForOneGame.get(p);
+        }
+
+        this.summ = summ;
     }
 
     public void setSumm(int summ) {

@@ -319,16 +319,15 @@ class OptionMenu extends MenuBar {
         pointsInBothHandsField.addValueChangeListener(event -> resultsLabel.setValue(""));
         pointsForContractField.addValueChangeListener(event -> resultsLabel.setValue(""));
 
-
-
-
         Button calculateImp = new Button("Oblicz impy! ", clickEvent -> {
             try {
+                CalculatedImpPointsForOneDeal a =new CalculatedImpPointsForOneDeal(Float.parseFloat(pointsInBothHandsField.getValue()),
+                                                Integer.parseInt(pointsForContractField.getValue()),
+                                                checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(),
+                                                checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
-                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(Float.parseFloat(pointsInBothHandsField.getValue()), Integer.parseInt(pointsForContractField.getValue()),
-                        checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  </B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  " +
+                        "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
 
             } catch (NumberFormatException | InvalidNumberOfPointsException | InvalidParameterException e) {
                 String message = (e instanceof NumberFormatException) ?
@@ -404,8 +403,8 @@ class OptionMenu extends MenuBar {
 
         vL.addComponent(checkboxFitWe);
         vL.addComponent(checkboxFitThey);
-
         vL.addComponent(fitLabel);
+
         vL.addComponent(doubleRedoubleGroup);
 
         vL.addComponent(contractLevelField);
@@ -423,27 +422,32 @@ class OptionMenu extends MenuBar {
         contractLevelField.addValueChangeListener(event -> resultsLabel.setValue(""));
 
 
-        TextField numberOfContract = new TextField("Podaj które to rozdanie (tylko dla zapisu 4 rozdań):");
+        TextField numberOfContract = new TextField("Podaj które to rozdanie (numer rozdania określa założenia: 1-obie przed, 2-my po, 3 oni po, 4 obie po:");
         vL.addComponent(numberOfContract);
         numberOfContract.addValueChangeListener(event -> resultsLabel.setValue(""));
 
 
         Button calculateImpPoints = new Button("Oblicz punkty i impy za jedno rozdanie - niezależnie kto gra! ", clickEvent -> {
             try {
-                int tricksTakenWe = Integer.parseInt(numberOfTricksField.getValue());
-                boolean assumptionWe = fillAssumption(Integer.parseInt(numberOfContract.getValue()) - 1)[0];
-                boolean assumptionThey = fillAssumption(Integer.parseInt(numberOfContract.getValue()) - 1)[1];
+                int contractNumber = Integer.parseInt(numberOfContract.getValue()); //bo liczy od zera
+                if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
+
 
                 DuplicateBridgeScoring duplicateBridgeScoring =
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(), checkboxDouble.getValue(), checkboxReDouble.getValue(),
-                        checkboxWe.getValue() ? assumptionWe : assumptionThey, checkboxWe.getValue() ? tricksTakenWe : 13 - tricksTakenWe);
+                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] :fillAssumption(contractNumber)[1] ,
+                                checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
                 String des = duplicateBridgeScoring.getDescription();
 
                 int pointsContractWe = checkboxWe.getValue() ? duplicateBridgeScoring.getContractScoringPoints() : -duplicateBridgeScoring.getContractScoringPoints();
 
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
-                        Float.parseFloat(pointsInBothHandsField.getValue()), pointsContractWe, assumptionWe, assumptionThey, checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
+                        Float.parseFloat(pointsInBothHandsField.getValue()),
+                        pointsContractWe,
+                        fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1] ,
+                        checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B> " +
+                        " <BR> czyli " + a.getResults() + impDeclination(a.getResults())+". ");// +
 
             }
             //pyt cz1: czy lepiej tak jak jest instance of ale w jednej linijce (i raz kolorowane)
@@ -461,29 +465,40 @@ class OptionMenu extends MenuBar {
 
         Label resultsLabelFor4Game = new Label("");
         resultsLabelFor4Game.setContentMode(ContentMode.HTML);
+        final RubberScoring aa = new RubberScoring();
+
 
         Button prowadzZapis = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
             try {
-                int contractNumber = Integer.parseInt(numberOfContract.getValue()) - 1; //bo liczy od zera
-                if (contractNumber > 4 || contractNumber < 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
+                int contractNumber = Integer.parseInt(numberOfContract.getValue()); //bo liczy od zera
+                if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
+
 
 
                 DuplicateBridgeScoring scoring =
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(), checkboxDouble.getValue(), checkboxReDouble.getValue(),
-                                fillAssumption(contractNumber)[0],  Integer.parseInt(numberOfTricksField.getValue()));
-                descriptionTable[contractNumber] = "Kontrakt nr.:" + (contractNumber+1) + scoring.getShortDescription();
+                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] :fillAssumption(contractNumber)[1] ,
+                                checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
+                descriptionTable[contractNumber-1] = "Kontrakt nr.:" + (contractNumber) + scoring.getShortDescription();
 
                 CalculatedImpPointsForOneDeal a =
-                        new CalculatedImpPointsForOneDeal(checkboxWe.getValue(), Float.parseFloat(pointsInBothHandsField.getValue()),
+                        new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
+                                Float.parseFloat(pointsInBothHandsField.getValue()),
                                 checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints(),
                                 checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                descriptionTable[contractNumber] = descriptionTable[contractNumber]+ a.getFullDescriprtion();
+                descriptionTable[contractNumber-1] = descriptionTable[contractNumber-1]+ a.getFullDescriprtion();
 
-                RubberScoring aa = new RubberScoring();
-                aa.fillOneContractFrom4GameSet(contractNumber, a);
 
-                resultsLabel.setValue("<B>To " + numberOfContract.getValue() + "  rozdanie i uzyskaliście " +  (checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints() )+ " punktów za kontrakt, czyli " + a.getResults() + " impów. " +
-                        " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + " impy. ");
+               // aa.fillOneContractFrom4GameSet(contractNumber, a);
+             int imp=   aa.fillOneContractFrom4GameSet(contractNumber, checkboxWe.getValue(),
+                        Float.parseFloat(pointsInBothHandsField.getValue()), Integer.parseInt(contractLevelField.getValue()),colorOfContractField.getValue(),
+                        Integer.parseInt(numberOfTricksField.getValue()),checkboxDouble.getValue(), checkboxReDouble.getValue(),
+                        checkboxFitWe.getValue(), checkboxFitThey.getValue());
+
+                resultsLabel.setValue("<B>To " + numberOfContract.getValue() + "  rozdanie i uzyskaliście "
+                        + (checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints() )
+                        + " punktów za kontrakt, czyli " + imp + impDeclination(imp)+ ". "
+                        + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm())+". ");
 
                 StringBuilder s = new StringBuilder("\n*** Zapis gier numer: " + aa.getGameID() + ".  ***  \n");
                 for (int i = 0; i < 4; i++)
@@ -503,6 +518,8 @@ class OptionMenu extends MenuBar {
 
         });
 
+
+
         Button pokazWyniki = new Button("Pokaz wyniki ostatnich  4 rozdań! ", clickEvent -> {
 
             actionOpenWindow(this.ui,"Okienko z wynikami ostatnich czterech rozdań.",actionDisplayResultsOf4GameWindow());
@@ -519,7 +536,15 @@ class OptionMenu extends MenuBar {
        return vL;
     }
 
+private String impDeclination(int i){
+        String imp;
+        if(i==1) imp = " imp";
+        else if(i<5) imp = " impy";
+        else imp = " impów";
+        return imp;
 
+
+}
     private boolean[] fillAssumption(int contractNumber) {
         boolean[] auctionAssumption = {false, false};
         if (contractNumber == 2) {

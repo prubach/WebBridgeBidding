@@ -74,7 +74,9 @@ public class CalculatedImpPointsForOneDealAdvanceTest {
             logger.info("My gramy: Dla " + pointsInBothHands + " pkt.   przy kontrakcie " + contractLevel + "NT i zebranych " + numberOfTricksTaken + " lewach - wynik jest " + res + " impów. Obie przed, obie bez fitu");
             Assert.assertEquals(testCountingPointsNTBothBeforeBothNoFit.get(pointsInBothHands, contractLevel, numberOfTricksTaken), res);
 
-
+            RubberScoring aa =new RubberScoring();
+            Integer imp = aa.fillOneContractFrom4GameSet(1,roog);
+            Assert.assertEquals(res,imp);
         }
     }
 
