@@ -8,10 +8,7 @@ public class InvalidContractLevelException extends BridgeException {
 
     //odp nie - nie ma sensu warunek ma być na zewnątrz tu mogą być jakieś parametry - czy mogłoby tu sprawdzać warunek a nie w kodzie?
 
-    public InvalidContractLevelException(String message) {
-        super(message);
-        //"Nieprawidłowo podana poziom kontraktu - spróbuj jeszcze raz!"
-    }
+
 
     public InvalidContractLevelException(int contractLevel) {
         super("Nie ma takiego poziomu gry, podano: " + contractLevel + " a powinno być między 1 a 7 (szlem) - spróbuj jeszcze raz");

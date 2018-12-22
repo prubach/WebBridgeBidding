@@ -2,7 +2,6 @@ package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.exceptions.InvalidParameterException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -115,11 +114,11 @@ public class RubberScoring {
      * @param cIPfoDforWe  is object where results for one deal is calculated
      * @return results of this particular game (one deal)
      * @throws InvalidNumberOfPointsException if number of points is wrong
-     * @throws InvalidParameterException if parameter are wrong
+     * @throws BridgeException if parameter are wrong
      */
     public int fillOneContractFrom4GameSet(int contractNumber,
                                            CalculatedImpPointsForOneDeal cIPfoDforWe)
-            throws InvalidNumberOfPointsException, InvalidParameterException {
+            throws InvalidNumberOfPointsException, BridgeException {
 
         scorringForOneGame.put(contractNumber, cIPfoDforWe);
         calculatedImpPointsForOneGame.put(contractNumber,cIPfoDforWe.getResults());
@@ -130,7 +129,7 @@ public class RubberScoring {
     public int fillOneContractFrom4GameSet(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
                                            int scoringPointsWe,
                                            boolean fitInOlderColorWe, boolean fitInOlderColorThey)
-            throws InvalidNumberOfPointsException, InvalidParameterException {
+            throws BridgeException {
 
         return fillOneContractFrom4GameSet(contractNumber,
                 new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe, whoPlay ? scoringPointsWe : -scoringPointsWe,
@@ -178,12 +177,12 @@ public class RubberScoring {
         return auctionAssumption;
     }
 
-    public String getRubberScoringAsString() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public String getRubberScoringAsString() throws BridgeException {
         StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + this.getGameID() + ".  ***  \n");
 
         Map<Integer, CalculatedImpPointsForOneDeal> map = this.scorringForOneGame;
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
-        s.append("\n").append(this.getRubberSpecialDescription());
+      //  s.append("\n").append(this.getRubberSpecialDescription());
 
         for (Integer key : ptsMapSet) {
 
@@ -199,7 +198,7 @@ public class RubberScoring {
     return this.summ;
     }
 
-    public int getSummCalulatedFromScorringForOneGame() throws InvalidNumberOfPointsException, InvalidParameterException
+    public int getSummCalulatedFromScorringForOneGame() throws BridgeException
     {
         SortedSet<Integer> ptsMapSet = new TreeSet<>(scorringForOneGame.keySet());
         int s = 0;

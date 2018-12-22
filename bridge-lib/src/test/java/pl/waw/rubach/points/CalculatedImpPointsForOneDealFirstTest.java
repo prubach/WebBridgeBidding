@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.exceptions.InvalidParameterException;
+import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.Map;
 
@@ -111,8 +110,7 @@ public class CalculatedImpPointsForOneDealFirstTest {
         testCountingPointsBothAfterFitTheyMap.put(12f, 1660f, 20);
     }
     @Test
-    public void testCountingPointsBothPlay() throws InvalidNumberOfPointsException, InvalidParameterException {
-
+    public void testCountingPointsBothPlay() throws BridgeException {
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitMap.entrySet()) {
 
             float pointsInBothHands = entry.getKey().getKey(0);
@@ -153,7 +151,7 @@ public class CalculatedImpPointsForOneDealFirstTest {
     }
 
     @Test
-    public void testCountingPointsWePlayOLD() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testCountingPointsWePlayOLD() throws BridgeException {
         //   public void testCountingPointsBothBeforeResNoFit() throws InvalidNumberOfPointsException, InvalidParameterException {
 
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitMap.entrySet()) {

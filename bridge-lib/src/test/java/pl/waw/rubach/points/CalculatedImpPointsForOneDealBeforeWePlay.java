@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.exceptions.InvalidParameterException;
+import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.Map;
 
@@ -85,7 +84,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
     }
 
 
-    private void testFunction1(MultiKeyMap<Float, Integer> map, int a, boolean wePlay, boolean[] assumption, boolean fitWe, boolean fitThey) throws InvalidNumberOfPointsException, InvalidParameterException {
+    private void testFunction1(MultiKeyMap<Float, Integer> map, int a, boolean wePlay, boolean[] assumption, boolean fitWe, boolean fitThey) throws BridgeException {
 
         String des2 = printFit(fitWe, fitThey);
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : map.entrySet()) {
@@ -99,7 +98,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         }
     }
 
-    private void testFunction2(MultiKeyMap<Float, Integer> map, boolean[] assumption, boolean fitWe, boolean fitThey) throws InvalidNumberOfPointsException, InvalidParameterException {
+    private void testFunction2(MultiKeyMap<Float, Integer> map, boolean[] assumption, boolean fitWe, boolean fitThey) throws BridgeException {
 
         String des2 = printFit(fitWe, fitThey);
         for (Map.Entry<MultiKey<? extends Float>, Integer> entry : map.entrySet()) {
@@ -121,7 +120,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
 
 
     @Test
-    public void testMirror() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testMirror() throws BridgeException {
         testFunction2(testCountingPointsNoFitBothMap, assumption, false, false);
         testFunction2(testCountingPointsFitWeMap,  assumption, true, false);
         testFunction2(testCountingPointsFitTheyMap,  assumption, false, true);
@@ -129,26 +128,26 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
     }
 
     @Test
-    public void testCountingPointsRes() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testCountingPointsRes()  throws BridgeException {
         testFunction1(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
 
     }
 
     @Test
-    public void testCountingPointsFitWeRes() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testCountingPointsFitWeRes() throws BridgeException {
         testFunction1(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
 
     }
 
 
     @Test
-    public void testCountingPointsFitTheyRes() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testCountingPointsFitTheyRes() throws BridgeException {
         testFunction1(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
 
     }
 
     @Test
-    public void testCountingPointsBothFitRes() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testCountingPointsBothFitRes() throws BridgeException {
        testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
 
 
@@ -156,7 +155,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
 
 //pyt - zamiast tej pustej klasy- lepiej tak: jakoś to mi się wydaje mało eleganckie :) ale z tą pustą klasą to trochę bez sensu...
     @Test
-    public void testCountingPointsResThey() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testCountingPointsResThey() throws BridgeException {
     wePlay = false;
      a = -1;
 

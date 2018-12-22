@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.exceptions.InvalidParameterException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -110,14 +110,14 @@ public class ImpExpTableTest {
     }
 
     @Test
-    public void testExpResSpecialCase20() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testExpResSpecialCase20() throws BridgeException {
         check(true, true);
         check(false, false);
         check(true, false);
         check(false, true);
     }
 
-    private void check(boolean asWe, boolean asThey) throws InvalidNumberOfPointsException, InvalidParameterException {
+    private void check(boolean asWe, boolean asThey) throws BridgeException {
         int p = 20, res1, res2, res3;
         String a = asWe ? "My Po," : "My Przed,";
         String b = asThey ? "Oni Po," : "Oni Przed, ";
@@ -171,7 +171,7 @@ public class ImpExpTableTest {
 
 
     @Test
-    public void testExpResFit() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testExpResFit() throws BridgeException {
         //p !=20 because for this case is not possible have both fit in major color - if so count only spades and hearst fit mark as no fit
 
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
@@ -236,7 +236,7 @@ public class ImpExpTableTest {
     }
 
     @Test
-    public void testExpResNoFit() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testExpResNoFit() throws BridgeException {
         for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
             Integer res;
             if (p >= 20) {
@@ -281,7 +281,7 @@ public class ImpExpTableTest {
     }
 
     @Test
-    public void testExpResOnlyOneFitBoth() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testExpResOnlyOneFitBoth() throws BridgeException {
 
 
         for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
@@ -338,7 +338,7 @@ public class ImpExpTableTest {
 
 
     @Test
-    public void testExpResOnlyOneFitMix() throws InvalidNumberOfPointsException, InvalidParameterException {
+    public void testExpResOnlyOneFitMix() throws BridgeException {
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
             Integer res;
             if (p >= 20) {

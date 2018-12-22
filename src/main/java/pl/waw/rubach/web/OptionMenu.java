@@ -6,8 +6,6 @@ import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.*;
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.exceptions.InvalidParameterException;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 
@@ -329,7 +327,7 @@ class OptionMenu extends MenuBar {
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  " +
                         "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
 
-            } catch (NumberFormatException | InvalidNumberOfPointsException | InvalidParameterException e) {
+            } catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowy format  punktów spróbuj jeszcze raz!" : e.getMessage();
                 resultsLabel.setValue("<font color=red>" + message + "</font>");
@@ -479,14 +477,13 @@ class OptionMenu extends MenuBar {
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(), checkboxDouble.getValue(), checkboxReDouble.getValue(),
                                 checkboxWe.getValue() ? fillAssumption(contractNumber)[0] :fillAssumption(contractNumber)[1] ,
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
-                descriptionTable[contractNumber-1] = "Kontrakt nr.:" + (contractNumber) + scoring.getShortDescription();
 
                 CalculatedImpPointsForOneDeal a =
                         new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
                                 Float.parseFloat(pointsInBothHandsField.getValue()),
                                 checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints(),
                                 checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                descriptionTable[contractNumber-1] = descriptionTable[contractNumber-1]+ a.getFullDescriprtion();
+                descriptionTable[contractNumber-1] =  "Kontrakt nr.:" + (contractNumber) + scoring.getShortDescription() + scoring.getDescription() + "\n "+ a.getFullDescriprtion();
 
 
                // aa.fillOneContractFrom4GameSet(contractNumber, a);
@@ -501,10 +498,10 @@ class OptionMenu extends MenuBar {
                         + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm())+". ");
 
                 StringBuilder s = new StringBuilder("\n*** Zapis gier numer: " + aa.getGameID() + ".  ***  \n");
-                for (int i = 0; i < 4; i++)
-                    s.append("\n").append(descriptionTable[i]);
+                for (int i = 0; i < 4; i++)  s.append("\n").append(descriptionTable[i]);
 
                 s.append("\n\n \t \t***\n");
+
                 descriprionOf4play = s.toString() + "\n" + aa.getRubberScoringAsString();
 
 //pyt: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?

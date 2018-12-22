@@ -1,8 +1,8 @@
 package pl.waw.rubach.points;
 
 import org.apache.commons.collections4.map.MultiKeyMap;
+import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.exceptions.InvalidParameterException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,13 +108,13 @@ public class ExpectedResultsTable {
      * @return bonus points
      */
     int getPoints(float points, boolean fitInOlderColorWe, boolean fitInOlderColorThey, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
-            throws InvalidNumberOfPointsException, InvalidParameterException {
+            throws InvalidNumberOfPointsException, BridgeException {
 
         //test if points value is correct if not print Exception
         if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
 
         if (points == 20 && fitInOlderColorThey && fitInOlderColorWe)
-            throw new InvalidParameterException(points, true, true);
+            throw new BridgeException(points, true, true);
 
         //if 1 we  so points are for us, if -1 they and points for us is minus that for they
         int whoShouldPlay= 1;

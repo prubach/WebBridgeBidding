@@ -2,7 +2,6 @@ package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
-import pl.waw.rubach.points.exceptions.InvalidParameterException;
 
 import static java.lang.Math.abs;
 
@@ -27,7 +26,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int pointsForContractWe,
                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitWe, boolean fitThey)
-            throws InvalidNumberOfPointsException, InvalidParameterException {
+            throws InvalidNumberOfPointsException, BridgeException {
 
         //pyt czy to jest potrzebne - myślałam że lepiej żeby przechowywało w jedym miejscu
         setWePlay(wePlay);
@@ -54,7 +53,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
         // else setPointDifferent(getExpectedPoints() - getContractScoringPoints());
 
         if (!(ImpTable.getInstance().checkInputValue(0, 10000, getPointDifferent())))
-            throw new InvalidParameterException();
+            throw new BridgeException(getPointDifferent(),true);
         //  int results = ImpTable.getInstance().getPoints(getPointDifferent());
         setResults(ImpTable.getInstance().getPoints(getPointDifferent()));
 
@@ -86,7 +85,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
     public CalculatedImpPointsForOneDeal(float pointsInBothDeclarerHands,
                                          int pointsForContractDeclarer,
                                          boolean auctionAssumptionDeclarer, boolean auctionAssumptionOponenst, boolean fitInOlderColorDeclarer, boolean fitInOlderColorOponents)
-            throws InvalidNumberOfPointsException, InvalidParameterException {
+            throws InvalidNumberOfPointsException, BridgeException {
         this(true, pointsInBothDeclarerHands, pointsForContractDeclarer, auctionAssumptionDeclarer, auctionAssumptionOponenst, fitInOlderColorDeclarer, fitInOlderColorOponents);
     }
 

@@ -42,11 +42,11 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
      * @throws InvalidContractLevelException if level is not between 1 to 7 (according bridge rules
      * @throws InvalidContractSuitException     if suit is no one of 5 bridge strain (colors + nt)
      * @throws InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
-     * @throws InvalidParameterException other parameter incorrect value ...
+     * @throws BridgeException other parameter incorrect value ...
      */
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
-            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
+            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, BridgeException {
         //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (nDRSignature == 2), nDRSignature == 4, auctionAssumptionDeclarer);
 
         //checking if contractLevel is correct
@@ -62,7 +62,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
         //checking if double/ redouble or undouble signature  is correct
         if (!(nDRSignature == 1 || nDRSignature == 2 || nDRSignature == 4))
-            throw new InvalidParameterException(nDRSignature);
+            throw new BridgeException(nDRSignature);
         setNoDoubleReSignature(nDRSignature);
 
         setDeclarerVulnerable(auctionAssumptionDeclarer);
@@ -90,7 +90,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
     //OLD constructor with boolean double redouble - exist in all test so cant be delayed
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
-            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, InvalidParameterException {
+            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, BridgeException {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
 
@@ -123,7 +123,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
                 return numberOfTricksForWhichArePointsCalculated * 30 + 10;
 
             default:
-                throw new InvalidContractSuitException("Nie ma takiego koloru - wpisz jeszcze raz.");
+                throw new InvalidContractSuitException();
         }
     }
 
