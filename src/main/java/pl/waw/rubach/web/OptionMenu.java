@@ -483,7 +483,7 @@ class OptionMenu extends MenuBar {
                                 Float.parseFloat(pointsInBothHandsField.getValue()),
                                 checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints(),
                                 checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                descriptionTable[contractNumber-1] =  "Kontrakt nr.:" + (contractNumber) + scoring.getShortDescription() + scoring.getDescription() + "\n "+ a.getFullDescriprtion();
+                descriptionTable[contractNumber-1] =  "Kontrakt nr. " + (contractNumber)+ ": " + scoring.getShortDescription() + scoring.getDescription() + "\n "+ a.getFitDescriprtion();
 
 
                // aa.fillOneContractFrom4GameSet(contractNumber, a);
@@ -497,12 +497,9 @@ class OptionMenu extends MenuBar {
                         + " punktów za kontrakt, czyli " + imp + impDeclination(imp)+ ". "
                         + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm())+". ");
 
-                StringBuilder s = new StringBuilder("\n*** Zapis gier numer: " + aa.getGameID() + ".  ***  \n");
-                for (int i = 0; i < 4; i++)  s.append("\n").append(descriptionTable[i]);
 
-                s.append("\n\n \t \t***\n");
 
-                descriprionOf4play = s.toString() + "\n" + aa.getRubberScoringAsString();
+                descriprionOf4play = makeDescription(aa,descriptionTable);
 
 //pyt: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
             } catch (BridgeException e) {
@@ -518,9 +515,7 @@ class OptionMenu extends MenuBar {
 
 
         Button pokazWyniki = new Button("Pokaz wyniki ostatnich  4 rozdań! ", clickEvent -> {
-
             actionOpenWindow(this.ui,"Okienko z wynikami ostatnich czterech rozdań.",actionDisplayResultsOf4GameWindow());
-            //System.out.println("Akuku"+ descriprionOf4play);
 
         });
 
@@ -532,6 +527,16 @@ class OptionMenu extends MenuBar {
         vL.addComponent(pokazWyniki);
        return vL;
     }
+
+    private String makeDescription(RubberScoring aa, String[] descriptionTable) throws BridgeException {
+        StringBuilder s = new StringBuilder("\n*** Zapis gier numer: " + aa.getGameID() + ".  ***  \n");
+        for (int i = 0; i < 4; i++)  s.append("\n").append(descriptionTable[i]);
+
+        s.append("\n\n \t \t***\n");
+
+        return s.toString() + "\n" + aa.getRubberScoringAsString();
+    }
+
 
 private String impDeclination(int i){
         String imp;

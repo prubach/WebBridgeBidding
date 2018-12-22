@@ -104,11 +104,11 @@ public class DeclarerPointsForOneDeal {
             return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
     }
 
-    public String getFullDescriprtion(){
+    public String getFitDescriprtion(){
         String fitDes = isDeclarerFit() ? " z fitem. " : " bez fitu. ";
         String fitODes = isOpponensFit() ? " Przeciwnicy mają fit i są : " :" Przeciwnicy nie mają fitu i są" ;
         String assOp = isOpponentVulnerable() ? " przed partią. " : " po partii.";
-        return getContractDescription() + "Rozgrywający mieli " +getPointsInBothDeclarerHands()+ " punkty  "+ fitDes + fitODes + assOp ;
+        return  "Rozgrywający mieli " +getPointsInBothDeclarerHands()+ " punkty  "+ fitDes + fitODes + assOp ;
     }
 
 
