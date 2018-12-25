@@ -1,23 +1,24 @@
 package pl.waw.rubach.points.exceptions;
 
 public class BridgeException extends Exception {
-    private static final float NUMBEROFPOINS = 20;
-    private int numberGiven;
+    protected static final float NUMBEROFPOINS = 20;
+    protected int numberGiven;
+
 
     public BridgeException(String message) {
         super(message);
     }
 
     /**
-     * General bridge exeption
+     * General bridge exception
      */
     public BridgeException() {
         super("Niezgodność z zasadami brydża. ");
 
     }
     /**
-     * Not posible acording method of scoring - shoud be error some where?
-     * @param pointDiff - is poinst differnce betwenn expected and real scorring (to calculate imps)
+     * Not possible according method of scoring - should be error some where?
+     * @param pointDiff - is points difference between expected and real scoring (to calculate imps)
      * @param aa - not important parameter to make constructor different :)
      */
     public BridgeException(int pointDiff,boolean aa) {

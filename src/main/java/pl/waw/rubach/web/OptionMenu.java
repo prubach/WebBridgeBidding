@@ -12,20 +12,20 @@ import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 class OptionMenu extends MenuBar {
 
 
-    private VaadinUI ui;
+    private final VaadinUI ui;
 
-    private String descriprionOf4play;
-    private CheckBox checkboxAssumptionWe = new CheckBox();
-    private CheckBox checkboxAssumptionThey = new CheckBox();
+    private String descriptionOf4play;
+    private final CheckBox checkboxAssumptionWe = new CheckBox();
+    private final CheckBox checkboxAssumptionThey = new CheckBox();
 
     private CheckBox checkboxFitWe, checkboxFitThey, checkboxDouble, checkboxReDouble;
-    private Label fitLabel;
+    private Label fitLabel, resultsLabel;
     private RadioButtonGroup<String> suitGroup, doubleRedoubleGroup;
 
     private TextField pointsForContractField, contractLevelField, numberOfTricksField, pointsInBothHandsField, colorOfContractField;
 
 
-    private CheckBox checkboxWe = new CheckBox(" My rozgrywamy - domyślnie");
+    private final CheckBox checkboxWe = new CheckBox(" My rozgrywamy - domyślnie");
 
 
     OptionMenu(VaadinUI ui) {
@@ -33,29 +33,30 @@ class OptionMenu extends MenuBar {
         checkboxAssumptionWe.setValue(false);
         checkboxAssumptionThey.setValue(false);
 
-        // First left top-level items to calculate poinst
+        // First left top-level items to calculate points
         Command commandToCalculatePoints = (Command) selectedItem -> actionOpenWindow(ui, "Okienko do liczenia punktów za serię rozdań.", actionCalculetePoints());
         this.addItem("Oblicz punkty (nowe) ", null, commandToCalculatePoints);
+        MenuBar.MenuItem optionMenuItemsCalculatePointsOld = this.addItem("Oblicz punkty (inne opcje):", null);
         Command commandToCalculatePointsOneDeal = (Command) selectedItem -> actionOpenWindow(ui, "Okienko do liczenia punktów za jeden kontrakt.", actionCalculetePointsOneDeal());
-        this.addItem("Oblicz punkty jednego rozdania", null, commandToCalculatePointsOneDeal);
+        optionMenuItemsCalculatePointsOld.addItem("Oblicz punkty jednego rozdania", null, commandToCalculatePointsOneDeal);
         Command commandToOldCalculatePoints = (Command) selectedItem -> actionOpenWindow(ui, "Stare okienko do ręcznego liczenia punktów.", actionManualCalculetePoints());
-        this.addItem("Oblicz punkty ręcznie (stare):", null, commandToOldCalculatePoints);
+        optionMenuItemsCalculatePointsOld.addItem("Oblicz punkty ręcznie (stare):", null, commandToOldCalculatePoints);
 
 
         // A top-level menu item that opens a submenu - assumption
         MenuBar.MenuItem optionMenuItemsAuctionAssumption = this.addItem("Założenia licytacyjne:", QUESTION_CIRCLE, null);
 
-        optionMenuItemsAuctionAssumption.addItem("Obie przed partią", null, (Command) selectedItem -> setAssumtionToGrid(false, false));
-        optionMenuItemsAuctionAssumption.addItem("My przed, oni po", null, (Command) selectedItem -> setAssumtionToGrid(false, true));
-        optionMenuItemsAuctionAssumption.addItem("My po, oni przed", null, (Command) selectedItem -> setAssumtionToGrid(true, false));
-        optionMenuItemsAuctionAssumption.addItem("Obie po partii", null, (Command) selectedItem -> setAssumtionToGrid(true, true));
+        optionMenuItemsAuctionAssumption.addItem("Obie przed partią", null, (Command) selectedItem -> setAssumptionToGrid(false, false));
+        optionMenuItemsAuctionAssumption.addItem("My przed, oni po", null, (Command) selectedItem -> setAssumptionToGrid(false, true));
+        optionMenuItemsAuctionAssumption.addItem("My po, oni przed", null, (Command) selectedItem -> setAssumptionToGrid(true, false));
+        optionMenuItemsAuctionAssumption.addItem("Obie po partii", null, (Command) selectedItem -> setAssumptionToGrid(true, true));
 
         // A top-level menu item that opens a submenu - description
         MenuBar.MenuItem instructionMenuItemBidsTypes = this.addItem("Legenda: ", null);
-        Command commandToOpenLegend = (Command) selectedItem -> actionOpenWindow(ui, "Legenda - opis typów odzywek", createLegendDescription());
-        instructionMenuItemBidsTypes.addItem("Opis typów odzywek w okienku - kliknij jak chcesz otworzyć. ", commandToOpenLegend);
-        Command commandToDisplanyPointsTable = (Command) selectedItem -> actionOpenWindow(ui, "Tableki do liczenia punktów.", createPointsTable());
-        instructionMenuItemBidsTypes.addItem("Tabelki  do obliczania punktów.", null, commandToDisplanyPointsTable);
+        Command commandToOpenLegend = (Command) selectedItem -> actionOpenWindow(ui, "Legenda - opis typów odzywek:", createLegendDescription());
+        instructionMenuItemBidsTypes.addItem("Opis typów odzywek w okienku: ", commandToOpenLegend);
+        Command commandToDisplayPointsTable = (Command) selectedItem -> actionOpenWindow(ui, "Tableki do liczenia punktów.", createPointsTable());
+        instructionMenuItemBidsTypes.addItem("Tabelki  do obliczania punktów:", null, commandToDisplayPointsTable);
         Command commandToOpenDescription = (Command) selectedItem -> actionOpenWindow(ui, "Jak liczyć punkty? ", createDesciption());
         instructionMenuItemBidsTypes.addItem("Zasady obliczania punktów", null, commandToOpenDescription);
 
@@ -70,7 +71,7 @@ class OptionMenu extends MenuBar {
 
     }
 
-    private void setAssumtionToGrid(boolean assWe, boolean assThey) {
+    private void setAssumptionToGrid(boolean assWe, boolean assThey) {
         checkboxAssumptionWe.setValue(assWe);
         checkboxAssumptionThey.setValue(assThey);
         ui.getAuctionAssumptionLabel().setValue("Założenia: " + (assWe ? "Po parti" : "Przed partią"));
@@ -244,18 +245,18 @@ class OptionMenu extends MenuBar {
         checkboxAssumptionWe.setCaption("Czy jesteście po partii (ustawiane w głównej aplikacji albo tutaj)? ");
         checkboxAssumptionThey.setCaption("Czy przeciwnicy są  po partii (ustawiane w głównej aplikacji albo tutaj)? ");
 
-        checkboxFitWe = new CheckBox("Czy  macie fit (domyślnie tak - ustawiane tutaj)?",true);
-        checkboxFitThey = new CheckBox("Czy  jest fit u przeciwników (domyślnie nie - ustawiane tutaj)?",false);
+        checkboxFitWe = new CheckBox("Czy  macie fit (domyślnie tak - ustawiane tutaj)?", true);
+        checkboxFitThey = new CheckBox("Czy  jest fit u przeciwników (domyślnie nie - ustawiane tutaj)?", false);
         fitLabel = new Label("Uwaga: Jeżeli macie PC >30 to czy jest fit (8+ kart) w dowolnym kolorze, jeżeli mniej punktów to tylko czy jest fit w  starszym kolorze.");
 
-        checkboxDouble = new CheckBox("Czy  była kontra (domyślnie nie - ustawiane tutaj)?",false);
-        checkboxReDouble = new CheckBox("Czy  była rekontra (domyślnie nie - ustawiane tutaj)?",false);
+        checkboxDouble = new CheckBox("Czy  była kontra (domyślnie nie - ustawiane tutaj)?", false);
+        checkboxReDouble = new CheckBox("Czy  była rekontra (domyślnie nie - ustawiane tutaj)?", false);
 
         doubleRedoubleGroup = new RadioButtonGroup<>();
-        doubleRedoubleGroup.setItems("Kontra","Rekontra");
+        doubleRedoubleGroup.setItems("Kontra", "Rekontra");
         doubleRedoubleGroup.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
         doubleRedoubleGroup.addValueChangeListener(event -> {
-            if(event.getValue().equals("Kontra")) checkboxDouble.setValue(true);
+            if (event.getValue().equals("Kontra")) checkboxDouble.setValue(true);
             else if (event.getValue().equals("Rekontra")) checkboxReDouble.setValue(true);
         });
 
@@ -266,19 +267,30 @@ class OptionMenu extends MenuBar {
         pointsForContractField = new TextField("Podaj liczbę punktów uzyskanych przy rozgrywaniu kontraktu:");
 
 
+        pointsInBothHandsField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        contractLevelField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        colorOfContractField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        numberOfTricksField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        pointsForContractField.addValueChangeListener(event -> resultsLabel.setValue(""));
+
+
         suitGroup = new RadioButtonGroup<>();
-        suitGroup.setItems("Bez Atu","Piki","Kiery", "Trefle","Kara");
+        suitGroup.setItems("Bez Atu", "Piki", "Kiery", "Trefle", "Kara");
         suitGroup.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
         //    JLabel message2 = new JLabel("Akuku");
         suitGroup.addValueChangeListener(event -> {
-            if(event.getValue().equals("Bez Atu")) colorOfContractField.setValue("N");
-            else if(event.getValue().equals("Piki")) colorOfContractField.setValue("S");
-            else if(event.getValue().equals("Kiery")) colorOfContractField.setValue("H");
-            else if(event.getValue().equals("Trefle")) colorOfContractField.setValue("C");
-            else if(event.getValue().equals("Kara")) colorOfContractField.setValue("D");
-            else  colorOfContractField.setValue(event.getValue());
+            if (event.getValue().equals("Bez Atu")) colorOfContractField.setValue("N");
+            else if (event.getValue().equals("Piki")) colorOfContractField.setValue("S");
+            else if (event.getValue().equals("Kiery")) colorOfContractField.setValue("H");
+            else if (event.getValue().equals("Trefle")) colorOfContractField.setValue("C");
+            else if (event.getValue().equals("Kara")) colorOfContractField.setValue("D");
+            else colorOfContractField.setValue(event.getValue());
             //      message2.setText(String.format("Radio button suitGroup value changed from '%s' to '%s'", event.getOldValue(), event.getValue()));}
-        }       );
+        });
+
+
+        resultsLabel = new Label("");
+        resultsLabel.setContentMode(ContentMode.HTML);
     }
 
     private void fillExampleData() {
@@ -292,9 +304,6 @@ class OptionMenu extends MenuBar {
         checkboxDouble.setValue(false);
 
     }
-
-
-
 
 
     private FormLayout actionManualCalculetePoints() {
@@ -312,17 +321,13 @@ class OptionMenu extends MenuBar {
         vL.addComponent(fitLabel);
         vL.addComponent(pointsForContractField);
 
-        Label resultsLabel = new Label("");
-        resultsLabel.setContentMode(ContentMode.HTML);
-        pointsInBothHandsField.addValueChangeListener(event -> resultsLabel.setValue(""));
-        pointsForContractField.addValueChangeListener(event -> resultsLabel.setValue(""));
 
         Button calculateImp = new Button("Oblicz impy! ", clickEvent -> {
             try {
-                CalculatedImpPointsForOneDeal a =new CalculatedImpPointsForOneDeal(Float.parseFloat(pointsInBothHandsField.getValue()),
-                                                Integer.parseInt(pointsForContractField.getValue()),
-                                                checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(),
-                                                checkboxFitWe.getValue(), checkboxFitThey.getValue());
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(Float.parseFloat(pointsInBothHandsField.getValue()),
+                        Integer.parseInt(pointsForContractField.getValue()),
+                        checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(),
+                        checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  " +
                         "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
@@ -357,16 +362,8 @@ class OptionMenu extends MenuBar {
         vL.addComponent(doubleRedoubleGroup);
         vL.addComponent(numberOfTricksField);
 
-        Label resultsLabel = new Label("");
-        resultsLabel.setContentMode(ContentMode.HTML);
 
-
-        contractLevelField.addValueChangeListener(event -> resultsLabel.setValue(""));
-        pointsInBothHandsField.addValueChangeListener(event -> resultsLabel.setValue(""));
-        numberOfTricksField.addValueChangeListener(event -> resultsLabel.setValue(""));
-        colorOfContractField.addValueChangeListener(event -> resultsLabel.setValue(""));
-
-         Button calculateImpPoints = new Button("Oblicz punkty i impy za jedno rodzanie (dla rozgrywającego)! ", clickEvent -> {
+        Button calculateImpPoints = new Button("Oblicz punkty i impy za jedno rodzanie (dla rozgrywającego)! ", clickEvent -> {
             try {
 
                 DuplicateBridgeScoring duplicateBridgeScoring = new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
@@ -376,7 +373,9 @@ class OptionMenu extends MenuBar {
                         Float.parseFloat(pointsInBothHandsField.getValue()), duplicateBridgeScoring.getContractScoringPoints(),
                         checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + duplicateBridgeScoring.getContractScoringPoints() + " punktów za kontrakt, (" + duplicateBridgeScoring.getDescription() + ") </B>  <BR> czyli " + a.getResults() + " impów.  ");// +
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + duplicateBridgeScoring.getContractScoringPoints() +
+                        " punktów za kontrakt, (" + duplicateBridgeScoring.getDescription() + ") </B> " +
+                        " <BR> czyli " + a.getResults() + impDeclination(a.getResults()) + ".  ");
 
             } catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
@@ -412,13 +411,6 @@ class OptionMenu extends MenuBar {
         checkboxWe.setValue(true);
         vL.addComponent(checkboxWe);
 
-        Label resultsLabel = new Label("");
-        resultsLabel.setContentMode(ContentMode.HTML);
-
-        pointsInBothHandsField.addValueChangeListener(event -> resultsLabel.setValue(""));
-        numberOfTricksField.addValueChangeListener(event -> resultsLabel.setValue(""));
-        contractLevelField.addValueChangeListener(event -> resultsLabel.setValue(""));
-
 
         TextField numberOfContract = new TextField("Podaj które to rozdanie (numer rozdania określa założenia: 1-obie przed, 2-my po, 3 oni po, 4 obie po:");
         vL.addComponent(numberOfContract);
@@ -433,7 +425,7 @@ class OptionMenu extends MenuBar {
 
                 DuplicateBridgeScoring duplicateBridgeScoring =
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(), checkboxDouble.getValue(), checkboxReDouble.getValue(),
-                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] :fillAssumption(contractNumber)[1] ,
+                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
                 String des = duplicateBridgeScoring.getDescription();
 
@@ -442,10 +434,10 @@ class OptionMenu extends MenuBar {
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()),
                         pointsContractWe,
-                        fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1] ,
+                        fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1],
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B> " +
-                        " <BR> czyli " + a.getResults() + impDeclination(a.getResults())+". ");// +
+                        " <BR> czyli " + a.getResults() + impDeclination(a.getResults()) + ". ");// +
 
             }
             //pyt cz1: czy lepiej tak jak jest instance of ale w jednej linijce (i raz kolorowane)
@@ -457,7 +449,6 @@ class OptionMenu extends MenuBar {
         });
 
 
-
         String[] descriptionTable = {"pierwszy kontrakt:", "drugi kontrakt", "trzeci kontrakt", "czwarty kontrakt"};
 
 
@@ -466,16 +457,15 @@ class OptionMenu extends MenuBar {
         final RubberScoring aa = new RubberScoring();
 
 
-        Button prowadzZapis = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
+        Button makeScorringOfFourDeal = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
             try {
                 int contractNumber = Integer.parseInt(numberOfContract.getValue()); //bo liczy od zera
                 if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
 
 
-
                 DuplicateBridgeScoring scoring =
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(), checkboxDouble.getValue(), checkboxReDouble.getValue(),
-                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] :fillAssumption(contractNumber)[1] ,
+                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
 
                 CalculatedImpPointsForOneDeal a =
@@ -483,23 +473,22 @@ class OptionMenu extends MenuBar {
                                 Float.parseFloat(pointsInBothHandsField.getValue()),
                                 checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints(),
                                 checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                descriptionTable[contractNumber-1] =  "Kontrakt nr. " + (contractNumber)+ ": " + scoring.getShortDescription() + scoring.getDescription() + "\n "+ a.getFitDescriprtion();
+                descriptionTable[contractNumber - 1] = "Kontrakt nr. " + (contractNumber) + ": " + scoring.getShortDescription() + scoring.getDescription() + "\n " + a.getFitDescriprtion();
 
 
-               // aa.fillOneContractFrom4GameSet(contractNumber, a);
-             int imp=   aa.fillOneContractFrom4GameSet(contractNumber, checkboxWe.getValue(),
-                        Float.parseFloat(pointsInBothHandsField.getValue()), Integer.parseInt(contractLevelField.getValue()),colorOfContractField.getValue(),
-                        Integer.parseInt(numberOfTricksField.getValue()),checkboxDouble.getValue(), checkboxReDouble.getValue(),
+                // aa.fillOneContractFrom4GameSet(contractNumber, a);
+                int imp = aa.fillOneContractFrom4GameSet(contractNumber, checkboxWe.getValue(),
+                        Float.parseFloat(pointsInBothHandsField.getValue()), Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
+                        Integer.parseInt(numberOfTricksField.getValue()), checkboxDouble.getValue(), checkboxReDouble.getValue(),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
                 resultsLabel.setValue("<B>To " + numberOfContract.getValue() + "  rozdanie i uzyskaliście "
-                        + (checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints() )
-                        + " punktów za kontrakt, czyli " + imp + impDeclination(imp)+ ". "
-                        + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm())+". ");
+                        + (checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints())
+                        + " punktów za kontrakt, czyli " + imp + impDeclination(imp) + ". "
+                        + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm()) + ". ");
 
 
-
-                descriprionOf4play = makeDescription(aa,descriptionTable);
+                descriptionOf4play = makeDescription(aa, descriptionTable);
 
 //pyt: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
             } catch (BridgeException e) {
@@ -513,24 +502,21 @@ class OptionMenu extends MenuBar {
         });
 
 
-
-        Button pokazWyniki = new Button("Pokaz wyniki ostatnich  4 rozdań! ", clickEvent -> {
-            actionOpenWindow(this.ui,"Okienko z wynikami ostatnich czterech rozdań.",actionDisplayResultsOf4GameWindow());
-
-        });
+        Button showResultsOfFourDeals = new Button("Pokaz wyniki ostatnich  4 rozdań! ", clickEvent ->
+                actionOpenWindow(this.ui, "Okienko z wynikami ostatnich czterech rozdań.", actionDisplayResultsOf4GameWindow()));
 
         fillExampleData();
 
         vL.addComponent(calculateImpPoints);
-        vL.addComponent(prowadzZapis);
+        vL.addComponent(makeScorringOfFourDeal);
         vL.addComponent(resultsLabel);
-        vL.addComponent(pokazWyniki);
-       return vL;
+        vL.addComponent(showResultsOfFourDeals);
+        return vL;
     }
 
     private String makeDescription(RubberScoring aa, String[] descriptionTable) throws BridgeException {
         StringBuilder s = new StringBuilder("\n*** Zapis gier numer: " + aa.getGameID() + ".  ***  \n");
-        for (int i = 0; i < 4; i++)  s.append("\n").append(descriptionTable[i]);
+        for (int i = 0; i < 4; i++) s.append("\n").append(descriptionTable[i]);
 
         s.append("\n\n \t \t***\n");
 
@@ -538,15 +524,16 @@ class OptionMenu extends MenuBar {
     }
 
 
-private String impDeclination(int i){
+    private String impDeclination(int i) {
         String imp;
-        if(i==1) imp = " imp";
-        else if(i<5) imp = " impy";
+        if (i == 1) imp = " imp";
+        else if (i < 5) imp = " impy";
         else imp = " impów";
         return imp;
 
 
-}
+    }
+
     private boolean[] fillAssumption(int contractNumber) {
         boolean[] auctionAssumption = {false, false};
         if (contractNumber == 2) {
@@ -561,21 +548,18 @@ private String impDeclination(int i){
     }
 
     private VerticalLayout actionDisplayResultsOf4GameWindow() {
-       VerticalLayout vL = new VerticalLayout();
-         vL.addComponent(new Label("Wersja wstępna - wyniki ostatnich zapisanych rozdań :)"));
-         vL.addComponent(new Label("Uwaga na razie nie ma możliwości zapisu edytowanego tekstu"));
+        VerticalLayout vL = new VerticalLayout();
+        vL.addComponent(new Label("Wersja wstępna - wyniki ostatnich zapisanych rozdań :)"));
+        vL.addComponent(new Label("Uwaga na razie nie ma możliwości zapisu edytowanego tekstu"));
         TextArea a = new TextArea();
         a.setWidth("100%");
-       // a.setHeight("800%");
-        a.setValue(descriprionOf4play);
+        // a.setHeight("800%");
+        a.setValue(descriptionOf4play);
         //a.setEditable(false);
-
         vL.addComponent(a);
-
-
-        //System.out.println("Akuku"+ descriprionOf4play);
         vL.addStyleName("window");
-       return vL;
+
+        return vL;
     }
 
 

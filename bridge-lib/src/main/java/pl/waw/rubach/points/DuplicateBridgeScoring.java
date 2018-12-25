@@ -123,7 +123,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
                 return numberOfTricksForWhichArePointsCalculated * 30 + 10;
 
             default:
-                throw new InvalidContractSuitException();
+                throw new InvalidContractSuitException(getContractSuit());
         }
     }
 

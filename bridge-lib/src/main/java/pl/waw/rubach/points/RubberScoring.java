@@ -20,7 +20,7 @@ public class RubberScoring {
     private int gameID;
 
     /**
-     * rubberSpecialDescription describe parameter of game - if accesible
+     * rubberSpecialDescription describe parameter of game - if accesible and results describe results of rubber
      */
     private String rubberSpecialDescription, resultsDescription;
 
@@ -33,7 +33,8 @@ public class RubberScoring {
      * Map number of game with scorring for one game
      */
     private Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
-//pyt być może to w jednej mapie siedzieć, ale nie umiem chyba łatwo (bez zmieniania miliona miejsc) wiec na razie będzie tak (ta nowa mapa trzyma tylko wynik żeby sprawdzić czy już był sumowany czy nie
+//pyt być może to w jednej mapie siedzieć, ale nie umiem chyba łatwo (bez zmieniania miliona miejsc) wiec na razie będzie tak
+// (ta nowa mapa trzyma tylko wynik żeby sprawdzić czy już był sumowany czy nie)
     private Map<Integer, Integer> calculatedImpPointsForOneGame = new HashMap<>();
 
     /**
@@ -118,7 +119,7 @@ public class RubberScoring {
      */
     public int fillOneContractFrom4GameSet(int contractNumber,
                                            CalculatedImpPointsForOneDeal cIPfoDforWe)
-            throws InvalidNumberOfPointsException, BridgeException {
+            throws BridgeException {
 
         scorringForOneGame.put(contractNumber, cIPfoDforWe);
         calculatedImpPointsForOneGame.put(contractNumber,cIPfoDforWe.getResults());
@@ -132,7 +133,8 @@ public class RubberScoring {
             throws BridgeException {
 
         return fillOneContractFrom4GameSet(contractNumber,
-                new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe, whoPlay ? scoringPointsWe : -scoringPointsWe,
+                new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe,
+                        whoPlay ? scoringPointsWe : -scoringPointsWe,
                         whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1], whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
                         whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
 
@@ -145,7 +147,8 @@ public class RubberScoring {
             throws BridgeException {
         rubberSpecialDescription = rubberSpecialDescription + pFC.getShortDescription() + "\n";
         return fillOneContractFrom4GameSet(contractNumber,
-                new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe, whoPlay ? pFC.getContractScoringPoints() : -pFC.getContractScoringPointsWe(),
+                new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe,
+                        whoPlay ? pFC.getContractScoringPoints() : -pFC.getContractScoringPointsWe(),
                         whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1], whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
                         whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
     }
