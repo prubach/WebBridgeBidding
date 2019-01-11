@@ -297,6 +297,7 @@ class OptionMenu extends MenuBar {
         pointsInBothHandsField.setValue("25");
         contractLevelField.setValue("3");
         colorOfContractField.setValue("NT");
+        suitGroup.setValue("Bez Atu");
         numberOfTricksField.setValue("9");
         checkboxFitWe.setValue(true);
         checkboxFitThey.setValue(false);
