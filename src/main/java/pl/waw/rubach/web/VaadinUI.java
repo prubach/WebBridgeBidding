@@ -2,10 +2,7 @@ package pl.waw.rubach.web;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.provider.ListDataProvider;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.Responsive;
-import com.vaadin.server.SerializableComparator;
-import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.*;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.spring.annotation.SpringUI;
@@ -44,7 +41,7 @@ public class VaadinUI extends UI {
     private Label bidSystemLabel = new Label("");
     private boolean assumption = false;
     private Label auctionAssumptionLabel = new Label("Założenia: Przed partią");
-    private Link brydzApkLink = new Link("Android Brydz APK", new ExternalResource("/brydz.apk"));
+    private Link brydzApkLink = new Link("", new ExternalResource("/brydz.apk"));
 
     private MenuBar optionMenuBar = new MenuBar();
     private HorizontalLayout legendLabel = new HorizontalLayout();
@@ -143,6 +140,10 @@ public class VaadinUI extends UI {
         curBidLabel.setWidth("100%");
         createLegendLabel();
         optionMenuBar =new OptionMenu(this);
+        //layout.addComponent(new Image(null,
+         //       new ClassResource("smiley.jpg")));
+        brydzApkLink.setIcon(new ThemeResource("androidapp.png"));
+        brydzApkLink.setTargetName("_blank");
 //		//HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
         HorizontalLayout topRightLayout = new HorizontalLayout(legendLabel, auctionAssumptionLabel, bidSystemLabel, optionMenuBar, brydzApkLink);//, bidSystemMenuBar);
 
