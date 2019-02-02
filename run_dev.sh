@@ -17,4 +17,4 @@ if [ -n "$PID" ]; then
     kill -9 $PID
 fi
 cd $DIR
-screen -dmSL bridge java -jar -Dspring.profiles.active=production build/libs/WebBridgeBidding*.war
+screen -dmSL bridge java -jar build/libs/WebBridgeBidding*.war
