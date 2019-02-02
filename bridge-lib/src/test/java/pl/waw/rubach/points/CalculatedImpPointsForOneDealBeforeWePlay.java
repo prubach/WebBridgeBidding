@@ -18,7 +18,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
 
     protected boolean wePlay = true;
     protected boolean[] assumption = {false, false};
-    protected int a = wePlay ? 1 : -1;
+    protected int a;// = wePlay ? 1 : -1;
 
     protected MultiKeyMap<Float, Integer> testCountingPointsFitWeMap = new MultiKeyMap<>();
     protected MultiKeyMap<Float, Integer> testCountingPointsFitTheyMap = new MultiKeyMap<>();
@@ -42,8 +42,6 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         testCountingPointsNoFitBothMap.put(28f, 100f, -7);
         testCountingPointsNoFitBothMap.put(29f, -50f, -10);
 
-
-//todo add more example
         testCountingPointsFitBothMap.put(12f, -100f, 8);
         testCountingPointsFitBothMap.put(28f, 100f, -8);
         testCountingPointsFitBothMap.put(19.5f, -100f, -1);

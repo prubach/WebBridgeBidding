@@ -451,8 +451,6 @@ class OptionMenu extends MenuBar {
 
 
         String[] descriptionTable = {"pierwszy kontrakt:", "drugi kontrakt", "trzeci kontrakt", "czwarty kontrakt"};
-
-
         Label resultsLabelFor4Game = new Label("");
         resultsLabelFor4Game.setContentMode(ContentMode.HTML);
         final RubberScoring aa = new RubberScoring();
