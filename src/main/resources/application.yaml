@@ -39,7 +39,7 @@ vaadin:
 spring:
   profiles: production
 server:
-  port: 9000
+  port: 7700
   ssl:
     key-store: classpath:bridge.p12
     key-store-password: haselkobridge
