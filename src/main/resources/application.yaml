@@ -40,10 +40,10 @@ spring:
   profiles: production
 server:
   port: 7700
-  ssl:
-    key-store: classpath:bridge.p12
-    key-store-password: haselkobridge
-    ssl.key-password: haselkobridge
+  #ssl:
+    #key-store: classpath:bridge.p12
+    #key-store-password: haselkobridge
+    #ssl.key-password: haselkobridge
 vaadin:
   servlet:
     productionMode: true
