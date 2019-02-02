@@ -359,7 +359,8 @@ class OptionMenu extends MenuBar {
         vL.addComponent(fitLabel);
 
         vL.addComponent(contractLevelField);
-        vL.addComponent(colorOfContractField);
+    //    vL.addComponent(colorOfContractField);
+        vL.addComponent(suitGroup);
         vL.addComponent(doubleRedoubleGroup);
         vL.addComponent(numberOfTricksField);
 
