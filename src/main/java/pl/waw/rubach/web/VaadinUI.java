@@ -144,30 +144,32 @@ public class VaadinUI extends UI {
          //       new ClassResource("smiley.jpg")));
         brydzApkLink.setIcon(new ThemeResource("androidapp.png"));
         brydzApkLink.setTargetName("_blank");
-//		//HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
-        HorizontalLayout topRightLayout = new HorizontalLayout(brydzApkLink, legendLabel, auctionAssumptionLabel, bidSystemLabel, optionMenuBar);//, bidSystemMenuBar);
+//		//HorizontalLayout topLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
+        HorizontalLayout topLayout = new HorizontalLayout(brydzApkLink, bidSystemLabel, optionMenuBar);//, bidSystemMenuBar);
 
         auctionAssumptionLabel.setStyleName("window");
 
 
 
-        topRightLayout.setComponentAlignment(legendLabel, Alignment.MIDDLE_LEFT);
-        topRightLayout.setComponentAlignment(bidSystemLabel, Alignment.MIDDLE_LEFT);
-        topRightLayout.setComponentAlignment(optionMenuBar, Alignment.MIDDLE_LEFT);
-        topRightLayout.setComponentAlignment(auctionAssumptionLabel, Alignment.MIDDLE_LEFT);
-        topRightLayout.setComponentAlignment(brydzApkLink, Alignment.MIDDLE_RIGHT);
+  //      topLayout.setComponentAlignment(legendLabel, Alignment.MIDDLE_LEFT);
+        topLayout.setComponentAlignment(bidSystemLabel, Alignment.MIDDLE_CENTER);
+        topLayout.setComponentAlignment(optionMenuBar, Alignment.MIDDLE_RIGHT);
+    //    topLayout.setComponentAlignment(auctionAssumptionLabel, Alignment.MIDDLE_LEFT);
+        topLayout.setComponentAlignment(brydzApkLink, Alignment.MIDDLE_LEFT);
 
-        //topRightLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);
-        //topRightLayout.setExpandRatio(bidSystemMenuBar,1);
-      //  topRightLayout.setExpandRatio(optionMenuBar, 1);
-        topRightLayout.setExpandRatio(bidSystemLabel, 1);
-        topRightLayout.setExpandRatio(legendLabel, 1);
-        topRightLayout.setExpandRatio(auctionAssumptionLabel, 1);
-        topRightLayout.setWidth("100%");
+        //topLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);
+        //topLayout.setExpandRatio(bidSystemMenuBar,1);
+    //    topLayout.setExpandRatio(optionMenuBar, 1);
+        topLayout.setExpandRatio(bidSystemLabel, 1);
+    //    topLayout.setExpandRatio(legendLabel, 1);
+    //    topLayout.setExpandRatio(auctionAssumptionLabel, 1);
+        topLayout.setWidth("100%");
         fwdBtn.setEnabled(false);
-        HorizontalLayout topLayout = new HorizontalLayout(backBtn, homeBtn, fwdBtn, navigatorLabel);
-        topLayout.setComponentAlignment(navigatorLabel, Alignment.MIDDLE_LEFT);
-        VerticalLayout topVertLayout = new VerticalLayout(topRightLayout, topLayout);
+        HorizontalLayout bottomLayout = new HorizontalLayout(backBtn, homeBtn, fwdBtn, navigatorLabel,auctionAssumptionLabel,legendLabel);
+        bottomLayout.setComponentAlignment(navigatorLabel, Alignment.MIDDLE_CENTER);
+        bottomLayout.setComponentAlignment(legendLabel, Alignment.MIDDLE_RIGHT);
+        bottomLayout.setComponentAlignment(auctionAssumptionLabel, Alignment.MIDDLE_RIGHT);
+        VerticalLayout topVertLayout = new VerticalLayout(topLayout, bottomLayout);
         //topVertLayout.setComponentAlignment(bidingPersonLabel,Alignment.BOTTOM_CENTER);
         topVertLayout.setSpacing(false);
         topVertLayout.setMargin(false);
@@ -208,7 +210,7 @@ public class VaadinUI extends UI {
 
         bidSystemLabel.setValue(curBidSystem.getName());
         bidSystemLabel.addStyleName("title");
-        navigatorLabel.setValue("Wybierz odzywkę:");
+        navigatorLabel.setValue("Wybierz odzywkę -");
 
         // Define Left Grid Columns
         initializeGridLayout(bidGrid);
