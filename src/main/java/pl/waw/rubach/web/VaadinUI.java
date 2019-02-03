@@ -145,7 +145,7 @@ public class VaadinUI extends UI {
         brydzApkLink.setIcon(new ThemeResource("androidapp.png"));
         brydzApkLink.setTargetName("_blank");
 //		//HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
-        HorizontalLayout topRightLayout = new HorizontalLayout(legendLabel, auctionAssumptionLabel, bidSystemLabel, optionMenuBar, brydzApkLink);//, bidSystemMenuBar);
+        HorizontalLayout topRightLayout = new HorizontalLayout(brydzApkLink, legendLabel, auctionAssumptionLabel, bidSystemLabel, optionMenuBar);//, bidSystemMenuBar);
 
         auctionAssumptionLabel.setStyleName("window");
 
