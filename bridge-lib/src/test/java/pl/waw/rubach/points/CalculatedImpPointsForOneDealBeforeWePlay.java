@@ -120,13 +120,13 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
     @Test
     public void testMirror() throws BridgeException {
         testFunction2(testCountingPointsNoFitBothMap, assumption, false, false);
-        testFunction2(testCountingPointsFitWeMap,  assumption, true, false);
-        testFunction2(testCountingPointsFitTheyMap,  assumption, false, true);
-        testFunction2(testCountingPointsFitBothMap,  assumption, true, true);
+        testFunction2(testCountingPointsFitWeMap, assumption, true, false);
+        testFunction2(testCountingPointsFitTheyMap, assumption, false, true);
+        testFunction2(testCountingPointsFitBothMap, assumption, true, true);
     }
 
     @Test
-    public void testCountingPointsRes()  throws BridgeException {
+    public void testCountingPointsRes() throws BridgeException {
         testFunction1(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
 
     }
@@ -146,25 +146,24 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
 
     @Test
     public void testCountingPointsBothFitRes() throws BridgeException {
-       testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
+        testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
 
 
     }
 
-//pyt - zamiast tej pustej klasy- lepiej tak: jakoś to mi się wydaje mało eleganckie :) ale z tą pustą klasą to trochę bez sensu...
+    //pyt - zamiast tej pustej klasy- lepiej tak: jakoś to mi się wydaje mało eleganckie :) ale z tą pustą klasą to trochę bez sensu...
+    //odp podobnie, myślę, że obydwa rozwiązania są ok.
     @Test
     public void testCountingPointsResThey() throws BridgeException {
-    wePlay = false;
-     a = -1;
+        wePlay = false;
+        a = -1;
 
         testFunction1(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
         testFunction1(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
         testFunction1(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
         testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
 
-           }
-
-
+    }
 
 
 }

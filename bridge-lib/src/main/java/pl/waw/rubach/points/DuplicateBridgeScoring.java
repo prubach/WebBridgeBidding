@@ -6,6 +6,7 @@ import pl.waw.rubach.points.exceptions.*;
 public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
     //pyt czy te parametry tu zostają czy przechodzą wyżej - wg mnie dalej się z tego nie korzysta tylko tu - czyli powinny zostać?
+    //odp jeśli się nie korzysta to niech zostaną tu
     /**
      * The number of tricks above six (the book) that are taken by declarer.
      */
@@ -141,6 +142,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
        // pyt jaki warunek lepiej (bardziej elegancko) - to chyba jest to samo :
         // if (oddTricks > getContractLevel()) {
+        //odp nie widzę specjalnej różnicy
         if (made && overtricks>0) {
 
             //  if (!isContractDouble && !isContractRedouble) {
@@ -255,6 +257,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
             //pyt chodzi o to że podoba mi się jak nie ma if tylko ? . Ale wtedy nie umiem dopisać drugiego polecenia bo musiałby być nawias np :  description = description + " + premia szlemikowa.";
             // Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
             // nieużywany znak np. "%" a potem wykonująć replace
+            //odp nie do końca rozumiem problem, ale replace wygląda sensownie
             if (getContractLevel() == 6) return (isDeclarerVulnerable()) ? 750 : 500;
             else if (getContractLevel() == 7) return (isDeclarerVulnerable()) ? 1500 : 1000;
         }

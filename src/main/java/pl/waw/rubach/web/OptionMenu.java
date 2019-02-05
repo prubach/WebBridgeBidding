@@ -443,6 +443,7 @@ class OptionMenu extends MenuBar {
 
             }
             //pyt cz1: czy lepiej tak jak jest instance of ale w jednej linijce (i raz kolorowane)
+            //odp ok
             catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowy format  punktów spróbuj jeszcze raz!" : e.getMessage();
@@ -491,6 +492,7 @@ class OptionMenu extends MenuBar {
                 descriptionOf4play = makeDescription(aa, descriptionTable);
 
 //pyt: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
+//odp w tym przypadku obydwa są ok, bo ciężko powiedzieć czy lepiej użyć instanceof czy duplikować blok
             } catch (BridgeException e) {
                 String mes1 = e.getMessage();
                 resultsLabel.setValue("<font color=red>" + mes1 + "</font>");

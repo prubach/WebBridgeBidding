@@ -12,6 +12,7 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
       a = wePlay ? 1 : -1;
        //super.fillTestPointsMap();
       //pyt rzuć okiem tu może być to super fill zakomentowane bo uzupełnia nowe dane (a jak się odkomentuje to uzupełnia nowe i stare)
+     //odp ok
        //both no fit
        testCountingPointsNoFitBothMap.put(20f, 0f, 0);
        testCountingPointsNoFitBothMap.put(10f, -660f, 0);

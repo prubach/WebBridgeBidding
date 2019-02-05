@@ -34,12 +34,16 @@ public class BridgeException extends Exception {
      * @param fitThey        if they have 8 cards in major suit
      */
     public BridgeException(float numberOfpoints, boolean fitWe, boolean fitThey) {
-        super("Nie mogą obie pary mieć fitu w starszym kolorze  przy 20 pkt -bo wtedy dla pików zapisuje się fit dla kierów brak fitu. " +
+        super(!fitWe || !fitThey || numberOfpoints != NUMBEROFPOINS ? "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony" :
+                "Nie mogą obie pary mieć fitu w starszym kolorze  przy 20 pkt -bo wtedy dla pików zapisuje się fit dla kierów brak fitu. " +
                 "Podano: " + numberOfpoints + " punktów oraz fity: My:" + fitWe + "  Oni:" + fitThey + " - popraw zaznaczenie fitów lub punktów");
-        if (!fitWe || !fitThey || numberOfpoints != NUMBEROFPOINS) { //nie jestem pewna warunku bo idea odwracała
+
+        //if (!fitWe || !fitThey || numberOfpoints != NUMBEROFPOINS) { //nie jestem pewna warunku bo idea odwracała
             //pyt - czy tak może być - czy ma to sens? - chodziło o to żeby zaraportował jakoś? złe użycie tego wyjatku?
-            System.out.print("Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony");
-        }
+            //odp - problem w tym, że ten komunikat pojawi się na konsoli serwera, więc to nie ma sensu, bo i tak go nikt nie zobaczy.
+            // Dlatego dałem go jako komunikat wyjątku
+        //    System.out.print("Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony");
+        //}
 
     }
 

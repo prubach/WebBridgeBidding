@@ -10,6 +10,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
 
     //pyt przeniosłam to tu z powrotem - to jest specyficzny parametr dla liczenia impów (może wogóle nie potrzebny jako parametr klasy
     // - ewentualnie tylko do wyciągnięcia i sprawdzenia jak było liczone... ale może wobec tego też co powinno być ?
+    //odp jeśli się przydaje do odczytania jak było liczone, to niech będzie.
     /**
      * diference betwenn assumpted result from ExpectedResults table and point reach playng contract (contractScoringPoints)
      */
@@ -22,6 +23,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
 
 
     //pyt proszę rzuć okiem czy tak lepie -  pozmieniałam na tak jak wydaje się bardziej elegancko (stare zostało w komentarzach-  chyba jest ok nie jestem pewna .. testy już są chyba ok..
+    //odp lepiej, dodałem tylko if else, bo po co ma to robić 2 razy dla przypadku They
     //constructors  when both play - there are tests
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int pointsForContractWe,
@@ -29,24 +31,21 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
             throws InvalidNumberOfPointsException, BridgeException {
 
         //pyt czy to jest potrzebne - myślałam że lepiej żeby przechowywało w jedym miejscu
+        //odp chyba potrzebne
         setWePlay(wePlay);
         setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
         setOpponentVulnerable(wePlay ? auctionAssumptionThey : auctionAssumptionWe);
-        setDeclarerFit(wePlay ?fitWe: fitThey);
+        setDeclarerFit(wePlay ? fitWe: fitThey);
         setOpponensFit(wePlay ? fitThey : fitWe);
         setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe);
         setContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
-        setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
+        if (wePlay)
+            setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
                 fitWe, fitThey, auctionAssumptionWe, auctionAssumptionThey));
-
+        else
         //if they play parameters should change because as imput we have points for we and scoring for we
-        if (!wePlay) setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
+            setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
                fitThey, fitWe, auctionAssumptionThey, auctionAssumptionWe));
-        // {
-        //  setPointsInBothDeclarerHands(40 - pointsInBothHandsWe);
-        //  setContractScoringPoints(-pointsForContractWe);
-        //     expectedPoints = -expectedPoints;
-        // }
         boolean winWe = getExpectedPoints() <= getContractScoringPoints();
         setPointDifferent(abs(getContractScoringPoints() - getExpectedPoints()));
         // if (getExpectedPoints() <= getContractScoringPoints()) setPointDifferent(getContractScoringPoints()- getExpectedPoints());
