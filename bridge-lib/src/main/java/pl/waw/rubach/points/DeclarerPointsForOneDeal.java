@@ -6,10 +6,15 @@ public class DeclarerPointsForOneDeal {
     public static final int IS_DOUBLE = 2;
     public static final int IS_REDOUBLE = 4;
     public static final int IS_UNDOUBLE = 1;
+    public static final int NUBEROFTRICS =13;
+    public static final int MAXNUBEROFPOINTS =40;
+    public static final float NUMBEROFPOINS = 20;
+    public static final int MINCONTRACTLEVEL = 1;
+    public static final int MAXCONTRACTLEVEL = 7;
 
     /**
      * indicates who is Declarer - but all value here for declarer
-      */
+     */
     private boolean wePlay;
 
     /**
@@ -17,13 +22,15 @@ public class DeclarerPointsForOneDeal {
      * in future from other part of application - results of biding part or user input
      */
     private int contractLevel;
+
     /**
      * Cards suits [denomination or strain] that denotes the proposed trump suit or no trump.
      * Thus, there are five denominations – no trump, spades, hearts, diamonds and clubs.
      */
     private String contractSuit;
+
     /**
-     *  Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
+     * Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
      */
     private int noDoubleReSignature;
 
@@ -32,6 +39,7 @@ public class DeclarerPointsForOneDeal {
      * Fit for  opponents of playing Pair means if they have 8 cards in suit (major or all depending of points)
      */
     private boolean opponensFit;
+
     /**
      * ATTENTION fit declarer not we!!!
      * Fit for Plaing Pair means if they have 8 cards in suit (major or all depending of poinst)
@@ -52,11 +60,10 @@ public class DeclarerPointsForOneDeal {
 
     /**
      * ATTENTION : It shoul not be Numnber of tricks taken in game by we !!!(Pair who make scoring not always plaing pair)
-     *
+     * <p>
      * Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
      * and who must therefore play both their own hand and the exposed hand of the dummy.
      * (opponent takes 13 - numberOfTrickTakenByDeclarer)
-
      */
     private int declarerNumberOfTrickTaken;
 
@@ -67,15 +74,15 @@ public class DeclarerPointsForOneDeal {
 
 
     /**
-     *  ATTENTION : It should not be Numnber of poins in our hands by we !!!(Pair who make scoring not always plaing pair)
+     * ATTENTION : It should not be Numnber of poins in our hands by we !!!(Pair who make scoring not always plaing pair)
      * number of  Goren (PC) points of both hands of pair who is playing
      * (in future could be astimated from biding part not exactly)
      */
     private float pointsInBothDeclarerHands;
 
     /**
-     *  //calculatedPoinstForContract -> contractScoringPoinst because it is no poinst exactly but scoring (zapis)
-     *  Points for contract calculated with modify bridge rules according to 4 play scoring
+     * //calculatedPoinstForContract -> contractScoringPoinst because it is no poinst exactly but scoring (zapis)
+     * Points for contract calculated with modify bridge rules according to 4 play scoring
      * Points  achved by playng contract with some additiona or lacking triks (calculated from duplicate bridge scoring)
      * calculated by DuplicateBridgeScoring by we!!! (Pair who make scoring not always plaing pair)
      */
@@ -90,42 +97,43 @@ public class DeclarerPointsForOneDeal {
 
     /**
      * Description of contract
+     *
      * @return short description of contract
      */
     protected String getContractDescription() {
         String assumption = isDeclarerVulnerable() ? ": po parti, " : ": przed partią, ";
-        String lew = getDeclarerNumberOfTrickTaken()==1 ? " tylko lewę. ": getDeclarerNumberOfTrickTaken()>1 && getDeclarerNumberOfTrickTaken() <5 ? " lewy." : " lew.";
+        String lew = getDeclarerNumberOfTrickTaken() == 1 ? " tylko lewę. " : getDeclarerNumberOfTrickTaken() > 1 && getDeclarerNumberOfTrickTaken() < 5 ? " lewy." : " lew.";
 
         if (getNoDoubleReSignature() == IS_DOUBLE)
-            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption +" z kontrą, rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
+            return " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " z kontrą, rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
         else if (getNoDoubleReSignature() == IS_REDOUBLE)
-            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " z rekontrą, rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
+            return " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " z rekontrą, rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
         else
-            return  " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
+            return " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
     }
 
-    public String getFitDescriprtion(){
+    public String getFitDescriprtion() {
         String fitDes = isDeclarerFit() ? " z fitem. " : " bez fitu. ";
-        String fitODes = isOpponensFit() ? " Przeciwnicy mają fit i są : " :" Przeciwnicy nie mają fitu i są" ;
+        String fitODes = isOpponensFit() ? " Przeciwnicy mają fit i są : " : " Przeciwnicy nie mają fitu i są";
         String assOp = isOpponentVulnerable() ? " przed partią. " : " po partii.";
-        return  "Rozgrywający mieli " +getPointsInBothDeclarerHands()+ " punkty  "+ fitDes + fitODes + assOp ;
+        return "Rozgrywający mieli " + getPointsInBothDeclarerHands() + " punkty  " + fitDes + fitODes + assOp;
     }
-
 
     public int getNumberOfTricksTakenWe() {
         if (isWePlay()) return getDeclarerNumberOfTrickTaken();
-        else return 13-getDeclarerNumberOfTrickTaken();
+        else return 13 - getDeclarerNumberOfTrickTaken();
     }
 
     public float getPoinsOnHandsWe() {
         if (isWePlay()) return getPointsInBothDeclarerHands();
-        else return 40-getPointsInBothDeclarerHands();
-            }
+        else return 40 - getPointsInBothDeclarerHands();
+    }
 
-     public int getContractScoringPointsWe(){
-        if(isWePlay()) return getContractScoringPoints();
+    public int getContractScoringPointsWe() {
+        if (isWePlay()) return getContractScoringPoints();
         else return -getContractScoringPoints();
     }
+
     //getteres and setteres
     public boolean isWePlay() {
         return wePlay;
@@ -171,6 +179,10 @@ public class DeclarerPointsForOneDeal {
         return opponentVulnerable;
     }
 
+    public void setOpponentVulnerable(boolean opponentVulnerable) {
+        this.opponentVulnerable = opponentVulnerable;
+    }
+
     public boolean isOpponensFit() {
         return opponensFit;
     }
@@ -185,10 +197,6 @@ public class DeclarerPointsForOneDeal {
 
     public void setDeclarerFit(boolean declarerFit) {
         this.declarerFit = declarerFit;
-    }
-
-    public void setOpponentVulnerable(boolean opponentVulnerable) {
-        this.opponentVulnerable = opponentVulnerable;
     }
 
     public int getDeclarerNumberOfTrickTaken() {

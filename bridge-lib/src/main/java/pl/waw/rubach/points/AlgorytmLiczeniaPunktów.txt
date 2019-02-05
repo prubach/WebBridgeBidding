@@ -201,3 +201,33 @@ odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  
                // CalculatedImpPointsForOneDeal ipr2 = new CalculatedImpPointsForOneDeal(true, 20, dbs.getContractScoringPoints(), false, false, false, false);
                // CalculatedImpPointsForOneDeal ipr1 = new CalculatedImpPointsForOneDeal(true, 20, 400, false, false, false, false);
                // CalculatedImpPointsForOneDeal ipr0 = new CalculatedImpPointsForOneDeal(true, 20, 3, "nt", 1, 9, false, false, false, false);
+
+
+ z klasy DuplicateBridgeScoringTestBefore
+  //czemu to wszystko jest protected jak idea proponuje żeby było bez niczego (package-private) - niby tylko ta druga klasa z pakietu z tego korzysta? Może Idea ma rację? Próbowałam i było ok.
+    //protected to dostęp dla wszystkich klas dziedziczących bez względu na to w jakim są pakiecie, więc de facto to jeszcze węższy poziom niż package-private
+    //czyli zostaje protected? Bo to TYLKO klasy dziedziczące wiec żeby inny test z tego pakietu czegoś nie poużywał sobie ?
+    //jeśli tylko dziedziczące mają mieć dostęp to protected jest ok
+
+    //dlaczego wpisałeś zero -przecież zero nie może być? no i private (bo getter) - a jeszcze mówiłeś że można tu coś zrobić zeby obejść - czyli tak sztuka dla sztuki może np podstawić jakąś przykładową wartość 
+        //odp nie ma znaczenia czy jest zero czy nie, bo int ma i tak domyślną wartość 0 jeśli się nic nie ustawi.
+        //nie wiem o jakie obejście chodzi. Getter ew potrzebny, żeby z samego wyjątku odczytać jaki poziom gry był podany.
+ //nie - nie ma sensu warunek ma być na zewnątrz tu mogą być jakieś parametry - czy mogłoby tu sprawdzać warunek a nie w kodzie?
+
+
+
+    //czy można dodać opis tak żeby został zapis ze znakami zapytania? Uważam że może być bez opisu bo o premi szlemikowej mało kto zapomina  description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
+            //nie rozumiem w jakim sensie ze znakami zapytania?
+            //chodzi o to że podoba mi się jak nie ma if tylko ? . Ale wtedy nie umiem dopisać drugiego polecenia bo musiałby być nawias np :  description = description + " + premia szlemikowa.";
+            // Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
+            // nieużywany znak np. "%" a potem wykonująć replace
+            //odp nie do końca rozumiem problem, ale replace wygląda sensownie
+            //nie wiem jak ten replace: chodzi o to że chciałabym znaleźć krótką wersję (jak poniżej) na to co jest zakomentowane
+
+CalculatedImpPointsForOneDeal:
+//przeniosłam to tu z powrotem - to jest specyficzny parametr dla liczenia impów (może wogóle nie potrzebny jako parametr klasy
+    // - ewentualnie tylko do wyciągnięcia i sprawdzenia jak było liczone... ale może wobec tego też co powinno być ?
+    //jeśli się przydaje do odczytania jak było liczone, to niech będzie.
+
+    //czy to jest potrzebne - myślałam że lepiej żeby przechowywało w jedym miejscu
+           //odp chyba potrzebne
