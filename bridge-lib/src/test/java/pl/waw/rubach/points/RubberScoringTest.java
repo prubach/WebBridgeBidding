@@ -29,7 +29,7 @@ public class RubberScoringTest {
         testRubberFromResults.put(6,10,-5,-3,8);
         testRubberFromResults.put(3,5,-5,-3,0);
 
-        //pyt is posible more then 4 keys?
+        //todo is posible more then 4 keys?
         //odp nie używałem tych MultiKeyMap więc trzeba by sprawdzić
         testRubberFromPoints.put(20,19,18,17,-110,-6);
         testRubberFromPoints.put(20,21,22,23,110,6);

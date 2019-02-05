@@ -1,12 +1,13 @@
 package pl.waw.rubach.points;
 
-import pl.waw.rubach.points.exceptions.*;
+import pl.waw.rubach.points.exceptions.BridgeException;
+import pl.waw.rubach.points.exceptions.InvalidContractLevelException;
+import pl.waw.rubach.points.exceptions.InvalidContractSuitException;
+import pl.waw.rubach.points.exceptions.InvalidNumberOfTrickTakenException;
 
 //This was  PointsForContract(...)
 public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
-    //pyt czy te parametry tu zostają czy przechodzą wyżej - wg mnie dalej się z tego nie korzysta tylko tu - czyli powinny zostać?
-    //odp jeśli się nie korzysta to niech zostaną tu
     /**
      * The number of tricks above six (the book) that are taken by declarer.
      */
@@ -23,27 +24,28 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
 
     //This was :  PointsForContract(...)
+
     /**
      * Constructor of scoring for duplicate Bridge game for Declarer hand  -  setting contract parameter and calculated scoring points for Contract
      * extended DealerPointsForOneDeal class where are field for all parameter for declarer.
      * Contract parameter:
-     * @param contractLevel The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
-     * in future from other part of application - results of biding part or user input
-     * @param contractSuit Cards suits [denomination or strain] that denotes the proposed trump suit or no trump.
-     * Thus, there are five denominations – no trump, spades, hearts, diamonds and clubs.
-     * @param nDRSignature Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
-     * @param auctionAssumptionDeclarer ATTENTION Auction assumption declarer not we!!!
-     * Auction Assumption for playing Pair means if pair is  vulnerable or unvulnerable
      *
+     * @param contractLevel                The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
+     *                                     in future from other part of application - results of biding part or user input
+     * @param contractSuit                 Cards suits [denomination or strain] that denotes the proposed trump suit or no trump.
+     *                                     Thus, there are five denominations – no trump, spades, hearts, diamonds and clubs.
+     * @param nDRSignature                 Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
+     * @param auctionAssumptionDeclarer    ATTENTION Auction assumption declarer not we!!!
+     *                                     Auction Assumption for playing Pair means if pair is  vulnerable or unvulnerable
      * @param numberOfTrickTakenByDeclarer ATTENTION : Number of tricks taken in game by we !!!(Pair who make scoring not always playing pair)
-     *
-     * Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
-     * and who must therefore play both their own hand and the exposed hand of the dummy.
-     * (opponent takes 13 - numberOfTrickTakenByDeclarer)
-     * @throws InvalidContractLevelException if level is not between 1 to 7 (according bridge rules
-     * @throws InvalidContractSuitException     if suit is no one of 5 bridge strain (colors + nt)
+     *                                     <p>
+     *                                     Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
+     *                                     and who must therefore play both their own hand and the exposed hand of the dummy.
+     *                                     (opponent takes 13 - numberOfTrickTakenByDeclarer)
+     * @throws InvalidContractLevelException      if level is not between 1 to 7 (according bridge rules
+     * @throws InvalidContractSuitException       if suit is no one of 5 bridge strain (colors + nt)
      * @throws InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
-     * @throws BridgeException other parameter incorrect value ...
+     * @throws BridgeException                    other parameter incorrect value ...
      */
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
@@ -76,7 +78,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
 
         if (made) {
             setContractScoringPoints(getContractPoints(contractLevel) * nDRSignature);
-              description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + getContractScoringPoints() + "pkt. ";
+            description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + getContractScoringPoints() + "pkt. ";
         } else {
             setContractScoringPoints(getPenaltyPoints());
         }
@@ -132,18 +134,19 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
      * When declarer makes overtrick, their score value depends upon the contract denomination, declarer's vulnerability and whether or not the contract is undouble, doubled or redoubled.
      * In an undouble contract each overtrick earns the same as in contract points (30 for no trump and major suit contracts, 20 for minor suit contracts);
      * values increase significantly when the contract has been doubled or redoubled, especially when vulnerable.
+     *
      * @return scoring for overtricks
      * @throws InvalidContractSuitException if contract suits is not correct
      */
     private int getOvertrickPoints() throws InvalidContractSuitException {
         // getOvertrickPoints(contractLevel,oddTricks,auctionAssumptionDeclarer,s==2,s==4,contractSuit);
         int overtricksPoints = 0;
-        int overtricks = oddTricks -getContractLevel();
+        int overtricks = oddTricks - getContractLevel();
 
-       // pyt jaki warunek lepiej (bardziej elegancko) - to chyba jest to samo :
+        // jaki warunek lepiej (bardziej elegancko) - to chyba jest to samo :
         // if (oddTricks > getContractLevel()) {
         //odp nie widzę specjalnej różnicy
-        if (made && overtricks>0) {
+        if (made && overtricks > 0) {
 
             //  if (!isContractDouble && !isContractRedouble) {
             if (getNoDoubleReSignature() == IS_UNDOUBLE) {
@@ -173,6 +176,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
     /**
      * When a contract is defeated, penalty points are awarded to the defending side. The value of the penalty depends on the number of undertricks,
      * whether the declaring side is vulnerable or not vulnerable and whether the contract was undoubled, doubled or redoubled.    *
+     *
      * @return scoring for under Tricks
      */
     private int getPenaltyPoints() {
@@ -183,10 +187,10 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
             underTricksPoints = -underTricks * 50;   //bez kontry przed partią 50
         if (!isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && underTricks == 1)
             underTricksPoints = -underTricks * 100;  //z kontrą przed partią pierwsza za 100
-        else if (!isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && (underTricks == 2 || underTricks ==3))
+        else if (!isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && (underTricks == 2 || underTricks == 3))
             underTricksPoints = -underTricks * 200 + 100;  //z kontrą przed partią druga i trzecia za 200
-    //    else if (!auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks == 3)
-     //       underTricksPoints = -underTricks * 200 + 100;
+            //    else if (!auctionAssumptionDeclarer && (isContractDouble || isContractRedouble) && underTricks == 3)
+            //       underTricksPoints = -underTricks * 200 + 100;
         else if (!isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && underTricks >= 4)
             underTricksPoints = -underTricks * 300 + 400;    //z kontrą przed partią czwarta i kolejne za 300?
 
@@ -197,10 +201,12 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
         else if (isDeclarerVulnerable() && ((getNoDoubleReSignature() == IS_DOUBLE) || (getNoDoubleReSignature() == IS_REDOUBLE)) && underTricks >= 2)
             underTricksPoints = -underTricks * 300 + 100;  //z kontrą po partii kolejne za 300
 
-        if ((getNoDoubleReSignature()==IS_REDOUBLE)) underTricksPoints = underTricksPoints * 2;
+        if ((getNoDoubleReSignature() == IS_REDOUBLE)) underTricksPoints = underTricksPoints * 2;
 
-        if (underTricks == 1) description = description + " Za nieugraną grę: punkty z " + underTricks + " wpadki: "+ underTricksPoints+ ". ";
-        else description = description + "Za nieugraną grę: punkty z " + underTricks + " wpadek: "+ underTricksPoints+ ". ";
+        if (underTricks == 1)
+            description = description + " Za nieugraną grę: punkty z " + underTricks + " wpadki: " + underTricksPoints + ". ";
+        else
+            description = description + "Za nieugraną grę: punkty z " + underTricks + " wpadek: " + underTricksPoints + ". ";
 
         return underTricksPoints;
     }
@@ -209,7 +215,8 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
      * When a doubled or redoubled contract is made, a bonus is awarded to the declaring side. It is colloquially referred to as a bonus for "insult",
      * meaning that the opponents have insulted the pair by suggesting that the declarer will not make the contract.
      * 50 points are awarded for a doubled contract made, and  100 points are awarded for a redoubled contract made.
-     * @return  double or redouble bonus
+     *
+     * @return double or redouble bonus
      */
     private int getDoubleRedoubleBonus() {
         if (getNoDoubleReSignature() == IS_DOUBLE && made) {
@@ -252,22 +259,17 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
     private int getSlamsBonusPoints() {
 
         if (oddTricks >= getContractLevel()) {
-            //czy można dodać opis tak żeby został zapis ze znakami zapytania? Uważam że może być bez opisu bo o premi szlemikowej mało kto zapomina  description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
-            //nie rozumiem w jakim sensie ze znakami zapytania?
-            //pyt chodzi o to że podoba mi się jak nie ma if tylko ? . Ale wtedy nie umiem dopisać drugiego polecenia bo musiałby być nawias np :  description = description + " + premia szlemikowa.";
-            // Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
-            // nieużywany znak np. "%" a potem wykonująć replace
-            //odp nie do końca rozumiem problem, ale replace wygląda sensownie
-            if (getContractLevel() == 6) return (isDeclarerVulnerable()) ? 750 : 500;
-            else if (getContractLevel() == 7) return (isDeclarerVulnerable()) ? 1500 : 1000;
+
+            if (getContractLevel() == 6) {description = description + "+ premia szlemikowa: %. ";  return (isDeclarerVulnerable()) ? 750 : 500;}
+            else if (getContractLevel() == 7) {description = description + "+ premia za szlema: %"; return (isDeclarerVulnerable()) ? 1500 : 1000;}
         }
         return 0;
     }
 
 
-
     //getter
     public String getDescription() {
+        description =description.replace("%", Integer.toString(getSlamsBonusPoints()));
         return description;
     }
 

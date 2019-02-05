@@ -33,7 +33,7 @@ public class RubberScoring {
      * Map number of game with scorring for one game
      */
     private Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
-//pyt być może to w jednej mapie siedzieć, ale nie umiem chyba łatwo (bez zmieniania miliona miejsc) wiec na razie będzie tak
+//todo  być może to w jednej mapie siedzieć, ale nie umiem chyba łatwo (bez zmieniania miliona miejsc) wiec na razie będzie tak
 // (ta nowa mapa trzyma tylko wynik żeby sprawdzić czy już był sumowany czy nie)
     //odp ok
     private Map<Integer, Integer> calculatedImpPointsForOneGame = new HashMap<>();

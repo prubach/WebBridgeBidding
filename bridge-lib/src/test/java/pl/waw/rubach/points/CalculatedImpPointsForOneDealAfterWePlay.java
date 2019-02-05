@@ -10,9 +10,8 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
        assumption[0] = true;
        assumption[1] = true;
       a = wePlay ? 1 : -1;
-       //super.fillTestPointsMap();
-      //pyt rzuć okiem tu może być to super fill zakomentowane bo uzupełnia nowe dane (a jak się odkomentuje to uzupełnia nowe i stare)
-     //odp ok
+       //super.fillTestPointsMap(); - is comented because not need to fill with date for we play (extended class) and here are new data:
+
        //both no fit
        testCountingPointsNoFitBothMap.put(20f, 0f, 0);
        testCountingPointsNoFitBothMap.put(10f, -660f, 0);

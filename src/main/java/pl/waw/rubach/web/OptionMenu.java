@@ -279,12 +279,26 @@ class OptionMenu extends MenuBar {
         suitGroup.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
         //    JLabel message2 = new JLabel("Akuku");
         suitGroup.addValueChangeListener(event -> {
-            if (event.getValue().equals("Bez Atu")) colorOfContractField.setValue("N");
-            else if (event.getValue().equals("Piki")) colorOfContractField.setValue("S");
-            else if (event.getValue().equals("Kiery")) colorOfContractField.setValue("H");
-            else if (event.getValue().equals("Trefle")) colorOfContractField.setValue("C");
-            else if (event.getValue().equals("Kara")) colorOfContractField.setValue("D");
-            else colorOfContractField.setValue(event.getValue());
+            switch (event.getValue()) {
+                case "Bez Atu":
+                    colorOfContractField.setValue("N");
+                    break;
+                case "Piki":
+                    colorOfContractField.setValue("S");
+                    break;
+                case "Kiery":
+                    colorOfContractField.setValue("H");
+                    break;
+                case "Trefle":
+                    colorOfContractField.setValue("C");
+                    break;
+                case "Kara":
+                    colorOfContractField.setValue("D");
+                    break;
+                default:
+                    colorOfContractField.setValue(event.getValue());
+                    break;
+            }
             //      message2.setText(String.format("Radio button suitGroup value changed from '%s' to '%s'", event.getOldValue(), event.getValue()));}
         });
 
@@ -442,7 +456,7 @@ class OptionMenu extends MenuBar {
                         " <BR> czyli " + a.getResults() + impDeclination(a.getResults()) + ". ");// +
 
             }
-            //pyt cz1: czy lepiej tak jak jest instance of ale w jednej linijce (i raz kolorowane)
+            //pytanie cz1: czy lepiej tak jak jest instance of ale w jednej linijce (i raz kolorowane)
             //odp ok
             catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
@@ -491,14 +505,15 @@ class OptionMenu extends MenuBar {
 
                 descriptionOf4play = makeDescription(aa, descriptionTable);
 
-//pyt: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
+//pytanie: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
 //odp w tym przypadku obydwa są ok, bo ciężko powiedzieć czy lepiej użyć instanceof czy duplikować blok
+// to może zrobię dwa z różnym kolorowaniem :) ???
             } catch (BridgeException e) {
                 String mes1 = e.getMessage();
                 resultsLabel.setValue("<font color=red>" + mes1 + "</font>");
             } catch (NumberFormatException e) {
                 String mes1 = "Nieprawidłowy format liczby-  spróbuj jeszcze raz!";
-                resultsLabel.setValue("<font color=red>" + mes1 + "</font>");
+                resultsLabel.setValue("<font color=pink>" + mes1 + "</font>");
             }
 
         });

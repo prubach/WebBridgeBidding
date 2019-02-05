@@ -8,9 +8,6 @@ import static java.lang.Math.abs;
 //TO było ResultsOfOneGame
 public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
 
-    //pyt przeniosłam to tu z powrotem - to jest specyficzny parametr dla liczenia impów (może wogóle nie potrzebny jako parametr klasy
-    // - ewentualnie tylko do wyciągnięcia i sprawdzenia jak było liczone... ale może wobec tego też co powinno być ?
-    //odp jeśli się przydaje do odczytania jak było liczone, to niech będzie.
     /**
      * diference betwenn assumpted result from ExpectedResults table and point reach playng contract (contractScoringPoints)
      */
@@ -21,44 +18,44 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
      */
     private int expectedPoints;
 
-
-    //pyt proszę rzuć okiem czy tak lepie -  pozmieniałam na tak jak wydaje się bardziej elegancko (stare zostało w komentarzach-  chyba jest ok nie jestem pewna .. testy już są chyba ok..
-    //odp lepiej, dodałem tylko if else, bo po co ma to robić 2 razy dla przypadku They
     //constructors  when both play - there are tests
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int pointsForContractWe,
                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitWe, boolean fitThey)
-            throws InvalidNumberOfPointsException, BridgeException {
+            throws BridgeException {
 
-        //pyt czy to jest potrzebne - myślałam że lepiej żeby przechowywało w jedym miejscu
-        //odp chyba potrzebne
         setWePlay(wePlay);
         setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
         setOpponentVulnerable(wePlay ? auctionAssumptionThey : auctionAssumptionWe);
-        setDeclarerFit(wePlay ? fitWe: fitThey);
+        setDeclarerFit(wePlay ? fitWe : fitThey);
         setOpponensFit(wePlay ? fitThey : fitWe);
-        setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe);
+
+        setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : MAXNUBEROFPOINTS - pointsInBothHandsWe);  //pyt gra nie jestem pewna czy zawsze prawda (z doliczaniem za single i renons)
+
         setContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
-        if (wePlay)
+
+      /*  if (wePlay)
             setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
-                fitWe, fitThey, auctionAssumptionWe, auctionAssumptionThey));
+                    fitWe, fitThey, auctionAssumptionWe, auctionAssumptionThey));
         else
-        //if they play parameters should change because as imput we have points for we and scoring for we
+            //if they play parameters should change because as imput we have points for we and scoring for we
             setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
-               fitThey, fitWe, auctionAssumptionThey, auctionAssumptionWe));
+                    fitThey, fitWe, auctionAssumptionThey, auctionAssumptionWe));
+*/
+        setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
+                isDeclarerFit(), isOpponensFit(), isDeclarerVulnerable(), isOpponentVulnerable()));
+
         boolean winWe = getExpectedPoints() <= getContractScoringPoints();
+
         setPointDifferent(abs(getContractScoringPoints() - getExpectedPoints()));
-        // if (getExpectedPoints() <= getContractScoringPoints()) setPointDifferent(getContractScoringPoints()- getExpectedPoints());
-        // else setPointDifferent(getExpectedPoints() - getContractScoringPoints());
 
         if (!(ImpTable.getInstance().checkInputValue(0, 10000, getPointDifferent())))
-            throw new BridgeException(getPointDifferent(),true);
-        //  int results = ImpTable.getInstance().getPoints(getPointDifferent());
+            throw new BridgeException(getPointDifferent(), true);
+
         setResults(ImpTable.getInstance().getPoints(getPointDifferent()));
 
         if (!winWe) setResults(-getResults());
-        //  if (getExpectedPoints() <= getContractScoringPoints()) setResults(result);
-        //  else setResults(-result);
+
     }
 
 
@@ -69,15 +66,14 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
 
         this(wePlay, pointsInBothHandsWe,
                 (wePlay ? 1 : -1) * new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
-                        wePlay ? numberOfTrickTakenByWe : 13 - numberOfTrickTakenByWe).getContractScoringPoints(),
+                        wePlay ? numberOfTrickTakenByWe : NUBEROFTRICS - numberOfTrickTakenByWe).getContractScoringPoints(),
                 auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
         setNoDoubleReSignature(normalDoubleRedubleSingnature);
         setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
-        setDeclarerNumberOfTrickTaken(wePlay ? numberOfTrickTakenByWe : 13 - numberOfTrickTakenByWe);
+        setDeclarerNumberOfTrickTaken(wePlay ? numberOfTrickTakenByWe : NUBEROFTRICS - numberOfTrickTakenByWe);
     }
-
 
 
     //contructors when only we play:
@@ -93,7 +89,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
                                          boolean auctionAssumptionDeclarer, boolean auctionAssumptionOponenst, boolean fitInOlderColorDeclarer, boolean fitInOlderColorOponents)
             throws BridgeException {
 
-        this(true, pointsInBothDeclarerHands, contractLevel, contractSuit, redoubleGame ? 4 : (doubleGame ? 2 : 1), numberOfTrickTakenByDeclarer,
+        this(true, pointsInBothDeclarerHands, contractLevel, contractSuit, redoubleGame ? IS_REDOUBLE : (doubleGame ? IS_DOUBLE : IS_UNDOUBLE), numberOfTrickTakenByDeclarer,
                 auctionAssumptionDeclarer, auctionAssumptionOponenst, fitInOlderColorDeclarer, fitInOlderColorOponents);
 
     }
@@ -103,7 +99,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
                                          boolean auctionAssumptionDeclarer, boolean auctionAssumptionOponenst, boolean fitInOlderColorDeclarer, boolean fitInOlderColorOponents)
             throws BridgeException {
 
-        this(true,pointsInBothDeclarerHands,
+        this(true, pointsInBothDeclarerHands,
                 new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer).getContractScoringPoints(),
                 auctionAssumptionDeclarer, auctionAssumptionOponenst, fitInOlderColorDeclarer, fitInOlderColorOponents);
 

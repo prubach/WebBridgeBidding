@@ -1,7 +1,9 @@
 package pl.waw.rubach.points.exceptions;
 
+import static pl.waw.rubach.points.DeclarerPointsForOneDeal.NUMBEROFPOINS;
+
 public class BridgeException extends Exception {
-    protected static final float NUMBEROFPOINS = 20;
+
     protected int numberGiven;
 
 
@@ -16,15 +18,6 @@ public class BridgeException extends Exception {
         super("Niezgodność z zasadami brydża. ");
 
     }
-    /**
-     * Not possible according method of scoring - should be error some where?
-     * @param pointDiff - is points difference between expected and real scoring (to calculate imps)
-     * @param aa - not important parameter to make constructor different :)
-     */
-    public BridgeException(int pointDiff,boolean aa) {
-        super("Błąd różnicy punktów - "+ pointDiff +" mniejsza od zera- to jakiś błąd programu");
-        //second option of message: "Róznica punktow nie może być ujemna - bład programu chyba"
-    }
 
 
     /**
@@ -35,25 +28,31 @@ public class BridgeException extends Exception {
      */
     public BridgeException(float numberOfpoints, boolean fitWe, boolean fitThey) {
         super(!fitWe || !fitThey || numberOfpoints != NUMBEROFPOINS ? "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony" :
-                "Nie mogą obie pary mieć fitu w starszym kolorze  przy 20 pkt -bo wtedy dla pików zapisuje się fit dla kierów brak fitu. " +
+                "Nie mogą obie pary mieć fitu w starszym kolorze  przy "+ NUMBEROFPOINS+" PC -bo wtedy dla pików zapisuje się fit dla kierów brak fitu. " +
                 "Podano: " + numberOfpoints + " punktów oraz fity: My:" + fitWe + "  Oni:" + fitThey + " - popraw zaznaczenie fitów lub punktów");
 
-        //if (!fitWe || !fitThey || numberOfpoints != NUMBEROFPOINS) { //nie jestem pewna warunku bo idea odwracała
-            //pyt - czy tak może być - czy ma to sens? - chodziło o to żeby zaraportował jakoś? złe użycie tego wyjatku?
-            //odp - problem w tym, że ten komunikat pojawi się na konsoli serwera, więc to nie ma sensu, bo i tak go nikt nie zobaczy.
-            // Dlatego dałem go jako komunikat wyjątku
-        //    System.out.print("Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony");
-        //}
+
 
     }
 
+
+    //pyt cz 1- czy lepiej niepotrzebny parametr (zamiast robić nowy wyjątek) ?
+    /**
+     * Not possible according method of scoring - should be error some where?
+     * @param pointDiff - is points difference between expected and real scoring (to calculate imps)
+     * @param aa - not important parameter to make constructor different :)
+     */
+    public BridgeException(int pointDiff,boolean aa) {
+        super(pointDiff >0 ?  "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony": "Błąd różnicy punktów - "+ pointDiff +" mniejsza od zera- to jakiś błąd programu");
+    }
+
+    //pyt cz 2. - to jest też jako oddzielny wyjątek - InvalidNumberOfGameInRubere - lepiej jako oddzielne czy lepiej tutaj jakoś różnicować (patrz wyżej)
     /**
      * According method of scoring and calculating points number of contrac should be
      * @param numberGiven less then 4 and more then 0
      */
     public BridgeException(int numberGiven) {
         super("Nieprawidłowy parametr rozdania-  podano: " + numberGiven + " a powinna 1, 2, lub 4- spróbuj jeszcze raz!");
-
         this.numberGiven = numberGiven;
     }
 
