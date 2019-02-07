@@ -148,23 +148,18 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
         //odp nie widzę specjalnej różnicy
         if (made && overtricks > 0) {
 
-            //  if (!isContractDouble && !isContractRedouble) {
             if (getNoDoubleReSignature() == IS_UNDOUBLE) {
                 overtricksPoints = getContractPoints(overtricks);  //bez kontry i rekontry - tak samo jak lewa
                 if (getContractSuit().equals("nt") || getContractSuit().equals("n") || getContractSuit().equals("N") || getContractSuit().equals("NT"))
                     overtricksPoints = overtricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!
             }
-            //if (isContractDouble && !auctionAssumptionDeclarer)
             if (getNoDoubleReSignature() == IS_DOUBLE && !isDeclarerVulnerable())
                 overtricksPoints = overtricks * 100;   //doubled, not vulnerable - each for 100
-            //if (isContractDouble && auctionAssumptionDeclarer)
             if (getNoDoubleReSignature() == IS_DOUBLE && isDeclarerVulnerable())
                 overtricksPoints = overtricks * 200;    // doubled, vulnerable - each for 200
 
-            //if (isContractRedouble && !auctionAssumptionDeclarer)
             if (getNoDoubleReSignature() == IS_REDOUBLE && !isDeclarerVulnerable())
                 overtricksPoints = overtricks * 200;     //  redoubled, not vulnerable - each for 200
-            //if (isContractRedouble && auctionAssumptionDeclarer)
             if (getNoDoubleReSignature() == IS_REDOUBLE && isDeclarerVulnerable())
                 overtricksPoints = overtricks * 400;     //redoubled, vulnerable - each for 400
 
