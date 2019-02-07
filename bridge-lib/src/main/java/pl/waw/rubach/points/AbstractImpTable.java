@@ -1,6 +1,7 @@
 package pl.waw.rubach.points;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class AbstractImpTable {
 
@@ -24,9 +25,40 @@ public abstract class AbstractImpTable {
      * @param points difference between expected and wined poinst in game
      * @return imp points
      */
-    public int getPoints(int points) {
+    public int getImpPoints(int points) {
         Integer key = ptsSet.ceiling(points);
         return ptsMap.get(key);
+    }
+
+    /**
+     * Function to give imps form points (map value from key?)
+     *
+     * @param imps difference between expected and wined poinst in game
+     * @return imp points
+     */
+    public int getExpectedPointsRevers(int imps) {
+
+        Map<Integer, Integer> map = getPtsMap();
+        SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
+        for (Integer key : ptsMapSet) {
+           if (map.get(key).equals(imps)) {
+               return key;
+           }
+        }
+        return 0;
+    }
+
+    static int[] findingDifferenceFromImp(int imps){
+        int a[]= {ImpTable.getInstance().getExpectedPointsRevers(imps-1), ImpTable.getInstance().getExpectedPointsRevers(imps)};
+        return a;
+    }
+// pyt probably it is better then above (to find key having value) but dont know how :(
+    public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
+        return map.entrySet()
+                .stream()
+                .filter(entry -> Objects.equals(entry.getValue(), value))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
     }
 
     /**

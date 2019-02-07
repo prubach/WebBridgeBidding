@@ -22,7 +22,7 @@ class OptionMenu extends MenuBar {
     private Label fitLabel, resultsLabel;
     private RadioButtonGroup<String> suitGroup, doubleRedoubleGroup;
 
-    private TextField pointsForContractField, contractLevelField, numberOfTricksField, pointsInBothHandsField, colorOfContractField;
+    private TextField pointsForContractField, contractLevelField, numberOfTricksField, pointsInBothHandsField, colorOfContractField, impsField;
 
 
     private final CheckBox checkboxWe = new CheckBox(" My rozgrywamy - domyślnie");
@@ -39,6 +39,8 @@ class OptionMenu extends MenuBar {
         MenuBar.MenuItem optionMenuItemsCalculatePointsOld = this.addItem("Oblicz punkty (inne opcje):", null);
         Command commandToCalculatePointsOneDeal = (Command) selectedItem -> actionOpenWindow(ui, "Okienko do liczenia punktów za jeden kontrakt.", actionCalculetePointsOneDeal());
         optionMenuItemsCalculatePointsOld.addItem("Oblicz punkty jednego rozdania", null, commandToCalculatePointsOneDeal);
+        Command commandToPredictWhichContractShouldBePlayed = (Command) selectedItem -> actionOpenWindow(ui, "Okienko do przeiwdywania wyników.", actionPredictsOneDealResult());
+        optionMenuItemsCalculatePointsOld.addItem("Przewidywanki", null, commandToPredictWhichContractShouldBePlayed);
         Command commandToOldCalculatePoints = (Command) selectedItem -> actionOpenWindow(ui, "Stare okienko do ręcznego liczenia punktów.", actionManualCalculetePoints());
         optionMenuItemsCalculatePointsOld.addItem("Oblicz punkty ręcznie (stare):", null, commandToOldCalculatePoints);
 
@@ -406,6 +408,51 @@ class OptionMenu extends MenuBar {
         return vL;
     }
 
+
+    private FormLayout actionPredictsOneDealResult() {
+        FormLayout vL = new FormLayout();
+        vL.addComponent(new Label("Wersja 1.1 - podaj założenia i twoje oczekiwania - uzyskasz wiadomość ile punków musisz zdobyć  :)"));
+
+        createAllInputElement();
+        vL.addComponent(checkboxAssumptionWe);
+        vL.addComponent(checkboxAssumptionThey);
+        vL.addComponent(pointsInBothHandsField);
+
+        vL.addComponent(checkboxFitWe);
+        vL.addComponent(checkboxFitThey);
+        vL.addComponent(fitLabel);
+
+        //vL.addComponent(contractLevelField);
+        //vL.addComponent(colorOfContractField);
+      //  vL.addComponent(new Label("Zaznacz preferowany kolor fitu (domyślnie bez atu)"));
+      //  vL.addComponent(suitGroup);
+        //vL.addComponent(doubleRedoubleGroup);
+        //vL.addComponent(numberOfTricksField);
+
+        impsField = new TextField("Podaj ile impów chciałbyś/chciałabyś ugrać:");
+        impsField.addValueChangeListener(event -> resultsLabel.setValue(""));
+        vL.addComponent(impsField);
+        impsField.setValue("0");
+
+        Button calculateImpPoints = new Button("Wykonaj przewidywanie jednego rodzania ! ", clickEvent -> {
+            try {
+
+              Prediction a = new Prediction(Integer.parseInt(impsField.getValue()), Float.parseFloat(pointsInBothHandsField.getValue()),
+                        checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+
+                resultsLabel.setValue(a.getDes());
+            } catch (NumberFormatException | BridgeException e) {
+                String message = (e instanceof NumberFormatException) ?
+                        "Nieprawidłowy format  punktów spróbuj jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>" + message + "</font>");
+            }
+        });
+
+        fillExampleData();
+        vL.addComponent(calculateImpPoints);
+        vL.addComponent(resultsLabel);
+        return vL;
+    }
 
     private FormLayout actionCalculetePoints() {
         FormLayout vL = new FormLayout();

@@ -108,7 +108,7 @@ public class ExpectedResultsTable {
      * @return bonus points
      */
     int getPoints(float points, boolean fitInOlderColorWe, boolean fitInOlderColorThey, boolean auctionAssumptionWe, boolean auctionAssumptionThey)
-            throws InvalidNumberOfPointsException, BridgeException {
+            throws BridgeException {
 
         //test if points value is correct if not print Exception
         if (points < 0 || points > 40) throw new InvalidNumberOfPointsException(points);
@@ -142,7 +142,7 @@ public class ExpectedResultsTable {
     //******************************************************************************************************************
 
     /**
-     * SHORT VERSION of getPoints
+     * SHORT VERSION of getImpPoints
      * Attention - probably also good but ask for assumption and fit pair who have more points, and not the same as points etc
      *
      * @param points            - points in both hands for those who have more

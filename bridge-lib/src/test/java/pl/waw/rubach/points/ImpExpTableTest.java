@@ -102,12 +102,26 @@ public class ImpExpTableTest {
     public void testImpPoints() {
         for (int p : new TreeSet<Integer>(testImpPointsMap.keySet())) {
             if (ImpTable.getInstance().checkInputValue(0, 10000, p)) {
-                Integer res = ImpTable.getInstance().getPoints(p);
+                Integer res = ImpTable.getInstance().getImpPoints(p);
                 logger.info("Dla " + p + " pkt: " + res + " impów.");
                 Assert.assertEquals(testImpPointsMap.get(p), res);
             }
         }
     }
+
+    @Test
+    public void reversTestImpPoints() {
+        for (int p : new TreeSet<Integer>(testImpPointsMap.keySet())) {
+            if (ImpTable.getInstance().checkInputValue(0, 10000, p)) {
+                int imps = testImpPointsMap.get(p);
+                 int resMin = ImpTable.findingDifferenceFromImp(imps)[0];
+                 int resMax = ImpTable.findingDifferenceFromImp(imps)[1];
+                logger.info("Dla " + imps + " impów różnica punków musi być między "  + resMin + " a " + resMax + ".");
+                  Assert.assertEquals(imps, ImpTable.getInstance().getImpPoints(p) );
+            }
+        }
+    }
+
 
     @Test
     public void testExpResSpecialCase20() throws BridgeException {
@@ -139,7 +153,7 @@ public class ImpExpTableTest {
     public void testExpResSHORT() throws InvalidNumberOfPointsException {
         for (float p : new TreeSet<Float>(testExpResBeforeFitMap.keySet())) {
             Integer res = ExpectedResultsTable.getInstance().getPoints(p, true, false);
-            //    else res = ExpectedResultsTable.getInstance().getPoints(p, true, false);
+            //    else res = ExpectedResultsTable.getInstance().getImpPoints(p, true, false);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Fit");
             Assert.assertEquals(testExpResBeforeFitMap.get(p), res);
 
@@ -147,21 +161,21 @@ public class ImpExpTableTest {
 
         for (float p : new TreeSet<Float>(testExpResAfterFitMap.keySet())) {
             Integer res = ExpectedResultsTable.getInstance().getPoints(p, true, true);
-            //    else res = ExpectedResultsTable.getInstance().getPoints( p, true, true);
+            //    else res = ExpectedResultsTable.getInstance().getImpPoints( p, true, true);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Fit");
             Assert.assertEquals(testExpResAfterFitMap.get(p), res);
         }
 
         for (float p : new TreeSet<Float>(testExpResBeforeNoFitMap.keySet())) {
             Integer res = ExpectedResultsTable.getInstance().getPoints(p, false, false);
-            // else  res = ExpectedResultsTable.getInstance().getPoints(p, false, false);
+            // else  res = ExpectedResultsTable.getInstance().getImpPoints(p, false, false);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Przed, Bez Fitu");
             Assert.assertEquals(testExpResBeforeNoFitMap.get(p), res);
         }
 
         for (float p : new TreeSet<Float>(testExpResAfterNoFitMap.keySet())) {
             Integer res = ExpectedResultsTable.getInstance().getPoints(p, false, true);
-            //  else  res =ExpectedResultsTable.getInstance().getPoints(p, false, true);
+            //  else  res =ExpectedResultsTable.getInstance().getImpPoints(p, false, true);
             logger.info("Dla " + p + " pkt: " + res + " oczekiwane. Po, Bez Fitu");
             Assert.assertEquals(testExpResAfterNoFitMap.get(p), res);
         }
@@ -407,12 +421,12 @@ public class ImpExpTableTest {
     public void testingTable() throws InvalidNumberOfPointsException {
         int[] testPoints = new int[]{50, 120, 450, 1090, 1200};
         for (int p : testPoints) {
-            System.out.println("Dla " + p + " pkt: " + ImpTable.getInstance().getPoints(p) + "impów.");
+            System.out.println("Dla " + p + " pkt: " + ImpTable.getInstance().getImpPoints(p) + "impów.");
         }
 
         int[] testPoints1 = new int[]{10, 15, 20, 25, 30, 35};
         for (int p : testPoints1) {
-            System.out.println("Dla " + p + " pkt: " + ExpectedResultsTable.getInstance().getPoints(p, true, false, true) + " oczekiwane.");
+            System.out.println("Dla " + p + " pkt: " + ExpectedResultsTable.getInstance().getImpPoints(p, true, false, true) + " oczekiwane.");
         }
 
     }

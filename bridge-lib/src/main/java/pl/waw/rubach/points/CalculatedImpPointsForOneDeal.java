@@ -35,11 +35,11 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
         setContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
 
       /*  if (wePlay)
-            setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
+            setExpectedPoints(ExpectedResultsTable.getInstance().getImpPoints(getPointsInBothDeclarerHands(),
                     fitWe, fitThey, auctionAssumptionWe, auctionAssumptionThey));
         else
             //if they play parameters should change because as imput we have points for we and scoring for we
-            setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
+            setExpectedPoints(ExpectedResultsTable.getInstance().getImpPoints(getPointsInBothDeclarerHands(),
                     fitThey, fitWe, auctionAssumptionThey, auctionAssumptionWe));
 */
         setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
@@ -52,7 +52,7 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
         if (!(ImpTable.getInstance().checkInputValue(0, 10000, getPointDifferent())))
             throw new BridgeException(getPointDifferent(), true);
 
-        setResults(ImpTable.getInstance().getPoints(getPointDifferent()));
+        setResults(ImpTable.getInstance().getImpPoints(getPointDifferent()));
 
         if (!winWe) setResults(-getResults());
 
