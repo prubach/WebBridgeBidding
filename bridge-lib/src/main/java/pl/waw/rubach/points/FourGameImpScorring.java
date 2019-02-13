@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+//this was RubberScorring
 public class FourGameImpScorring {
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
@@ -25,37 +26,30 @@ public class FourGameImpScorring {
     private String rubberSpecialDescription, resultsDescription;
 
     /**
-     * Pair of Auction Assumption according contract number (1 none, 2, we, 3, they, 4 both)
-     */
-    private boolean[] auctionAssumption = {false, false};
-
-    /**
      * Map number of game with scorring for one game
      */
     private Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
 
     /**
-     * Result of 4 games
+     * Result of 4 games - imp points
      */
     private int summ;
 
     //powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...
     //odp jeżeli już to FourGameImpPoints, ale np. przy robrze niekoniecznie będą 4 gry, więc może GameImpPoints
-    //odp :2  ale jak rober to nie będą impy - wydaje mi się ze wtedy to będzie musiało być inne ?
-    //po polsku mogło by być Punkty/ZapisPorównawczy i drugi ZapisRobrowy
+    //ale jak rober to nie będą impy - wydaje mi się ze wtedy to będzie musiało być inne ?  po polsku mogło by być Punkty/ZapisPorównawczy i drugi ZapisRobrowy
     //
 
     //defut constructor adding number of game 1 - possible use other constructor with special number of game with next constructor
-    //this was RubberScorring
-    public FourGameImpScorring() {
+     public FourGameImpScorring() {
         this(1);
        }
 
     //create special game with special gameID
     public FourGameImpScorring(int gameID) {
         this.gameID = gameID;
-        this.rubberSpecialDescription = " Tworzę nową serię 4 gier z numerem:  " + gameID + ". \n";
-        this.resultsDescription = " Wyniki: \n";
+        this.rubberSpecialDescription = " \n *** Nowa seria 4 gier z numerem:  " + gameID + ". ***  \n";
+        this.resultsDescription = " \nWyniki: \n";
         this.summ = 0;
     }
 
@@ -172,19 +166,7 @@ public class FourGameImpScorring {
 
     }
 
-    private boolean[] fillAssumption(int contractNumber) {
-        auctionAssumption[0] = false;
-        auctionAssumption[1] = false;
-        if (contractNumber == 2) {
-            auctionAssumption[0] = true;
-        } else if (contractNumber == 3) {
-            auctionAssumption[1] = true;
-        } else if (contractNumber == 4) {
-            auctionAssumption[0] = true;
-            auctionAssumption[1] = true;
-        }
-        return auctionAssumption;
-    }
+
 
     private Assumption fillAssumptionA(int contractNumber) throws BridgeException {
         for (Assumption a : Assumption.values())
