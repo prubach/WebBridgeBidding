@@ -13,6 +13,7 @@ class OptionMenu extends MenuBar {
 
 
     private final VaadinUI ui;
+    private int gameID =0;
 
     private String descriptionOf4play;
     private final CheckBox checkboxAssumptionWe = new CheckBox();
@@ -516,8 +517,12 @@ class OptionMenu extends MenuBar {
         String[] descriptionTable = {"pierwszy kontrakt:", "drugi kontrakt", "trzeci kontrakt", "czwarty kontrakt"};
         Label resultsLabelFor4Game = new Label("");
         resultsLabelFor4Game.setContentMode(ContentMode.HTML);
-        final RubberScoring aa = new RubberScoring();
+        setGameID(getGameID()+1);
+        final RubberScoring aa = new RubberScoring(getGameID());
 
+        Button makeNew4GameScoring = new Button("Zacznij nowy zapis 4 rozdań", clickEvent -> {
+            setGameID(getGameID()+1);
+        });
 
         Button makeScorringOfFourDeal = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
             try {
@@ -575,6 +580,7 @@ class OptionMenu extends MenuBar {
         vL.addComponent(makeScorringOfFourDeal);
         vL.addComponent(resultsLabel);
         vL.addComponent(showResultsOfFourDeals);
+        vL.addComponent(makeNew4GameScoring);
         return vL;
     }
 
@@ -626,5 +632,11 @@ class OptionMenu extends MenuBar {
         return vL;
     }
 
+    public int getGameID() {
+        return gameID;
+    }
 
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
+    }
 }

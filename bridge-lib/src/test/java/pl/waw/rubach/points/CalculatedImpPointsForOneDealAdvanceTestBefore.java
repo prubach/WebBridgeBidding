@@ -49,14 +49,18 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
         testCountingPointsNTBothBeforeBothNoFit.put(32, 3, 9, -5); //400
 
         testCountingPointsNTBothBeforeBothNoFit.put(20, 6, 12, 14); //990
-        testCountingPointsNTBothBeforeBothNoFit.put(29, 6, 11, -10); //990
         testCountingPointsNTBothBeforeBothNoFit.put(28, 6, 12, 11); //990
+        testCountingPointsNTBothBeforeBothNoFit.put(29, 6, 12, 11); //990
+        testCountingPointsNTBothBeforeBothNoFit.put(29, 6, 13, 11); //990 +30 = 1020 //jedna lepiej tu nic nie zmienia
+        testCountingPointsNTBothBeforeBothNoFit.put(29, 6, 11, -10); //-50         //bez jednej
+
 
         testCountingPointsNTBothBeforeBothNoFit.put(21, 1, 7, 1); //90
         testCountingPointsNTBothBeforeBothNoFit.put(24, 1, 7, -1); //90
         testCountingPointsNTBothBeforeBothNoFit.put(27, 1, 7, -6); //90
         testCountingPointsNTBothBeforeBothNoFit.put(21, 1, 8, 2); //140
 
+        //todo add more example for tests
         testCountingPointsNTBothBeforeBothFit.put(26,1,7,-7);
         testCountingPointsNTBothBeforeBothFit.put(26,3,9,0);
     }
@@ -99,22 +103,15 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
 
     @Test
     public void testCountingPointsBothBeforeBoth() throws BridgeException {
-
-
     testHelperFunction(testCountingPointsNTBothBeforeBothNoFit, "Obie bez fitu");
-
-
     }
 
 
     @Test
     public void testCountingPointsBothBeforeBothBothFit() throws BridgeException {
-
         weFit =true;
         theyFit = true;
         testHelperFunction(testCountingPointsNTBothBeforeBothFit, "Obie fit");
-
-
     }
 
 
@@ -128,10 +125,7 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
         CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, false, false, false, false);
         Assert.assertEquals(a2.getResults(), 9);
-
     }
-
-
 }
 
 

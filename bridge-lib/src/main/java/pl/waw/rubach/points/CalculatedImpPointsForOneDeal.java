@@ -1,7 +1,6 @@
 package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
 
 import static java.lang.Math.abs;
 
@@ -34,18 +33,8 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
 
         setContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
 
-      /*  if (wePlay)
-            setExpectedPoints(ExpectedResultsTable.getInstance().getImpPoints(getPointsInBothDeclarerHands(),
-                    fitWe, fitThey, auctionAssumptionWe, auctionAssumptionThey));
-        else
-            //if they play parameters should change because as imput we have points for we and scoring for we
-            setExpectedPoints(ExpectedResultsTable.getInstance().getImpPoints(getPointsInBothDeclarerHands(),
-                    fitThey, fitWe, auctionAssumptionThey, auctionAssumptionWe));
-*/
         setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
                 isDeclarerFit(), isOpponensFit(), isDeclarerVulnerable(), isOpponentVulnerable()));
-
-        boolean winWe = getExpectedPoints() <= getContractScoringPoints();
 
         setPointDifferent(abs(getContractScoringPoints() - getExpectedPoints()));
 
@@ -54,9 +43,21 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
 
         setResults(ImpTable.getInstance().getImpPoints(getPointDifferent()));
 
-        if (!winWe) setResults(-getResults());
+        if (getExpectedPoints() <= getContractScoringPoints()) {
+            return;
+        }
+        setResults(-getResults());
 
     }
+
+    //second constructor using ENUM
+    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
+                                         int pointsForContractWe,
+                                        Assumption assumption, boolean fitWe, boolean fitThey)
+            throws BridgeException {
+       this(wePlay,pointsInBothHandsWe,pointsForContractWe,assumption.areWeVunerable(),assumption.areTheyVunerable(),fitWe,fitThey);
+    }
+
 
 
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
@@ -75,12 +76,11 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal {
         setDeclarerNumberOfTrickTaken(wePlay ? numberOfTrickTakenByWe : NUBEROFTRICS - numberOfTrickTakenByWe);
     }
 
-
     //contructors when only we play:
     public CalculatedImpPointsForOneDeal(float pointsInBothDeclarerHands,
                                          int pointsForContractDeclarer,
                                          boolean auctionAssumptionDeclarer, boolean auctionAssumptionOponenst, boolean fitInOlderColorDeclarer, boolean fitInOlderColorOponents)
-            throws InvalidNumberOfPointsException, BridgeException {
+            throws  BridgeException {
         this(true, pointsInBothDeclarerHands, pointsForContractDeclarer, auctionAssumptionDeclarer, auctionAssumptionOponenst, fitInOlderColorDeclarer, fitInOlderColorOponents);
     }
 

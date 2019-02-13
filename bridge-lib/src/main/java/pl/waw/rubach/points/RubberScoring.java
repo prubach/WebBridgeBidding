@@ -33,10 +33,6 @@ public class RubberScoring {
      * Map number of game with scorring for one game
      */
     private Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
-//todo  być może to w jednej mapie siedzieć, ale nie umiem chyba łatwo (bez zmieniania miliona miejsc) wiec na razie będzie tak
-// (ta nowa mapa trzyma tylko wynik żeby sprawdzić czy już był sumowany czy nie)
-    //odp ok
-    private Map<Integer, Integer> calculatedImpPointsForOneGame = new HashMap<>();
 
     /**
      * Result of 4 games
@@ -52,10 +48,10 @@ public class RubberScoring {
     public RubberScoring() {
         this(1);
         //this.gameID = gameID + 1;  //todo how to change number to one plus before?
-        //odp Tak się nie da to będzie zawsze 1 //pyt a jak się da ? :)
+        //odp Tak się nie da to będzie zawsze 1 //pyt a jak się da ? :) - sprobowałam dodać to w Option menu jako argument
     }
 
-    //create special number scorring
+    //create special game with special gameID
     public RubberScoring(int gameID) {
         this.gameID = gameID;
         this.rubberSpecialDescription = " Tworzę nową serię 4 gier z numerem:  " + gameID + ". \n";
@@ -112,18 +108,18 @@ public class RubberScoring {
 
     /**
      * Function to fill ruberScoring wiht results of each game
-     * @param contractNumber  is numnber of contract
-     * @param cIPfoDforWe  is object where results for one deal is calculated
+     *
+     * @param contractNumber is numnber of contract
+     * @param cIPfoDforWe    is object where results for one deal is calculated
      * @return results of this particular game (one deal)
      * @throws InvalidNumberOfPointsException if number of points is wrong
-     * @throws BridgeException if parameter are wrong
+     * @throws BridgeException                if parameter are wrong
      */
     public int fillOneContractFrom4GameSet(int contractNumber,
                                            CalculatedImpPointsForOneDeal cIPfoDforWe)
             throws BridgeException {
 
         scorringForOneGame.put(contractNumber, cIPfoDforWe);
-        calculatedImpPointsForOneGame.put(contractNumber,cIPfoDforWe.getResults());
         setSumm();
         return cIPfoDforWe.getResults();
     }
@@ -136,7 +132,11 @@ public class RubberScoring {
         return fillOneContractFrom4GameSet(contractNumber,
                 new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe,
                         whoPlay ? scoringPointsWe : -scoringPointsWe,
-                        whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1], whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
+                        //pyt czy bardzie elegancko jest z tym enumem, czy wcześniejsza wersja (zakomentowana) była lepsza?
+                        //     whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
+                        //     whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
+                        whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                        whoPlay ? fillAssumptionA(contractNumber).areTheyVunerable() : fillAssumptionA(contractNumber).areWeVunerable(),
                         whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
 
     }
@@ -150,8 +150,11 @@ public class RubberScoring {
         return fillOneContractFrom4GameSet(contractNumber,
                 new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe,
                         whoPlay ? pFC.getContractScoringPoints() : -pFC.getContractScoringPointsWe(),
-                        whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1], whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
-                        whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
+                        //pyt czy bardzie elegancko jest z tym enumem, czy wcześniejsza wersja (zakomentowana) była lepsza?
+                        //     whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
+                        //     whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
+                        whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                        whoPlay ? fillAssumptionA(contractNumber).areTheyVunerable() : fillAssumptionA(contractNumber).areWeVunerable(), whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
     }
 
 
@@ -160,14 +163,16 @@ public class RubberScoring {
                                            boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
         return fillOneContractFrom4GameSet(contractNumber, whoPlay, pointsInBothHandsWe,
-                new DuplicateBridgeScoring(gameLevel, suit, isdouble, isredouble, (whoPlay) ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1], whoPlay ? numberOfTricksTakenWe : 13 - numberOfTricksTakenWe),
+                new DuplicateBridgeScoring(gameLevel, suit, isdouble, isredouble,
+                        // whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
+                        whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                        whoPlay ? numberOfTricksTakenWe : 13 - numberOfTricksTakenWe),
                 fitInOlderColorWe, fitInOlderColorThey);
 
 
     }
 
     private boolean[] fillAssumption(int contractNumber) {
-
         auctionAssumption[0] = false;
         auctionAssumption[1] = false;
         if (contractNumber == 2) {
@@ -181,12 +186,20 @@ public class RubberScoring {
         return auctionAssumption;
     }
 
+    private Assumption fillAssumptionA(int contractNumber) throws BridgeException {
+        for (Assumption a : Assumption.values())
+            if (contractNumber == a.getContractNumber()) return a;
+
+        throw new BridgeException(contractNumber);
+    }
+
+
     public String getRubberScoringAsString() throws BridgeException {
         StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + this.getGameID() + ".  ***  \n");
 
         Map<Integer, CalculatedImpPointsForOneDeal> map = this.scorringForOneGame;
         SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
-      //  s.append("\n").append(this.getRubberSpecialDescription());
+        //  s.append("\n").append(this.getRubberSpecialDescription());
 
         for (Integer key : ptsMapSet) {
 
@@ -198,16 +211,27 @@ public class RubberScoring {
         return s.toString();
     }
 
-    public int getSumm()  {
-    return this.summ;
+    public int getSumm() {
+        return this.summ;
     }
 
-    public int getSummCalulatedFromScorringForOneGame() throws BridgeException
-    {
+    private void setSumm(int summ) {
+        this.summ = summ;
+    }
+
+    public void setSumm() {
+        int summ = 0;
+        for (int p : new TreeSet<Integer>(scorringForOneGame.keySet())) {
+            summ = summ + scorringForOneGame.get(p).getResults();
+        }
+
+        this.summ = summ;
+    }
+
+    public int getSummCalulatedFromScorringForOneGame() throws BridgeException {
         SortedSet<Integer> ptsMapSet = new TreeSet<>(scorringForOneGame.keySet());
         int s = 0;
         for (Integer key : ptsMapSet) {
-
             if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
                 s = s + scorringForOneGame.get(key).getResults();
 
@@ -217,18 +241,7 @@ public class RubberScoring {
         return s;
     }
 
-    public void setSumm() {
-        int summ=0;
-        for (int p : new TreeSet<Integer>(calculatedImpPointsForOneGame.keySet())) {
-            summ= summ+calculatedImpPointsForOneGame.get(p);
-        }
 
-        this.summ = summ;
-    }
-
-    public void setSumm(int summ) {
-        this.summ = summ;
-    }
 
     public int getGameID() {
         return gameID;
