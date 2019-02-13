@@ -518,7 +518,7 @@ class OptionMenu extends MenuBar {
         Label resultsLabelFor4Game = new Label("");
         resultsLabelFor4Game.setContentMode(ContentMode.HTML);
         setGameID(getGameID()+1);
-        final RubberScoring aa = new RubberScoring(getGameID());
+        final FourGameImpScorring aa = new FourGameImpScorring(getGameID());
 
         Button makeNew4GameScoring = new Button("Zacznij nowy zapis 4 rozdań", clickEvent -> {
             setGameID(getGameID()+1);
@@ -584,7 +584,7 @@ class OptionMenu extends MenuBar {
         return vL;
     }
 
-    private String makeDescription(RubberScoring aa, String[] descriptionTable) throws BridgeException {
+    private String makeDescription(FourGameImpScorring aa, String[] descriptionTable) throws BridgeException {
         StringBuilder s = new StringBuilder("\n*** Zapis gier numer: " + aa.getGameID() + ".  ***  \n");
         for (int i = 0; i < 4; i++) s.append("\n").append(descriptionTable[i]);
 

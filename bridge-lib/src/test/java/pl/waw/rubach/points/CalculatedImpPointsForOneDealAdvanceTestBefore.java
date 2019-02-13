@@ -92,7 +92,7 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
             //to check - should be the same always...
             Assert.assertEquals(res, resR);
 
-            RubberScoring aa =new RubberScoring();
+            FourGameImpScorring aa =new FourGameImpScorring();
             Integer imp = aa.fillOneContractFrom4GameSet(1,roog);
             Assert.assertEquals(res,imp);
             Integer imp2 = aa.fillOneContractFrom4GameSet(1,roogR);

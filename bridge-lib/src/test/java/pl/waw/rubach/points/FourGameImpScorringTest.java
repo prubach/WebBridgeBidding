@@ -11,9 +11,9 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.Map;
 
-public class RubberScoringTest {
+public class FourGameImpScorringTest {
 
-    private static Logger logger = LoggerFactory.getLogger(RubberScoringTest.class);
+    private static Logger logger = LoggerFactory.getLogger(FourGameImpScorringTest.class);
 
     private MultiKeyMap<Integer, Integer> testRubberFromResults = new MultiKeyMap<>();
     private MultiKeyMap<Integer, Integer> testRubberFromPoints = new MultiKeyMap<>();
@@ -53,7 +53,7 @@ public class RubberScoringTest {
             int result3 = entry.getKey().getKey(2);
             int result4 = entry.getKey().getKey(3);
 
-            RubberScoring rS = new RubberScoring(result1,result2,result3,result4);
+            FourGameImpScorring rS = new FourGameImpScorring(result1,result2,result3,result4);
             Integer res = rS.getSumm();
             logger.info("Wynik dla całego robra z podanych wyników rozdań (" + result1+ ","+ result2+ ","+ result3 +","+ result4+ ") jest: "+ res +" \n");
             Assert.assertEquals(testRubberFromResults.get(result1, result2, result3,result4), res);
@@ -70,12 +70,12 @@ public class RubberScoringTest {
             float cSFloat = entry.getKey().getKey(4);
             int cS = Math.round(cSFloat);
 
-            RubberScoring rS = new RubberScoring(true,true,true,true,ph1,ph2,ph3,ph4,cS,cS,cS,cS,false,false,false,false,false,false,false,false);
+            FourGameImpScorring rS = new FourGameImpScorring(true,true,true,true,ph1,ph2,ph3,ph4,cS,cS,cS,cS,false,false,false,false,false,false,false,false);
             Integer res = rS.getSumm();
             logger.info("Wynik dla całego robra z podanych punktów na ręku (" + ph1+ ","+ ph2+ ","+ ph3 +","+ ph4+ ") i wyniku każdego rozdania "+ cS+" jest: "+ res +" \n");
           //  Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3,ph4, cSFloat), res);
 
-            RubberScoring rSRevers = new RubberScoring(false,false,false,false,40-ph1,40-ph2,40-ph3,40-ph4,-cS,-cS,-cS,-cS,false,false,false,false,false,false,false,false);
+            FourGameImpScorring rSRevers = new FourGameImpScorring(false,false,false,false,40-ph1,40-ph2,40-ph3,40-ph4,-cS,-cS,-cS,-cS,false,false,false,false,false,false,false,false);
             //     Integer resRevers = -rSRevers.getSumm();
 
             //    Assert.assertEquals(res,resRevers);
@@ -94,12 +94,12 @@ public class RubberScoringTest {
             int ph4 = entry.getKey().getKey(3);
             int cS = entry.getKey().getKey(4);
 
-            RubberScoring rS = new RubberScoring(true,true,true,true,ph1,ph2,ph3,ph4,cS,cS,cS,cS,false,false,false,false,false,false,false,false);
+            FourGameImpScorring rS = new FourGameImpScorring(true,true,true,true,ph1,ph2,ph3,ph4,cS,cS,cS,cS,false,false,false,false,false,false,false,false);
             Integer res = rS.getSumm();
             logger.info("Wynik dla całego robra z podanych punktów na ręku (" + ph1+ ","+ ph2+ ","+ ph3 +","+ ph4+ ") i wyniku każdego rozdania "+ cS+" jest: "+ res +" \n");
             Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3,ph4, cS), res);
 
-            RubberScoring rSRevers = new RubberScoring(false,false,false,false,40-ph1,40-ph2,40-ph3,40-ph4,-cS,-cS,-cS,-cS,false,false,false,false,false,false,false,false);
+            FourGameImpScorring rSRevers = new FourGameImpScorring(false,false,false,false,40-ph1,40-ph2,40-ph3,40-ph4,-cS,-cS,-cS,-cS,false,false,false,false,false,false,false,false);
        //     Integer resRevers = -rSRevers.getSumm();
 
         //    Assert.assertEquals(res,resRevers);
@@ -112,15 +112,15 @@ public class RubberScoringTest {
     @Test
     public void testRubberScoringTest() throws BridgeException {
 
-        RubberScoring a = new RubberScoring(true, true, true, true, 1, "nt", 1, "nt", 3, "nt", 3, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+        FourGameImpScorring a = new FourGameImpScorring(true, true, true, true, 1, "nt", 1, "nt", 3, "nt", 3, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
         logger.info("Wynik dla całego robra liczonengo na raz z podstawowych parametrów wejściowych jest: " + a.getSumm() + " \n");
         Assert.assertEquals(a.getSumm(), 6);
 
-        RubberScoring a1 = new RubberScoring(true, true, true, true, 1, "nt", 1, "nt", 6, "nt", 6, "nt", 12, 28, 15, 35, 7, 6, 1, 12, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+        FourGameImpScorring a1 = new FourGameImpScorring(true, true, true, true, 1, "nt", 1, "nt", 6, "nt", 6, "nt", 12, 28, 15, 35, 7, 6, 1, 12, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
         logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych jest: " + a1.getSumm() + " \n");
         Assert.assertEquals(a1.getSumm(), -10);
 
-        RubberScoring a2 = new RubberScoring(true, true, true, true, 1, "nt", 1, "nt", 1, "nt", 1, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+        FourGameImpScorring a2 = new FourGameImpScorring(true, true, true, true, 1, "nt", 1, "nt", 1, "nt", 1, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
         logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych  jest: " + a2.getSumm() + " \n");
         Assert.assertEquals(a2.getSumm(), 2);
 
@@ -133,7 +133,7 @@ public class RubberScoringTest {
     public void testRubberScorigFillingDeals() throws BridgeException {
 
         {
-            RubberScoring rooG = new RubberScoring(15);
+            FourGameImpScorring rooG = new FourGameImpScorring(15);
             int a = rooG.fillOneContractFrom4GameSet(1, true, 20, -110, false, false);
             Assert.assertEquals(a, -3);
 
@@ -151,7 +151,7 @@ public class RubberScoringTest {
             Assert.assertEquals(sum, -6);
         }
         {
-            RubberScoring rooG = new RubberScoring(15);
+            FourGameImpScorring rooG = new FourGameImpScorring(15);
             int a = rooG.fillOneContractFrom4GameSet(1, true, 20, 110, false, false);
             Assert.assertEquals(a, 3);
 
@@ -170,7 +170,7 @@ public class RubberScoringTest {
         }
 
         {
-            RubberScoring rooG = new RubberScoring(15);
+            FourGameImpScorring rooG = new FourGameImpScorring(15);
             int a = rooG.fillOneContractFrom4GameSet(1, true, 28, 400, false, false);
             Assert.assertEquals(a, 0);
             int i=  new CalculatedImpPointsForOneDeal(true,28,400,false,false,false,false).getResults();

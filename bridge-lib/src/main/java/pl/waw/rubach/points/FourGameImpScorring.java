@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class RubberScoring {
+public class FourGameImpScorring {
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
      * date and time
@@ -39,20 +39,20 @@ public class RubberScoring {
      */
     private int summ;
 
-    //todo powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...
+    //powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...
     //odp jeżeli już to FourGameImpPoints, ale np. przy robrze niekoniecznie będą 4 gry, więc może GameImpPoints
     //odp :2  ale jak rober to nie będą impy - wydaje mi się ze wtedy to będzie musiało być inne ?
     //po polsku mogło by być Punkty/ZapisPorównawczy i drugi ZapisRobrowy
     //
 
-    public RubberScoring() {
+    //defut constructor adding number of game 1 - possible use other constructor with special number of game with next constructor
+    //this was RubberScorring
+    public FourGameImpScorring() {
         this(1);
-        //this.gameID = gameID + 1;  //todo how to change number to one plus before?
-        //odp Tak się nie da to będzie zawsze 1 //pyt a jak się da ? :) - sprobowałam dodać to w Option menu jako argument
-    }
+       }
 
     //create special game with special gameID
-    public RubberScoring(int gameID) {
+    public FourGameImpScorring(int gameID) {
         this.gameID = gameID;
         this.rubberSpecialDescription = " Tworzę nową serię 4 gier z numerem:  " + gameID + ". \n";
         this.resultsDescription = " Wyniki: \n";
@@ -60,7 +60,7 @@ public class RubberScoring {
     }
 
 
-    public RubberScoring(int result1, int result2, int result3, int result4)
+    public FourGameImpScorring(int result1, int result2, int result3, int result4)
             throws BridgeException {
         this();
         setSumm(result1 + result2 + result3 + result4);
@@ -69,10 +69,10 @@ public class RubberScoring {
 
 
     //0ld no very usefull  but in tests ...
-    public RubberScoring(boolean wp1, boolean wp2, boolean wp3, boolean wp4,
-                         float piH1, float piH2, float piH3, float piH4,
-                         int sp1, int sp2, int sp3, int sp4,
-                         boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
+    public FourGameImpScorring(boolean wp1, boolean wp2, boolean wp3, boolean wp4,
+                               float piH1, float piH2, float piH3, float piH4,
+                               int sp1, int sp2, int sp3, int sp4,
+                               boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
         this();
 
@@ -88,10 +88,10 @@ public class RubberScoring {
 
 
     //0ld no very usefull  but in tests ...
-    public RubberScoring(boolean wp1, boolean wp2, boolean wp3, boolean wp4, int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
-                         float piH1, float piH2, float piH3, float piH4, int ntt1, int ntt2, int ntt3, int ntt4,
-                         boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
-                         boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
+    public FourGameImpScorring(boolean wp1, boolean wp2, boolean wp3, boolean wp4, int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
+                               float piH1, float piH2, float piH3, float piH4, int ntt1, int ntt2, int ntt3, int ntt4,
+                               boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
+                               boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
         this();
 

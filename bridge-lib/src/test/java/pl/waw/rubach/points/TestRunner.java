@@ -48,7 +48,7 @@ public class TestRunner {
         System.out.println("DuplicateBridgeScoringTestAfter test: " + resultCountingPointsTestAfter.wasSuccessful());
 
 //=======================================Rubberscoring
-        Result resultRubberScoringTest = JUnitCore.runClasses(RubberScoringTest.class);
+        Result resultRubberScoringTest = JUnitCore.runClasses(FourGameImpScorringTest.class);
         for (Failure failureRubberScoringTest : resultRubberScoringTest.getFailures()) {
             System.out.println(failureRubberScoringTest.toString());
         }
