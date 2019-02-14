@@ -543,8 +543,8 @@ class OptionMenu extends MenuBar {
                 descriptionTable[contractNumber - 1] = "Kontrakt nr. " + (contractNumber) + ": " + scoring.getShortDescription() + scoring.getDescription() + "\n " + a.getFitDescriprtion();
 
 
-                // aa.fillOneContractFrom4GameSet(contractNumber, a);
-                int imp = aa.fillOneContractFrom4GameSet(contractNumber, checkboxWe.getValue(),
+                // aa.fillOneContract(contractNumber, a);
+                int imp = aa.fillOneContract(contractNumber, checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()), Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
                         Integer.parseInt(numberOfTricksField.getValue()), checkboxDouble.getValue(), checkboxReDouble.getValue(),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
@@ -590,7 +590,7 @@ class OptionMenu extends MenuBar {
 
         s.append("\n\n \t \t***\n");
 
-        return s.toString() + "\n" + aa.getRubberScoringAsString();
+        return s.toString() + "\n" + aa.getGameScoringAsString();
     }
 
 

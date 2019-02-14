@@ -93,9 +93,9 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
             Assert.assertEquals(res, resR);
 
             FourGameImpScorring aa =new FourGameImpScorring();
-            Integer imp = aa.fillOneContractFrom4GameSet(1,roog);
+            Integer imp = aa.fillOneContract(1,roog);
             Assert.assertEquals(res,imp);
-            Integer imp2 = aa.fillOneContractFrom4GameSet(1,roogR);
+            Integer imp2 = aa.fillOneContract(1,roogR);
             Assert.assertEquals(resR,imp2);
 
         }

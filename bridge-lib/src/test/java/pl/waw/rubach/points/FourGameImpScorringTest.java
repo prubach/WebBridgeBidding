@@ -134,16 +134,16 @@ public class FourGameImpScorringTest {
 
         {
             FourGameImpScorring rooG = new FourGameImpScorring(15);
-            int a = rooG.fillOneContractFrom4GameSet(1, true, 20, -110, false, false);
+            int a = rooG.fillOneContract(1, true, 20, -110, false, false);
             Assert.assertEquals(a, -3);
 
-            int b = rooG.fillOneContractFrom4GameSet(2, true, 19, -110, false, false);
+            int b = rooG.fillOneContract(2, true, 19, -110, false, false);
             Assert.assertEquals(b, -2);
 
-            int c = rooG.fillOneContractFrom4GameSet(3, true, 18, -110, false, false);
+            int c = rooG.fillOneContract(3, true, 18, -110, false, false);
             Assert.assertEquals(c, -1);
 
-            int d = rooG.fillOneContractFrom4GameSet(4, true, 17, -110, false, false);
+            int d = rooG.fillOneContract(4, true, 17, -110, false, false);
             Assert.assertEquals(d, 0);
 
             int sum = rooG.getSumm();
@@ -151,17 +151,17 @@ public class FourGameImpScorringTest {
             Assert.assertEquals(sum, -6);
         }
         {
-            FourGameImpScorring rooG = new FourGameImpScorring(15);
-            int a = rooG.fillOneContractFrom4GameSet(1, true, 20, 110, false, false);
+            FourGameImpScorring rooG = new FourGameImpScorring(14);
+            int a = rooG.fillOneContract(1, true, 20, 110, false, false);
             Assert.assertEquals(a, 3);
 
-            int b = rooG.fillOneContractFrom4GameSet(2, true, 21, 110, false, false);
+            int b = rooG.fillOneContract(2, true, 21, 110, false, false);
             Assert.assertEquals(b, 2);
 
-            int c = rooG.fillOneContractFrom4GameSet(3, true, 22, 110, false, false);
+            int c = rooG.fillOneContract(3, true, 22, 110, false, false);
             Assert.assertEquals(c, 1);
 
-            int d = rooG.fillOneContractFrom4GameSet(4, true, 23, 110, false, false);
+            int d = rooG.fillOneContract(4, true, 23, 110, false, false);
             Assert.assertEquals(d, 0);
 
             int sum = rooG.getSumm();
@@ -170,29 +170,29 @@ public class FourGameImpScorringTest {
         }
 
         {
-            FourGameImpScorring rooG = new FourGameImpScorring(15);
-            int a = rooG.fillOneContractFrom4GameSet(1, true, 28, 400, false, false);
+            FourGameImpScorring rooG = new FourGameImpScorring(13);
+            int a = rooG.fillOneContract(1, true, 28, 400, false, false);
             Assert.assertEquals(a, 0);
             int i=  new CalculatedImpPointsForOneDeal(true,28,400,false,false,false,false).getResults();
              Assert.assertEquals(a,i);
-            int b = rooG.fillOneContractFrom4GameSet(2, true, 25, 400, false, false);
+            int b = rooG.fillOneContract(2, true, 25, 400, false, false);
             Assert.assertEquals(b, 3);
             int ib=  new CalculatedImpPointsForOneDeal(true,25,400,true,false,false,false).getResults();
             Assert.assertEquals(b,ib);
 
-            int c = rooG.fillOneContractFrom4GameSet(3, true, 28, 400, false, false);
+            int c = rooG.fillOneContract(3, true, 28, 400, false, false);
             Assert.assertEquals(c, 0);
             int ic=  new CalculatedImpPointsForOneDeal(true,28,400,false,true,false,false).getResults();
             Assert.assertEquals(c,ic);
 
-            int d = rooG.fillOneContractFrom4GameSet(4, true, 27, 400, false, false);
+            int d = rooG.fillOneContract(4, true, 27, 400, false, false);
             Assert.assertEquals(d, -3);
             int id=  new CalculatedImpPointsForOneDeal(true,27,400,true,true,false,false).getResults();
             Assert.assertEquals(d,id);
 
             int sum = rooG.getSumm();
             logger.info("Wynik dla całego robra wpisanego ręcznie (punkty i wyniki) rozdanie po rozdaniu jest:  " + sum + ". ");
-            Assert.assertEquals(sum, 0);
+           Assert.assertEquals(sum, 0);
             }
 
     }

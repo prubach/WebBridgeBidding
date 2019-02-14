@@ -1,39 +1,12 @@
 package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfPointsException;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 //this was RubberScorring
-public class FourGameImpScorring {
-    /**
-     * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
-     * date and time
-     * place
-     * names of players
-     * photos etc ...
-     * should be done automaticly incriasing of 1 - but how????- gdzieś tak widziałam...
-     */
-    private int gameID;
+public class FourGameImpScorring extends AbstractWholeGameScorring {
 
-    /**
-     * rubberSpecialDescription describe parameter of game - if accesible and results describe results of rubber
-     */
-    private String rubberSpecialDescription, resultsDescription;
-
-    /**
-     * Map number of game with scorring for one game
-     */
-    private Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
-
-    /**
-     * Result of 4 games - imp points
-     */
-    private int summ;
 
     //powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...
     //odp jeżeli już to FourGameImpPoints, ale np. przy robrze niekoniecznie będą 4 gry, więc może GameImpPoints
@@ -41,24 +14,24 @@ public class FourGameImpScorring {
     //
 
     //defut constructor adding number of game 1 - possible use other constructor with special number of game with next constructor
-     public FourGameImpScorring() {
+    public FourGameImpScorring() {
         this(1);
-       }
+    }
 
     //create special game with special gameID
     public FourGameImpScorring(int gameID) {
-        this.gameID = gameID;
-        this.rubberSpecialDescription = " \n *** Nowa seria 4 gier z numerem:  " + gameID + ". ***  \n";
-        this.resultsDescription = " \nWyniki: \n";
-        this.summ = 0;
+        setGameID(gameID);
+        setGameType("IMP");
+        setRubberSpecialDescription(" \n *** Nowa seria 4 gier z numerem:  " + getGameID() + ". ***  \n");
+        setResultsDescription(" \nWyniki: \n");
+        setSumm(0);
     }
 
 
-    public FourGameImpScorring(int result1, int result2, int result3, int result4)
-            throws BridgeException {
+    public FourGameImpScorring(int result1, int result2, int result3, int result4) {
         this();
         setSumm(result1 + result2 + result3 + result4);
-        resultsDescription = ("Końcowy wynik gry numer:" + getGameID() + " z podanymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
+        setResultsDescription("Końcowy wynik gry na impy numer:" + getGameID() + " z podanymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
     }
 
 
@@ -70,13 +43,13 @@ public class FourGameImpScorring {
             throws BridgeException {
         this();
 
-        int result1 = fillOneContractFrom4GameSet(1, wp1, piH1, sp1, fW1, fT1);
-        int result2 = fillOneContractFrom4GameSet(2, wp2, piH2, sp2, fW2, fT2);
-        int result3 = fillOneContractFrom4GameSet(3, wp3, piH3, sp3, fW3, fT3);
-        int result4 = fillOneContractFrom4GameSet(4, wp4, piH4, sp4, fW4, fT4);
+        int result1 = fillOneContract(1, wp1, piH1, sp1, fW1, fT1);
+        int result2 = fillOneContract(2, wp2, piH2, sp2, fW2, fT2);
+        int result3 = fillOneContract(3, wp3, piH3, sp3, fW3, fT3);
+        int result4 = fillOneContract(4, wp4, piH4, sp4, fW4, fT4);
 
         setSumm(result1 + result2 + result3 + result4);
-        resultsDescription = ("Końcowy wynik gry numer:" + getGameID() + " z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
+        setResultsDescription("Końcowy wynik gry numer:" + getGameID() + " z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
 
     }
 
@@ -89,13 +62,13 @@ public class FourGameImpScorring {
             throws BridgeException {
         this();
 
-        int result1 = fillOneContractFrom4GameSet(1, wp1, piH1, lev1, color1, ntt1, d1, r1, fW1, fT1);
-        int result2 = fillOneContractFrom4GameSet(2, wp2, piH2, lev2, color2, ntt2, d2, r2, fW2, fT2);
-        int result3 = fillOneContractFrom4GameSet(3, wp3, piH3, lev3, color3, ntt3, d3, r3, fW3, fT3);
-        int result4 = fillOneContractFrom4GameSet(4, wp4, piH4, lev4, color4, ntt4, d4, r4, fW4, fT4);
+        int result1 = fillOneContract(1, wp1, piH1, lev1, color1, ntt1, d1, r1, fW1, fT1);
+        int result2 = fillOneContract(2, wp2, piH2, lev2, color2, ntt2, d2, r2, fW2, fT2);
+        int result3 = fillOneContract(3, wp3, piH3, lev3, color3, ntt3, d3, r3, fW3, fT3);
+        int result4 = fillOneContract(4, wp4, piH4, lev4, color4, ntt4, d4, r4, fW4, fT4);
 
         setSumm(result1 + result2 + result3 + result4);
-        resultsDescription = ("Końcowy wynik gry numer:" + getGameID() + " na podstawie danych podstawowych wprowadzonych na raz,  z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
+        setResultsDescription("Końcowy wynik gry numer:" + getGameID() + " na podstawie danych podstawowych wprowadzonych na raz,  z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
 
     }
 
@@ -106,57 +79,93 @@ public class FourGameImpScorring {
      * @param contractNumber is numnber of contract
      * @param cIPfoDforWe    is object where results for one deal is calculated
      * @return results of this particular game (one deal)
-     * @throws InvalidNumberOfPointsException if number of points is wrong
-     * @throws BridgeException                if parameter are wrong
      */
-    public int fillOneContractFrom4GameSet(int contractNumber,
-                                           CalculatedImpPointsForOneDeal cIPfoDforWe)
-            throws BridgeException {
+    public int fillOneContract(int contractNumber, CalculatedImpPointsForOneDeal cIPfoDforWe) {
 
-        scorringForOneGame.put(contractNumber, cIPfoDforWe);
+        // pyt co jest bardziej elegancko put po prostu czy ten setter?
+         setScorringForOneGame(contractNumber,cIPfoDforWe);
+        //scorringForOneGame.put(contractNumber, cIPfoDforWe);
         setSumm();
         return cIPfoDforWe.getResults();
     }
 
-    public int fillOneContractFrom4GameSet(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
-                                           int scoringPointsWe,
-                                           boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    /**
+     * Function to fill ruberScoring wiht results of each game
+     *
+     * @param contractNumber      is numnber of contract with some othrer parameter:
+     * @param whoPlay             (indicates who play game)
+     * @param pointsInBothHandsWe (indicates how many points are in our hands)
+     * @param scoringPointsWe     (indicates how many poinst are for game)
+     * @param fitInOlderColorWe   describe if it is fit or not
+     * @param fitInOlderColorThey describe if it is fit or not
+     * @return results of this particular game (one deal)
+     * @throws BridgeException if parameter are wrong
+     */
+    public int fillOneContract(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
+                               int scoringPointsWe,
+                               boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
 
-        return fillOneContractFrom4GameSet(contractNumber,
+        return fillOneContract(contractNumber,
                 new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe,
                         whoPlay ? scoringPointsWe : -scoringPointsWe,
-                        //pyt czy bardzie elegancko jest z tym enumem, czy wcześniejsza wersja (zakomentowana) była lepsza?
-                        //     whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
-                        //     whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
+                        //pyt czy bardzie elegancko jest z tym enumem, czy wcześniejsza wersja (zakomentowana) była lepsza? (to samo w dwóch poniższych wariantach funkcji
+                        //whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
+                        //whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
                         whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
                         whoPlay ? fillAssumptionA(contractNumber).areTheyVunerable() : fillAssumptionA(contractNumber).areWeVunerable(),
                         whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
 
     }
 
-
-    public int fillOneContractFrom4GameSet(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
-                                           DuplicateBridgeScoring pFC,
-                                           boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    /**
+     * Function to fill ruberScoring wiht results of each game
+     *
+     * @param contractNumber      is numnber of contract with some othrer parameter:
+     * @param whoPlay             (indicates who play game)
+     * @param pointsInBothHandsWe (indicates how many points are in our hands)
+     * @param dBS                 is object with all calculated points
+     * @param fitInOlderColorWe   describe if it is fit or not
+     * @param fitInOlderColorThey describe if it is fit or not
+     * @return results of this particular game (one deal)
+     * @throws BridgeException if parameter are wrong
+     */
+    public int fillOneContract(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
+                               DuplicateBridgeScoring dBS,
+                               boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
-        rubberSpecialDescription = rubberSpecialDescription + pFC.getShortDescription() + "\n";
-        return fillOneContractFrom4GameSet(contractNumber,
+        setRubberSpecialDescription(getRubberSpecialDescription() + dBS.getShortDescription() + "\n");
+        return fillOneContract(contractNumber,
                 new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe,
-                        whoPlay ? pFC.getContractScoringPoints() : -pFC.getContractScoringPointsWe(),
-                        //pyt czy bardzie elegancko jest z tym enumem, czy wcześniejsza wersja (zakomentowana) była lepsza?
-                        //     whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
-                        //     whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
+                        whoPlay ? dBS.getContractScoringPoints() : -dBS.getContractScoringPointsWe(),
+                        //whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
+                        //whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
                         whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
-                        whoPlay ? fillAssumptionA(contractNumber).areTheyVunerable() : fillAssumptionA(contractNumber).areWeVunerable(), whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
+                        whoPlay ? fillAssumptionA(contractNumber).areTheyVunerable() : fillAssumptionA(contractNumber).areWeVunerable(),
+                        whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
     }
 
-
-    public int fillOneContractFrom4GameSet(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
-                                           int gameLevel, String suit, int numberOfTricksTakenWe, boolean isdouble, boolean isredouble,
-                                           boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+    /**
+     * Function to fill ruberScoring wiht results of each game
+     *
+     * @param contractNumber        is numnber of contract with some othrer parameter:
+     * @param whoPlay               (indicates who play game)
+     * @param pointsInBothHandsWe   (indicates how many points are in our hands)
+     * @param gameLevel             having game level
+     * @param suit                  is suit of game
+     * @param numberOfTricksTakenWe is number of tricck taken by we
+     * @param isdouble              indicates if it is double contract or
+     * @param isredouble            is redouble
+     * @param fitInOlderColorWe     describe if it is fit or not
+     * @param fitInOlderColorThey   describe if it is fit or not
+     * @return results of this particular game (one deal)
+     * @throws BridgeException if parameter are wrong
+     */
+    public int fillOneContract(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
+                               int gameLevel, String suit, int numberOfTricksTakenWe, boolean isdouble, boolean isredouble,
+                               boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
-        return fillOneContractFrom4GameSet(contractNumber, whoPlay, pointsInBothHandsWe,
+        return fillOneContract(contractNumber, whoPlay, pointsInBothHandsWe,
                 new DuplicateBridgeScoring(gameLevel, suit, isdouble, isredouble,
                         // whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                         whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
@@ -167,7 +176,6 @@ public class FourGameImpScorring {
     }
 
 
-
     private Assumption fillAssumptionA(int contractNumber) throws BridgeException {
         for (Assumption a : Assumption.values())
             if (contractNumber == a.getContractNumber()) return a;
@@ -176,16 +184,11 @@ public class FourGameImpScorring {
     }
 
 
-    public String getRubberScoringAsString() throws BridgeException {
-        StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + this.getGameID() + ".  ***  \n");
-
-        Map<Integer, CalculatedImpPointsForOneDeal> map = this.scorringForOneGame;
-        SortedSet<Integer> ptsMapSet = new TreeSet<>(map.keySet());
+    public String getGameScoringAsString() {
+        StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + getGameID() + ".  ***  \n");
         //  s.append("\n").append(this.getRubberSpecialDescription());
-
-        for (Integer key : ptsMapSet) {
-
-            s.append("\n dla ").append(key).append(" gry jest ").append(map.get(key).getContractScoringPoints()).append(" punktów i wynik jest ").append(map.get(key).getResults()).append(" impów");
+        for (Integer key : new TreeSet<>(getScorringForOneGame().keySet())) {
+            s.append("\n dla ").append(key).append(" gry jest ").append(getScorringForOneGame().get(key).getContractScoringPoints()).append(" punktów i wynik jest ").append(getScorringForOneGame().get(key).getResults()).append(" impów");
 
         }
 
@@ -193,61 +196,9 @@ public class FourGameImpScorring {
         return s.toString();
     }
 
-    public int getSumm() {
-        return this.summ;
-    }
-
-    private void setSumm(int summ) {
-        this.summ = summ;
-    }
-
-    public void setSumm() {
-        int summ = 0;
-        for (int p : new TreeSet<Integer>(scorringForOneGame.keySet())) {
-            summ = summ + scorringForOneGame.get(p).getResults();
-        }
-
-        this.summ = summ;
-    }
-
-    public int getSummCalulatedFromScorringForOneGame() throws BridgeException {
-        SortedSet<Integer> ptsMapSet = new TreeSet<>(scorringForOneGame.keySet());
-        int s = 0;
-        for (Integer key : ptsMapSet) {
-            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
-                s = s + scorringForOneGame.get(key).getResults();
-
-            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + scorringForOneGame.get(key).getResults() + " \t Do tej pory  wynik jest: " + s + " \n");
-
-        }
-        return s;
-    }
 
 
 
-    public int getGameID() {
-        return gameID;
-    }
-
-    public String getRubberSpecialDescription() {
-        return rubberSpecialDescription;
-    }
-
-    public void setRubberSpecialDescription(String rubberSpecialDescription) {
-        this.rubberSpecialDescription = rubberSpecialDescription;
-    }
-
-    public Map<Integer, CalculatedImpPointsForOneDeal> getScorringForOneGame() {
-        return scorringForOneGame;
-    }
-
-    public String getResultsDescription() {
-        return resultsDescription;
-    }
-
-    public void setResultsDescription(String resultsDescription) {
-        this.resultsDescription = resultsDescription;
-    }
 
 
 }
