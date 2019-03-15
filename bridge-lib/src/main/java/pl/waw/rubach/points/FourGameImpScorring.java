@@ -2,10 +2,18 @@ package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
 //this was RubberScorring
 public class FourGameImpScorring extends AbstractWholeGameScorring {
+
+
+    /**
+     * Map number of game with scorring for one game
+     */
+    protected Map<Integer, CalculatedImpPointsForOneDeal > scorringForOneGame = new HashMap<>();
 
 
     //powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...
@@ -13,18 +21,13 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     //ale jak rober to nie będą impy - wydaje mi się ze wtedy to będzie musiało być inne ?  po polsku mogło by być Punkty/ZapisPorównawczy i drugi ZapisRobrowy
     //
 
-    //defut constructor adding number of game 1 - possible use other constructor with special number of game with next constructor
     public FourGameImpScorring() {
         this(1);
     }
 
-    //create special game with special gameID
     public FourGameImpScorring(int gameID) {
-        setGameID(gameID);
+        super(gameID,"na impy");
         setGameType("IMP");
-        setRubberSpecialDescription(" \n *** Nowa seria 4 gier z numerem:  " + getGameID() + ". ***  \n");
-        setResultsDescription(" \nWyniki: \n");
-        setSumm(0);
     }
 
 
@@ -83,7 +86,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     public int fillOneContract(int contractNumber, CalculatedImpPointsForOneDeal cIPfoDforWe) {
 
         // pyt co jest bardziej elegancko put po prostu czy ten setter?
-         setScorringForOneGame(contractNumber,cIPfoDforWe);
+        setScorringForOneGame(contractNumber, cIPfoDforWe);
         //scorringForOneGame.put(contractNumber, cIPfoDforWe);
         setSumm();
         return cIPfoDforWe.getResults();
@@ -197,9 +200,25 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     }
 
 
+    private void setScorringForOneGame(Integer contractNumber, CalculatedImpPointsForOneDeal cIPfOD) {
+        this.scorringForOneGame.put(contractNumber, cIPfOD);
+    }
+
+    public Map<Integer, CalculatedImpPointsForOneDeal > getScorringForOneGame() {
+        return scorringForOneGame;
+    }
 
 
+    protected void setSumm() {
+        int summ = 0;
+        for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
+//            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
+            summ = summ + getScorringForOneGame().get(key).getResults();
+            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + getScorringForOneGame().get(key).getResults() + " \t Do tej pory  wynik jest: " + summ + " \n");
+        }
 
+        setSumm(summ);
+    }
 
 }
 

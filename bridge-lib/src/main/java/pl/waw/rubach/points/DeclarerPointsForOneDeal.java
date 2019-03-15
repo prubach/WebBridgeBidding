@@ -95,6 +95,14 @@ public class DeclarerPointsForOneDeal {
      */
     private int results;
 
+    DeclarerPointsForOneDeal(){}
+
+    DeclarerPointsForOneDeal(int contractLevel, String contractSuit, int declarerNumberOfTrickTaken){
+        this.contractLevel=contractLevel;
+        this.contractSuit=contractSuit;
+        this.declarerNumberOfTrickTaken= declarerNumberOfTrickTaken;
+    }
+
     /**
      * Description of contract
      *

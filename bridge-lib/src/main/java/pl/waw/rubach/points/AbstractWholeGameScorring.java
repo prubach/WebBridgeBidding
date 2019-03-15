@@ -1,10 +1,6 @@
 package pl.waw.rubach.points;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
-
-public class AbstractWholeGameScorring {
+public abstract class AbstractWholeGameScorring {
 
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
@@ -27,15 +23,21 @@ public class AbstractWholeGameScorring {
 
 
     /**
-     * Map number of game with scorring for one game
-     */
-    private Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
-
-
-    /**
      * Result of 4 games - imp points
      */
     private int summ;
+
+
+
+    protected AbstractWholeGameScorring(int gameID, String des) {
+        setGameID(gameID);
+        setRubberSpecialDescription(" \n *** Nowa seria gier "+ des +" z numerem:  " + getGameID() + ". ***  \n");
+        setResultsDescription(" \nWyniki: \n");
+        setSumm(0);
+
+    }
+
+
 
 
     public String getGameType() {
@@ -71,27 +73,7 @@ public class AbstractWholeGameScorring {
         this.resultsDescription = resultsDescription;
     }
 
-    public Map<Integer, CalculatedImpPointsForOneDeal> getScorringForOneGame() {
-        return scorringForOneGame;
-    }
-
-    protected void setScorringForOneGame(Integer contractNumber, CalculatedImpPointsForOneDeal cIPfOD) {
-        this.scorringForOneGame.put(contractNumber, cIPfOD);
-    }
-
-
-    protected void setSumm() {
-        int summ = 0;
-        for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
-//            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
-            summ = summ + getScorringForOneGame().get(key).getResults();
-            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + getScorringForOneGame().get(key).getResults() + " \t Do tej pory  wynik jest: " + summ + " \n");
-        }
-
-        setSumm(summ);
-    }
-
-    public int getSumm() {
+     public int getSumm() {
         return this.summ;
     }
 

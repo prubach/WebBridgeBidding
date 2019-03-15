@@ -232,7 +232,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
      * @param calculatedPointsForContract - are points for Contract - not overtricks included - so to know is is more then 100.
      * @return game/ part game or slam bonnus
      */
-    private int getGamePartGameBonus(int calculatedPointsForContract) {
+    protected int getGamePartGameBonus(int calculatedPointsForContract) {
 
         if (calculatedPointsForContract >= 100 && made) {
             description = description + " + punkty za ugraną końcówkę (zależnie od założeń).";
