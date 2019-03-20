@@ -215,12 +215,12 @@ class OptionMenu extends MenuBar {
 
         table.addStyleName("window");
 
-        //   checkboxAssumptionWe.setValue(true); //move to create menu?
-        checkboxFitWe.setValue(true);
+        createAllInputElement();
 
         table.addComponent(checkboxAssumptionWe);
         table.addComponent(checkboxFitWe);
-        table.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy dowolny kolor jest sfitowany, jeżeli mniej to tylko starszy."));
+        table.addComponent(fitLabel);
+        // table.addComponent(new Label("Uwaga: Jeżeli macie PC >30 to czy dowolny kolor jest sfitowany, jeżeli mniej to tylko starszy."));
         //  checkboxAssumptionWe.addValueChangeListener(event ->
         //         checkboxFitWe.setValue(! checkboxAssumptionWe.getValue()));
 
@@ -504,8 +504,6 @@ class OptionMenu extends MenuBar {
                         " <BR> czyli " + a.getResults() + impDeclination(a.getResults()) + ". ");// +
 
             }
-            //pytanie cz1: czy lepiej tak jak jest instance of ale w jednej linijce (i raz kolorowane)
-            //odp ok
             catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
                         "Nieprawidłowy format  punktów spróbuj jeszcze raz!" : e.getMessage();
@@ -557,9 +555,8 @@ class OptionMenu extends MenuBar {
 
                 descriptionOf4play = makeDescription(aa, descriptionTable);
 
-//pytanie: cz2 czy tak lepiej - nie ma instance of za to dwa razy catch?
-//odp w tym przypadku obydwa są ok, bo ciężko powiedzieć czy lepiej użyć instanceof czy duplikować blok
-// to może zrobię dwa z różnym kolorowaniem :) ???
+//w tym przypadku obydwa są ok, bo ciężko powiedzieć czy lepiej użyć instanceof czy duplikować blok
+//pyt to może zrobię dwa z różnym kolorowaniem :) ???
             } catch (BridgeException e) {
                 String mes1 = e.getMessage();
                 resultsLabel.setValue("<font color=red>" + mes1 + "</font>");
