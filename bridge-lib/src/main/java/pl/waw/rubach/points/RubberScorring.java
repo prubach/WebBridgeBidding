@@ -28,7 +28,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
 
 
-    public int fillOneContract(int contractNumber, RubberPoints d){
+    public int fillOneContract(int contractNumber, CalculatedRubberPoints d){
         setScorringForOneGame(contractNumber, d);
         setSumm();
         return d.getResults();
@@ -38,7 +38,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
                                boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
     throws BridgeException
     {
-        RubberPoints d = new RubberPoints(contractLevel,contractSuit,isContractDouble,isContractRedouble,auctionAssumptionDeclarer,numberOfTrickTakenByDeclarer);
+        CalculatedRubberPoints d = new CalculatedRubberPoints(contractLevel,contractSuit,isContractDouble,isContractRedouble,auctionAssumptionDeclarer,numberOfTrickTakenByDeclarer);
         return fillOneContract(contractNumber, d);
     }
 

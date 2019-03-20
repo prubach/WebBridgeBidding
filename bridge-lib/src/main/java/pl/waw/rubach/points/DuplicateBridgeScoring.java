@@ -53,18 +53,18 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
         //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (nDRSignature == 2), nDRSignature == 4, auctionAssumptionDeclarer);
 
         //checking if contractLevel is correct
-        if (contractLevel > 7 || contractLevel < 1)
+        if (contractLevel > MAXCONTRACTLEVEL || contractLevel < MINCONTRACTLEVEL)
             throw new InvalidContractLevelException(contractLevel);
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
 
         //checking if number of tricks is correct
-        if (numberOfTrickTakenByDeclarer > 13 || numberOfTrickTakenByDeclarer < 0)
+        if (numberOfTrickTakenByDeclarer > NUBEROFTRICS || numberOfTrickTakenByDeclarer < 0)
             throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
         setDeclarerNumberOfTrickTaken(numberOfTrickTakenByDeclarer);
 
         //checking if double/ redouble or undouble signature  is correct
-        if (!(nDRSignature == 1 || nDRSignature == 2 || nDRSignature == 4))
+        if (!(nDRSignature == IS_UNDOUBLE || nDRSignature == IS_DOUBLE || nDRSignature == IS_REDOUBLE))
             throw new BridgeException(nDRSignature);
         setNoDoubleReSignature(nDRSignature);
 

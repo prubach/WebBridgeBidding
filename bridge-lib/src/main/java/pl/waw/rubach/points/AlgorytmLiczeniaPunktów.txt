@@ -1,3 +1,10 @@
+Uwagi co do zpisu impowego:
+    Nadróbki są mniej ważne. Nie ma sensu ryzykować straty gry premiowej (300-500 = 8-11 IMP) dla potencjalnej nadróbki dającej 1 IMP;
+    Z tego samego powodu bardzo ważne jest bezpieczeństwo gry;
+    Częste są gry końcowe i szlemowe o niskim prawdopodobieństwie powodzenia. 40% gra końcowa przed partią, 45% gra końcowa po partii oraz 50% szlemik dają pozytywny wynik IMP w dłuższej perspektywie;
+    Rzadko są poświęcenia i niosą większe ryzyko;
+    Niezbyt częste są gry z kontrą. Kontra powoduje, że rozgrywający bardziej asekuruje się przed przegraną.
+
 Postanowiłam spisać jak się liczy punkty, żeby spróbować znaleźć gdzie potencjalnie jest błąd.
 Poza tym można tu zapisać jakieś uwagi pomysły żeby nie zaśmiecać komentarzami plików z kodem?
 
