@@ -77,7 +77,7 @@ public class ExpectedResultsTable {
      * @param auctionAssumption - assumption After (true) or Before (false)
      * @return map of points in hand to bonus points
      */
-    private Map<Integer, Integer> getPtsMap(boolean fitInOlderColor, boolean auctionAssumption) {
+    private Map getPtsMap(boolean fitInOlderColor, boolean auctionAssumption) {
         return pointsMap.get(fitInOlderColor, auctionAssumption);
     }
 

@@ -48,10 +48,22 @@ public abstract class AbstractImpTable {
         return 0;
     }
 
+    static String impDeclination(int i) {
+        String imp;
+        if (i == 1) imp = " imp";
+        else if (i < 5) imp = " impy";
+        else imp = " impów";
+        return imp;
+
+
+    }
+
     static int[] findingDifferenceFromImp(int imps){
         int a[]= {ImpTable.getInstance().getExpectedPointsRevers(imps-1), ImpTable.getInstance().getExpectedPointsRevers(imps)};
         return a;
     }
+
+
 // pyt probably it is better then above (to find key having value) but dont know how :(
     public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
         return map.entrySet()

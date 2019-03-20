@@ -134,7 +134,7 @@ public class DeclarerPointsForOneDeal {
 
     public float getPoinsOnHandsWe() {
         if (isWePlay()) return getPointsInBothDeclarerHands();
-        else return 40 - getPointsInBothDeclarerHands();
+        else return MAXNUBEROFPOINTS - getPointsInBothDeclarerHands();
     }
 
     public int getContractScoringPointsWe() {

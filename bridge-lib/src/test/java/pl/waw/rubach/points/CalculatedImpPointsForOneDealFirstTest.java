@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class CalculatedImpPointsForOneDealFirstTest {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
 
     protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitWeMap = new MultiKeyMap<>();
     protected MultiKeyMap<Float, Integer> testCountingPointsBothAfterFitTheyMap = new MultiKeyMap<>();
@@ -37,6 +37,7 @@ public class CalculatedImpPointsForOneDealFirstTest {
 
     @Before
     public void fillTestPointsMap() {
+                                                //points in hand points for contract imps
         testCountingPointsBothBeforNoFitMap.put(28f, 990f, 11);
         testCountingPointsBothBeforNoFitMap.put(28f, 100f, -7);
         testCountingPointsBothBeforNoFitMap.put(29f, -50f, -10);
