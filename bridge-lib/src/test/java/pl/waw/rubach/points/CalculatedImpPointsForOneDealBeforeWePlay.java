@@ -32,6 +32,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         testCountingPointsNoFitBothMap.put(11f, 50f, 10);
         testCountingPointsNoFitBothMap.put(12f, -990f, -11);
         testCountingPointsNoFitBothMap.put(12f, -100f, 7);
+        testCountingPointsNoFitBothMap.put(15f, -400f, -5);
         testCountingPointsNoFitBothMap.put(20f, 400f, 9);
         testCountingPointsNoFitBothMap.put(22f, 400f, 8);
         testCountingPointsNoFitBothMap.put(23f, 400f, 7);

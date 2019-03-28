@@ -20,7 +20,7 @@ public class OneDeal {
     /**
      * indicates who is Declarer - but all value here for declarer
      */
-    private boolean wePlay;
+    private boolean wePlay = true;
 
     /**
      * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
@@ -111,14 +111,8 @@ public class OneDeal {
     private String shortDescription;
 
 
-    OneDeal(){
-    }
+    OneDeal(){    }
 
-    OneDeal(int contractLevel, String contractSuit, int declarerNumberOfTrickTaken){
-        this.contractLevel=contractLevel;
-        this.contractSuit=contractSuit;
-        this.declarerNumberOfTrickTaken= declarerNumberOfTrickTaken;
-    }
 
     /**
      * Description of contract
@@ -314,6 +308,8 @@ public class OneDeal {
     public int getDeclarerResluts() {
         return declarerResluts;
     }
+
+    public int getResultsWe() {return wePlay ? declarerResluts : -declarerResluts; }
 
 
     public void setShortDescription(String shortDescription) {

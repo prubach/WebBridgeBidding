@@ -43,10 +43,8 @@ public class CalculatedImpPointsForOneDeal extends OneDeal {
 
         setDeclarerResluts(ImpTable.getInstance().getImpPoints(getPointDifferent()));
 
-        if (getExpectedPoints() <= getDeclarerContractScoringPoints()) {
-            return;
-        }
-        setDeclarerResluts(-getDeclarerResluts());
+        if (getExpectedPoints() > getDeclarerContractScoringPoints())  setDeclarerResluts(-getDeclarerResluts());
+
 
     }
 

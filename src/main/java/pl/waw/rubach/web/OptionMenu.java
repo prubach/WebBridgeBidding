@@ -8,6 +8,7 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
+import static java.lang.Math.abs;
 import static pl.waw.rubach.points.CalculatedImpPointsForOneDeal.impDeclination;
 
 class OptionMenu extends MenuBar {
@@ -327,7 +328,7 @@ class OptionMenu extends MenuBar {
 
     private FormLayout actionManualCalculetePoints() {
         FormLayout vL = new FormLayout();
-        vL.addComponent(new Label("Wersja 1.1 - podaj ile macie punktów na ręku i ile zdobyliście punktów - liczone dla pary rozgrywającej! :)"));
+        vL.addComponent(new Label("Wersja 1.1 - podaj ile macie punktów na ręku i ile zdobyliście punktów - liczone dla dowolnej pary! :)"));
 
         createAllInputElement();
 
@@ -343,7 +344,8 @@ class OptionMenu extends MenuBar {
 
         Button calculateImp = new Button("Oblicz impy! ", clickEvent -> {
             try {
-                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(Float.parseFloat(pointsInBothHandsField.getValue()),
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(
+                        Float.parseFloat(pointsInBothHandsField.getValue()),
                         Integer.parseInt(pointsForContractField.getValue()),
                         checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
@@ -389,11 +391,11 @@ class OptionMenu extends MenuBar {
                 DuplicateBridgeScoring duplicateBridgeScoring = new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
                         checkboxDouble.getValue(), checkboxReDouble.getValue(), checkboxAssumptionWe.getValue(), Integer.parseInt(numberOfTricksField.getValue()));
 
-                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(!checkboxWe.getValue(),
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(
                         Float.parseFloat(pointsInBothHandsField.getValue()), duplicateBridgeScoring.getDeclarerContractScoringPoints(),
                         checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + duplicateBridgeScoring.getDeclarerContractScoringPoints() +
+                resultsLabel.setValue("<B>W tym rozdaniu rozgrywający uzyskał " + duplicateBridgeScoring.getDeclarerContractScoringPoints() +
                         " punktów za kontrakt, (" + duplicateBridgeScoring.getDescription() + ") </B> " +
                         " <BR> czyli " + a.getDeclarerResluts() + impDeclination(a.getDeclarerResluts()) + ".  ");
 
@@ -502,7 +504,7 @@ class OptionMenu extends MenuBar {
                         fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1],
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B> " +
-                        " <BR> czyli " + a.getDeclarerResluts() + impDeclination(a.getDeclarerResluts()) + ". ");// +
+                        " <BR> czyli " + a.getResultsWe() + impDeclination(abs(a.getResultsWe())) + ". ");// +
 
             }
             catch (NumberFormatException | BridgeException e) {
