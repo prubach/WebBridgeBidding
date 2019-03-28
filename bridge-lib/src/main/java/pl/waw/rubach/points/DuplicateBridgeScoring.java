@@ -1,12 +1,10 @@
 package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
-import pl.waw.rubach.points.exceptions.InvalidContractLevelException;
 import pl.waw.rubach.points.exceptions.InvalidContractSuitException;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfTrickTakenException;
 
 //This was  PointsForContract(...)
-public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
+public class DuplicateBridgeScoring extends OneDeal {
 
     /**
      * The number of tricks above six (the book) that are taken by declarer.
@@ -42,39 +40,29 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
      *                                     Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
      *                                     and who must therefore play both their own hand and the exposed hand of the dummy.
      *                                     (opponent takes 13 - numberOfTrickTakenByDeclarer)
-     * @throws InvalidContractLevelException      if level is not between 1 to 7 (according bridge rules
-     * @throws InvalidContractSuitException       if suit is no one of 5 bridge strain (colors + nt)
-     * @throws InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
-     * @throws BridgeException                    other parameter incorrect value ...
+     * @throws BridgeException                  if some bridge parameter have  incorrect value:
+     * InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
+     * InvalidContractSuitException       if suit is no one of 5 bridge strain (colors + nt)
+     * InvalidContractLevelException      if level is not between 1 to 7 (according bridge rules etc
      */
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
-            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, BridgeException {
-        //this(contractLevel, numberOfTrickTakenByDeclarer, contractSuit, (nDRSignature == 2), nDRSignature == 4, auctionAssumptionDeclarer);
+            throws  BridgeException {
 
-        //checking if contractLevel is correct
-        if (contractLevel > MAXCONTRACTLEVEL || contractLevel < MINCONTRACTLEVEL)
-            throw new InvalidContractLevelException(contractLevel);
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
-
-        //checking if number of tricks is correct
-        if (numberOfTrickTakenByDeclarer > NUBEROFTRICS || numberOfTrickTakenByDeclarer < 0)
-            throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
+        setNoDoubleReSignature(nDRSignature);
+        setDeclarerVulnerable(auctionAssumptionDeclarer);
         setDeclarerNumberOfTrickTaken(numberOfTrickTakenByDeclarer);
 
-        //checking if double/ redouble or undouble signature  is correct
-        if (!(nDRSignature == IS_UNDOUBLE || nDRSignature == IS_DOUBLE || nDRSignature == IS_REDOUBLE))
-            throw new BridgeException(nDRSignature);
-        setNoDoubleReSignature(nDRSignature);
 
-        setDeclarerVulnerable(auctionAssumptionDeclarer);
+        //helping variable
         setShortDescription(getContractDescription());
+        this.oddTricks = numberOfTrickTakenByDeclarer - 6;    //tricks above 6
+        this.made = oddTricks >= contractLevel;  //condition if game is made or not
 
         //  Begin of calculation
         setContractScoringPoints(0);       // points equal zero at the beginning of calculation
-        this.oddTricks = numberOfTrickTakenByDeclarer - 6;    //tricks above 6
-        this.made = oddTricks >= contractLevel;  //condition if game is made or not
 
         if (made) {
             setContractScoringPoints(getContractPoints(contractLevel) * nDRSignature);
@@ -93,7 +81,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
     //OLD constructor with boolean double redouble - exist in all test so cant be delayed
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
-            throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, BridgeException {
+            throws BridgeException {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
 
@@ -131,6 +119,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
     }
 
     /**
+     * "NADRÓBKI"
      * When declarer makes overtrick, their score value depends upon the contract denomination, declarer's vulnerability and whether or not the contract is undouble, doubled or redoubled.
      * In an undouble contract each overtrick earns the same as in contract points (30 for no trump and major suit contracts, 20 for minor suit contracts);
      * values increase significantly when the contract has been doubled or redoubled, especially when vulnerable.
@@ -169,6 +158,7 @@ public class DuplicateBridgeScoring extends DeclarerPointsForOneDeal {
     }
 
     /**
+     * "WPADKI"
      * When a contract is defeated, penalty points are awarded to the defending side. The value of the penalty depends on the number of undertricks,
      * whether the declaring side is vulnerable or not vulnerable and whether the contract was undoubled, doubled or redoubled.    *
      *

@@ -7,7 +7,7 @@ import static pl.waw.rubach.points.AbstractImpTable.impDeclination;
 /**
  * class to calculate which contract (in future) should be playde with assumption, poinst on Hands fit to reach imp points
  */
-public class Prediction extends DeclarerPointsForOneDeal{
+public class Prediction extends OneDeal {
 
     /**
      * description
@@ -21,7 +21,7 @@ public class Prediction extends DeclarerPointsForOneDeal{
     private int expectedPoints;
 
     public Prediction(int imps, float points,boolean assumptionWe, boolean assumptionThey, boolean fitWe,boolean fitThey) throws BridgeException {
-        setResults(imps);
+        setImpResults(imps);
         setDeclarerFit(fitWe);
         setOpponensFit(fitThey);
         setDeclarerVulnerable(assumptionWe);

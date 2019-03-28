@@ -12,7 +12,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
     /**
      * Map number of game with scorring for one game
      */
-    protected Map<Integer, DeclarerPointsForOneDeal > scorringForOneGame = new HashMap<>();
+    protected Map<Integer, OneDeal> scorringForOneGame = new HashMap<>();
 
 
     //defut constructor adding number of game 1 - possible use other constructor with special number of game with next constructor
@@ -31,7 +31,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
     public int fillOneContract(int contractNumber, CalculatedRubberPoints d){
         setScorringForOneGame(contractNumber, d);
         setSumm();
-        return d.getResults();
+        return d.getImpResults();
     }
 
     public int fillOneContract(int contractNumber,int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
@@ -43,11 +43,11 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
 
-    private void setScorringForOneGame(Integer contractNumber, DeclarerPointsForOneDeal d) {
+    private void setScorringForOneGame(Integer contractNumber, OneDeal d) {
         this.scorringForOneGame.put(contractNumber, d);
     }
 
-    public Map<Integer, DeclarerPointsForOneDeal > getScorringForOneGame() {
+    public Map<Integer, OneDeal> getScorringForOneGame() {
         return scorringForOneGame;
     }
 
@@ -56,8 +56,8 @@ public class RubberScorring extends AbstractWholeGameScorring {
         int summ = 0;
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
-            summ = summ + getScorringForOneGame().get(key).getResults();
-            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + getScorringForOneGame().get(key).getResults() + " \t Do tej pory  wynik jest: " + summ + " \n");
+            summ = summ + getScorringForOneGame().get(key).getImpResults();
+            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + getScorringForOneGame().get(key).getImpResults() + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
         setSumm(summ);

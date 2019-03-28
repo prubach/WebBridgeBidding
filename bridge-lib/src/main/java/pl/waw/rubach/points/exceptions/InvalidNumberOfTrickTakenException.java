@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.DeclarerPointsForOneDeal.NUBEROFTRICS;
+import static pl.waw.rubach.points.OneDeal.NUBEROFTRICS;
 
 public class InvalidNumberOfTrickTakenException extends BridgeException {
     private int numberOfTricksTaken;

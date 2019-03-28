@@ -1,7 +1,7 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.DeclarerPointsForOneDeal.MAXCONTRACTLEVEL;
-import static pl.waw.rubach.points.DeclarerPointsForOneDeal.MINCONTRACTLEVEL;
+import static pl.waw.rubach.points.OneDeal.MAXCONTRACTLEVEL;
+import static pl.waw.rubach.points.OneDeal.MINCONTRACTLEVEL;
 
 public class InvalidContractLevelException extends BridgeException {
 

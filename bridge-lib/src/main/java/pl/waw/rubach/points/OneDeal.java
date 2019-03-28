@@ -1,7 +1,12 @@
 package pl.waw.rubach.points;
 
 
-public class DeclarerPointsForOneDeal {
+import pl.waw.rubach.points.exceptions.BridgeException;
+import pl.waw.rubach.points.exceptions.InvalidContractLevelException;
+import pl.waw.rubach.points.exceptions.InvalidContractSuitException;
+import pl.waw.rubach.points.exceptions.InvalidNumberOfTrickTakenException;
+
+public class OneDeal {
 
     public static final int IS_DOUBLE = 2;
     public static final int IS_REDOUBLE = 4;
@@ -19,7 +24,7 @@ public class DeclarerPointsForOneDeal {
 
     /**
      * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
-     * in future from other part of application - results of biding part or user input
+     * in future from other part of application - impResults of biding part or user input
      */
     private int contractLevel;
 
@@ -33,6 +38,17 @@ public class DeclarerPointsForOneDeal {
      * Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
      */
     private int noDoubleReSignature;
+
+
+    /**
+     * Fit for  we of playing Pair means if we have 8 cards in suit (major or all depending of points)
+     */
+    private boolean fitWe;
+
+    /**
+     * Fit for they means if they have 8 cards in suit (major or all depending of poinst)
+     */
+    private boolean fitThey;
 
     /**
      * ATTENTION fit opponents not they!!!
@@ -68,12 +84,6 @@ public class DeclarerPointsForOneDeal {
     private int declarerNumberOfTrickTaken;
 
     /**
-     * shortDescription -  only with contract main parameter
-     */
-    private String shortDescription;
-
-
-    /**
      * ATTENTION : It should not be Numnber of poins in our hands by we !!!(Pair who make scoring not always plaing pair)
      * number of  Goren (PC) points of both hands of pair who is playing
      * (in future could be astimated from biding part not exactly)
@@ -93,11 +103,18 @@ public class DeclarerPointsForOneDeal {
      * Number of Victory Poinst - could be IMP Points   if 0 is equal, if -1 is one less etc ...
      * (for we - Pair who make scoring not always plaing pair)
      */
-    private int results;
+    private int impResults;
 
-    DeclarerPointsForOneDeal(){}
+    /**
+     * shortDescription -  only with contract main parameter
+     */
+    private String shortDescription;
 
-    DeclarerPointsForOneDeal(int contractLevel, String contractSuit, int declarerNumberOfTrickTaken){
+
+    OneDeal(){
+    }
+
+    OneDeal(int contractLevel, String contractSuit, int declarerNumberOfTrickTaken){
         this.contractLevel=contractLevel;
         this.contractSuit=contractSuit;
         this.declarerNumberOfTrickTaken= declarerNumberOfTrickTaken;
@@ -128,22 +145,22 @@ public class DeclarerPointsForOneDeal {
     }
 
     public int getNumberOfTricksTakenWe() {
-        if (isWePlay()) return getDeclarerNumberOfTrickTaken();
+        if (areWePlay()) return getDeclarerNumberOfTrickTaken();
         else return 13 - getDeclarerNumberOfTrickTaken();
     }
 
     public float getPoinsOnHandsWe() {
-        if (isWePlay()) return getPointsInBothDeclarerHands();
+        if (areWePlay()) return getPointsInBothDeclarerHands();
         else return MAXNUBEROFPOINTS - getPointsInBothDeclarerHands();
     }
 
     public int getContractScoringPointsWe() {
-        if (isWePlay()) return getContractScoringPoints();
+        if (areWePlay()) return getContractScoringPoints();
         else return -getContractScoringPoints();
     }
 
     //getteres and setteres
-    public boolean isWePlay() {
+    public boolean areWePlay() {
         return wePlay;
     }
 
@@ -155,7 +172,11 @@ public class DeclarerPointsForOneDeal {
         return contractLevel;
     }
 
-    public void setContractLevel(int contractLevel) {
+    public void setContractLevel(int contractLevel) throws InvalidContractLevelException {
+        //checking if contractLevel is correct
+        if (contractLevel > MAXCONTRACTLEVEL || contractLevel < MINCONTRACTLEVEL)
+            throw new InvalidContractLevelException(contractLevel);
+
         this.contractLevel = contractLevel;
     }
 
@@ -163,16 +184,36 @@ public class DeclarerPointsForOneDeal {
         return contractSuit;
     }
 
-    public void setContractSuit(String contractSuit) {
+    public void setContractSuit(String contractSuit) throws InvalidContractSuitException {
         this.contractSuit = contractSuit;
-    }
+/*
+        switch (getContractSuit().toUpperCase()) {
+            case "S":
+            case "H":
+                this.contractSuit = contractSuit;
+                break;
+            case "D":
+            case "C":
+                this.contractSuit = contractSuit;
+                break;
+            case "N":
+            case "NT":
+                this.contractSuit = contractSuit;
+                break;
+            default:
+                throw new InvalidContractSuitException(getContractSuit());
+ }*/
+   }
 
     public int getNoDoubleReSignature() {
         return noDoubleReSignature;
     }
 
-    public void setNoDoubleReSignature(int noDoubleReSignature) {
-        this.noDoubleReSignature = noDoubleReSignature;
+    public void setNoDoubleReSignature(int nDRSignature) throws BridgeException {
+        //checking if double/ redouble or undouble signature  is correct
+        if (!(nDRSignature == IS_UNDOUBLE || nDRSignature == IS_DOUBLE || nDRSignature == IS_REDOUBLE))
+            throw new BridgeException(nDRSignature);
+        this.noDoubleReSignature = nDRSignature;
     }
 
     public boolean isDeclarerVulnerable() {
@@ -191,12 +232,36 @@ public class DeclarerPointsForOneDeal {
         this.opponentVulnerable = opponentVulnerable;
     }
 
+    public boolean isFitWe() {
+        return fitWe;
+    }
+
+    public void setFitWe() {
+        this.fitWe = wePlay ? declarerFit : opponensFit;
+        }
+    public void setFitWe(boolean fitWe) {
+        this.fitWe = fitWe;
+    }
+
+    public boolean isFitThey() {
+        return fitThey;
+    }
+    public void setFitThey(boolean fitThey) {
+        this.fitThey = fitThey;
+    }
+
+    public void setFitThey() {
+        this.fitThey = wePlay ? opponensFit : declarerFit;
+    }
+
     public boolean isOpponensFit() {
         return opponensFit;
     }
 
     public void setOpponensFit(boolean opponensFit) {
         this.opponensFit = opponensFit;
+        setFitThey();
+        setFitWe();
     }
 
     public boolean isDeclarerFit() {
@@ -205,13 +270,18 @@ public class DeclarerPointsForOneDeal {
 
     public void setDeclarerFit(boolean declarerFit) {
         this.declarerFit = declarerFit;
+        setFitThey();
+        setFitWe();
     }
 
     public int getDeclarerNumberOfTrickTaken() {
         return declarerNumberOfTrickTaken;
     }
 
-    public void setDeclarerNumberOfTrickTaken(int declarerNumberOfTrickTaken) {
+    public void setDeclarerNumberOfTrickTaken(int numberOfTrickTakenByDeclarer) throws InvalidNumberOfTrickTakenException {
+        //checking if number of tricks is correct
+        if (numberOfTrickTakenByDeclarer > NUBEROFTRICS || numberOfTrickTakenByDeclarer < 0)
+            throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
         this.declarerNumberOfTrickTaken = declarerNumberOfTrickTaken;
     }
 
@@ -241,11 +311,11 @@ public class DeclarerPointsForOneDeal {
     }
 
 
-    public int getResults() {
-        return results;
+    public int getImpResults() {
+        return impResults;
     }
 
-    public void setResults(int results) {
-        this.results = results;
+    public void setImpResults(int impResults) {
+        this.impResults = impResults;
     }
 }

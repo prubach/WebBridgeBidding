@@ -5,7 +5,7 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 import static java.lang.Math.abs;
 
 //TO było ResultsOfOneGame
-public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal  {
+public class CalculatedImpPointsForOneDeal extends OneDeal {
 
     /**
      * diference betwenn assumpted result from ExpectedResults table and point reach playng contract (contractScoringPoints)
@@ -41,12 +41,12 @@ public class CalculatedImpPointsForOneDeal extends DeclarerPointsForOneDeal  {
         if (!(ImpTable.getInstance().checkInputValue(0, 10000, getPointDifferent())))
             throw new BridgeException(getPointDifferent(), true);
 
-        setResults(ImpTable.getInstance().getImpPoints(getPointDifferent()));
+        setImpResults(ImpTable.getInstance().getImpPoints(getPointDifferent()));
 
         if (getExpectedPoints() <= getContractScoringPoints()) {
             return;
         }
-        setResults(-getResults());
+        setImpResults(-getImpResults());
 
     }
 

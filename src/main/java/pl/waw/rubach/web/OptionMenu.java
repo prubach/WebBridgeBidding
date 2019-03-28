@@ -347,7 +347,7 @@ class OptionMenu extends MenuBar {
                         checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getResults() + " impów (punktów).  " +
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getImpResults() + " impów (punktów).  " +
                         "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
 
             } catch (NumberFormatException | BridgeException e) {
@@ -394,7 +394,7 @@ class OptionMenu extends MenuBar {
 
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + duplicateBridgeScoring.getContractScoringPoints() +
                         " punktów za kontrakt, (" + duplicateBridgeScoring.getDescription() + ") </B> " +
-                        " <BR> czyli " + a.getResults() + impDeclination(a.getResults()) + ".  ");
+                        " <BR> czyli " + a.getImpResults() + impDeclination(a.getImpResults()) + ".  ");
 
             } catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
@@ -501,7 +501,7 @@ class OptionMenu extends MenuBar {
                         fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1],
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B> " +
-                        " <BR> czyli " + a.getResults() + impDeclination(a.getResults()) + ". ");// +
+                        " <BR> czyli " + a.getImpResults() + impDeclination(a.getImpResults()) + ". ");// +
 
             }
             catch (NumberFormatException | BridgeException e) {

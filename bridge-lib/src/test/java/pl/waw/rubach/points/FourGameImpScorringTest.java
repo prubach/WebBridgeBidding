@@ -173,21 +173,21 @@ public class FourGameImpScorringTest {
             FourGameImpScorring rooG = new FourGameImpScorring(13);
             int a = rooG.fillOneContract(1, true, 28, 400, false, false);
             Assert.assertEquals(a, 0);
-            int i=  new CalculatedImpPointsForOneDeal(true,28,400,false,false,false,false).getResults();
+            int i=  new CalculatedImpPointsForOneDeal(true,28,400,false,false,false,false).getImpResults();
              Assert.assertEquals(a,i);
             int b = rooG.fillOneContract(2, true, 25, 400, false, false);
             Assert.assertEquals(b, 3);
-            int ib=  new CalculatedImpPointsForOneDeal(true,25,400,true,false,false,false).getResults();
+            int ib=  new CalculatedImpPointsForOneDeal(true,25,400,true,false,false,false).getImpResults();
             Assert.assertEquals(b,ib);
 
             int c = rooG.fillOneContract(3, true, 28, 400, false, false);
             Assert.assertEquals(c, 0);
-            int ic=  new CalculatedImpPointsForOneDeal(true,28,400,false,true,false,false).getResults();
+            int ic=  new CalculatedImpPointsForOneDeal(true,28,400,false,true,false,false).getImpResults();
             Assert.assertEquals(c,ic);
 
             int d = rooG.fillOneContract(4, true, 27, 400, false, false);
             Assert.assertEquals(d, -3);
-            int id=  new CalculatedImpPointsForOneDeal(true,27,400,true,true,false,false).getResults();
+            int id=  new CalculatedImpPointsForOneDeal(true,27,400,true,true,false,false).getImpResults();
             Assert.assertEquals(d,id);
 
             int sum = rooG.getSumm();

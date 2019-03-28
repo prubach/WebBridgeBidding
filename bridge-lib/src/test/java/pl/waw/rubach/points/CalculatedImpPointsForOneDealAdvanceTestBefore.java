@@ -75,14 +75,14 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
 
             CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(true, pointsInBothHands,
                     contractLevel, "nt", 1, numberOfTricksTaken, weBeforeAfter, theyBeforeAfter, weFit, theyFit);
-            Integer res = roog.getResults();
+            Integer res = roog.getImpResults();
             logger.info("My gramy: Dla " + pointsInBothHands + " pkt.   przy kontrakcie " + contractLevel + "NT i zebranych " + numberOfTricksTaken + " lewach - wynik jest " + res + " impów. Obie przed, "+ opis +".");
             logger.info("Punktów za kontrakt jest : "+ roog.getContractScoringPoints() +" Róznica jest: " +roog.getPointDifferent());
             Assert.assertEquals(map.get(pointsInBothHands, contractLevel, numberOfTricksTaken), res);
 
             CalculatedImpPointsForOneDeal roogR = new CalculatedImpPointsForOneDeal(false, 40 - pointsInBothHands,
                     contractLevel, "nt", 1, 13 - numberOfTricksTaken, theyBeforeAfter, weBeforeAfter, weFit, theyFit);
-            Integer resR = roogR.getResults();
+            Integer resR = roogR.getImpResults();
 
             logger.info("Oni grają: Dla " + (40-pointsInBothHands)+" pkt. na ich ręku  przy kontrakcie " + contractLevel + "NT i zebranych " +  (13-numberOfTricksTaken) + "przez nich lewach - wynik jest " + resR + " dla nas impów. Obie przed, "+ opis +".");
             logger.info("Punktów za kontrakt jest : "+ roogR.getContractScoringPoints() +" Róznica jest: " +roogR.getPointDifferent());
@@ -120,11 +120,11 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
 
         CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, false, false, false, false);
-        Assert.assertEquals(a.getResults(), 9);
+        Assert.assertEquals(a.getImpResults(), 9);
 
         CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, false, false, false, false);
-        Assert.assertEquals(a2.getResults(), 9);
+        Assert.assertEquals(a2.getImpResults(), 9);
     }
 }
 

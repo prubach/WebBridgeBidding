@@ -89,7 +89,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         setScorringForOneGame(contractNumber, cIPfoDforWe);
         //scorringForOneGame.put(contractNumber, cIPfoDforWe);
         setSumm();
-        return cIPfoDforWe.getResults();
+        return cIPfoDforWe.getImpResults();
     }
 
     /**
@@ -191,7 +191,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + getGameID() + ".  ***  \n");
         //  s.append("\n").append(this.getRubberSpecialDescription());
         for (Integer key : new TreeSet<>(getScorringForOneGame().keySet())) {
-            s.append("\n dla ").append(key).append(" gry jest ").append(getScorringForOneGame().get(key).getContractScoringPoints()).append(" punktów i wynik jest ").append(getScorringForOneGame().get(key).getResults()).append(" impów");
+            s.append("\n dla ").append(key).append(" gry jest ").append(getScorringForOneGame().get(key).getContractScoringPoints()).append(" punktów i wynik jest ").append(getScorringForOneGame().get(key).getImpResults()).append(" impów");
 
         }
 
@@ -213,8 +213,8 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         int summ = 0;
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
-            summ = summ + getScorringForOneGame().get(key).getResults();
-            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + getScorringForOneGame().get(key).getResults() + " \t Do tej pory  wynik jest: " + summ + " \n");
+            summ = summ + getScorringForOneGame().get(key).getImpResults();
+            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + getScorringForOneGame().get(key).getImpResults() + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
         setSumm(summ);
