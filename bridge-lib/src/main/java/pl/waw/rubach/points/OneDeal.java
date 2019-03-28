@@ -24,7 +24,7 @@ public class OneDeal {
 
     /**
      * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
-     * in future from other part of application - impResults of biding part or user input
+     * in future from other part of application - declarerResluts of biding part or user input
      */
     private int contractLevel;
 
@@ -96,14 +96,14 @@ public class OneDeal {
      * Points  achved by playng contract with some additiona or lacking triks (calculated from duplicate bridge scoring)
      * calculated by DuplicateBridgeScoring by we!!! (Pair who make scoring not always plaing pair)
      */
-    private int contractScoringPoints;
+    private int declarerContractScoringPoints;
 
 
     /**
      * Number of Victory Poinst - could be IMP Points   if 0 is equal, if -1 is one less etc ...
      * (for we - Pair who make scoring not always plaing pair)
      */
-    private int impResults;
+    private int declarerResluts;
 
     /**
      * shortDescription -  only with contract main parameter
@@ -144,20 +144,7 @@ public class OneDeal {
         return "Rozgrywający mieli " + getPointsInBothDeclarerHands() + " punkty  " + fitDes + fitODes + assOp;
     }
 
-    public int getNumberOfTricksTakenWe() {
-        if (areWePlay()) return getDeclarerNumberOfTrickTaken();
-        else return 13 - getDeclarerNumberOfTrickTaken();
-    }
 
-    public float getPoinsOnHandsWe() {
-        if (areWePlay()) return getPointsInBothDeclarerHands();
-        else return MAXNUBEROFPOINTS - getPointsInBothDeclarerHands();
-    }
-
-    public int getContractScoringPointsWe() {
-        if (areWePlay()) return getContractScoringPoints();
-        else return -getContractScoringPoints();
-    }
 
     //getteres and setteres
     public boolean areWePlay() {
@@ -232,6 +219,8 @@ public class OneDeal {
         this.opponentVulnerable = opponentVulnerable;
     }
 
+    //***************** FIT
+
     public boolean isFitWe() {
         return fitWe;
     }
@@ -274,48 +263,65 @@ public class OneDeal {
         setFitWe();
     }
 
+    //*****OTHER
+    public void setDeclarerNumberOfTrickTaken(int declarerNumberOfTrickTaken) throws InvalidNumberOfTrickTakenException {
+        //checking if number of tricks is correct
+        if (declarerNumberOfTrickTaken > NUBEROFTRICS || declarerNumberOfTrickTaken < 0)
+            throw new InvalidNumberOfTrickTakenException(declarerNumberOfTrickTaken);
+        this.declarerNumberOfTrickTaken = declarerNumberOfTrickTaken;
+    }
+
     public int getDeclarerNumberOfTrickTaken() {
         return declarerNumberOfTrickTaken;
     }
 
-    public void setDeclarerNumberOfTrickTaken(int numberOfTrickTakenByDeclarer) throws InvalidNumberOfTrickTakenException {
-        //checking if number of tricks is correct
-        if (numberOfTrickTakenByDeclarer > NUBEROFTRICS || numberOfTrickTakenByDeclarer < 0)
-            throw new InvalidNumberOfTrickTakenException(numberOfTrickTakenByDeclarer);
-        this.declarerNumberOfTrickTaken = declarerNumberOfTrickTaken;
+    public int getNumberOfTricksTakenWe() {
+        if (areWePlay()) return getDeclarerNumberOfTrickTaken();
+        else return 13 - getDeclarerNumberOfTrickTaken();
+    }
+
+
+
+    public void setDeclarerContractScoringPoints(int declarerContractScoringPoints) {
+        this.declarerContractScoringPoints = declarerContractScoringPoints;
+    }
+    public int getDeclarerContractScoringPoints() {
+        return declarerContractScoringPoints;
+    }
+
+    public int getContractScoringPointsWe() {
+        if (areWePlay()) return getDeclarerContractScoringPoints();
+        else return -getDeclarerContractScoringPoints();
+    }
+
+    public void setPointsInBothDeclarerHands(float pointsInBothDeclarerHands) {
+        this.pointsInBothDeclarerHands = pointsInBothDeclarerHands;
+    }
+    public float getPointsInBothDeclarerHands() {
+        return pointsInBothDeclarerHands;
+    }
+
+    public float getPoinsOnHandsWe() {
+        if (areWePlay()) return getPointsInBothDeclarerHands();
+        else return MAXNUBEROFPOINTS - getPointsInBothDeclarerHands();
+    }
+
+
+    public void setDeclarerResluts(int declarerResluts) {
+        this.declarerResluts = declarerResluts;
+    }
+
+    public int getDeclarerResluts() {
+        return declarerResluts;
+    }
+
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     public String getShortDescription() {
         return shortDescription;
     }
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public int getContractScoringPoints() {
-        return contractScoringPoints;
-    }
-
-    public void setContractScoringPoints(int contractScoringPoints) {
-        this.contractScoringPoints = contractScoringPoints;
-    }
-
-
-    public float getPointsInBothDeclarerHands() {
-        return pointsInBothDeclarerHands;
-    }
-
-    public void setPointsInBothDeclarerHands(float pointsInBothDeclarerHands) {
-        this.pointsInBothDeclarerHands = pointsInBothDeclarerHands;
-    }
-
-
-    public int getImpResults() {
-        return impResults;
-    }
-
-    public void setImpResults(int impResults) {
-        this.impResults = impResults;
-    }
 }

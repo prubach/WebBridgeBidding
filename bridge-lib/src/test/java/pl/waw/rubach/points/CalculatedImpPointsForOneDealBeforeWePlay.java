@@ -90,7 +90,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
             float pointsInBothHands = entry.getKey().getKey(0);
             float contractScoringPointsFloat = entry.getKey().getKey(1);
             int contractScoringPoints = Math.round(contractScoringPointsFloat);
-            Integer res = a * new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getImpResults();
+            Integer res = a * new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getDeclarerResluts();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + contractScoringPoints + " wynik jest " + res + " impów. " + printAssumtion(assumption) + des2);
             Assert.assertEquals(map.get(pointsInBothHands, contractScoringPointsFloat), res);
         }
@@ -105,10 +105,10 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
             if ((pointsInBothHands != 20) || !fitWe || !fitThey) {
                 float contractScoringPointsFloat = entry.getKey().getKey(1);
                 int contractScoringPoints = Math.round(contractScoringPointsFloat);
-                Integer res = new CalculatedImpPointsForOneDeal(true, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getImpResults();
+                Integer res = new CalculatedImpPointsForOneDeal(true, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getDeclarerResluts();
                 logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + contractScoringPoints + " wynik jest " + res + " impów. " + printAssumtion(assumption) + des2);
                 Assert.assertEquals(map.get(pointsInBothHands, contractScoringPointsFloat), res);
-                Integer resR = -new CalculatedImpPointsForOneDeal(false, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getImpResults();
+                Integer resR = -new CalculatedImpPointsForOneDeal(false, pointsInBothHands, contractScoringPoints, assumption[0], assumption[1], fitWe, fitThey).getDeclarerResluts();
                 logger.info(" Oni grają: Dla " + pointsInBothHands + " pkt:  oraz ugranych " + contractScoringPoints + " wynik jest " + res + " impów. " + printAssumtion(assumption) + des2);
                 Assert.assertEquals(map.get(pointsInBothHands, contractScoringPointsFloat), resR);
             }

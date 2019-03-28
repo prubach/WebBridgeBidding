@@ -8,6 +8,7 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
+import static pl.waw.rubach.points.CalculatedImpPointsForOneDeal.impDeclination;
 
 class OptionMenu extends MenuBar {
 
@@ -347,7 +348,7 @@ class OptionMenu extends MenuBar {
                         checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getImpResults() + " impów (punktów).  " +
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + a.getDeclarerResluts() + " impów (punktów).  " +
                         "</B>  <BR> jeżeli liczba punktów jest ujemna to zapisuje się punkty po stronie przeciwników. ");
 
             } catch (NumberFormatException | BridgeException e) {
@@ -389,12 +390,12 @@ class OptionMenu extends MenuBar {
                         checkboxDouble.getValue(), checkboxReDouble.getValue(), checkboxAssumptionWe.getValue(), Integer.parseInt(numberOfTricksField.getValue()));
 
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(!checkboxWe.getValue(),
-                        Float.parseFloat(pointsInBothHandsField.getValue()), duplicateBridgeScoring.getContractScoringPoints(),
+                        Float.parseFloat(pointsInBothHandsField.getValue()), duplicateBridgeScoring.getDeclarerContractScoringPoints(),
                         checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
-                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + duplicateBridgeScoring.getContractScoringPoints() +
+                resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + duplicateBridgeScoring.getDeclarerContractScoringPoints() +
                         " punktów za kontrakt, (" + duplicateBridgeScoring.getDescription() + ") </B> " +
-                        " <BR> czyli " + a.getImpResults() + impDeclination(a.getImpResults()) + ".  ");
+                        " <BR> czyli " + a.getDeclarerResluts() + impDeclination(a.getDeclarerResluts()) + ".  ");
 
             } catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
@@ -493,7 +494,7 @@ class OptionMenu extends MenuBar {
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
                 String des = duplicateBridgeScoring.getDescription();
 
-                int pointsContractWe = checkboxWe.getValue() ? duplicateBridgeScoring.getContractScoringPoints() : -duplicateBridgeScoring.getContractScoringPoints();
+                int pointsContractWe = checkboxWe.getValue() ? duplicateBridgeScoring.getDeclarerContractScoringPoints() : -duplicateBridgeScoring.getDeclarerContractScoringPoints();
 
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()),
@@ -501,7 +502,7 @@ class OptionMenu extends MenuBar {
                         fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1],
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B> " +
-                        " <BR> czyli " + a.getImpResults() + impDeclination(a.getImpResults()) + ". ");// +
+                        " <BR> czyli " + a.getDeclarerResluts() + impDeclination(a.getDeclarerResluts()) + ". ");// +
 
             }
             catch (NumberFormatException | BridgeException e) {
@@ -536,7 +537,7 @@ class OptionMenu extends MenuBar {
                 CalculatedImpPointsForOneDeal a =
                         new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
                                 Float.parseFloat(pointsInBothHandsField.getValue()),
-                                checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints(),
+                                checkboxWe.getValue() ? scoring.getDeclarerContractScoringPoints() : -scoring.getDeclarerContractScoringPoints(),
                                 checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 descriptionTable[contractNumber - 1] = "Kontrakt nr. " + (contractNumber) + ": " + scoring.getShortDescription() + scoring.getDescription() + "\n " + a.getFitDescriprtion();
 
@@ -548,7 +549,7 @@ class OptionMenu extends MenuBar {
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
                 resultsLabel.setValue("<B>To " + numberOfContract.getValue() + "  rozdanie i uzyskaliście "
-                        + (checkboxWe.getValue() ? scoring.getContractScoringPoints() : -scoring.getContractScoringPoints())
+                        + (checkboxWe.getValue() ? scoring.getDeclarerContractScoringPoints() : -scoring.getDeclarerContractScoringPoints())
                         + " punktów za kontrakt, czyli " + imp + impDeclination(imp) + ". "
                         + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm()) + ". ");
 
@@ -591,15 +592,7 @@ class OptionMenu extends MenuBar {
     }
 
 
-    private String impDeclination(int i) {
-        String imp;
-        if (i == 1) imp = " imp";
-        else if (i < 5) imp = " impy";
-        else imp = " impów";
-        return imp;
 
-
-    }
 
     private boolean[] fillAssumption(int contractNumber) {
         boolean[] auctionAssumption = {false, false};

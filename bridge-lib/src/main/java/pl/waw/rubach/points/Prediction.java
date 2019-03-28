@@ -21,7 +21,7 @@ public class Prediction extends OneDeal {
     private int expectedPoints;
 
     public Prediction(int imps, float points,boolean assumptionWe, boolean assumptionThey, boolean fitWe,boolean fitThey) throws BridgeException {
-        setImpResults(imps);
+        setDeclarerResluts(imps);
         setDeclarerFit(fitWe);
         setOpponensFit(fitThey);
         setDeclarerVulnerable(assumptionWe);
@@ -38,7 +38,7 @@ public class Prediction extends OneDeal {
         int wynikUjemnyMin = getExpectedPoints() - ImpTable.findingDifferenceFromImp(imps)[1];
 
       if(imps>0)
-          setContractScoringPoints((wynikMax+wynikMin)/2);
+          setDeclarerContractScoringPoints((wynikMax+wynikMin)/2);
 
         else {
         imps = -imps;
@@ -47,7 +47,7 @@ public class Prediction extends OneDeal {
 
           wynikUjemnyMax = getExpectedPoints() - ImpTable.findingDifferenceFromImp(imps)[0];
           wynikUjemnyMin = getExpectedPoints() - ImpTable.findingDifferenceFromImp(imps)[1];
-          setContractScoringPoints(-(wynikUjemnyMax + wynikUjemnyMin) / 2);
+          setDeclarerContractScoringPoints(-(wynikUjemnyMax + wynikUjemnyMin) / 2);
 
         }
 
@@ -55,7 +55,7 @@ setDes(" \n Oczekiwane wyniki przy "+getPointsInBothDeclarerHands()+ " to "+ get
          +"</B>  <BR> Aby uzyskać "+ imps +  impDeclination(imps)+ " różnica punktów musi być między: " +ImpTable.findingDifferenceFromImp(imps)[0] + " a " + ImpTable.findingDifferenceFromImp(imps)[1]
          +"</B>  <BR> Aby uzyskać wynik "+ imps +  impDeclination(imps)+ " , przy " +getPointsInBothDeclarerHands()+ " na ręku, musisz ugrać (zdobyć) pomiędzy "  + wynikMin + " a "+ wynikMax+"."
          +"</B>  <BR>Przeciwnicy uzyskają wynik "+ imps  +  impDeclination(imps)+ " , gdy ty masz  " + getPointsInBothDeclarerHands()+ " na ręku (czyli oni mają : "+ (40 - getPointsInBothDeclarerHands()) +"),"
-         +"</B>  <BR> a ty ugrasz (zdobędziesz) pomiędzy "  + wynikUjemnyMin + " a "+ wynikUjemnyMax+ " czyli średnio" +getContractScoringPoints()+ " pkt.");
+         +"</B>  <BR> a ty ugrasz (zdobędziesz) pomiędzy "  + wynikUjemnyMin + " a "+ wynikUjemnyMax+ " czyli średnio" + getDeclarerContractScoringPoints()+ " pkt.");
     }
 
 

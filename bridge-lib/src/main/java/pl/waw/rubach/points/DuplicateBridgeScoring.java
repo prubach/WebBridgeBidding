@@ -62,17 +62,17 @@ public class DuplicateBridgeScoring extends OneDeal {
         this.made = oddTricks >= contractLevel;  //condition if game is made or not
 
         //  Begin of calculation
-        setContractScoringPoints(0);       // points equal zero at the beginning of calculation
+        setDeclarerContractScoringPoints(0);       // points equal zero at the beginning of calculation
 
         if (made) {
-            setContractScoringPoints(getContractPoints(contractLevel) * nDRSignature);
-            description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + getContractScoringPoints() + "pkt. ";
+            setDeclarerContractScoringPoints(getContractPoints(contractLevel) * nDRSignature);
+            description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + getDeclarerContractScoringPoints() + "pkt. ";
         } else {
-            setContractScoringPoints(getPenaltyPoints());
+            setDeclarerContractScoringPoints(getPenaltyPoints());
         }
 
-        setContractScoringPoints(getContractScoringPoints()
-                + getGamePartGameBonus(getContractScoringPoints())
+        setDeclarerContractScoringPoints(getDeclarerContractScoringPoints()
+                + getGamePartGameBonus(getDeclarerContractScoringPoints())
                 + getOvertrickPoints()
                 + getDoubleRedoubleBonus()
                 + getSlamsBonusPoints());

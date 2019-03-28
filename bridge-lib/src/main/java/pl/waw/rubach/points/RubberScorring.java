@@ -31,7 +31,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
     public int fillOneContract(int contractNumber, CalculatedRubberPoints d){
         setScorringForOneGame(contractNumber, d);
         setSumm();
-        return d.getImpResults();
+        return d.getDeclarerResluts();
     }
 
     public int fillOneContract(int contractNumber,int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
@@ -56,8 +56,8 @@ public class RubberScorring extends AbstractWholeGameScorring {
         int summ = 0;
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
-            summ = summ + getScorringForOneGame().get(key).getImpResults();
-            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + getScorringForOneGame().get(key).getImpResults() + " \t Do tej pory  wynik jest: " + summ + " \n");
+            summ = summ + getScorringForOneGame().get(key).getDeclarerResluts();
+            setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: " + getScorringForOneGame().get(key).getDeclarerResluts() + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
         setSumm(summ);
