@@ -309,7 +309,8 @@ public class OneDeal {
         return declarerResluts;
     }
 
-    public int getResultsWe() {return wePlay ? declarerResluts : -declarerResluts; }
+    public int getResultsWe(boolean wePlay) {return wePlay ? declarerResluts : -declarerResluts; }
+    public int getResultsWe(boolean wePlay, int declarerResluts) {return wePlay ? declarerResluts : -declarerResluts; }
 
 
     public void setShortDescription(String shortDescription) {

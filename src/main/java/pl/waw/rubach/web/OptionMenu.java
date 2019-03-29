@@ -313,12 +313,12 @@ class OptionMenu extends MenuBar {
     }
 
     private void fillExampleData() {
-        pointsInBothHandsField.setValue("25");
+        pointsInBothHandsField.setValue("15");
         contractLevelField.setValue("3");
         colorOfContractField.setValue("NT");
         suitGroup.setValue("Bez Atu");
-        numberOfTricksField.setValue("9");
-        checkboxFitWe.setValue(true);
+        numberOfTricksField.setValue("4");
+        checkboxFitWe.setValue(false);
         checkboxFitThey.setValue(false);
         checkboxReDouble.setValue(false);
         checkboxDouble.setValue(false);
@@ -491,7 +491,8 @@ class OptionMenu extends MenuBar {
 
 
                 DuplicateBridgeScoring duplicateBridgeScoring =
-                        new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(), checkboxDouble.getValue(), checkboxReDouble.getValue(),
+                        new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
+                                checkboxDouble.getValue(), checkboxReDouble.getValue(),
                                 checkboxWe.getValue() ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
                 String des = duplicateBridgeScoring.getDescription();
@@ -504,7 +505,7 @@ class OptionMenu extends MenuBar {
                         fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1],
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B> " +
-                        " <BR> czyli " + a.getResultsWe() + impDeclination(abs(a.getResultsWe())) + ". ");// +
+                        " <BR> czyli " + a.getResultsWe( checkboxWe.getValue())+ impDeclination(abs(a.getResultsWe(checkboxWe.getValue()))) + ". ");// +
 
             }
             catch (NumberFormatException | BridgeException e) {
@@ -531,8 +532,9 @@ class OptionMenu extends MenuBar {
                 if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
 
 
-                DuplicateBridgeScoring scoring =
-                        new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(), checkboxDouble.getValue(), checkboxReDouble.getValue(),
+           /*     DuplicateBridgeScoring scoring =
+                        new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
+                        checkboxDouble.getValue(), checkboxReDouble.getValue(),
                                 checkboxWe.getValue() ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
 
@@ -541,19 +543,39 @@ class OptionMenu extends MenuBar {
                                 Float.parseFloat(pointsInBothHandsField.getValue()),
                                 checkboxWe.getValue() ? scoring.getDeclarerContractScoringPoints() : -scoring.getDeclarerContractScoringPoints(),
                                 checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
-                descriptionTable[contractNumber - 1] = "Kontrakt nr. " + (contractNumber) + ": " + scoring.getShortDescription() + scoring.getDescription() + "\n " + a.getFitDescriprtion();
+         */
+
+                DuplicateBridgeScoring duplicateBridgeScoring =
+                        new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
+                                checkboxDouble.getValue(), checkboxReDouble.getValue(),
+                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
+                                checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
+                String des = duplicateBridgeScoring.getDescription();
+
+                int pointsContractWe = checkboxWe.getValue() ? duplicateBridgeScoring.getDeclarerContractScoringPoints() : -duplicateBridgeScoring.getDeclarerContractScoringPoints();
+
+                CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
+                        Float.parseFloat(pointsInBothHandsField.getValue()),
+                        pointsContractWe,
+                        fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1],
+                        checkboxFitWe.getValue(), checkboxFitThey.getValue());
+
+                String whoPlayed = checkboxWe.getValue() ? " my my" : "ją oni.";
+                descriptionTable[contractNumber - 1] = "Kontrakt nr. " + (contractNumber) + ": (gra" + whoPlayed+ ") "
+                        + duplicateBridgeScoring.getShortDescription() + duplicateBridgeScoring.getDescription() + "\n " + a.getFitDescriprtion();
 
 
-                // aa.fillOneContract(contractNumber, a);
-                int imp = aa.fillOneContract(contractNumber, checkboxWe.getValue(),
+                int imp = aa.fillOneContract(contractNumber, a);
+               /* int imp = aa.fillOneContract(contractNumber, checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()), Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
                         Integer.parseInt(numberOfTricksField.getValue()), checkboxDouble.getValue(), checkboxReDouble.getValue(),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
-
+*/
                 resultsLabel.setValue("<B>To " + numberOfContract.getValue() + "  rozdanie i uzyskaliście "
-                        + (checkboxWe.getValue() ? scoring.getDeclarerContractScoringPoints() : -scoring.getDeclarerContractScoringPoints())
-                        + " punktów za kontrakt, czyli " + imp + impDeclination(imp) + ". "
-                        + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm()) + ". ");
+                        + (checkboxWe.getValue() ? duplicateBridgeScoring.getDeclarerContractScoringPoints() : -duplicateBridgeScoring.getDeclarerContractScoringPoints())
+                        + " punktów za kontrakt, czyli " + a.getResultsWe(checkboxWe.getValue()) + impDeclination(a.getResultsWe(checkboxWe.getValue())) + ". "
+               //       + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm()) + ". ");
+                        + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach :" + imp + impDeclination(imp) + ". ");
 
 
                 descriptionOf4play = makeDescription(aa, descriptionTable);
