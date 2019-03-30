@@ -16,12 +16,12 @@ public class FourGameImpScorringTest {
     private static Logger logger = LoggerFactory.getLogger(FourGameImpScorringTest.class);
 
 
-    private MultiKeyMap<Integer, Integer> inputDataPointsInHands1 = new MultiKeyMap<>();
+    private MultiKeyMap<Integer, Integer> inputDataPointsInHands6 = new MultiKeyMap<>();
     private MultiKeyMap<Integer, Integer> inputDataPointsInHands2 = new MultiKeyMap<>();
     private MultiKeyMap<Integer, Integer> inputDataPointsInHands3 = new MultiKeyMap<>();
     private MultiKeyMap<Integer, Integer> inputDataPointsInHands4 = new MultiKeyMap<>();
     private MultiKeyMap<Integer, Integer> inputDataPointsInHands5 = new MultiKeyMap<>();
-    private MultiKeyMap<Integer, Integer> inputDataPointsInHands6 = new MultiKeyMap<>();
+    private MultiKeyMap<Integer, Integer> inputDataPointsInHands1 = new MultiKeyMap<>();
 
 
     private MultiKeyMap<Integer, Integer> inputDataPointsForContract1 = new MultiKeyMap<>();
@@ -47,39 +47,53 @@ public class FourGameImpScorringTest {
         whoPlay4.put(0, 0, 0, 0, 0);
 
         inputDataPointsInHands1.put(20, 19, 18, 14, 1); //value is symetry
-        inputDataPointsInHands2.put(12, 15, 12, 13, 0);
-        inputDataPointsInHands3.put(28, 25, 28, 27, 0);
-
         inputDataPointsForContract1.put(-440, -440, -440, -440, 0);
-        inputDataPointsForContract2.put(-400, -400, -400, -400, 0);
-        inputDataPointsForContract3.put(400, 400, 400, 400, 0);
-        inputDataPointsInHands4.put(28, 28, 28, 28, 0);
-        inputDataPointsForContract4.put(400, 600, 400, 600, 0);
-
-        inputDataPointsInHands5.put(16, 14, 16, 14, 0);
-        inputDataPointsForContract5.put(-400, -600, -400, -600, 0);
-
         testRubberFromPoints2MultiKey.put(inputDataPointsInHands1, inputDataPointsForContract1, whoPlay1, -28);
-        testRubberFromPoints2MultiKey.put(inputDataPointsInHands1, inputDataPointsForContract2, whoPlay1, -24);
+
+        //we playde -symetric
+        inputDataPointsInHands4.put(28, 28, 28, 28, 1);
+        inputDataPointsForContract4.put(400, 600, 400, 600, 0);
+        testRubberFromPoints2MultiKey.put(inputDataPointsInHands4, inputDataPointsForContract4, whoPlay1, 0);
+
+        //they played - symetric
+        inputDataPointsInHands5.put(12, 12, 12, 12, 1);
+        inputDataPointsForContract5.put(-400, -600, -400, -600, 0);
+        testRubberFromPoints2MultiKey.put(inputDataPointsInHands5, inputDataPointsForContract5, whoPlay4, 0);
+
+
+        // not symetric
+        inputDataPointsInHands2.put(12, 15, 12, 13, 0);
+        inputDataPointsForContract2.put(-400, -400, -400, -400, 0);
         testRubberFromPoints2MultiKey.put(inputDataPointsInHands2, inputDataPointsForContract2, whoPlay1, 3);
+
+        inputDataPointsInHands3.put(28, 25, 28, 27, 0);
+        inputDataPointsForContract3.put(400, 400, 400, 400, 0);
         testRubberFromPoints2MultiKey.put(inputDataPointsInHands3, inputDataPointsForContract3, whoPlay1, 0);
 
-        testRubberFromPoints2MultiKey.put(inputDataPointsInHands4, inputDataPointsForContract4, whoPlay1, 0);
-        testRubberFromPoints2MultiKey.put(inputDataPointsInHands5, inputDataPointsForContract5, whoPlay4, 0);
-     }
+        //others - repetition
+        inputDataPointsInHands6.put(20, 19, 18, 14, 0); //value is NOT  symetry
+        testRubberFromPoints2MultiKey.put(inputDataPointsInHands6, inputDataPointsForContract2, whoPlay1, -24);
+        testRubberFromPoints2MultiKey.put(inputDataPointsInHands6, inputDataPointsForContract3, whoPlay1, 42);
+        testRubberFromPoints2MultiKey.put(inputDataPointsInHands6, inputDataPointsForContract4, whoPlay1, 45);
+
+
+    }
 
     @Test
     public void testRubberScoringFromInputDataMultiKeyMaps() throws BridgeException {
 
 
         helpFunctionMultiKey(inputDataPointsInHands1, inputDataPointsForContract1, whoPlay1);
-        helpFunctionMultiKey(inputDataPointsInHands1, inputDataPointsForContract2, whoPlay1);
         helpFunctionMultiKey(inputDataPointsInHands2, inputDataPointsForContract2, whoPlay1);
         helpFunctionMultiKey(inputDataPointsInHands3, inputDataPointsForContract3, whoPlay1);
-
-
         helpFunctionMultiKey(inputDataPointsInHands4, inputDataPointsForContract4, whoPlay1);
-   //     helpFunctionMultiKey(inputDataPointsInHands5, inputDataPointsForContract5, whoPlay4);
+        helpFunctionMultiKey(inputDataPointsInHands5, inputDataPointsForContract5, whoPlay4);
+        helpFunctionMultiKey(inputDataPointsInHands6, inputDataPointsForContract6, whoPlay4);
+
+        helpFunctionMultiKey(inputDataPointsInHands6, inputDataPointsForContract2, whoPlay1);
+        helpFunctionMultiKey(inputDataPointsInHands6, inputDataPointsForContract3, whoPlay1);
+        helpFunctionMultiKey(inputDataPointsInHands6, inputDataPointsForContract4, whoPlay1);
+
 
     }
 
@@ -113,7 +127,7 @@ public class FourGameImpScorringTest {
                                 ph1, ph2, ph3, ph4, pfc1, pfc2, pfc3, pfc4,
                                 false, false, false, false, false, false, false, false);
                         Integer res = rS.getSumm();
-                        logger.info("Wynik  dla całego robra z podanych punktów na ręku/wynik ("
+                        logger.info("Wynik dla całego robra z podanych punktów na ręku/wynik ("
                                 + ph1 + "/" + pfc1 + "," + ph2 + "/" + pfc2 + "," + ph3 + "/" + pfc3 + "," + ph4 + "/" + pfc4 + ") jest: " + res + " \n");
                         Assert.assertEquals(testRubberFromPoints2MultiKey.get(inputDataPointsInHands, inputDataPointsForContract, whoPlay), res);
                     }
@@ -143,13 +157,13 @@ public class FourGameImpScorringTest {
                     int pfc3 = -entry2.getKey().getKey(2);
                     int pfc4 = -entry2.getKey().getKey(3);
 
-                    if (entryWp.getValue() == 1) {
+                    if (entry.getValue().equals(Integer.parseInt("1"))) {
                         {
                             FourGameImpScorring rS = new FourGameImpScorring(wp1, wp2, wp3, wp4,
                                     ph1, ph2, ph3, ph4, pfc1, pfc2, pfc3, pfc4,
                                     false, false, false, false, false, false, false, false);
                             Integer res = -rS.getSumm();
-                            logger.info("Wynik  dla całego robra z podanych punktów na ręku/wynik ("
+                            logger.info("Wynik (rewers) dla całego robra z podanych punktów na ręku/wynik ("
                                     + ph1 + "/" + pfc1 + "," + ph2 + "/" + pfc2 + "," + ph3 + "/" + pfc3 + "," + ph4 + "/" + pfc4 + ") jest: " + res + " \n");
                             Assert.assertEquals(testRubberFromPoints2MultiKey.get(inputDataPointsInHands, inputDataPointsForContract, whoPlay), res);
                         }

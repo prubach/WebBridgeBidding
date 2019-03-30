@@ -9,8 +9,9 @@ import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 import static java.lang.Math.abs;
+import static pl.waw.rubach.points.Assumption.fillAssumptionThey;
+import static pl.waw.rubach.points.Assumption.fillAssumptionWe;
 import static pl.waw.rubach.points.CalculatedImpPointsForOneDeal.impDeclination;
-import static pl.waw.rubach.points.FourGameImpScorring.fillAssumptionA;
 
 class OptionMenu extends MenuBar {
 
@@ -495,7 +496,7 @@ class OptionMenu extends MenuBar {
                 DuplicateBridgeScoring duplicateBridgeScoring =
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
                                 checkboxDouble.getValue(), checkboxReDouble.getValue(),
-                                checkboxWe.getValue() ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                                checkboxWe.getValue() ?   fillAssumptionWe(contractNumber) : fillAssumptionThey(contractNumber),
                                         //fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
                 String des = duplicateBridgeScoring.getDescription();
@@ -505,7 +506,7 @@ class OptionMenu extends MenuBar {
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()),
                         pointsContractWe,
-                        fillAssumptionA(contractNumber).areWeVunerable(), fillAssumptionA(contractNumber).areTheyVunerable(),
+                        fillAssumptionWe(contractNumber) , fillAssumptionThey(contractNumber),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B> " +
                         " <BR> czyli " + a.getResultsWe( checkboxWe.getValue())+ impDeclination(abs(a.getResultsWe(checkboxWe.getValue()))) + ". ");// +
@@ -551,7 +552,7 @@ class OptionMenu extends MenuBar {
                 DuplicateBridgeScoring duplicateBridgeScoring =
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
                                 checkboxDouble.getValue(), checkboxReDouble.getValue(),
-                                checkboxWe.getValue() ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                                checkboxWe.getValue() ? fillAssumptionWe(contractNumber) : fillAssumptionThey(contractNumber),
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
            //     String des = duplicateBridgeScoring.getDescription();
 
@@ -559,7 +560,7 @@ class OptionMenu extends MenuBar {
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()),
                         checkboxWe.getValue() ? duplicateBridgeScoring.getDeclarerContractScoringPoints() : -duplicateBridgeScoring.getDeclarerContractScoringPoints(),
-                        fillAssumptionA(contractNumber).areWeVunerable(), fillAssumptionA(contractNumber).areTheyVunerable(),
+                        fillAssumptionWe(contractNumber) , fillAssumptionThey(contractNumber),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
                 String whoPlayed = checkboxWe.getValue() ? " my my" : "ją oni.";

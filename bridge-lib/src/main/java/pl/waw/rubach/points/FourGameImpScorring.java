@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
+import static pl.waw.rubach.points.Assumption.fillAssumptionThey;
+import static pl.waw.rubach.points.Assumption.fillAssumptionWe;
+
 //this was RubberScorring
 public class FourGameImpScorring extends AbstractWholeGameScorring {
 
@@ -116,8 +119,8 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
                         //pyt czy bardzie elegancko jest z tym enumem, czy wcześniejsza wersja (zakomentowana) była lepsza? (to samo w dwóch poniższych wariantach funkcji
                         //whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                         //whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
-                        whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
-                        whoPlay ? fillAssumptionA(contractNumber).areTheyVunerable() : fillAssumptionA(contractNumber).areWeVunerable(),
+                        whoPlay ? fillAssumptionWe(contractNumber) : fillAssumptionThey(contractNumber),
+                        whoPlay ? fillAssumptionThey(contractNumber) : fillAssumptionWe(contractNumber),
                         whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
 
     }
@@ -144,8 +147,8 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
                         whoPlay ? dBS.getDeclarerContractScoringPoints() : -dBS.getContractScoringPointsWe(),
                         //whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                         //whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
-                        whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
-                        whoPlay ? fillAssumptionA(contractNumber).areTheyVunerable() : fillAssumptionA(contractNumber).areWeVunerable(),
+                        whoPlay ? fillAssumptionWe(contractNumber) : fillAssumptionThey(contractNumber),
+                        whoPlay ? fillAssumptionThey(contractNumber) : fillAssumptionWe(contractNumber),
                         whoPlay ? fitInOlderColorWe : fitInOlderColorThey, whoPlay ? fitInOlderColorThey : fitInOlderColorWe));
     }
 
@@ -172,7 +175,8 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         return fillOneContract(contractNumber, whoPlay, pointsInBothHandsWe,
                 new DuplicateBridgeScoring(gameLevel, suit, isdouble, isredouble,
                         // whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
-                        whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                      //  whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                        whoPlay ? fillAssumptionWe(contractNumber) : fillAssumptionThey(contractNumber),
                         whoPlay ? numberOfTricksTakenWe : 13 - numberOfTricksTakenWe),
                 fitInOlderColorWe, fitInOlderColorThey);
 
@@ -180,13 +184,13 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     }
 
 
-    public static Assumption fillAssumptionA(int contractNumber) throws BridgeException {
+  /*  public static Assumption fillAssumptionA(int contractNumber) throws BridgeException {
         for (Assumption a : Assumption.values())
             if (contractNumber == a.getContractNumber()) return a;
 
         throw new BridgeException(contractNumber);
     }
-
+*/
 
     public String getGameScoringAsString() {
         StringBuilder s = new StringBuilder("\n*** Wyniki dla gry numer: " + getGameID() + ".  ***  \n");

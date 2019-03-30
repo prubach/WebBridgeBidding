@@ -40,14 +40,39 @@ public enum Assumption {
             we = false;
             they = false;
         }
-        //    throw new BridgeException(contractNumber);)
+
     }
 
-   public boolean findAssumption(int contractNumber,boolean who) throws BridgeException
-   {
+    public static boolean fillAssumptionWe(int contractNumber) throws BridgeException
+    {
+        checkIfCorrectContractNumber(contractNumber);
+        for (Assumption a : Assumption.values()) {
+            if (contractNumber == a.getContractNumber()) return a.areWeVunerable();
+            }
+        return false;
 
-      return who ? we : they;
     }
+    public static boolean fillAssumptionThey(int contractNumber) throws BridgeException
+    {
+        checkIfCorrectContractNumber(contractNumber);
+        for (Assumption a : Assumption.values()) {
+            if (contractNumber == a.getContractNumber()) return a.areTheyVunerable();
+            }
+        return false;
+
+    }
+
+   public static boolean fillAssumption(int contractNumber, boolean who) throws BridgeException
+   {  checkIfCorrectContractNumber(contractNumber);
+       for (Assumption a : Assumption.values()) {
+           if (contractNumber == a.getContractNumber()) return who ? a.areWeVunerable() : a.areTheyVunerable();
+    }
+       return false;
+   }
+
+   private static void checkIfCorrectContractNumber(int contractNumber) throws BridgeException {
+        if(contractNumber>4 || contractNumber<0) throw new BridgeException(contractNumber);
+   }
 
     public int getContractNumber() {
         return contractNumber;
