@@ -62,9 +62,13 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
 
 
         //todo add more example for tests
-     //   testCountingPointsNTBothBeforeBothFit.put(26,1,7,-7);
-        testCountingPointsNTBothBeforeBothFit.put(26,3,9,0);
-     //   testCountingPointsNTBothBeforeBothFit.put(25,3,9,-2);
+        testCountingPointsNTBothBeforeBothFit.put(26,1,7,-7); //90  ex 400 : 90-400 =-310
+        testCountingPointsNTBothBeforeBothFit.put(26,3,9,0);  //400  ex400 : 0
+        testCountingPointsNTBothBeforeBothFit.put(25,3,9,2);  //400  ex 350 : 400-350=50
+
+        testCountingPointsNTBothBeforeBothFit.put(14,1,6,8); //-50  ex -400 : -50+400 =350
+        testCountingPointsNTBothBeforeBothFit.put(14,3,4,4);  //-250  ex -400 : -250+400=150
+        testCountingPointsNTBothBeforeBothFit.put(15,3,4,3);  //-250  ex -350 : -250+350=100
     }
 
 
@@ -85,17 +89,19 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
             Assert.assertEquals(map.get(pointsInBothHands, contractLevel, numberOfTricksTaken), res);
 
             CalculatedImpPointsForOneDeal roogR = new CalculatedImpPointsForOneDeal(false, 40 - pointsInBothHands,
-                    contractLevel, "nt", 1, 13 - numberOfTricksTaken, theyBeforeAfter, weBeforeAfter, weFit, theyFit);
-          //  Integer resR = roogR.getDeclarerResluts();
+                    contractLevel, "nt", 1, 13 - numberOfTricksTaken, theyBeforeAfter, weBeforeAfter,  theyFit,weFit);
+            Integer resRR = roogR.getDeclarerResluts();
             Integer resR = roogR.getResultsWe(false);
-
+            Integer ressRM = (-1)* resR;  //oponets results
+            Integer ressRRM = (-1)* resRR;  // they results
             logger.info("Oni grają: Dla " + (40-pointsInBothHands)+" pkt. na ich ręku  przy kontrakcie " + contractLevel + "NT i zebranych " +  (13-numberOfTricksTaken) + "przez nich lewach - wynik jest " + resR + "  impów dla nas. Obie przed, "+ opis +".");
             logger.info("Punktów za kontrakt jest : "+ roogR.getDeclarerContractScoringPoints() +" Róznica jest: " +roogR.getPointDifferent());
-//fixme finwhy test does not passed
-       //     Assert.assertEquals(map.get(pointsInBothHands, contractLevel, numberOfTricksTaken), resR);
+            Assert.assertEquals(map.get(pointsInBothHands, contractLevel, numberOfTricksTaken), resRR);
 
             //to check - should be the same always...
-       //     Assert.assertEquals(res, resR);
+            Assert.assertEquals(res, resRR);
+            Assert.assertEquals(resRR, ressRM);
+            Assert.assertEquals(resR, ressRRM);
 
             FourGameImpScorring aa =new FourGameImpScorring();
             Integer imp = aa.fillOneContract(1,roog);

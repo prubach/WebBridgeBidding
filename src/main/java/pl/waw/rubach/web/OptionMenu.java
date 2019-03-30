@@ -10,6 +10,7 @@ import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 import static java.lang.Math.abs;
 import static pl.waw.rubach.points.CalculatedImpPointsForOneDeal.impDeclination;
+import static pl.waw.rubach.points.FourGameImpScorring.fillAssumptionA;
 
 class OptionMenu extends MenuBar {
 
@@ -490,10 +491,12 @@ class OptionMenu extends MenuBar {
                 if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
 
 
+
                 DuplicateBridgeScoring duplicateBridgeScoring =
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
                                 checkboxDouble.getValue(), checkboxReDouble.getValue(),
-                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
+                                checkboxWe.getValue() ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                                        //fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
                 String des = duplicateBridgeScoring.getDescription();
 
@@ -502,7 +505,7 @@ class OptionMenu extends MenuBar {
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()),
                         pointsContractWe,
-                        fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1],
+                        fillAssumptionA(contractNumber).areWeVunerable(), fillAssumptionA(contractNumber).areTheyVunerable(),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
                 resultsLabel.setValue("<B>W tym rozdaniu uzyskaliście " + pointsContractWe + " punktów za kontrakt, (" + des + ") </B> " +
                         " <BR> czyli " + a.getResultsWe( checkboxWe.getValue())+ impDeclination(abs(a.getResultsWe(checkboxWe.getValue()))) + ". ");// +
@@ -548,16 +551,15 @@ class OptionMenu extends MenuBar {
                 DuplicateBridgeScoring duplicateBridgeScoring =
                         new DuplicateBridgeScoring(Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
                                 checkboxDouble.getValue(), checkboxReDouble.getValue(),
-                                checkboxWe.getValue() ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
+                                checkboxWe.getValue() ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
                                 checkboxWe.getValue() ? Integer.parseInt(numberOfTricksField.getValue()) : 13 - Integer.parseInt(numberOfTricksField.getValue()));
-                String des = duplicateBridgeScoring.getDescription();
+           //     String des = duplicateBridgeScoring.getDescription();
 
-                int pointsContractWe = checkboxWe.getValue() ? duplicateBridgeScoring.getDeclarerContractScoringPoints() : -duplicateBridgeScoring.getDeclarerContractScoringPoints();
 
                 CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()),
-                        pointsContractWe,
-                        fillAssumption(contractNumber)[0], fillAssumption(contractNumber)[1],
+                        checkboxWe.getValue() ? duplicateBridgeScoring.getDeclarerContractScoringPoints() : -duplicateBridgeScoring.getDeclarerContractScoringPoints(),
+                        fillAssumptionA(contractNumber).areWeVunerable(), fillAssumptionA(contractNumber).areTheyVunerable(),
                         checkboxFitWe.getValue(), checkboxFitThey.getValue());
 
                 String whoPlayed = checkboxWe.getValue() ? " my my" : "ją oni.";
@@ -565,7 +567,8 @@ class OptionMenu extends MenuBar {
                         + duplicateBridgeScoring.getShortDescription() + duplicateBridgeScoring.getDescription() + "\n " + a.getFitDescriprtion();
 
 
-                int imp = aa.fillOneContract(contractNumber, a);
+                //int imp =
+                        aa.fillOneContract(contractNumber, a);
                /* int imp = aa.fillOneContract(contractNumber, checkboxWe.getValue(),
                         Float.parseFloat(pointsInBothHandsField.getValue()), Integer.parseInt(contractLevelField.getValue()), colorOfContractField.getValue(),
                         Integer.parseInt(numberOfTricksField.getValue()), checkboxDouble.getValue(), checkboxReDouble.getValue(),
@@ -574,8 +577,8 @@ class OptionMenu extends MenuBar {
                 resultsLabel.setValue("<B>To " + numberOfContract.getValue() + "  rozdanie i uzyskaliście "
                         + (checkboxWe.getValue() ? duplicateBridgeScoring.getDeclarerContractScoringPoints() : -duplicateBridgeScoring.getDeclarerContractScoringPoints())
                         + " punktów za kontrakt, czyli " + a.getResultsWe(checkboxWe.getValue()) + impDeclination(a.getResultsWe(checkboxWe.getValue())) + ". "
-               //       + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm()) + ". ");
-                        + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach :" + imp + impDeclination(imp) + ". ");
+                      + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm()) + ". ");
+               //         + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach :" + imp + impDeclination(imp) + ". ");
 
 
                 descriptionOf4play = makeDescription(aa, descriptionTable);
@@ -618,7 +621,7 @@ class OptionMenu extends MenuBar {
 
 
 
-    private boolean[] fillAssumption(int contractNumber) {
+  /*  private boolean[] fillAssumption(int contractNumber) {
         boolean[] auctionAssumption = {false, false};
         if (contractNumber == 2) {
             auctionAssumption[0] = true;
@@ -629,7 +632,7 @@ class OptionMenu extends MenuBar {
             auctionAssumption[1] = true;
         }
         return auctionAssumption;
-    }
+    }*/
 
     private VerticalLayout actionDisplayResultsOf4GameWindow() {
         VerticalLayout vL = new VerticalLayout();

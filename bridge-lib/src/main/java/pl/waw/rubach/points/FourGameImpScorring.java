@@ -180,7 +180,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     }
 
 
-    private Assumption fillAssumptionA(int contractNumber) throws BridgeException {
+    public static Assumption fillAssumptionA(int contractNumber) throws BridgeException {
         for (Assumption a : Assumption.values())
             if (contractNumber == a.getContractNumber()) return a;
 
