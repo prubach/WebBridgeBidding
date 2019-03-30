@@ -11,8 +11,8 @@ public class OneDeal {
     public static final int IS_DOUBLE = 2;
     public static final int IS_REDOUBLE = 4;
     public static final int IS_UNDOUBLE = 1;
-    public static final int NUBEROFTRICS =13;
-    public static final int MAXNUBEROFPOINTS =40;
+    public static final int NUBEROFTRICS = 13;
+    public static final int MAXNUBEROFPOINTS = 40;
     public static final float NUMBEROFPOINS = 20;
     public static final int MINCONTRACTLEVEL = 1;
     public static final int MAXCONTRACTLEVEL = 7;
@@ -111,7 +111,8 @@ public class OneDeal {
     private String shortDescription;
 
 
-    OneDeal(){    }
+    OneDeal() {
+    }
 
 
     /**
@@ -137,7 +138,6 @@ public class OneDeal {
         String assOp = isOpponentVulnerable() ? " przed partią. " : " po partii.";
         return "Rozgrywający mieli " + getPointsInBothDeclarerHands() + " punkty  " + fitDes + fitODes + assOp;
     }
-
 
 
     //getteres and setteres
@@ -184,7 +184,7 @@ public class OneDeal {
             default:
                 throw new InvalidContractSuitException(getContractSuit());
  }*/
-   }
+    }
 
     public int getNoDoubleReSignature() {
         return noDoubleReSignature;
@@ -219,16 +219,18 @@ public class OneDeal {
         return fitWe;
     }
 
-    public void setFitWe() {
-        this.fitWe = wePlay ? declarerFit : opponensFit;
-        }
     public void setFitWe(boolean fitWe) {
         this.fitWe = fitWe;
+    }
+
+    public void setFitWe() {
+        this.fitWe = wePlay ? declarerFit : opponensFit;
     }
 
     public boolean isFitThey() {
         return fitThey;
     }
+
     public void setFitThey(boolean fitThey) {
         this.fitThey = fitThey;
     }
@@ -258,15 +260,22 @@ public class OneDeal {
     }
 
     //*****OTHER
+
+    public int getDeclarerNumberOfTrickTaken() {
+        return declarerNumberOfTrickTaken;
+    }
+
     public void setDeclarerNumberOfTrickTaken(int declarerNumberOfTrickTaken) throws InvalidNumberOfTrickTakenException {
         //checking if number of tricks is correct
         if (declarerNumberOfTrickTaken > NUBEROFTRICS || declarerNumberOfTrickTaken < 0)
             throw new InvalidNumberOfTrickTakenException(declarerNumberOfTrickTaken);
         this.declarerNumberOfTrickTaken = declarerNumberOfTrickTaken;
     }
+    public void setNuberoftricsTakenWe(int nuberoftricsTakenWe) throws InvalidNumberOfTrickTakenException {
+        if (nuberoftricsTakenWe > NUBEROFTRICS || nuberoftricsTakenWe < 0)
+            throw new InvalidNumberOfTrickTakenException(declarerNumberOfTrickTaken);
+        this.declarerNumberOfTrickTaken = areWePlay() ? nuberoftricsTakenWe :NUBEROFTRICS -nuberoftricsTakenWe;
 
-    public int getDeclarerNumberOfTrickTaken() {
-        return declarerNumberOfTrickTaken;
     }
 
     public int getNumberOfTricksTakenWe() {
@@ -274,13 +283,12 @@ public class OneDeal {
         else return 13 - getDeclarerNumberOfTrickTaken();
     }
 
-
+    public int getDeclarerContractScoringPoints() {
+        return declarerContractScoringPoints;
+    }
 
     public void setDeclarerContractScoringPoints(int declarerContractScoringPoints) {
         this.declarerContractScoringPoints = declarerContractScoringPoints;
-    }
-    public int getDeclarerContractScoringPoints() {
-        return declarerContractScoringPoints;
     }
 
     public int getContractScoringPointsWe() {
@@ -288,11 +296,12 @@ public class OneDeal {
         else return -getDeclarerContractScoringPoints();
     }
 
-    public void setPointsInBothDeclarerHands(float pointsInBothDeclarerHands) {
-        this.pointsInBothDeclarerHands = pointsInBothDeclarerHands;
-    }
     public float getPointsInBothDeclarerHands() {
         return pointsInBothDeclarerHands;
+    }
+
+    public void setPointsInBothDeclarerHands(float pointsInBothDeclarerHands) {
+        this.pointsInBothDeclarerHands = pointsInBothDeclarerHands;
     }
 
     public float getPoinsOnHandsWe() {
@@ -300,25 +309,28 @@ public class OneDeal {
         else return MAXNUBEROFPOINTS - getPointsInBothDeclarerHands();
     }
 
+    public int getDeclarerResluts() {
+        return declarerResluts;
+    }
 
     public void setDeclarerResluts(int declarerResluts) {
         this.declarerResluts = declarerResluts;
     }
 
-    public int getDeclarerResluts() {
-        return declarerResluts;
+    public int getResultsWe(boolean wePlay) {
+        return wePlay ? declarerResluts : -declarerResluts;
     }
 
-    public int getResultsWe(boolean wePlay) {return wePlay ? declarerResluts : -declarerResluts; }
-    public int getResultsWe(boolean wePlay, int declarerResluts) {return wePlay ? declarerResluts : -declarerResluts; }
-
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+    public int getResultsWe(boolean wePlay, int declarerResluts) {
+        return wePlay ? declarerResluts : -declarerResluts;
     }
 
     public String getShortDescription() {
         return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
 }

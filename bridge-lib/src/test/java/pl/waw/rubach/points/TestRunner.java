@@ -9,11 +9,19 @@ public class TestRunner {
     public static void main(String[] args) {
 
 //=================================Points counting first:   Imp and Expected Points test
-        Result resultImpExpTest = JUnitCore.runClasses(CalculatedImpPointsForOneDealBeforeWePlay.class);
-        for (Failure failureGameModelCards : resultImpExpTest.getFailures()) {
-            System.out.println(failureGameModelCards.toString());
+        Result resultImpExpTest = JUnitCore.runClasses(ImpExpTableTest.class);
+        for (Failure failureImpExpTest : resultImpExpTest.getFailures()) {
+            System.out.println(failureImpExpTest.toString());
         }
         System.out.println("Imp and ExpectedPoints Test test: " + resultImpExpTest.wasSuccessful());
+
+        //=================================Points counting first:   Imp and Expected Points test
+        Result resultCalculatedImpPointsForOneDealBeforeWePlay = JUnitCore.runClasses(CalculatedImpPointsForOneDealBeforeWePlay.class);
+        for (Failure failureCalculatedImpPointsForOneDealBeforeWePlay : resultCalculatedImpPointsForOneDealBeforeWePlay.getFailures()) {
+            System.out.println(failureCalculatedImpPointsForOneDealBeforeWePlay.toString());
+        }
+        System.out.println("CalculatedImpPointsForOneDealBeforeWePlay test: " + resultCalculatedImpPointsForOneDealBeforeWePlay.wasSuccessful());
+
 
 //=======================================Points counting Basic - taking points in both hands and points for contract giving ipm points
 
@@ -54,5 +62,13 @@ public class TestRunner {
         }
         System.out.println("Rubber Scorring  test: " + resultRubberScoringTest.wasSuccessful());
 
+
+    //=======================================Rubberscoring
+    Result resultRubberScoringFirstTest = JUnitCore.runClasses(FourGameImpScorringFirstTest.class);
+        for (Failure failureRubberScoringFirstTest : resultRubberScoringFirstTest.getFailures()) {
+        System.out.println(failureRubberScoringFirstTest.toString());
     }
+        System.out.println("Rubber Scorring  test: " + resultRubberScoringFirstTest.wasSuccessful());
+
+}
 }

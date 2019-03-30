@@ -58,8 +58,10 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
         testCountingPointsNTBothBeforeBothNoFit.put(21, 1, 7, 1); //90
         testCountingPointsNTBothBeforeBothNoFit.put(24, 1, 7, -1); //90
         testCountingPointsNTBothBeforeBothNoFit.put(27, 1, 7, -6); //90
-        testCountingPointsNTBothBeforeBothNoFit.put(21, 1, 8, 2); //140
 
+        testCountingPointsNTBothBeforeBothNoFit.put(21, 1, 8, 2); //120 ex 50 : 70
+        testCountingPointsNTBothBeforeBothNoFit.put(24, 1, 8, 0); //120 ex 130 : -10
+        testCountingPointsNTBothBeforeBothNoFit.put(27, 1, 8, -6); //120 ex 350 : -230
 
         //todo add more example for tests
         testCountingPointsNTBothBeforeBothFit.put(26,1,7,-7); //90  ex 400 : 90-400 =-310

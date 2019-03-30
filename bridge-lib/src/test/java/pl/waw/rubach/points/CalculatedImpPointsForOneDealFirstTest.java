@@ -53,7 +53,10 @@ public class CalculatedImpPointsForOneDealFirstTest {
         testCountingPointsBothBeforNoFitMap.put(28f, 400f, 0);
 
         testCountingPointsBothBeforFitBothMap.put(12f,-100f,8);
+        testCountingPointsBothBeforFitBothMap.put(12f,-400f,2);
         testCountingPointsBothBeforFitBothMap.put(28f,100f,-8);
+        testCountingPointsBothBeforFitBothMap.put(28f,400f,-2);
+
 
         //Fit only we - they no fit
         testCountingPointsBothAfterFitWeMap.put(20f, 0f, -2);

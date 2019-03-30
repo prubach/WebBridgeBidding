@@ -16,6 +16,7 @@ public class CalculatedImpPointsForOneDealAfterWePlay extends CalculatedImpPoint
        testCountingPointsNoFitBothMap.put(20f, 0f, 0);
        testCountingPointsNoFitBothMap.put(10f, -660f, 0);
        testCountingPointsNoFitBothMap.put(10f, -100f, 11);
+       testCountingPointsNoFitBothMap.put(15f, -400f, -3);
        testCountingPointsNoFitBothMap.put(30f, 660f, 0);
        testCountingPointsNoFitBothMap.put(30f, 100f, -11);
 

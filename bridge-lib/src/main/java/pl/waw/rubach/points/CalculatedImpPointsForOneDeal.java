@@ -119,7 +119,7 @@ public class CalculatedImpPointsForOneDeal extends OneDeal {
         return pointDifferent;
     }
 
-    public void setPointDifferent(int pointDifferent) {
+    private void setPointDifferent(int pointDifferent) {
         this.pointDifferent = pointDifferent;
     }
 
@@ -127,7 +127,7 @@ public class CalculatedImpPointsForOneDeal extends OneDeal {
         return expectedPoints;
     }
 
-    public void setExpectedPoints(int expectedPoints) {
+    private void setExpectedPoints(int expectedPoints) {
         this.expectedPoints = expectedPoints;
     }
 }
