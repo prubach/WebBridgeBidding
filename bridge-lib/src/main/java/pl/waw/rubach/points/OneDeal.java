@@ -315,6 +315,11 @@ public class OneDeal {
         else return -getDeclarerContractScoringPoints();
     }
 
+    public int getContractScoringPointsWe(boolean whoPlay) {
+        if (whoPlay) return getDeclarerContractScoringPoints();
+        else return -getDeclarerContractScoringPoints();
+    }
+
     public float getPointsInBothDeclarerHands() {
         return pointsInBothDeclarerHands;
     }

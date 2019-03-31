@@ -68,10 +68,10 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
             throws BridgeException {
         this();
 
-        int result1 = fillOneContract(1, wp1, piH1, lev1, color1, ntt1, d1, r1, fW1, fT1);
-        int result2 = fillOneContract(2, wp2, piH2, lev2, color2, ntt2, d2, r2, fW2, fT2);
-        int result3 = fillOneContract(3, wp3, piH3, lev3, color3, ntt3, d3, r3, fW3, fT3);
-        int result4 = fillOneContract(4, wp4, piH4, lev4, color4, ntt4, d4, r4, fW4, fT4);
+        int result1 = fillOneContract(1, wp1, piH1, lev1, color1, d1, r1, ntt1, fW1, fT1);
+        int result2 = fillOneContract(2, wp2, piH2, lev2, color2, d2, r2, ntt2, fW2, fT2);
+        int result3 = fillOneContract(3, wp3, piH3, lev3, color3, d3, r3, ntt3, fW3, fT3);
+        int result4 = fillOneContract(4, wp4, piH4, lev4, color4, d4, r4, ntt4, fW4, fT4);
 
         setSumm(result1 + result2 + result3 + result4);
         setResultsDescription("Końcowy wynik gry numer:" + getGameID() + " na podstawie danych podstawowych wprowadzonych na raz,  z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
@@ -144,7 +144,8 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         setRubberSpecialDescription(getRubberSpecialDescription() + dBS.getShortDescription() + "\n");
         return fillOneContract(contractNumber,
                 new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe,
-                        whoPlay ? dBS.getDeclarerContractScoringPoints() : -dBS.getContractScoringPointsWe(),
+                       // whoPlay ? dBS.getDeclarerContractScoringPoints() : -
+                        dBS.getContractScoringPointsWe(whoPlay),
                         //whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                         //whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
                         whoPlay ? fillAssumptionWe(contractNumber) : fillAssumptionThey(contractNumber),
@@ -160,16 +161,16 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
      * @param pointsInBothHandsWe   (indicates how many points are in our hands)
      * @param gameLevel             having game level
      * @param suit                  is suit of game
-     * @param numberOfTricksTakenWe is number of tricck taken by we
      * @param isdouble              indicates if it is double contract or
      * @param isredouble            is redouble
+     * @param numberOfTricksTakenWe is number of tricck taken by we
      * @param fitInOlderColorWe     describe if it is fit or not
      * @param fitInOlderColorThey   describe if it is fit or not
      * @return results of this particular game (one deal)
      * @throws BridgeException if parameter are wrong
      */
     public int fillOneContract(int contractNumber, boolean whoPlay, float pointsInBothHandsWe,
-                               int gameLevel, String suit, int numberOfTricksTakenWe, boolean isdouble, boolean isredouble,
+                               int gameLevel, String suit, boolean isdouble, boolean isredouble, int numberOfTricksTakenWe,
                                boolean fitInOlderColorWe, boolean fitInOlderColorThey)
             throws BridgeException {
         return fillOneContract(contractNumber, whoPlay, pointsInBothHandsWe,

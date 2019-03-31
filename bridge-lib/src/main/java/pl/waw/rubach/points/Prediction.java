@@ -56,7 +56,7 @@ public class Prediction extends OneDeal {
 setDes(" \n Oczekiwane wyniki przy "+getPointsInBothDeclarerHands()+ " to "+ getExpectedPoints() + " punktów za kontrakt .  "
          +"</B>  <BR> Aby uzyskać "+ imps +  impDeclination(imps)+ " różnica punktów musi być między: " +ImpTable.findingDifferenceFromImp(imps)[0] + " a " + ImpTable.findingDifferenceFromImp(imps)[1]
          +"</B>  <BR> Aby uzyskać wynik "+ imps +  impDeclination(imps)+ " , przy " +getPointsInBothDeclarerHands()+ " na ręku, musisz ugrać (zdobyć) pomiędzy "  + wynikMin + " a "+ wynikMax+"."
-        + " czyli średnio: " + getContractScoringPointsWe()+ " pkt."
+        + " czyli średnio: " + getContractScoringPointsWe(whoPlay)+ " pkt."
         +"</B>  <BR>Przeciwnicy uzyskają wynik "+ imps  +  impDeclination(imps)+ " , gdy ty masz  " + getPointsInBothDeclarerHands()+ " na ręku (czyli oni mają : "+ (40 - getPointsInBothDeclarerHands()) +"),"
          +"</B>  <BR> a ty ugrasz (zdobędziesz) pomiędzy "  + wynikUjemnyMin + " a "+ wynikUjemnyMax + "punktów. ");
     }

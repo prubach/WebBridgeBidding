@@ -74,6 +74,22 @@ public class CalculatedImpPointsForOneDeal extends OneDeal {
         setDeclarerNumberOfTrickTaken(wePlay ? numberOfTrickTakenByWe : NUBEROFTRICS - numberOfTrickTakenByWe);
     }
 
+    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
+                                         int contractLevel, String contractSuit, boolean isDouble,boolean isRedouble, int numberOfTrickTakenByWe,
+                                         boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+            throws BridgeException {
+
+        this(wePlay, pointsInBothHandsWe,
+                (wePlay ? 1 : -1) * new DuplicateBridgeScoring(contractLevel, contractSuit, isDouble ? 2 : (isRedouble  ? 4 :1), wePlay ? auctionAssumptionWe : auctionAssumptionThey,
+                        wePlay ? numberOfTrickTakenByWe : NUBEROFTRICS - numberOfTrickTakenByWe).getDeclarerContractScoringPoints(),
+                auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+        setContractLevel(contractLevel);
+        setContractSuit(contractSuit);
+        setNoDoubleReSignature(isDouble ? 2 : (isRedouble  ? 4 :1));
+        setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
+        setDeclarerNumberOfTrickTaken(wePlay ? numberOfTrickTakenByWe : NUBEROFTRICS - numberOfTrickTakenByWe);
+    }
+
     //contructors when only we play:
     public CalculatedImpPointsForOneDeal(float pointsInBothDeclarerHands,
                                          int pointsForContractDeclarer,
