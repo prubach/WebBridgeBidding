@@ -20,16 +20,18 @@ public class Prediction extends OneDeal {
      */
     private int expectedPoints;
 
-    public Prediction(int imps, float points,boolean assumptionWe, boolean assumptionThey, boolean fitWe,boolean fitThey) throws BridgeException {
-        setDeclarerResluts(imps);
-        setDeclarerFit(fitWe);
-        setOpponensFit(fitThey);
-        setDeclarerVulnerable(assumptionWe);
-        setOpponentVulnerable(assumptionThey);
-        setPointsInBothDeclarerHands(points);
+    public Prediction(int imps, float points,
+                      boolean assumptionWe, boolean assumptionThey, boolean fitWe,boolean fitThey,
+                        boolean whoPlay) throws BridgeException {
+        setResultsWe(whoPlay,imps);
+        setFitWe(fitWe);
+        setFitThey(fitThey);
+        setWeVulnerable(whoPlay,assumptionWe);
+        setTheyVulnerable(whoPlay,assumptionThey);
+        setPoinsInHandsWe(whoPlay,points);
 
         setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
-                isDeclarerFit(), isOpponensFit(), isDeclarerVulnerable(), isOpponentVulnerable()));
+                isFitWe(),isFitThey(),areWeVulnerable(whoPlay),areTheyVulnerable(whoPlay)));
 
         int wynikMax = getExpectedPoints() + ImpTable.findingDifferenceFromImp(imps)[1];
         int wynikMin = getExpectedPoints() + ImpTable.findingDifferenceFromImp(imps)[0];
@@ -54,19 +56,20 @@ public class Prediction extends OneDeal {
 setDes(" \n Oczekiwane wyniki przy "+getPointsInBothDeclarerHands()+ " to "+ getExpectedPoints() + " punktów za kontrakt .  "
          +"</B>  <BR> Aby uzyskać "+ imps +  impDeclination(imps)+ " różnica punktów musi być między: " +ImpTable.findingDifferenceFromImp(imps)[0] + " a " + ImpTable.findingDifferenceFromImp(imps)[1]
          +"</B>  <BR> Aby uzyskać wynik "+ imps +  impDeclination(imps)+ " , przy " +getPointsInBothDeclarerHands()+ " na ręku, musisz ugrać (zdobyć) pomiędzy "  + wynikMin + " a "+ wynikMax+"."
-         +"</B>  <BR>Przeciwnicy uzyskają wynik "+ imps  +  impDeclination(imps)+ " , gdy ty masz  " + getPointsInBothDeclarerHands()+ " na ręku (czyli oni mają : "+ (40 - getPointsInBothDeclarerHands()) +"),"
-         +"</B>  <BR> a ty ugrasz (zdobędziesz) pomiędzy "  + wynikUjemnyMin + " a "+ wynikUjemnyMax+ " czyli średnio" + getDeclarerContractScoringPoints()+ " pkt.");
+        + " czyli średnio: " + getContractScoringPointsWe()+ " pkt."
+        +"</B>  <BR>Przeciwnicy uzyskają wynik "+ imps  +  impDeclination(imps)+ " , gdy ty masz  " + getPointsInBothDeclarerHands()+ " na ręku (czyli oni mają : "+ (40 - getPointsInBothDeclarerHands()) +"),"
+         +"</B>  <BR> a ty ugrasz (zdobędziesz) pomiędzy "  + wynikUjemnyMin + " a "+ wynikUjemnyMax + "punktów. ");
     }
 
 
     public static void main(String[] args){
-        int imps = 1;
+        int imps = 0;
          System.out.println("Aby uzyskać "+ imps + " impów różnica punktów musi być między: " +ImpTable.findingDifferenceFromImp(imps)[0] + " a " + ImpTable.findingDifferenceFromImp(imps)[1]);
 
 float poinst = 23.0f;
 
 try {
-    Prediction ex =new Prediction(imps,poinst, false, false, false, false);
+    Prediction ex =new Prediction(imps,poinst, false, false, false, false,true);
 
     System.out.print("\n "+ex.getDes());
 } catch (Exception e) {

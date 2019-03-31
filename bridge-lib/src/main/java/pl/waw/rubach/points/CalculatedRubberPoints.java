@@ -12,7 +12,8 @@ public class CalculatedRubberPoints extends DuplicateBridgeScoring {
         super(contractLevel, contractSuit, nDRSignature, auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
 
-    public CalculatedRubberPoints(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble, boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer) throws InvalidContractLevelException, InvalidContractSuitException, InvalidNumberOfTrickTakenException, BridgeException {
+    public CalculatedRubberPoints(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
+                                  boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)  throws  BridgeException {
         super(contractLevel, contractSuit, isContractDouble, isContractRedouble, auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
     @Override
@@ -20,4 +21,11 @@ public class CalculatedRubberPoints extends DuplicateBridgeScoring {
         return 0;
     }
 
+    public int getDeclarerUnderPoints()  throws  BridgeException {
+        return made ? getContractPoints(getContractLevel()) * getNoDoubleReSignature() :0 ;
+    }
+
+    public int getDeclarerOverPoints() throws BridgeException {
+        return getDeclarerContractScoringPoints() - getDeclarerUnderPoints();
+    }
 }

@@ -13,7 +13,7 @@ public class DuplicateBridgeScoring extends OneDeal {
     /**
      * Indicates if contract is made  which means  take at least as many tricks as a contract calls for.
      */
-    private boolean made;
+    protected boolean made;
 
     /**
      * Long description explain how points are calculating - is setting in time of calculation, so no setter need!
@@ -98,7 +98,7 @@ public class DuplicateBridgeScoring extends OneDeal {
      * @return Scoring  for this part of contract
      * @throws InvalidContractSuitException if contract suits is not correct
      */
-    private int getContractPoints(int numberOfTricksForWhichArePointsCalculated) throws InvalidContractSuitException {
+    protected int getContractPoints(int numberOfTricksForWhichArePointsCalculated) throws InvalidContractSuitException {
 
         switch (getContractSuit().toUpperCase()) {
             case "S":

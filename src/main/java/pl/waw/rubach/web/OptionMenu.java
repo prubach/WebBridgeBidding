@@ -427,6 +427,7 @@ class OptionMenu extends MenuBar {
         vL.addComponent(checkboxFitWe);
         vL.addComponent(checkboxFitThey);
         vL.addComponent(fitLabel);
+        vL.addComponent(checkboxWe);
 
         //vL.addComponent(contractLevelField);
         //vL.addComponent(colorOfContractField);
@@ -443,8 +444,11 @@ class OptionMenu extends MenuBar {
         Button calculateImpPoints = new Button("Wykonaj przewidywanie jednego rodzania ! ", clickEvent -> {
             try {
 
-              Prediction a = new Prediction(Integer.parseInt(impsField.getValue()), Float.parseFloat(pointsInBothHandsField.getValue()),
-                        checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(), checkboxFitWe.getValue(), checkboxFitThey.getValue());
+              Prediction a = new Prediction(Integer.parseInt(impsField.getValue()),
+                      Float.parseFloat(pointsInBothHandsField.getValue()),
+                      checkboxAssumptionWe.getValue(), checkboxAssumptionThey.getValue(),
+                      checkboxFitWe.getValue(), checkboxFitThey.getValue(),
+                      checkboxWe.getValue());
 
                 resultsLabel.setValue(a.getDes());
             } catch (NumberFormatException | BridgeException e) {

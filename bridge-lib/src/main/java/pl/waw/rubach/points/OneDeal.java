@@ -197,6 +197,24 @@ public class OneDeal {
         this.noDoubleReSignature = nDRSignature;
     }
 
+    public boolean areWeVulnerable(boolean wePlay) {
+        return wePlay ? isDeclarerVulnerable() : isOpponentVulnerable() ;
+    }
+
+    public void setWeVulnerable(boolean wePlay, boolean areWeVunerable) {
+        if(wePlay) this.declarerVulnerable =areWeVunerable;
+        else this.opponentVulnerable=areWeVunerable;
+    }
+
+    public boolean areTheyVulnerable(boolean wePlay) {
+        return wePlay ? isOpponentVulnerable(): isDeclarerVulnerable();
+    }
+
+    public void setTheyVulnerable(boolean wePlay, boolean areTheyVunerable) {
+        if(wePlay) this.declarerVulnerable =areTheyVunerable;
+        else this.opponentVulnerable=areTheyVunerable;
+    }
+
     public boolean isDeclarerVulnerable() {
         return declarerVulnerable;
     }
@@ -212,6 +230,7 @@ public class OneDeal {
     public void setOpponentVulnerable(boolean opponentVulnerable) {
         this.opponentVulnerable = opponentVulnerable;
     }
+
 
     //***************** FIT
 
@@ -303,6 +322,10 @@ public class OneDeal {
     public void setPointsInBothDeclarerHands(float pointsInBothDeclarerHands) {
         this.pointsInBothDeclarerHands = pointsInBothDeclarerHands;
     }
+    public void setPoinsInHandsWe(boolean wePlay, float pointsOnHandsWe){
+        if(wePlay) this.pointsInBothDeclarerHands = pointsOnHandsWe;
+        else this.pointsInBothDeclarerHands = MAXNUBEROFPOINTS - pointsOnHandsWe;
+    }
 
     public float getPoinsOnHandsWe() {
         if (areWePlay()) return getPointsInBothDeclarerHands();
@@ -317,6 +340,10 @@ public class OneDeal {
         this.declarerResluts = declarerResluts;
     }
 
+
+    public void setResultsWe(boolean wePlay, int weResults) {
+        setDeclarerResluts(wePlay ? weResults : -weResults);
+    }
     public int getResultsWe(boolean wePlay) {
         return wePlay ? declarerResluts : -declarerResluts;
     }
