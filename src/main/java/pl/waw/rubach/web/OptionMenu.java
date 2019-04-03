@@ -4,15 +4,16 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.*;
+import pl.waw.rubach.points.duplicateBridgeImps.*;
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
-import pl.waw.rubach.points.rubberScorring.RubberScorring;
+import pl.waw.rubach.points.rubberBridge.RubberScorring;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 import static java.lang.Math.abs;
-import static pl.waw.rubach.points.Assumption.fillAssumptionThey;
-import static pl.waw.rubach.points.Assumption.fillAssumptionWe;
-import static pl.waw.rubach.points.CalculatedImpPointsForOneDeal.impDeclination;
+import static pl.waw.rubach.points.duplicateBridgeImps.Assumption.fillAssumptionThey;
+import static pl.waw.rubach.points.duplicateBridgeImps.Assumption.fillAssumptionWe;
+import static pl.waw.rubach.points.duplicateBridgeImps.CalculatedImpPointsForOneDeal.impDeclination;
 
 class OptionMenu extends MenuBar {
 

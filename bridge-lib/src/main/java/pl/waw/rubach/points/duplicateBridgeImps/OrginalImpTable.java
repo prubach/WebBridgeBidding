@@ -1,4 +1,4 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.duplicateBridgeImps;
 
 import java.util.TreeSet;
 

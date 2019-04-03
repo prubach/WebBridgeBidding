@@ -84,7 +84,7 @@ public class OneDeal {
     private String shortDescription;
 
 
-    OneDeal() {
+    protected OneDeal() {
     }
 
     OneDeal(boolean whoPlay, int contractLevel,String contractSuit, int noDoubleReSignature, int declarerNumberOfTrickTaken){

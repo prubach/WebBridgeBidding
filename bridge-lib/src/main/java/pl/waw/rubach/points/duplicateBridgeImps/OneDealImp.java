@@ -1,7 +1,9 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.duplicateBridgeImps;
 
 
-public class OneDealImp extends OneDeal{
+import pl.waw.rubach.points.OneDeal;
+
+public class OneDealImp extends OneDeal {
     public static final int MAXNUBEROFPOINTS = 40;
     public static final float NUMBEROFPOINS = 20;
 

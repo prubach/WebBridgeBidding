@@ -1,13 +1,15 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.duplicateBridgeImps;
 
+import pl.waw.rubach.points.AbstractWholeGameScorring;
+import pl.waw.rubach.points.DuplicateBridgeScoring;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-import static pl.waw.rubach.points.Assumption.fillAssumptionThey;
-import static pl.waw.rubach.points.Assumption.fillAssumptionWe;
+import static pl.waw.rubach.points.duplicateBridgeImps.Assumption.fillAssumptionThey;
+import static pl.waw.rubach.points.duplicateBridgeImps.Assumption.fillAssumptionWe;
 
 //this was RubberScorring
 public class FourGameImpScorring extends AbstractWholeGameScorring {
@@ -16,7 +18,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     /**
      * Map number of game with scorring for one game
      */
-    protected Map<Integer, CalculatedImpPointsForOneDeal > scorringForOneGame = new HashMap<>();
+    protected Map<Integer, CalculatedImpPointsForOneDeal> scorringForOneGame = new HashMap<>();
 
 
     //powinno się nazywać 4GameImpPoints albo coś takiego bo scorring jak rozumiem to zapis a tu są już punkty ... no i nie Rubber bo to jest dla zapisu robrowego - my błędnie mówimy na 4 gry rober wydaje mi się ...

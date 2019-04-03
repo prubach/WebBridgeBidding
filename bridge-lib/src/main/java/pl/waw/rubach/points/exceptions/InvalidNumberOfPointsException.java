@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.OneDealImp.MAXNUBEROFPOINTS;
+import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MAXNUBEROFPOINTS;
 
 public class InvalidNumberOfPointsException extends BridgeException {
 

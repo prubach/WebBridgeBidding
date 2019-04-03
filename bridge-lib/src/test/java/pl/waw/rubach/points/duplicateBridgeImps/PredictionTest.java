@@ -1,4 +1,4 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.duplicateBridgeImps;
 
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.junit.Assert;

@@ -1,4 +1,4 @@
-package pl.waw.rubach.points.rubberScorring;
+package pl.waw.rubach.points.rubberBridge;
 
 import pl.waw.rubach.points.AbstractWholeGameScorring;
 import pl.waw.rubach.points.OneDeal;
@@ -38,7 +38,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
 
-    public int fillOneContract(boolean whoPlay, RubberBridgeScorring d) throws BridgeException {
+    public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScorring d) throws BridgeException {
         setWePlay(whoPlay);
         setContractNumber(getContractNumber()+1);
         setScorringForOneGame(getContractNumber(), d);
@@ -54,7 +54,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
                                boolean isContractDouble, boolean isContractRedouble,
                                int numberOfTrickTakenByDeclarer)
             throws BridgeException {
-            return fillOneContract(whoPlay, new RubberBridgeScorring(contractLevel, contractSuit,
+            return fillOneContract(whoPlay, new CalculatedOneDealRubberScorring(contractLevel, contractSuit,
                 isContractDouble, isContractRedouble, (whoPlay ? isAreWeVunerable() : isAreTheyVunerable()),
                 numberOfTrickTakenByDeclarer) );
     }
@@ -74,7 +74,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
     }
 
-    private void setUnderAbovePoints(RubberBridgeScorring d) throws BridgeException {
+    private void setUnderAbovePoints(CalculatedOneDealRubberScorring d) throws BridgeException {
 
         setUnderWe(areWePlay() ? d.getDeclarerUnderPoints() : 0);
         setAboveWe(areWePlay() ? d.getDeclarerOverPoints() : 0);
@@ -118,7 +118,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
     //getters and setters
 
-    private void setScorringForOneGame(Integer contractNumber, RubberBridgeScorring d) {
+    private void setScorringForOneGame(Integer contractNumber, CalculatedOneDealRubberScorring d) {
            this.scorringForOneGame.put(contractNumber, d);
     }
 

@@ -1,5 +1,6 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.duplicateBridgeImps;
 
+import pl.waw.rubach.points.DuplicateBridgeScoring;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
 import static java.lang.Math.abs;
@@ -51,7 +52,7 @@ public class CalculatedImpPointsForOneDeal extends OneDealImp {
     //second constructor using ENUM
     public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
                                          int pointsForContractWe,
-                                        Assumption assumption, boolean fitWe, boolean fitThey)
+                                         Assumption assumption, boolean fitWe, boolean fitThey)
             throws BridgeException {
        this(wePlay,pointsInBothHandsWe,pointsForContractWe,assumption.areWeVunerable(),assumption.areTheyVunerable(),fitWe,fitThey);
     }

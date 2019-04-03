@@ -1,8 +1,8 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.duplicateBridgeImps;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
 
-import static pl.waw.rubach.points.AbstractImpTable.impDeclination;
+import static pl.waw.rubach.points.duplicateBridgeImps.AbstractImpTable.impDeclination;
 
 /**
  * class to calculate which contract (in future) should be playde with assumption, poinst on Hands fit to reach imp points
