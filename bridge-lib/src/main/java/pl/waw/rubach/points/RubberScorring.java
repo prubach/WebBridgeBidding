@@ -12,17 +12,13 @@ public class RubberScorring extends AbstractWholeGameScorring {
     /**
      * Map number of game with scorring for one game
      */
-    protected Map<Integer, OneDeal> scorringForOneGame = new HashMap<>();
-    boolean areWeBefore, areTheyBefore;
-    boolean winWe, winThey;
-
-    public int getWiningScorring() {
-        return winingScorring;
-    }
-
-    private int winingScorring=0;
+    private Map<Integer, OneDeal> scorringForOneGame = new HashMap<>();
+    private boolean areWeVunerable, areTheyVunerable, wePlay;
+    private boolean winWe, winThey;
+    private int ourWiningScorring = 0;
     private int aboveWe = 0, aboveThey = 0, underWe = 0, underThey = 0;
     private int aboveWeSumm = 0, aboveTheySumm = 0, underWeSumm = 0, underTheySumm = 0;
+    private int contractNumber=0;
 
     //defut constructor adding number of game 1 - possible use other constructor with special number of game with next constructor
     public RubberScorring() {
@@ -33,40 +29,36 @@ public class RubberScorring extends AbstractWholeGameScorring {
     public RubberScorring(int gameID) {
         super(gameID, " robrowej ");
         setGameType("RUBER");
-        setAreWeBefore(false);
-        setAreTheyBefore(false);
+        setAreWeVunerable(false);
+        setAreTheyVunerable(false);
+        setOurWiningScorring(0);
+        setContractNumber(0);
     }
 
 
-    public int fillOneContract(int contractNumber, boolean whoPlay, CalculatedRubberPoints d) throws BridgeException {
-        setScorringForOneGame(contractNumber, d);
-
+    public int fillOneContract(boolean whoPlay, CalculatedRubberPoints d) throws BridgeException {
+        setWePlay(whoPlay);
+        setContractNumber(getContractNumber()+1);
+        setScorringForOneGame(getContractNumber(), d);
         setUnderAbovePoints(d);
-        this.winingScorring = isEndOfTheGame();
-        //setSumm();
-        return d.getDeclarerUnderPoints()+d.getDeclarerOverPoints();
+        setOurWiningScorring(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
+       return areWePlay() ? getAboveWe() + getUnderWe() : getAboveThey() + getUnderThey();
+       //  return getOurWiningScorring();
 
-//        return whoPlay ? d.getDeclarerUnderPoints()+d.getDeclarerOverPoints() : -d.getDeclarerUnderPoints()+d.getDeclarerOverPoints();
+
+      //  return  d.getDeclarerUnderPoints()+d.getDeclarerOverPoints();
     }
 
-    public int fillOneContract(int contractNumber, boolean whoPlay, int contractLevel, String contractSuit,
+    public int fillOneContract(boolean whoPlay, int contractLevel, String contractSuit,
                                boolean isContractDouble, boolean isContractRedouble,
                                int numberOfTrickTakenByDeclarer)
             throws BridgeException {
-        CalculatedRubberPoints d = new CalculatedRubberPoints(contractLevel, contractSuit,
-                isContractDouble, isContractRedouble, (whoPlay ? isAreWeBefore() : isAreTheyBefore())  ,
-                numberOfTrickTakenByDeclarer );
-        return fillOneContract(contractNumber, whoPlay, d);
+            return fillOneContract(whoPlay, new CalculatedRubberPoints(contractLevel, contractSuit,
+                isContractDouble, isContractRedouble, (whoPlay ? isAreWeVunerable() : isAreTheyVunerable()),
+                numberOfTrickTakenByDeclarer) );
     }
 
 
-    private void setScorringForOneGame(Integer contractNumber, CalculatedRubberPoints d) {
-        this.scorringForOneGame.put(contractNumber, d);
-    }
-
-    public Map<Integer, OneDeal> getScorringForOneGame() {
-        return scorringForOneGame;
-    }
 
 
     protected void setSumm() {
@@ -83,18 +75,11 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
     private void setUnderAbovePoints(CalculatedRubberPoints d) throws BridgeException {
-        boolean whoPlay = d.areWePlay();
-        if (whoPlay) {
-            setUnderWe(d.getDeclarerUnderPoints());
-            setAboveWe(d.getDeclarerOverPoints());
-            setAboveThey(0);
-            setUnderThey(0);
-        } else {
-            setUnderThey(d.getDeclarerUnderPoints());
-            setAboveThey(d.getDeclarerOverPoints());
-            setAboveWe(0);
-            setUnderWe(0);
-        }
+
+        setUnderWe(areWePlay() ? d.getDeclarerUnderPoints() : 0);
+        setAboveWe(areWePlay() ? d.getDeclarerOverPoints() : 0);
+        setUnderThey(areWePlay() ? 0 : d.getDeclarerUnderPoints());
+        setAboveThey(areWePlay() ? 0 : d.getDeclarerOverPoints());
 
         addUnderWeSumm(getUnderWe());
         addUnderTheySumm(getUnderThey());
@@ -103,34 +88,42 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
         if (getUnderTheySumm() >= 100 || getUnderWeSumm() >= 100) {
 
-            if (getUnderThey() >= 100) {
+            if (getUnderTheySumm() >= 100) {
 
-                if (isAreTheyBefore()) {setWinThey(true);
-                }
-                if (!isAreTheyBefore()) setAreTheyBefore(true);
+                if (isAreTheyVunerable())  setWinThey(true);
+                else setAreTheyVunerable(true);
             }
 
-            if (getUnderWe() >= 100) {
-
-                if (isAreWeBefore()) {setWinWe(true);
-                }
-                if (!isAreWeBefore()) setAreWeBefore(true);
+            if (getUnderWeSumm() >= 100) {
+                if (isAreWeVunerable())  setWinWe(true);
+                else setAreWeVunerable(true); 
             }
-            addAboveWeSumm(getUnderWeSumm());
-            setUnderWeSumm(0);
             addAboveTheySumm(getUnderTheySumm());
             setUnderTheySumm(0);
+            addAboveWeSumm(getUnderWeSumm());
+            setUnderWeSumm(0);
         }
 
     }
-    public int isEndOfTheGame() {
-        int results=0 ;
-        int a = getAboveTheySumm() + getUnderTheySumm() - getAboveWeSumm() - getUnderWeSumm();
-        if(isWinWe()) results = -a+ (isAreTheyBefore() ? 300 :500);
-        if(isWinThey()) results =a+ (isAreWeBefore() ? 300 :500);
 
+    public int isEndOfTheGame() {
+        int results = 0;
+        int a =getAboveWeSumm() + getUnderWeSumm() -(getAboveTheySumm() + getUnderTheySumm());
+        if (isWinWe()) results = a + (isAreTheyVunerable() ? 300 : 500);
+        if (isWinThey()) results = -a + (isAreWeVunerable() ? 300 : 500);
 
         return results;
+    }
+
+
+    //getters and setters
+
+    private void setScorringForOneGame(Integer contractNumber, CalculatedRubberPoints d) {
+           this.scorringForOneGame.put(contractNumber, d);
+    }
+
+    public Map<Integer, OneDeal> getScorringForOneGame() {
+        return scorringForOneGame;
     }
 
 
@@ -214,20 +207,20 @@ public class RubberScorring extends AbstractWholeGameScorring {
         this.underTheySumm += underTheySumm;
     }
 
-    public boolean isAreWeBefore() {
-        return areWeBefore;
+    public boolean isAreWeVunerable() {
+        return areWeVunerable;
     }
 
-    public void setAreWeBefore(boolean areWeBefore) {
-        this.areWeBefore = areWeBefore;
+    public void setAreWeVunerable(boolean areWeVunerable) {
+        this.areWeVunerable = areWeVunerable;
     }
 
-    public boolean isAreTheyBefore() {
-        return areTheyBefore;
+    public boolean isAreTheyVunerable() {
+        return areTheyVunerable;
     }
 
-    public void setAreTheyBefore(boolean areTheyBefore) {
-        this.areTheyBefore = areTheyBefore;
+    public void setAreTheyVunerable(boolean areTheyVunerable) {
+        this.areTheyVunerable = areTheyVunerable;
     }
 
     public boolean isWinWe() {
@@ -244,6 +237,30 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
     public void setWinThey(boolean winThey) {
         this.winThey = winThey;
+    }
+
+    public int getContractNumber() {
+        return contractNumber;
+    }
+
+    public void setContractNumber(int contractNumber) {
+        this.contractNumber = contractNumber;
+    }
+
+    public void setOurWiningScorring(int ourWiningScorring) {
+        this.ourWiningScorring = ourWiningScorring;
+    }
+
+    public int getOurWiningScorring() {
+        return ourWiningScorring;
+    }
+
+    public boolean areWePlay() {
+        return wePlay;
+    }
+
+    public void setWePlay(boolean whoPlay) {
+        this.wePlay = whoPlay;
     }
 }
 

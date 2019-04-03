@@ -37,8 +37,11 @@ class OptionMenu extends MenuBar {
         Command commandToCalculatePoints = (Command) selectedItem -> actionOpenWindow(ui, "Okienko do liczenia punktów za serię rozdań.", actionCalculetePoints());
         this.addItem("Oblicz punkty (nowe) ", null, commandToCalculatePoints);
         MenuBar.MenuItem optionMenuItemsCalculatePointsOld = this.addItem("Oblicz punkty (inne opcje):", null);
+        Command commandToCalculatePointsRubberScorring = (Command) selectedItem -> actionOpenWindow(ui, "Okienko do liczenia punktów za jeden kontrakt.", actionCalculetePointsRubberScorring());
+        optionMenuItemsCalculatePointsOld.addItem("Oblicz punkty - zapis robrowy", null, commandToCalculatePointsRubberScorring);
         Command commandToCalculatePointsOneDeal = (Command) selectedItem -> actionOpenWindow(ui, "Okienko do liczenia punktów za jeden kontrakt.", actionCalculetePointsOneDeal());
         optionMenuItemsCalculatePointsOld.addItem("Oblicz punkty jednego rozdania", null, commandToCalculatePointsOneDeal);
+
         Command commandToPredictWhichContractShouldBePlayed = (Command) selectedItem -> actionOpenWindow(ui, "Okienko do przeiwdywania wyników.", actionPredictsOneDealResult());
         optionMenuItemsCalculatePointsOld.addItem("Przewidywanki", null, commandToPredictWhichContractShouldBePlayed);
         Command commandToOldCalculatePoints = (Command) selectedItem -> actionOpenWindow(ui, "Stare okienko do ręcznego liczenia punktów.", actionManualCalculetePoints());
@@ -406,6 +409,42 @@ class OptionMenu extends MenuBar {
 
         fillExampleData();
         vL.addComponent(calculateImpPoints);
+        vL.addComponent(resultsLabel);
+        return vL;
+    }
+
+    private FormLayout actionCalculetePointsRubberScorring() {
+        FormLayout vL = new FormLayout();
+        vL.addComponent(new Label("Wersja R1.1 - podaj jaki był kontrakt i co ugraliście - zapis robrowy :)"));
+
+        createAllInputElement();
+        vL.addComponent(contractLevelField);
+        vL.addComponent(suitGroup);
+        vL.addComponent(doubleRedoubleGroup);
+        vL.addComponent(numberOfTricksField);
+
+        checkboxWe.setValue(true);
+        vL.addComponent(checkboxWe);
+
+        final RubberScorring aa = new RubberScorring(1);
+        Button calculateRubberPoints = new Button("Oblicz punkty  za jedno rodzanie (dla rozgrywającego)! ", clickEvent -> {
+            try {
+               int result =  aa.fillOneContract(checkboxWe.getValue(),Integer.parseInt(contractLevelField.getValue()),colorOfContractField.getValue(),
+                        checkboxDouble.getValue(), checkboxReDouble.getValue(),Integer.parseInt(numberOfTricksField.getValue()));
+
+                resultsLabel.setValue("<B>W tym rozdaniu numer " + aa.getContractNumber() + " rozgrywający uzyskał " + result +
+                        " punktów za kontrakt,  </B> " +
+                        " <BR> czyli do tej pory wynik jest dla nas:" + aa.getOurWiningScorring() + ".  ");
+
+            } catch (NumberFormatException | BridgeException e) {
+                String message = (e instanceof NumberFormatException) ?
+                        "Nieprawidłowy format  punktów spróbuj jeszcze raz!" : e.getMessage();
+                resultsLabel.setValue("<font color=red>" + message + "</font>");
+            }
+        });
+
+        fillExampleData();
+        vL.addComponent(calculateRubberPoints);
         vL.addComponent(resultsLabel);
         return vL;
     }

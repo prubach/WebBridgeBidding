@@ -11,12 +11,10 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 public class RubberScorringTest {
 
 
-    private static Logger logger = LoggerFactory.getLogger(FourGameImpScorringFirstTest.class);
+    private static Logger logger = LoggerFactory.getLogger(RubberScorringTest.class);
 
 
 
@@ -27,176 +25,151 @@ public class RubberScorringTest {
     @Before
     public void fillTestPointsMap() throws Exception {
 
-        testRubberFromPoints.put(3, 9, 4, 9, 100+500);
-        testRubberFromPoints.put(3, 9, 1, 9, 290+500);
+        testRubberFromPoints.put(3, 9, 4,  100+500);
+        testRubberFromPoints.put(3, 9, 1,  290+500);
 
-        testRubberFromPoints1.put(3, 9, 4, 9, 150+500);
-        testRubberFromPoints1.put(3, 9, 1, 9, 290+500);
+        testRubberFromPoints1.put(3, 9, 4,  150+500);
+        testRubberFromPoints1.put(3, 9, 1,  290+500);
 
     }
 
 
     @Test
-    public void fillOneContract() throws BridgeException {
+    public void fillOneContractOnlyWePlay() throws BridgeException {
         for (Map.Entry<MultiKey<? extends Integer>, Integer> entry : testRubberFromPoints.entrySet()) {
             int ph1 = entry.getKey().getKey(0);
             int ph2 = entry.getKey().getKey(1);
             int ph3 = entry.getKey().getKey(2);
-            int ph4 = entry.getKey().getKey(3);
+         //   int ph4 = entry.getKey().getKey(3);
 //            int cS = entry.getKey().getKey(4);
 
-            RubberScorring aa = new RubberScorring((2)); //uwaga istotna jest kolejność wpisów a nie numer!! TODO poprawić?
+            RubberScorring aa = new RubberScorring((2)); //uwaga istotna jest kolejność wpisów a nie numer!!
+            Assert.assertFalse(aa.isAreWeVunerable());
+            Assert.assertFalse(aa.isAreTheyVunerable());
+            int a1=   aa.fillOneContract(true,ph1,"n",false,false,ph2);
+            Integer res1 = aa.getOurWiningScorring();//aa
+            Assert.assertTrue(aa.isAreWeVunerable());
+            Assert.assertFalse(aa.isAreTheyVunerable());
+            int a2=   aa.fillOneContract(true,ph3,"s",false,false,ph2);
+            Integer res2 = aa.getOurWiningScorring();//aa
 
-         int a1=   aa.fillOneContract(1,true,ph1,"n",false,false,ph2);
-            Integer res1 = aa.getWiningScorring();//aa
-         int a2=   aa.fillOneContract(2,true,ph3,"s",false,false,ph2);
-            Integer res2 = aa.getWiningScorring();//aa
-         int a3=   aa.fillOneContract(3,true,ph1,"n",false,false,ph2);
+            int a3=   aa.fillOneContract(true,ph1,"n",false,false,ph2);
+            Assert.assertTrue(aa.isAreWeVunerable());
+            Assert.assertFalse(aa.isAreTheyVunerable());
 
-            Integer res3 = aa.getWiningScorring();//aa.getSumm();
-            logger.info("Wynik dla robra z dwóch rozdań (wysokość/liczba lew) (" + ph1 + "/" + ph2 + "," + ph3 + "/" + ph4 + ") " +
-                    "i wyniku rozdania : " +a1+" " + a2 + "  " +a3 +" "+ +res1 + ", "+ res2+ " ,"+ res3 + " \n");
-            Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3, ph4), res3);
+            Integer res3 = aa.getOurWiningScorring();//aa.getSumm();
+            logger.info("Wynik dla robra dla Nas z trzech rozdań (my gramy) (wysokość/liczba lew) (" + ph1 + "/" + ph2 + "," + ph3 + "/" + ph2 + " " + ph1 + "/" + ph2 +") " +
+                    "i wyniku rozdania (oni bez partii): " +a1+" " + a2 + "  " +a3 +" "+ +res1 + ", "+ res2+ " ,"+ res3 + " \n");
+            Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3), res3);
 
             RubberScorring bb = new RubberScorring((4));
 
-            int b2 = bb.fillOneContract(2, true, ph3, "s", false, false, ph2);
-            Integer res2b = bb.getWiningScorring();//aa
+            int b1 = bb.fillOneContract( true, ph3, "s", false, false, ph2);
+            Integer res1b = bb.getOurWiningScorring();//aa
+            Assert.assertFalse(bb.isAreWeVunerable());
+            Assert.assertFalse(bb.isAreTheyVunerable());
 
-            int b1 = bb.fillOneContract(1, true, ph1, "n", false, false, ph2);
-            Integer res1b = bb.getWiningScorring();//aa
-            int b3 = bb.fillOneContract(3, true, ph1, "n", false, false, ph2);
+            int b2 = bb.fillOneContract(true, ph1, "n", false, false, ph2);
+            Integer res2b = bb.getOurWiningScorring();//aa
+            Assert.assertTrue(bb.isAreWeVunerable());
+            Assert.assertFalse(bb.isAreTheyVunerable());
 
-            Integer res3b = bb.getWiningScorring();//aa.getSumm();
-            logger.info("Wynik dla robra z dwóch rozdań (wysokość/liczba lew) (" + ph1 + "/" + ph2 + "," + ph3 + "/" + ph4 + ") " +
-                    "i wyniku rozdania : " + b1 + " " + b2 + "  " + b3 + " " + +res1b + ", " + res2b + " ," + res3b + " \n");
-            Assert.assertEquals(testRubberFromPoints1.get(ph1, ph2, ph3, ph4), res3b);
+            int b3 = bb.fillOneContract(true, ph1, "n", false, false, ph2);
+            Assert.assertTrue(bb.isAreWeVunerable());
+            Assert.assertFalse(bb.isAreTheyVunerable());
+
+
+            Integer res3b = bb.getOurWiningScorring();//aa.getSumm();
+            logger.info("Wynik2 dla robra dla Nas z trzech rozdań (my gramy) (wysokość/liczba lew) (" + ph3 + "/" + ph2 + "," + ph1 + "/" + ph2 +" "+ ph1 + "/" + ph2 + ") " +
+                    "i wyniku rozdania (oni bez partii): " + b1 + " " + b2 + "  " + b3 + " " + +res1b + ", " + res2b + " ," + res3b + " \n");
+            Assert.assertEquals(testRubberFromPoints1.get(ph1, ph2, ph3), res3b);
 
 
         }}
 
     @Test
-    public void fillOneContract1() throws BridgeException {
+    public void fillOneContractTheyPlay() throws BridgeException {
         for (Map.Entry<MultiKey<? extends Integer>, Integer> entry : testRubberFromPoints.entrySet()) {
             int ph1 = entry.getKey().getKey(0);
             int ph2 = entry.getKey().getKey(1);
             int ph3 = entry.getKey().getKey(2);
-            int ph4 = entry.getKey().getKey(3);
+       //     int ph4 = entry.getKey().getKey(3);
+//            int cS = entry.getKey().getKey(4);
 
-        }
-    }
-     /*  @Test
-    public void getGameType() {
-    }
+            RubberScorring aa = new RubberScorring((1)); //uwaga istotna jest kolejność wpisów a nie numer!! TODO poprawić?
+            Assert.assertFalse(aa.isAreWeVunerable());
+            Assert.assertFalse(aa.isAreTheyVunerable());
 
-    @Test
-    public void setGameType() {
-    }
+            int a1=   aa.fillOneContract(false,ph1,"n",false,false,ph2);
+            Integer res1 = -aa.getOurWiningScorring();//aa
 
-    @Test
-    public void getGameID() {
-    }
+             Assert.assertFalse(aa.isAreWeVunerable());
+            Assert.assertTrue(aa.isAreTheyVunerable());
 
-    @Test
-    public void setGameID() {
-    }
+            int a2=   aa.fillOneContract(false,ph3,"s",false,false,ph2);
+            Integer res2 = -aa.getOurWiningScorring();//aa
 
-    @Test
-    public void getRubberSpecialDescription() {
-    }
+            int a3=   aa.fillOneContract(false,ph1,"n",false,false,ph2);
+            Assert.assertFalse(aa.isAreWeVunerable());
+            Assert.assertTrue(aa.isAreTheyVunerable());
 
-    @Test
-    public void setRubberSpecialDescription() {
-    }
+            Integer res3 = -aa.getOurWiningScorring();//aa.getSumm();
+            logger.info("Wynik dla robra dla Nich z trzech rozdań (oni grają) (wysokość/liczba lew) (" + ph1 + "/" + ph2 + "," + ph3 + "/" + ph2 + "" +  ph1 + "/" + ph2 +  ") " +
+                    "i wyniku rozdania dla nich! (my bez partii) : " +a1+" " + a2 + "  " +a3 +" "+ +res1 + ", "+ res2+ " ,"+ res3 + " \n");
+            Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3), res3);
 
-    @Test
-    public void getResultsDescription() {
-    }
+            RubberScorring bb = new RubberScorring((3));
 
-    @Test
-    public void setResultsDescription() {
-    }
+            int b1 = bb.fillOneContract( false, ph3, "s", false, false, ph2);
+            Integer res1b = -bb.getOurWiningScorring();//aa
 
-    @Test
-    public void getSumm() {
-    }
+            int b2 = bb.fillOneContract( false, ph1, "n", false, false, ph2);
+            Integer res2b = -bb.getOurWiningScorring();//aa
+            int b3 = bb.fillOneContract( false, ph1, "n", false, false, ph2);
+            Integer res3b = -bb.getOurWiningScorring();//aa.getSumm();
+            logger.info("Wynik2 dla robra dla Nich z trzech rozdań (oni grają) (wysokość/liczba lew) (" + ph3 + "/" + ph2 + "," + ph1 + "/" + ph2 + " "  + ph1 + "/" + ph2 + ") " +
+                    "i wyniku rozdania dla nich (my bez partii): " + b1 + " " + b2 + "  " + b3 + " " + +res1b + ", " + res2b + " ," + res3b + " \n");
+            Assert.assertEquals(testRubberFromPoints1.get(ph1, ph2, ph3), res3b);
 
-    @Test
-    public void setSumm() {
-    }
-*/
 
-/*
-    @Test
-    public void getScorringForOneGame() {
-    }
+        }}
 
     @Test
-    public void setSumm1() {
-    }
+    public void fillOneContractBothPlay() throws BridgeException {
+        for (Map.Entry<MultiKey<? extends Integer>, Integer> entry : testRubberFromPoints.entrySet()) {
+            int ph1 = entry.getKey().getKey(0);
+            int ph2 = entry.getKey().getKey(1);
+            int ph3 = entry.getKey().getKey(2);
+            //     int ph4 = entry.getKey().getKey(3);
+//            int cS = entry.getKey().getKey(4);
 
-    @Test
-    public void getAboveWe() {
-    }
+            RubberScorring aa = new RubberScorring((11)); //uwaga istotna jest kolejność wpisów a nie numer!! TODO poprawić?
+            Assert.assertFalse(aa.isAreWeVunerable());
+            Assert.assertFalse(aa.isAreTheyVunerable());
 
-    @Test
-    public void getAboveThey() {
-    }
+            int a1=   aa.fillOneContract(true,ph1,"n",false,false,ph2);
+            Integer res1 = aa.getOurWiningScorring();//aa
 
-    @Test
-    public void getUnderWe() {
-    }
+            Assert.assertTrue(aa.isAreWeVunerable());
+            Assert.assertFalse(aa.isAreTheyVunerable());
 
-    @Test
-    public void getUnderThey() {
-    }
+            int a11=   aa.fillOneContract(false,ph1,"n",false,false,ph2);
+            Integer res11 = -aa.getOurWiningScorring();//aa
 
-    @Test
-    public void getAboveWeSumm() {
-    }
+            int a2=   aa.fillOneContract(true,ph3,"s",false,false,ph2);
+            Integer res2 = aa.getOurWiningScorring();//aa
 
-    @Test
-    public void getAboveTheySumm() {
-    }
+            int a3=   aa.fillOneContract(true,ph1,"n",false,false,ph2);
+            Assert.assertTrue(aa.isAreWeVunerable());
+            Assert.assertTrue(aa.isAreTheyVunerable());
 
-    @Test
-    public void getUnderWeSumm() {
-    }
+            Integer res3 = aa.getOurWiningScorring()+300;//aa.getSumm();
+            logger.info("Wynik dla robra dla Nas (wysokość/liczba lew) (my:" + ph1 + "/" + ph2 + ",(oni)"+ ph1 + "/" + ph2 + "," + ph3 + "/" + ph2 + ") " +
+                    "i wyniku rozdania : my:" +a1+" oni:" +a11+" my:"+ a2 + "  my:" +a3 +" "+ res1 + ", "+ res11 + ", "+ res2+ " ,"+ (res3-300) + " \n");
+            Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3), res3);
+          //  Assert.assertEquals(testRubberFromPoints1.get(ph1, ph2, ph3), res3b);
 
-    @Test
-    public void getUnderTheySumm() {
-    }
 
-    @Test
-    public void isAreWeBefore() {
-    }
+        }}
 
-    @Test
-    public void setAreWeBefore() {
-    }
-
-    @Test
-    public void isAreTheyBefore() {
-    }
-
-    @Test
-    public void setAreTheyBefore() {
-    }
-
-    @Test
-    public void isWinWe() {
-    }
-
-    @Test
-    public void setWinWe() {
-    }
-
-    @Test
-    public void isWinThey() {
-    }
-
-    @Test
-    public void setWinThey() {
-    }
-    */
 }
