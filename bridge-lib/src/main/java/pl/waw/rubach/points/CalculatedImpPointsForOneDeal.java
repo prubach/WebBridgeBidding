@@ -5,7 +5,7 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 import static java.lang.Math.abs;
 
 //TO było ResultsOfOneGame
-public class CalculatedImpPointsForOneDeal extends OneDeal {
+public class CalculatedImpPointsForOneDeal extends OneDealImp {
 
     /**
      * diference betwenn assumpted result from ExpectedResults table and point reach playng contract (contractScoringPoints)

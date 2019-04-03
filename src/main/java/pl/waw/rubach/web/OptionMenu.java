@@ -6,6 +6,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.*;
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
+import pl.waw.rubach.points.rubberScorring.RubberScorring;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 import static java.lang.Math.abs;
@@ -434,7 +435,8 @@ class OptionMenu extends MenuBar {
 
                 resultsLabel.setValue("<B>W tym rozdaniu numer " + aa.getContractNumber() + " rozgrywający uzyskał " + result +
                         " punktów za kontrakt,  </B> " +
-                        " <BR> czyli do tej pory wynik jest dla nas:" + aa.getOurWiningScorring() + ".  ");
+                        " <BR> czyli do tej pory wynik jest dla nas:" + aa.getOurWiningScorring() + ", " +
+                        "a suma punktów jest (my/oni)"+ aa.getUnderWeSumm()+aa.getAboveWeSumm() +"/"+ aa.getAboveTheySumm()+aa.getUnderTheySumm() );
 
             } catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?

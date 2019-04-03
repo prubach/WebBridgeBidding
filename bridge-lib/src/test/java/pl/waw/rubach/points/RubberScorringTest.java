@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.waw.rubach.points.exceptions.BridgeException;
+import pl.waw.rubach.points.rubberScorring.RubberScorring;
 
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class RubberScorringTest {
     private MultiKeyMap<Integer, Integer> testRubberFromPoints1 = new MultiKeyMap<>();
 
     @Before
-    public void fillTestPointsMap() throws Exception {
+    public void fillTestPointsMap()  {
 
         testRubberFromPoints.put(3, 9, 4,  100+500);
         testRubberFromPoints.put(3, 9, 1,  290+500);

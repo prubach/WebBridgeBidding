@@ -12,8 +12,6 @@ public class OneDeal {
     public static final int IS_REDOUBLE = 4;
     public static final int IS_UNDOUBLE = 1;
     public static final int NUBEROFTRICS = 13;
-    public static final int MAXNUBEROFPOINTS = 40;
-    public static final float NUMBEROFPOINS = 20;
     public static final int MINCONTRACTLEVEL = 1;
     public static final int MAXCONTRACTLEVEL = 7;
 
@@ -39,41 +37,6 @@ public class OneDeal {
      */
     private int noDoubleReSignature;
 
-
-    /**
-     * Fit for  we of playing Pair means if we have 8 cards in suit (major or all depending of points)
-     */
-    private boolean fitWe;
-
-    /**
-     * Fit for they means if they have 8 cards in suit (major or all depending of poinst)
-     */
-    private boolean fitThey;
-
-    /**
-     * ATTENTION fit opponents not they!!!
-     * Fit for  opponents of playing Pair means if they have 8 cards in suit (major or all depending of points)
-     */
-    private boolean opponensFit;
-
-    /**
-     * ATTENTION fit declarer not we!!!
-     * Fit for Plaing Pair means if they have 8 cards in suit (major or all depending of poinst)
-     */
-    private boolean declarerFit;
-
-    /**
-     * ATTENTION Auction assumption opponents  not they!!
-     * Auction Assumption for opponens of Plaing Pair means if pair is  vulnerable or unvulnerable
-     */
-    private boolean opponentVulnerable;
-
-    /**
-     * ATTENTION Auction assumption declarer not we!!!
-     * Auction Assumption for Plaing Pair means if pair is  vulnerable or unvulnerable
-     */
-    private boolean declarerVulnerable;
-
     /**
      * ATTENTION : It shoul not be Numnber of tricks taken in game by we !!!(Pair who make scoring not always plaing pair)
      * <p>
@@ -83,12 +46,22 @@ public class OneDeal {
      */
     private int declarerNumberOfTrickTaken;
 
+
     /**
-     * ATTENTION : It should not be Numnber of poins in our hands by we !!!(Pair who make scoring not always plaing pair)
-     * number of  Goren (PC) points of both hands of pair who is playing
-     * (in future could be astimated from biding part not exactly)
+     * ATTENTION Auction assumption opponents  not they!!
+     * Auction Assumption for opponens of Plaing Pair means if pair is  vulnerable or unvulnerable
      */
-    private float pointsInBothDeclarerHands;
+    private boolean opponentVulnerable;
+
+
+
+    /**
+     * ATTENTION Auction assumption declarer not we!!!
+     * Auction Assumption for Plaing Pair means if pair is  vulnerable or unvulnerable
+     */
+    private boolean declarerVulnerable;
+
+
 
     /**
      * //calculatedPoinstForContract -> contractScoringPoinst because it is no poinst exactly but scoring (zapis)
@@ -114,6 +87,9 @@ public class OneDeal {
     OneDeal() {
     }
 
+    OneDeal(boolean whoPlay, int contractLevel,String contractSuit, int noDoubleReSignature, int declarerNumberOfTrickTaken){
+
+    }
 
     /**
      * Description of contract
@@ -132,12 +108,7 @@ public class OneDeal {
             return " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
     }
 
-    public String getFitDescriprtion() {
-        String fitDes = isDeclarerFit() ? " z fitem. " : " bez fitu. ";
-        String fitODes = isOpponensFit() ? " Przeciwnicy mają fit i są : " : " Przeciwnicy nie mają fitu i są";
-        String assOp = isOpponentVulnerable() ? " przed partią. " : " po partii.";
-        return "Rozgrywający mieli " + getPointsInBothDeclarerHands() + " punkty  " + fitDes + fitODes + assOp;
-    }
+
 
 
     //getteres and setteres
@@ -232,52 +203,6 @@ public class OneDeal {
     }
 
 
-    //***************** FIT
-
-    public boolean isFitWe() {
-        return fitWe;
-    }
-
-    public void setFitWe(boolean fitWe) {
-        this.fitWe = fitWe;
-    }
-
-    public void setFitWe() {
-        this.fitWe = wePlay ? declarerFit : opponensFit;
-    }
-
-    public boolean isFitThey() {
-        return fitThey;
-    }
-
-    public void setFitThey(boolean fitThey) {
-        this.fitThey = fitThey;
-    }
-
-    public void setFitThey() {
-        this.fitThey = wePlay ? opponensFit : declarerFit;
-    }
-
-    public boolean isOpponensFit() {
-        return opponensFit;
-    }
-
-    public void setOpponensFit(boolean opponensFit) {
-        this.opponensFit = opponensFit;
-        setFitThey();
-        setFitWe();
-    }
-
-    public boolean isDeclarerFit() {
-        return declarerFit;
-    }
-
-    public void setDeclarerFit(boolean declarerFit) {
-        this.declarerFit = declarerFit;
-        setFitThey();
-        setFitWe();
-    }
-
     //*****OTHER
 
     public int getDeclarerNumberOfTrickTaken() {
@@ -320,22 +245,6 @@ public class OneDeal {
         else return -getDeclarerContractScoringPoints();
     }
 
-    public float getPointsInBothDeclarerHands() {
-        return pointsInBothDeclarerHands;
-    }
-
-    public void setPointsInBothDeclarerHands(float pointsInBothDeclarerHands) {
-        this.pointsInBothDeclarerHands = pointsInBothDeclarerHands;
-    }
-    public void setPoinsInHandsWe(boolean wePlay, float pointsOnHandsWe){
-        if(wePlay) this.pointsInBothDeclarerHands = pointsOnHandsWe;
-        else this.pointsInBothDeclarerHands = MAXNUBEROFPOINTS - pointsOnHandsWe;
-    }
-
-    public float getPoinsOnHandsWe() {
-        if (areWePlay()) return getPointsInBothDeclarerHands();
-        else return MAXNUBEROFPOINTS - getPointsInBothDeclarerHands();
-    }
 
     public int getDeclarerResluts() {
         return declarerResluts;

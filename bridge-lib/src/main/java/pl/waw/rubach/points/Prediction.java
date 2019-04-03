@@ -7,7 +7,7 @@ import static pl.waw.rubach.points.AbstractImpTable.impDeclination;
 /**
  * class to calculate which contract (in future) should be playde with assumption, poinst on Hands fit to reach imp points
  */
-public class Prediction extends OneDeal {
+public class Prediction extends OneDealImp {
 
     /**
      * description

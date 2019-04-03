@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.OneDeal.NUMBEROFPOINS;
+import static pl.waw.rubach.points.OneDealImp.NUMBEROFPOINS;
 
 public class BridgeException extends Exception {
 

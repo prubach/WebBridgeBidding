@@ -1,5 +1,7 @@
-package pl.waw.rubach.points;
+package pl.waw.rubach.points.rubberScorring;
 
+import pl.waw.rubach.points.AbstractWholeGameScorring;
+import pl.waw.rubach.points.OneDeal;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.HashMap;
@@ -36,45 +38,43 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
 
-    public int fillOneContract(boolean whoPlay, CalculatedRubberPoints d) throws BridgeException {
+    public int fillOneContract(boolean whoPlay, RubberBridgeScorring d) throws BridgeException {
         setWePlay(whoPlay);
         setContractNumber(getContractNumber()+1);
         setScorringForOneGame(getContractNumber(), d);
+        d.setResultsWe(whoPlay,getUnderThey()+getAboveWe());
         setUnderAbovePoints(d);
         setOurWiningScorring(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
        return areWePlay() ? getAboveWe() + getUnderWe() : getAboveThey() + getUnderThey();
        //  return getOurWiningScorring();
-
-
-      //  return  d.getDeclarerUnderPoints()+d.getDeclarerOverPoints();
+       //  return  d.getDeclarerUnderPoints()+d.getDeclarerOverPoints();
     }
 
     public int fillOneContract(boolean whoPlay, int contractLevel, String contractSuit,
                                boolean isContractDouble, boolean isContractRedouble,
                                int numberOfTrickTakenByDeclarer)
             throws BridgeException {
-            return fillOneContract(whoPlay, new CalculatedRubberPoints(contractLevel, contractSuit,
+            return fillOneContract(whoPlay, new RubberBridgeScorring(contractLevel, contractSuit,
                 isContractDouble, isContractRedouble, (whoPlay ? isAreWeVunerable() : isAreTheyVunerable()),
                 numberOfTrickTakenByDeclarer) );
     }
 
 
-
-
-    protected void setSumm() {
+    protected void setSumm() { //todo change it with ourWinningScorring
         int summ = 0;
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
-            summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay());
+         //   summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay());
             setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: "
                     + getScorringForOneGame().get(key).getDeclarerResluts()
                     + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
-        setSumm(summ);
+        setSumm(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
+
     }
 
-    private void setUnderAbovePoints(CalculatedRubberPoints d) throws BridgeException {
+    private void setUnderAbovePoints(RubberBridgeScorring d) throws BridgeException {
 
         setUnderWe(areWePlay() ? d.getDeclarerUnderPoints() : 0);
         setAboveWe(areWePlay() ? d.getDeclarerOverPoints() : 0);
@@ -118,7 +118,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
     //getters and setters
 
-    private void setScorringForOneGame(Integer contractNumber, CalculatedRubberPoints d) {
+    private void setScorringForOneGame(Integer contractNumber, RubberBridgeScorring d) {
            this.scorringForOneGame.put(contractNumber, d);
     }
 
