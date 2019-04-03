@@ -39,11 +39,15 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
 
     public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScorring d) throws BridgeException {
-        setWePlay(whoPlay);
-        setContractNumber(getContractNumber()+1);
+        setContractParameter(whoPlay,d.getContractLevel(),d.getContractSuit(),
+                d.getNoDoubleReSignature(),d.getDeclarerNumberOfTrickTaken());
         setScorringForOneGame(getContractNumber(), d);
+
+        setShortDescription(getContractDescription(whoPlay ? isAreWeVunerable() : isAreTheyVunerable()));
+
         d.setResultsWe(whoPlay,getUnderThey()+getAboveWe());
         setUnderAbovePoints(d);
+
         setOurWiningScorring(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
        return areWePlay() ? getAboveWe() + getUnderWe() : getAboveThey() + getUnderThey();
        //  return getOurWiningScorring();
@@ -212,6 +216,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
     public void setAreWeVunerable(boolean areWeVunerable) {
+
         this.areWeVunerable = areWeVunerable;
     }
 
@@ -261,6 +266,22 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
     public void setWePlay(boolean whoPlay) {
         this.wePlay = whoPlay;
+    }
+
+    private void setContractParameter(boolean whoPlay,
+                                      int contractLevel, String contractSuit,
+                                      int nDRSig,
+                                      int numerOfTricskTakenByDeclarere
+    )
+    throws BridgeException{
+        setWePlay(whoPlay);
+        setContractNumber(getContractNumber()+1);
+        setContractLevel(contractLevel);
+        setContractSuit(contractSuit);
+        setNoDoubleReSignature(nDRSig);
+        setNuberoftricsTakenWe(numerOfTricskTakenByDeclarere);
+        setDeclarerVulnerable(whoPlay ? isAreTheyVunerable():isAreTheyVunerable());
+
     }
 }
 

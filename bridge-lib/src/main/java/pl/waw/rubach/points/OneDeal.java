@@ -96,8 +96,11 @@ public class OneDeal {
      *
      * @return short description of contract
      */
-    protected String getContractDescription() {
-        String assumption = isDeclarerVulnerable() ? ": po parti, " : ": przed partią, ";
+    public String getContractDescription() {
+       return getContractDescription(isDeclarerVulnerable());    }
+
+    public String getContractDescription(boolean assumptionB) {
+        String assumption ="" ;// assumptionB ? ": po parti, " : ": przed partią, "; //fixme poprawić wczytywanie założeń
         String lew = getDeclarerNumberOfTrickTaken() == 1 ? " tylko lewę. " : getDeclarerNumberOfTrickTaken() > 1 && getDeclarerNumberOfTrickTaken() < 5 ? " lewy." : " lew.";
 
         if (getNoDoubleReSignature() == IS_DOUBLE)
@@ -107,8 +110,6 @@ public class OneDeal {
         else
             return " Kontrakt jest: " + getContractLevel() + getContractSuit() + assumption + " rozgrywający zebrał " + getDeclarerNumberOfTrickTaken() + lew;
     }
-
-
 
 
     //getteres and setteres
@@ -272,6 +273,9 @@ public class OneDeal {
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+    }
+    public void setShortDescription() {
+        this.shortDescription = getContractDescription();
     }
 
 }
