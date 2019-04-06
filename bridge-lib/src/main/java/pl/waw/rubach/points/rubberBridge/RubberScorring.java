@@ -4,6 +4,7 @@ import pl.waw.rubach.points.AbstractWholeGameScorring;
 import pl.waw.rubach.points.OneDeal;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -22,6 +23,16 @@ public class RubberScorring extends AbstractWholeGameScorring {
     private int aboveWeSumm = 0, aboveTheySumm = 0, underWeSumm = 0, underTheySumm = 0;
     private int contractNumber=0;
 
+    public RubberScorring(ArrayList<CalculatedOneDealRubberScorring> d) throws BridgeException {
+        this(1);
+
+        for (CalculatedOneDealRubberScorring calculatedOneDealRubberScorring : d)
+            fillOneContract(calculatedOneDealRubberScorring.areWePlay(), calculatedOneDealRubberScorring);
+
+        setResultsDescription("Końcowy wynik gry do rozdania numer:" + getGameID() + " dla nas jest: " + getSumm() + " \n");
+
+    }
+
     //defut constructor adding number of game 1 - possible use other constructor with special number of game with next constructor
     public RubberScorring() {
         this(1);
@@ -38,15 +49,18 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
 
+
+
+
     public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScorring d) throws BridgeException {
-        setContractParameter(whoPlay,d.getContractLevel(),d.getContractSuit(),
+        setContractParameter(contractNumber+1, whoPlay,d.getContractLevel(),d.getContractSuit(),
                 d.getNoDoubleReSignature(),d.getDeclarerNumberOfTrickTaken());
 
         setScorringForOneGame(getContractNumber(), d);
         setShortDescription(getContractDescription(whoPlay ? isAreWeVunerable() : isAreTheyVunerable()));
         setUnderAbovePoints(d);
-        d.setResultsWe(whoPlay,areWePlay() ? getOverWe() + getUnderWe() : getOverThey() + getUnderThey());
-                //getUnderWe()+ getOverWe());
+        d.setResultsWe(whoPlay,getOverWe() + getUnderWe());
+
 
         setOurWiningScorring(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
        return d.getResultsWe(areWePlay());
@@ -55,12 +69,20 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
     public int fillOneContract(boolean whoPlay, int contractLevel, String contractSuit,
+                               int nDRsig, int numberOfTrickTakenByDeclarer)
+            throws BridgeException {
+        return fillOneContract(whoPlay, new CalculatedOneDealRubberScorring(contractLevel, contractSuit,
+                nDRsig, (whoPlay ? isAreWeVunerable() : isAreTheyVunerable()),
+                numberOfTrickTakenByDeclarer) );
+    }
+
+
+    public int fillOneContract(boolean whoPlay, int contractLevel, String contractSuit,
                                boolean isContractDouble, boolean isContractRedouble,
                                int numberOfTrickTakenByDeclarer)
             throws BridgeException {
-            return fillOneContract(whoPlay, new CalculatedOneDealRubberScorring(contractLevel, contractSuit,
-                isContractDouble, isContractRedouble, (whoPlay ? isAreWeVunerable() : isAreTheyVunerable()),
-                numberOfTrickTakenByDeclarer) );
+            return fillOneContract(whoPlay, contractLevel, contractSuit,
+                    (isContractDouble ? 2 : (isContractRedouble ? 4:1)),numberOfTrickTakenByDeclarer );
     }
 
 
@@ -69,12 +91,14 @@ public class RubberScorring extends AbstractWholeGameScorring {
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
          //   summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay());
+            setSumm(getUnderWeSumm()+getAboveWeSumm()-getUnderTheySumm()-getAboveTheySumm());
             setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: "
                     + getScorringForOneGame().get(key).getDeclarerResluts()
                     + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
-        setSumm(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
+        setSumm(getUnderWeSumm()+getAboveWeSumm()-getUnderTheySumm()-getAboveTheySumm());
+       // setSumm(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
 
     }
 
@@ -272,7 +296,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
         this.wePlay = whoPlay;
     }
 
-    private void setContractParameter(boolean whoPlay,
+    private void setContractParameter(int contractNumber, boolean whoPlay,
                                       int contractLevel, String contractSuit,
                                       int nDRSig,
                                       int numerOfTricskTakenByDeclarere

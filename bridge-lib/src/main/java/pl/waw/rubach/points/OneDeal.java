@@ -264,6 +264,7 @@ public class OneDeal {
     }
 
 
+
     public void setResultsWe(boolean wePlay, int weResults) {
         setDeclarerResluts(wePlay ? weResults : -weResults);
     }

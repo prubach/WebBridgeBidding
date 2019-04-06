@@ -3,6 +3,7 @@ package pl.waw.rubach.points.duplicateBridgeImps;
 import pl.waw.rubach.points.AbstractWholeGameScorring;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -30,7 +31,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     }
 
     public FourGameImpScorring(int gameID) {
-        super(gameID,"na impy");
+        super(gameID, "na impy");
         setGameType("IMP");
     }
 
@@ -39,6 +40,16 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         this();
         setSumm(result1 + result2 + result3 + result4);
         setResultsDescription("Końcowy wynik gry na impy numer:" + getGameID() + " z podanymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
+    }
+
+    public FourGameImpScorring(ArrayList<CalculatedImpPointsForOneDeal> d) {
+        this();
+
+        for (CalculatedImpPointsForOneDeal calculatedImpPointsForOneDeal : d)
+            fillOneContract(1, calculatedImpPointsForOneDeal);
+
+        setResultsDescription("Końcowy wynik gry do rozdania numer:" + getGameID() + " jest: " + getSumm() + " \n");
+
     }
 
 
@@ -84,8 +95,8 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
                                int numberOfTrickTakenByDeclarer) throws BridgeException {
         int contractNumber = 1; //askForContractNumber();
 
-        return fillOneContract(contractNumber,whoPlay,20,contractLevel,contractSuit,
-                isContractDouble,isContractRedouble,numberOfTrickTakenByDeclarer,true,true);
+        return fillOneContract(contractNumber, whoPlay, 20, contractLevel, contractSuit,
+                isContractDouble, isContractRedouble, numberOfTrickTakenByDeclarer, true, true);
     }
 
     /**
@@ -101,7 +112,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         setScorringForOneGame(contractNumber, cIPfoDforWe);
         //scorringForOneGame.put(contractNumber, cIPfoDforWe);
         setSumm();
-    //    return cIPfoDforWe.getDeclarerResluts();
+        //    return cIPfoDforWe.getDeclarerResluts();
         return cIPfoDforWe.getResultsWe(cIPfoDforWe.areWePlay());
     }
 
@@ -153,7 +164,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         setRubberSpecialDescription(getRubberSpecialDescription() + dBS.getShortDescription() + "\n");
         return fillOneContract(contractNumber,
                 new CalculatedImpPointsForOneDeal(whoPlay, whoPlay ? pointsInBothHandsWe : 40 - pointsInBothHandsWe,
-                       // whoPlay ? dBS.getDeclarerContractScoringPoints() : -
+                        // whoPlay ? dBS.getDeclarerContractScoringPoints() : -
                         dBS.getContractScoringPointsWe(whoPlay),
                         //whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
                         //whoPlay ? fillAssumption(contractNumber)[1] : fillAssumption(contractNumber)[0],
@@ -185,7 +196,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         return fillOneContract(contractNumber, whoPlay, pointsInBothHandsWe,
                 new DuplicateBridgeScoring(gameLevel, suit, isdouble, isredouble,
                         // whoPlay ? fillAssumption(contractNumber)[0] : fillAssumption(contractNumber)[1],
-                      //  whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
+                        //  whoPlay ? fillAssumptionA(contractNumber).areWeVunerable() : fillAssumptionA(contractNumber).areTheyVunerable(),
                         whoPlay ? fillAssumptionWe(contractNumber) : fillAssumptionThey(contractNumber),
                         whoPlay ? numberOfTricksTakenWe : 13 - numberOfTricksTakenWe),
                 fitInOlderColorWe, fitInOlderColorThey);
@@ -220,7 +231,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         this.scorringForOneGame.put(contractNumber, cIPfOD);
     }
 
-    public Map<Integer, CalculatedImpPointsForOneDeal > getScorringForOneGame() {
+    public Map<Integer, CalculatedImpPointsForOneDeal> getScorringForOneGame() {
         return scorringForOneGame;
     }
 
@@ -229,11 +240,11 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         int summ = 0;
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
-            summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay(),getScorringForOneGame().get(key).getDeclarerResluts());
-        //    summ = summ + getScorringForOneGame().get(key).getDeclarerResluts();
+            summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay(), getScorringForOneGame().get(key).getDeclarerResluts());
+            //    summ = summ + getScorringForOneGame().get(key).getDeclarerResluts();
 
             setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: "
-                    + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay(),getScorringForOneGame().get(key).getDeclarerResluts())
+                    + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay(), getScorringForOneGame().get(key).getDeclarerResluts())
                     + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
