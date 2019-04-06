@@ -20,15 +20,12 @@ public class Prediction extends OneDealImp {
      */
     private int expectedPoints;
 
-    public Prediction(int imps, float points,
+    public Prediction(int imps, float pointsInBothHandsWe,
                       boolean assumptionWe, boolean assumptionThey, boolean fitWe,boolean fitThey,
                         boolean whoPlay) throws BridgeException {
+        super(whoPlay,pointsInBothHandsWe,0,assumptionWe,assumptionThey,fitWe,fitThey);
+
         setResultsWe(whoPlay,imps);
-        setFitWe(fitWe);
-        setFitThey(fitThey);
-        setWeVulnerable(whoPlay,assumptionWe);
-        setTheyVulnerable(whoPlay,assumptionThey);
-        setPoinsInHandsWe(whoPlay,points);
 
         setExpectedPoints(ExpectedResultsTable.getInstance().getPoints(getPointsInBothDeclarerHands(),
                 isFitWe(),isFitThey(),areWeVulnerable(whoPlay),areTheyVulnerable(whoPlay)));

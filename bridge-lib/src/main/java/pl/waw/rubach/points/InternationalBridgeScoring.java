@@ -49,12 +49,7 @@ public class InternationalBridgeScoring extends OneDeal {
                                       boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws  BridgeException {
 
-        setContractLevel(contractLevel);
-        setContractSuit(contractSuit);
-        setNoDoubleReSignature(nDRSignature);
-        setDeclarerVulnerable(auctionAssumptionDeclarer);
-        setDeclarerNumberOfTrickTaken(numberOfTrickTakenByDeclarer);
-
+        super(contractLevel,contractSuit,nDRSignature,numberOfTrickTakenByDeclarer,auctionAssumptionDeclarer);
 
         //helping variable
         setShortDescription(getContractDescription());
@@ -223,15 +218,7 @@ public class InternationalBridgeScoring extends OneDeal {
      * @return game/ part game or slam bonnus
      */
     protected int getGamePartGameBonus(int calculatedPointsForContract) {
-
-    /*    if (calculatedPointsForContract >= 100 && made) {
-            description = description + " + punkty za ugraną końcówkę (zależnie od założeń).";
-            return (isDeclarerVulnerable()) ? 500 : 300;
-        } else if (calculatedPointsForContract > 0) {
-            description = description + " + 50 pkt za częściówkę.";
-            return 50;
-        } else
-      */      return 0;
+    return 0;
     }
 
     /**

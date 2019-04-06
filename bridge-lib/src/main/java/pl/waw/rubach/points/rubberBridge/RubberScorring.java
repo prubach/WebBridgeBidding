@@ -17,8 +17,8 @@ public class RubberScorring extends AbstractWholeGameScorring {
     private Map<Integer, OneDeal> scorringForOneGame = new HashMap<>();
     private boolean areWeVunerable, areTheyVunerable, wePlay;
     private boolean winWe, winThey;
-    private int ourWiningScorring = 0;
-    private int aboveWe = 0, aboveThey = 0, underWe = 0, underThey = 0;
+    private int ourWiningScorring;
+    private int overWe = 0, overThey = 0, underWe = 0, underThey = 0;
     private int aboveWeSumm = 0, aboveTheySumm = 0, underWeSumm = 0, underTheySumm = 0;
     private int contractNumber=0;
 
@@ -41,15 +41,15 @@ public class RubberScorring extends AbstractWholeGameScorring {
     public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScorring d) throws BridgeException {
         setContractParameter(whoPlay,d.getContractLevel(),d.getContractSuit(),
                 d.getNoDoubleReSignature(),d.getDeclarerNumberOfTrickTaken());
+
         setScorringForOneGame(getContractNumber(), d);
-
         setShortDescription(getContractDescription(whoPlay ? isAreWeVunerable() : isAreTheyVunerable()));
-
-        d.setResultsWe(whoPlay,getUnderThey()+getAboveWe());
         setUnderAbovePoints(d);
+        d.setResultsWe(whoPlay,areWePlay() ? getOverWe() + getUnderWe() : getOverThey() + getUnderThey());
+                //getUnderWe()+ getOverWe());
 
         setOurWiningScorring(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
-       return areWePlay() ? getAboveWe() + getUnderWe() : getAboveThey() + getUnderThey();
+       return d.getResultsWe(areWePlay());
        //  return getOurWiningScorring();
        //  return  d.getDeclarerUnderPoints()+d.getDeclarerOverPoints();
     }
@@ -80,15 +80,15 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
     private void setUnderAbovePoints(CalculatedOneDealRubberScorring d) throws BridgeException {
 
-        setUnderWe(areWePlay() ? d.getDeclarerUnderPoints() : 0);
-        setAboveWe(areWePlay() ? d.getDeclarerOverPoints() : 0);
-        setUnderThey(areWePlay() ? 0 : d.getDeclarerUnderPoints());
-        setAboveThey(areWePlay() ? 0 : d.getDeclarerOverPoints());
+        setUnderWe(d);
+        setOverWe(d);
+        setUnderThey(d);
+        setOverThey(d);
 
         addUnderWeSumm(getUnderWe());
         addUnderTheySumm(getUnderThey());
-        addAboveTheySumm(getAboveThey());
-        addAboveWeSumm(getAboveWe());
+        addAboveTheySumm(getOverThey());
+        addAboveWeSumm(getOverWe());
 
         if (getUnderTheySumm() >= 100 || getUnderWeSumm() >= 100) {
 
@@ -102,6 +102,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
                 if (isAreWeVunerable())  setWinWe(true);
                 else setAreWeVunerable(true); 
             }
+
             addAboveTheySumm(getUnderTheySumm());
             setUnderTheySumm(0);
             addAboveWeSumm(getUnderWeSumm());
@@ -131,37 +132,40 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
 
-    public int getAboveWe() {
-        return aboveWe;
+    private int getOverWe() {
+        return overWe;
     }
 
-    private void setAboveWe(int aboveWe) {
-        this.aboveWe = aboveWe;
+    private void setOverWe(CalculatedOneDealRubberScorring d) throws BridgeException {
+        this.overWe = areWePlay() ? d.getDeclarerOverPoints() : 0;
+
     }
 
-    public int getAboveThey() {
-        return aboveThey;
+    private int getOverThey() {
+        return overThey;
     }
 
-    private void setAboveThey(int aboveThey) {
-        this.aboveThey = aboveThey;
+    private void setOverThey(CalculatedOneDealRubberScorring d) throws BridgeException {
+        this.overThey = areWePlay() ? 0 : d.getDeclarerOverPoints();
     }
 
     public int getUnderWe() {
         return underWe;
     }
 
-    private void setUnderWe(int underWe) {
-        this.underWe = underWe;
+    private void setUnderWe(CalculatedOneDealRubberScorring d) throws BridgeException {
+        this.underWe = areWePlay() ? d.getDeclarerUnderPoints() : 0;
+
     }
 
     public int getUnderThey() {
         return underThey;
     }
 
-    private void setUnderThey(int underThey) {
-        this.underThey = underThey;
+    private void setUnderThey(CalculatedOneDealRubberScorring d) throws BridgeException {
+        this.underThey = areWePlay() ? 0 : d.getDeclarerUnderPoints();
     }
+
 
     public int getAboveWeSumm() {
         return aboveWeSumm;
@@ -283,6 +287,10 @@ public class RubberScorring extends AbstractWholeGameScorring {
         setDeclarerVulnerable(whoPlay ? isAreTheyVunerable():isAreTheyVunerable());
 
     }
+
+
+
+
 }
 
 

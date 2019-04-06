@@ -87,7 +87,15 @@ public class OneDeal {
     protected OneDeal() {
     }
 
-    OneDeal(boolean whoPlay, int contractLevel,String contractSuit, int noDoubleReSignature, int declarerNumberOfTrickTaken){
+    protected OneDeal(int contractLevel,String contractSuit,
+                      int noDoubleReSignature, int declarerNumberOfTrickTaken,boolean auctionAssumptionDeclarer)
+    throws  BridgeException{
+
+        setContractLevel(contractLevel);
+        setContractSuit(contractSuit);
+        setNoDoubleReSignature(noDoubleReSignature);
+        setDeclarerVulnerable(auctionAssumptionDeclarer);
+        setDeclarerNumberOfTrickTaken(declarerNumberOfTrickTaken);
 
     }
 
@@ -100,7 +108,7 @@ public class OneDeal {
        return getContractDescription(isDeclarerVulnerable());    }
 
     public String getContractDescription(boolean assumptionB) {
-        String assumption ="" ;// assumptionB ? ": po parti, " : ": przed partią, "; //fixme poprawić wczytywanie założeń
+        String assumption = assumptionB ? ": po parti, " : ": przed partią, "; //fixme poprawić wczytywanie założeń
         String lew = getDeclarerNumberOfTrickTaken() == 1 ? " tylko lewę. " : getDeclarerNumberOfTrickTaken() > 1 && getDeclarerNumberOfTrickTaken() < 5 ? " lewy." : " lew.";
 
         if (getNoDoubleReSignature() == IS_DOUBLE)

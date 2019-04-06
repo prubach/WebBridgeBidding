@@ -62,10 +62,21 @@ public class OneDealImp extends OneDeal {
     private String shortDescription;
 
 
-    OneDealImp() {
-    }
+    protected OneDealImp(boolean wePlay,
+               float pointsInBothHandsWe, int pointsForContractWe,
+               boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitWe,boolean fitThey){
 
-    OneDealImp(boolean whoPlay, int contractLevel, String contractSuit, int noDoubleReSignature, int declarerNumberOfTrickTaken){
+
+        setWePlay(wePlay);
+        setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
+        setOpponentVulnerable(wePlay ? auctionAssumptionThey : auctionAssumptionWe);
+        setDeclarerFit(wePlay ? fitWe : fitThey);
+        setOpponensFit(wePlay ? fitThey : fitWe);
+
+        setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : MAXNUBEROFPOINTS - pointsInBothHandsWe);  //pyt gra nie jestem pewna czy zawsze prawda (z doliczaniem za single i renons)
+
+        setDeclarerContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
+
 
     }
 

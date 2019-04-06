@@ -24,15 +24,15 @@ public class DuplicateBridgeScoring extends InternationalBridgeScoring {
      *                                     Number of tricks taken in game  by declarer - the player whose bid establishes the suit of the contract
      *                                     and who must therefore play both their own hand and the exposed hand of the dummy.
      *                                     (opponent takes 13 - numberOfTrickTakenByDeclarer)
-     * @throws BridgeException                  if some bridge parameter have  incorrect value:
-     * InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
-     * InvalidContractSuitException       if suit is no one of 5 bridge strain (colors + nt)
-     * InvalidContractLevelException      if level is not between 1 to 7 (according bridge rules etc
+     * @throws BridgeException if some bridge parameter have  incorrect value:
+     *                         InvalidNumberOfTrickTakenException if number of tricks is less then 0 or more then 13 (52:4)
+     *                         InvalidContractSuitException       if suit is no one of 5 bridge strain (colors + nt)
+     *                         InvalidContractLevelException      if level is not between 1 to 7 (according bridge rules etc
      */
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
-            throws  BridgeException {
-    super(contractLevel,contractSuit,nDRSignature,auctionAssumptionDeclarer,numberOfTrickTakenByDeclarer);
+            throws BridgeException {
+        super(contractLevel, contractSuit, nDRSignature, auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
 
     }
 
@@ -52,7 +52,7 @@ public class DuplicateBridgeScoring extends InternationalBridgeScoring {
      * @param calculatedPointsForContract - are points for Contract - not overtricks included - so to know is is more then 100.
      * @return game/ part game or slam bonnus
      */
-
+    @Override
     protected int getGamePartGameBonus(int calculatedPointsForContract) {
 
         if (calculatedPointsForContract >= 100 && made) {
@@ -64,7 +64,6 @@ public class DuplicateBridgeScoring extends InternationalBridgeScoring {
         } else
             return 0;
     }
-
 
 
 }
