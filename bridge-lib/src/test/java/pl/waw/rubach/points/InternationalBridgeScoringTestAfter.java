@@ -1,15 +1,15 @@
-package pl.waw.rubach.points.duplicateBridgeImps;
+package pl.waw.rubach.points;
 
 import org.junit.Before;
 
-public class DuplicateBridgeScoringTestAfter extends DuplicateBridgeScoringTestBefore {
+public class InternationalBridgeScoringTestAfter extends InternationalBridgeScoringTestBefore {
 
     @Before
     public void fillTestPointsMap() {
         beforeAfter = true;
         karaZaKontre = 50;
-    //    premiaZaCzesciowke = 50;
-    //    premiaZaKoncowke = 500;
+      //  premiaZaCzesciowke = 50;
+      //  premiaZaKoncowke = 500;
         premiaZaSzlemika = 750;
         premiaZaSzlema = 1500;
         nadrobkaZKontra = 200;

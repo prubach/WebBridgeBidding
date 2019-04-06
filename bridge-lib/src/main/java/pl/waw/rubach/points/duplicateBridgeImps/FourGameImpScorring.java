@@ -1,7 +1,6 @@
 package pl.waw.rubach.points.duplicateBridgeImps;
 
 import pl.waw.rubach.points.AbstractWholeGameScorring;
-import pl.waw.rubach.points.DuplicateBridgeScoring;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.HashMap;
@@ -80,6 +79,14 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
 
     }
 
+    public int fillOneContract(boolean whoPlay, int contractLevel, String contractSuit,
+                               boolean isContractDouble, boolean isContractRedouble,
+                               int numberOfTrickTakenByDeclarer) throws BridgeException {
+        int contractNumber = 1; //askForContractNumber();
+
+        return fillOneContract(contractNumber,whoPlay,20,contractLevel,contractSuit,
+                isContractDouble,isContractRedouble,numberOfTrickTakenByDeclarer,true,true);
+    }
 
     /**
      * Function to fill ruberScoring wiht results of each game

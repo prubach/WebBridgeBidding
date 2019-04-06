@@ -3,7 +3,6 @@ package pl.waw.rubach.web;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import pl.waw.rubach.points.*;
 import pl.waw.rubach.points.duplicateBridgeImps.*;
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;

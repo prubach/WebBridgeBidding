@@ -4,7 +4,7 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidContractSuitException;
 
 //This was  PointsForContract(...)
-public class DuplicateBridgeScoring extends OneDeal {
+public class InternationalBridgeScoring extends OneDeal {
 
     /**
      * The number of tricks above six (the book) that are taken by declarer.
@@ -18,7 +18,7 @@ public class DuplicateBridgeScoring extends OneDeal {
     /**
      * Long description explain how points are calculating - is setting in time of calculation, so no setter need!
      */
-    private String description = "Punkty za kontrakt: ";
+    protected String description = "Punkty za kontrakt: ";
 
 
     //This was :  PointsForContract(...)
@@ -45,8 +45,8 @@ public class DuplicateBridgeScoring extends OneDeal {
      * InvalidContractSuitException       if suit is no one of 5 bridge strain (colors + nt)
      * InvalidContractLevelException      if level is not between 1 to 7 (according bridge rules etc
      */
-    public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
-                                  boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
+    public InternationalBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
+                                      boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws  BridgeException {
 
         setContractLevel(contractLevel);
@@ -79,8 +79,8 @@ public class DuplicateBridgeScoring extends OneDeal {
     }
 
     //OLD constructor with boolean double redouble - exist in all test so cant be delayed
-    public DuplicateBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
-                                  boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
+    public InternationalBridgeScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
+                                      boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws BridgeException {
         this(contractLevel, contractSuit, isContractRedouble ? 4 : (isContractDouble ? 2 : 1), auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
     }
@@ -224,14 +224,14 @@ public class DuplicateBridgeScoring extends OneDeal {
      */
     protected int getGamePartGameBonus(int calculatedPointsForContract) {
 
-        if (calculatedPointsForContract >= 100 && made) {
+    /*    if (calculatedPointsForContract >= 100 && made) {
             description = description + " + punkty za ugraną końcówkę (zależnie od założeń).";
             return (isDeclarerVulnerable()) ? 500 : 300;
         } else if (calculatedPointsForContract > 0) {
             description = description + " + 50 pkt za częściówkę.";
             return 50;
         } else
-            return 0;
+      */      return 0;
     }
 
     /**

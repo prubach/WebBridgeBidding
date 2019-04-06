@@ -1,9 +1,9 @@
 package pl.waw.rubach.points.rubberBridge;
 
-import pl.waw.rubach.points.DuplicateBridgeScoring;
+import pl.waw.rubach.points.InternationalBridgeScoring;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
-public class CalculatedOneDealRubberScorring extends DuplicateBridgeScoring {
+public class CalculatedOneDealRubberScorring extends InternationalBridgeScoring {
 
 
     public CalculatedOneDealRubberScorring(int contractLevel, String contractSuit, int nDRSignature,

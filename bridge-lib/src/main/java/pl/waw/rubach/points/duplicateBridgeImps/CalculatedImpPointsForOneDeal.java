@@ -1,6 +1,5 @@
 package pl.waw.rubach.points.duplicateBridgeImps;
 
-import pl.waw.rubach.points.DuplicateBridgeScoring;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
 import static java.lang.Math.abs;
