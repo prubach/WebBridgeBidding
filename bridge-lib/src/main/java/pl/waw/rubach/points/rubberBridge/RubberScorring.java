@@ -20,7 +20,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
     private boolean winWe, winThey;
     private int ourWiningScorring;
     private int overWe = 0, overThey = 0, underWe = 0, underThey = 0;
-    private int aboveWeSumm = 0, aboveTheySumm = 0, underWeSumm = 0, underTheySumm = 0;
+    private int overWeSumm = 0, overTheySumm = 0, underWeSumm = 0, underTheySumm = 0;
     private int contractNumber=0;
 
     public RubberScorring(ArrayList<CalculatedOneDealRubberScorring> d) throws BridgeException {
@@ -59,7 +59,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
         setScorringForOneGame(getContractNumber(), d);
         setShortDescription(getContractDescription(whoPlay ? isAreWeVunerable() : isAreTheyVunerable()));
         setUnderAbovePoints(d);
-        d.setResultsWe(whoPlay,getOverWe() + getUnderWe());
+        d.setResultsWe(whoPlay,getOverWe() + getUnderWe()+getOverThey()+getOverWe());
 
 
         setOurWiningScorring(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
@@ -91,13 +91,13 @@ public class RubberScorring extends AbstractWholeGameScorring {
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
          //   summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay());
-            setSumm(getUnderWeSumm()+getAboveWeSumm()-getUnderTheySumm()-getAboveTheySumm());
+            setSumm(getUnderWeSumm()+ getOverWeSumm()-getUnderTheySumm()- getOverTheySumm());
             setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: "
                     + getScorringForOneGame().get(key).getDeclarerResluts()
                     + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
-        setSumm(getUnderWeSumm()+getAboveWeSumm()-getUnderTheySumm()-getAboveTheySumm());
+        setSumm(getUnderWeSumm()+ getOverWeSumm()-getUnderTheySumm()- getOverTheySumm());
        // setSumm(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
 
     }
@@ -137,9 +137,9 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
     public int isEndOfTheGame() {
         int results = 0;
-        int a =getAboveWeSumm() + getUnderWeSumm() -(getAboveTheySumm() + getUnderTheySumm());
-        if (isWinWe()) results = a + (isAreTheyVunerable() ? 300 : 500);
-        if (isWinThey()) results = -a + (isAreWeVunerable() ? 300 : 500);
+        int a = getOverWeSumm() + getUnderWeSumm() -(getOverTheySumm() + getUnderTheySumm());
+        if (isWinWe()) results = a + (isAreTheyVunerable() ? 500 : 700);
+        if (isWinThey()) results = -a + (isAreWeVunerable() ? 500 : 700);
 
         return results;
     }
@@ -191,20 +191,20 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
 
-    public int getAboveWeSumm() {
-        return aboveWeSumm;
+    public int getOverWeSumm() {
+        return overWeSumm;
     }
 
-    private void setAboveWeSumm(int aboveWeSumm) {
-        this.aboveWeSumm = aboveWeSumm;
+    private void setOverWeSumm(int overWeSumm) {
+        this.overWeSumm = overWeSumm;
     }
 
-    public int getAboveTheySumm() {
-        return aboveTheySumm;
+    public int getOverTheySumm() {
+        return overTheySumm;
     }
 
-    private void setAboveTheySumm(int aboveTheySumm) {
-        this.aboveTheySumm = aboveTheySumm;
+    private void setOverTheySumm(int overTheySumm) {
+        this.overTheySumm = overTheySumm;
     }
 
     public int getUnderWeSumm() {
@@ -224,11 +224,11 @@ public class RubberScorring extends AbstractWholeGameScorring {
     }
 
     private void addAboveWeSumm(int aboveWeSumm) {
-        this.aboveWeSumm += aboveWeSumm;
+        this.overWeSumm += aboveWeSumm;
     }
 
     private void addAboveTheySumm(int aboveTheySumm) {
-        this.aboveTheySumm += aboveTheySumm;
+        this.overTheySumm += aboveTheySumm;
     }
 
     private void addUnderWeSumm(int underWeSumm) {

@@ -25,11 +25,11 @@ public class RubberScorringTest {
     @Before
     public void fillTestPointsMap()  {
 
-        testRubberFromPoints.put(3, 9, 4,  100+500);
-        testRubberFromPoints.put(3, 9, 1,  290+500);
+        testRubberFromPoints.put(3, 9, 4,  100+700);
+        testRubberFromPoints.put(3, 9, 1,  290+700);
 
-        testRubberFromPoints1.put(3, 9, 4,  150+500);
-        testRubberFromPoints1.put(3, 9, 1,  290+500);
+        testRubberFromPoints1.put(3, 9, 4,  150+700);
+        testRubberFromPoints1.put(3, 9, 1,  290+700);
 
     }
 

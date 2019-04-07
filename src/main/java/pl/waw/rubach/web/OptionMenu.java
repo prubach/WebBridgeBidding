@@ -436,7 +436,7 @@ class OptionMenu extends MenuBar {
                 resultsLabel.setValue("<B>W tym rozdaniu numer " + aa.getContractNumber() + " rozgrywający uzyskał " + result +
                         " punktów za kontrakt,  </B> " +
                         " <BR> czyli do tej pory wynik jest dla nas:" + aa.getOurWiningScorring() + ", " +
-                        "a suma punktów jest (my/oni)"+ aa.getUnderWeSumm()+aa.getAboveWeSumm() +"/"+ aa.getAboveTheySumm()+aa.getUnderTheySumm() );
+                        "a suma punktów jest (my/oni)"+ aa.getUnderWeSumm()+aa.getOverWeSumm() +"/"+ aa.getOverTheySumm()+aa.getUnderTheySumm() );
 
             } catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
