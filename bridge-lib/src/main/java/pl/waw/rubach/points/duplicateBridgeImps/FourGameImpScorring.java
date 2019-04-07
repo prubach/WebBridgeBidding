@@ -45,8 +45,10 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     public FourGameImpScorring(ArrayList<CalculatedImpPointsForOneDeal> d) {
         this();
 
-        for (CalculatedImpPointsForOneDeal calculatedImpPointsForOneDeal : d)
-            fillOneContract(1, calculatedImpPointsForOneDeal);
+        for (int i = 0; i < d.size(); i++) {
+            CalculatedImpPointsForOneDeal calculatedImpPointsForOneDeal = d.get(i);
+            fillOneContract(i+1, calculatedImpPointsForOneDeal);
+        }
 
         setResultsDescription("Końcowy wynik gry do rozdania numer:" + getGameID() + " jest: " + getSumm() + " \n");
 
@@ -90,15 +92,15 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
 
     }
 
-    public int fillOneContract(boolean whoPlay, int contractLevel, String contractSuit,
+ /*   public int fillOneContract(int contractNumber, boolean whoPlay, int contractLevel, String contractSuit,
                                boolean isContractDouble, boolean isContractRedouble,
                                int numberOfTrickTakenByDeclarer) throws BridgeException {
-        int contractNumber = 1; //askForContractNumber();
+      //  int contractNumber = 1; //askForContractNumber();
 
         return fillOneContract(contractNumber, whoPlay, 20, contractLevel, contractSuit,
                 isContractDouble, isContractRedouble, numberOfTrickTakenByDeclarer, true, true);
     }
-
+*/
     /**
      * Function to fill ruberScoring wiht results of each game
      *

@@ -1,7 +1,5 @@
 package pl.waw.rubach.points;
 
-import pl.waw.rubach.points.exceptions.BridgeException;
-
 public abstract class AbstractWholeGameScorring extends OneDeal{
 
     /**
@@ -40,9 +38,9 @@ public abstract class AbstractWholeGameScorring extends OneDeal{
     }
 
 
-    abstract public int fillOneContract(boolean whoPlay, int contractLevel, String contractSuit,
-                                        boolean isContractDouble, boolean isContractRedouble,
-                                        int numberOfTrickTakenByDeclarer) throws BridgeException;
+  //  abstract public int fillOneContract(int contractNumber, boolean whoPlay, int contractLevel, String contractSuit,
+  //                                      boolean isContractDouble, boolean isContractRedouble,
+  //                                      int numberOfTrickTakenByDeclarer) throws BridgeException;
 
     public String getGameType() {
         return gameType;

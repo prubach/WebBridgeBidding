@@ -4,9 +4,12 @@ package pl.waw.rubach.points.duplicateBridgeImps;
 import pl.waw.rubach.points.OneDeal;
 
 public class OneDealImp extends OneDeal {
-    public static final int MAXNUBEROFPOINTS = 40;
-    public static final float NUMBEROFPOINS = 20;
 
+    public static final int MAXNUBEROFPOINTS = 40;
+    public static final float MEDIUMNUMBEROFPOINS = 20;
+    public static final int MINNUMBEROFPOINTS = 0;
+
+    public static final int NUMBEROFGAMEINRUBBER =4;
 
 
 
@@ -153,7 +156,7 @@ public class OneDealImp extends OneDeal {
         this.fitThey = fitThey;
     }
 
-    public void setFitThey() {
+    private void setFitThey() {
         this.fitThey = areWePlay() ? opponensFit : declarerFit;
     }
 

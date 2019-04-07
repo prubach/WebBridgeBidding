@@ -53,7 +53,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
 
     public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScorring d) throws BridgeException {
-        setContractParameter(contractNumber+1, whoPlay,d.getContractLevel(),d.getContractSuit(),
+        setContractParameter(getContractNumber()+1, whoPlay,d.getContractLevel(),d.getContractSuit(),
                 d.getNoDoubleReSignature(),d.getDeclarerNumberOfTrickTaken());
 
         setScorringForOneGame(getContractNumber(), d);

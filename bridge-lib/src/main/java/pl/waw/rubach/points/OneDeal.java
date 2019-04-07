@@ -1,10 +1,7 @@
 package pl.waw.rubach.points;
 
 
-import pl.waw.rubach.points.exceptions.BridgeException;
-import pl.waw.rubach.points.exceptions.InvalidContractLevelException;
-import pl.waw.rubach.points.exceptions.InvalidContractSuitException;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfTrickTakenException;
+import pl.waw.rubach.points.exceptions.*;
 
 public class OneDeal {
 
@@ -173,7 +170,7 @@ public class OneDeal {
     public void setNoDoubleReSignature(int nDRSignature) throws BridgeException {
         //checking if double/ redouble or undouble signature  is correct
         if (!(nDRSignature == IS_UNDOUBLE || nDRSignature == IS_DOUBLE || nDRSignature == IS_REDOUBLE))
-            throw new BridgeException(nDRSignature);
+            throw new InvalidNDRSignatureException(nDRSignature);
         this.noDoubleReSignature = nDRSignature;
     }
 

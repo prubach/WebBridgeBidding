@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class FourGameImpScorringFirstTest {
@@ -54,6 +55,18 @@ public class FourGameImpScorringFirstTest {
         //                              0       -5       5        3
     }
 
+    private FourGameImpScorring help(int ph1,int ph2, int ph3, int ph4, int cS, boolean whoPlay, boolean fitWe, boolean fitThey) throws BridgeException{
+
+        ArrayList<CalculatedImpPointsForOneDeal> aa = new ArrayList<>();
+        aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph1,cS,false,false,fitWe, fitThey));
+        aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph2,cS,true,false,fitWe, fitThey));
+        aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph3,cS,false,true,fitWe, fitThey));
+        aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph4,cS,true,true,fitWe, fitThey));
+
+        FourGameImpScorring aaaaa =  new FourGameImpScorring(aa);
+        aaaaa.setSumm();
+        return aaaaa;
+    }
 
     @Test
     public void testRubberScoringFromInputData() throws BridgeException {
@@ -84,10 +97,16 @@ public class FourGameImpScorringFirstTest {
 
                 }
 
+            Integer summm =  help(ph1,ph2,ph3,ph4,cS,true,false,false).getSumm();
+            Assert.assertEquals(testRubberFromPoints1.get(ph1, ph2, ph3, ph4, cS), summm);
             }
         }
 
     }
+
+
+
+
 
     @Test
     public void testRubberScoringFromInputDataMirrorFloat() throws BridgeException {
@@ -123,6 +142,8 @@ public class FourGameImpScorringFirstTest {
                 Assert.assertEquals(testRubberFromPointsFloat.get(ph1, ph2, ph3, ph4, cSFloat), summ);
 
             }
+
+
         }
     }
 
@@ -150,6 +171,8 @@ public class FourGameImpScorringFirstTest {
 
                 Assert.assertEquals(res, resRevers);
             }
+            Integer summm =  -help(40-ph1,40-ph2,40-ph3,40-ph4,-cS,false,false,false).getSumm();
+            Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3, ph4, cS), summm);
 
             {
                 FourGameImpScorring rSfromPart = new FourGameImpScorring(22);
