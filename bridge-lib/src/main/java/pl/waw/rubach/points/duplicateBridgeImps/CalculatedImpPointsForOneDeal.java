@@ -101,16 +101,6 @@ public class CalculatedImpPointsForOneDeal extends OneDealImp {
     }
 
 
-    public static String impDeclination(int i) {
-        String imp;
-        if (i == 1) imp = " imp (punkt) ";
-        else if (i < 5 | i > 21 && i < 25) imp = " impy";
-        else imp = " impów";
-        return imp;
-
-
-    }
-
     //geters and setters
     public int getPointDifferent() {
         return pointDifferent;

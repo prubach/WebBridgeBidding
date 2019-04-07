@@ -3,6 +3,7 @@ package pl.waw.rubach.points.rubberBridge;
 import pl.waw.rubach.points.AbstractWholeGameScorring;
 import pl.waw.rubach.points.OneDeal;
 import pl.waw.rubach.points.exceptions.BridgeException;
+import pl.waw.rubach.points.exceptions.EndOfRubberException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +45,8 @@ public class RubberScorring extends AbstractWholeGameScorring {
         setGameType("RUBER");
         setAreWeVunerable(false);
         setAreTheyVunerable(false);
+        setWinWe(false);
+        setWinThey(false);
         setOurWiningScorring(0);
         setContractNumber(0);
     }
@@ -53,7 +56,10 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
 
     public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScorring d) throws BridgeException {
-        setContractParameter(getContractNumber()+1, whoPlay,d.getContractLevel(),d.getContractSuit(),
+
+     if(isWinWe() || isWinThey()) throw new EndOfRubberException(getOurWiningScorring());
+
+     setContractParameter(getContractNumber()+1, whoPlay,d.getContractLevel(),d.getContractSuit(),
                 d.getNoDoubleReSignature(),d.getDeclarerNumberOfTrickTaken());
 
         setScorringForOneGame(getContractNumber(), d);

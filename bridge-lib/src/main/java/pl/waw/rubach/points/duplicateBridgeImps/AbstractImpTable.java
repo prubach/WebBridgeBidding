@@ -17,7 +17,7 @@ public abstract class AbstractImpTable {
     protected NavigableSet<Integer> ptsSet;
 
 
-    //Getters ? (no setters because is not possible to change sth here ?
+       //Getters ? (no setters because is not possible to change sth here ?
 
     /**
      * Function to give imps form points (map value from key?)
@@ -48,10 +48,10 @@ public abstract class AbstractImpTable {
         return 0;
     }
 
-    static String impDeclination(int i) {
+    public static String impDeclination(int i) {
         String imp;
         if (i == 1) imp = " imp";
-        else if (i < 5) imp = " impy";
+        else if (i < 5 | i > 21 && i < 25) imp = " impy";
         else imp = " impów";
         return imp;
 

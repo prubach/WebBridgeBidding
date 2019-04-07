@@ -12,7 +12,7 @@ import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 import static java.lang.Math.abs;
 import static pl.waw.rubach.points.duplicateBridgeImps.Assumption.fillAssumptionThey;
 import static pl.waw.rubach.points.duplicateBridgeImps.Assumption.fillAssumptionWe;
-import static pl.waw.rubach.points.duplicateBridgeImps.CalculatedImpPointsForOneDeal.impDeclination;
+import static pl.waw.rubach.points.duplicateBridgeImps.AbstractImpTable.impDeclination;
 
 class OptionMenu extends MenuBar {
 

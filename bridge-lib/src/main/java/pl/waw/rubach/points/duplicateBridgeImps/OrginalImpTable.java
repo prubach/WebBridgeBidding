@@ -36,7 +36,6 @@ public class OrginalImpTable extends AbstractImpTable {
 
     /**
      * magic function to check if it is instance of ImpTable and create it if it is not
-     * (problem which I found somewhere is that two person cant use it in the same time?
      * @return instance of ImpTable
      */
     public static OrginalImpTable getInstance() {
