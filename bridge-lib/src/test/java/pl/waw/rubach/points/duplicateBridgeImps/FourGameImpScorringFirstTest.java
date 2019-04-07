@@ -288,4 +288,45 @@ public class FourGameImpScorringFirstTest {
         }
 
     }
+
+    @Test
+    public void testCountingPointsManual() throws BridgeException {
+
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(true,20f,
+                3, "nt", 1, 9, false, false, false, false);
+        Assert.assertEquals(a.getDeclarerResluts(), 9);
+        Assert.assertEquals(a.getResultsWe(true), 9);
+
+        CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(true,20f,
+                3, "nt", 1, 9, true, false, false, false);
+        Assert.assertEquals(a2.getDeclarerResluts(), 12);
+        Assert.assertEquals(a2.getResultsWe(true), 12);
+
+        CalculatedImpPointsForOneDeal a1 = new CalculatedImpPointsForOneDeal(false,20f,
+                3, "nt", 1, 4, false, true, false, false);
+        Assert.assertEquals(a1.getDeclarerResluts(), 12);
+        Assert.assertEquals(a1.getResultsWe(false), -12);
+
+        CalculatedImpPointsForOneDeal a12 = new CalculatedImpPointsForOneDeal(false,20f,
+                3, "nt", 1, 4, true, true, false, false);
+        Assert.assertEquals(a12.getDeclarerResluts(), 12);
+        Assert.assertEquals(a12.getResultsWe(false), -12);
+
+        ArrayList<CalculatedImpPointsForOneDeal> aa = new ArrayList<>();
+        aa.add(a);
+        aa.add(a2);
+        aa.add(a1);
+        aa.add(a12);
+        FourGameImpScorring fg = new FourGameImpScorring(aa);
+        int i = fg.getSumm();
+        Assert.assertEquals(i,-3);
+
+        ArrayList<CalculatedImpPointsForOneDeal> aa3 = new ArrayList<>();
+        aa3.add(a);
+        FourGameImpScorring fg3 = new FourGameImpScorring(aa3);
+        int i3 = fg3.getSumm();
+        Assert.assertEquals(i3,9);
+        fg3.fillOneContract(2,a2);
+        Assert.assertEquals(fg3.getSumm(),9+12);
+    }
 }

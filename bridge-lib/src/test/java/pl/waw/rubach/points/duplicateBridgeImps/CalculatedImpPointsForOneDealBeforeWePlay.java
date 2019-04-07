@@ -11,7 +11,6 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.Map;
 
-//todo make copy of this for  one before the second after
 public class CalculatedImpPointsForOneDealBeforeWePlay {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());

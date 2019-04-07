@@ -13,7 +13,7 @@ public class PredictionTest extends CalculatedImpPointsForOneDealFirstTest {
     public void testPrediction() throws BridgeException {
 
         for (
-            Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitMap.entrySet()) {
+            Map.Entry<MultiKey<? extends Float>, Integer> entry : testCountingPointsBothBeforNoFitBothMap.entrySet()) {
 
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);

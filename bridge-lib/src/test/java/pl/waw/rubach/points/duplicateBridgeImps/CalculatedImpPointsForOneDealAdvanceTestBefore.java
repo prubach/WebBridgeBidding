@@ -128,29 +128,7 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
     }
 
 
-    @Test
-    public void testCountingPointsA() throws BridgeException {
 
-        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(true,20f,
-                3, "nt", 1, 9, false, false, false, false);
-        Assert.assertEquals(a.getDeclarerResluts(), 9);
-        Assert.assertEquals(a.getResultsWe(true), 9);
-
-        CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(true,20f,
-                3, "nt", 1, 9, false, false, false, false);
-        Assert.assertEquals(a2.getDeclarerResluts(), 9);
-        Assert.assertEquals(a2.getResultsWe(true), 9);
-
-        CalculatedImpPointsForOneDeal a1 = new CalculatedImpPointsForOneDeal(false,20f,
-                3, "nt", 1, 4, false, false, false, false);
-        Assert.assertEquals(a1.getDeclarerResluts(), 9);
-        Assert.assertEquals(a1.getResultsWe(false), -9);
-
-        CalculatedImpPointsForOneDeal a12 = new CalculatedImpPointsForOneDeal(false,20f,
-                3, "nt", 1, 4, false, false, false, false);
-        Assert.assertEquals(a12.getDeclarerResluts(), 9);
-        Assert.assertEquals(a12.getResultsWe(false), -9);
-    }
 }
 
 
