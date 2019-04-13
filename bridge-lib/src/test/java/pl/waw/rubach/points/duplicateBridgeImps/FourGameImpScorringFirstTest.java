@@ -320,13 +320,16 @@ public class FourGameImpScorringFirstTest {
         FourGameImpScorring fg = new FourGameImpScorring(aa);
         int i = fg.getSumm();
         Assert.assertEquals(i,-3);
-
+        logger.info(fg.getResultsDescription());
         ArrayList<CalculatedImpPointsForOneDeal> aa3 = new ArrayList<>();
         aa3.add(a);
         FourGameImpScorring fg3 = new FourGameImpScorring(aa3);
         int i3 = fg3.getSumm();
         Assert.assertEquals(i3,9);
         fg3.fillOneContract(2,a2);
-        Assert.assertEquals(fg3.getSumm(),9+12);
+        fg3.fillOneContract(3,a1);
+        Assert.assertEquals(fg3.getSumm(),9+12-12);
+        logger.info("\n " + fg3.getResultsDescription());
+
     }
 }

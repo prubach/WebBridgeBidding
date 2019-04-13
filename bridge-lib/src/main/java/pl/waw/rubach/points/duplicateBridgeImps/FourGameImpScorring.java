@@ -44,13 +44,14 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
 
     public FourGameImpScorring(ArrayList<CalculatedImpPointsForOneDeal> d) {
         this();
-
+        int lastContractNumber=0;
         for (int i = 0; i < d.size(); i++) {
             CalculatedImpPointsForOneDeal calculatedImpPointsForOneDeal = d.get(i);
             fillOneContract(i+1, calculatedImpPointsForOneDeal);
+            lastContractNumber = i;
         }
 
-        setResultsDescription("Końcowy wynik gry do rozdania numer:" + getGameID() + " jest: " + getSumm() + " \n");
+        setResultsDescription("Końcowy wynik gry nr: "+ getGameID() + " do rozdania numer:" + lastContractNumber + " jest: " + getSumm() + " \n");
 
     }
 

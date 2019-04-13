@@ -1,15 +1,17 @@
 package pl.waw.rubach.points.exceptions;
 
-import java.util.Optional;
-
 public class EndOfRubberException extends BridgeException {
+
 
 
     private int finalScore;
 
-
-    public EndOfRubberException(int finalScore) {
-        super(Optional.of(finalScore).map(finalScore1 -> "Rober jest zakończony z wynikiem: " + finalScore1 + " dla nas ").orElse("Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony"));
+    /**
+     * Exception of end of the rubber (whole game)
+     */
+    //pyt czy taki wyjątek to dobry pomysł czy próbowąć to zrobić też dla gry na impy?
+    public EndOfRubberException(int finalScore, boolean winWe, boolean winThey) {
+        super(winWe || winThey ? "Rober jest zakończony z wynikiem: " + finalScore + " dla nas " :"Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony");
         this.finalScore = finalScore;
     }
 

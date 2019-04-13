@@ -57,7 +57,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
     public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScorring d) throws BridgeException {
 
-     if(isWinWe() || isWinThey()) throw new EndOfRubberException(getOurWiningScorring());
+     if(isWinWe() || isWinThey()) throw new EndOfRubberException(getOurWiningScorring(),isWinWe() ,isWinThey() );
 
      setContractParameter(getContractNumber()+1, whoPlay,d.getContractLevel(),d.getContractSuit(),
                 d.getNoDoubleReSignature(),d.getDeclarerNumberOfTrickTaken());

@@ -3,6 +3,9 @@ package pl.waw.rubach.points;
 
 import pl.waw.rubach.points.exceptions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class OneDeal {
 
     public static final int IS_DOUBLE = 2;
@@ -11,6 +14,7 @@ public class OneDeal {
     public static final int NUBEROFTRICS = 13;
     public static final int MINCONTRACTLEVEL = 1;
     public static final int MAXCONTRACTLEVEL = 7;
+    public static final List<String> SUITS = Arrays.asList("S","H","D","C","NT","N");
 
     /**
      * indicates who is Declarer - but all value here for declarer
@@ -143,25 +147,13 @@ public class OneDeal {
     }
 
     public void setContractSuit(String contractSuit) throws InvalidContractSuitException {
-        this.contractSuit = contractSuit;
-/*
-        switch (getContractSuit().toUpperCase()) {
-            case "S":
-            case "H":
-                this.contractSuit = contractSuit;
-                break;
-            case "D":
-            case "C":
-                this.contractSuit = contractSuit;
-                break;
-            case "N":
-            case "NT":
-                this.contractSuit = contractSuit;
-                break;
-            default:
-                throw new InvalidContractSuitException(getContractSuit());
- }*/
+        for(String s: SUITS) {
+            if (s.equals(contractSuit.toUpperCase()))    this.contractSuit = contractSuit;
+            }
+       if (this.contractSuit == null)  throw new InvalidContractSuitException(contractSuit);
+
     }
+
 
     public int getNoDoubleReSignature() {
         return noDoubleReSignature;

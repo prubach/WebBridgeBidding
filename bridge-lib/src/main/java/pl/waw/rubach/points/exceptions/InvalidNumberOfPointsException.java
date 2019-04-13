@@ -5,14 +5,14 @@ import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MINNUMBEROFPOI
 
 public class InvalidNumberOfPointsException extends BridgeException {
 
-    private float pointsGiven;
+    private final float pointsGiven;
 
 
     public InvalidNumberOfPointsException(float pointsGiven) {
-        super(pointsGiven<=MAXNUBEROFPOINTS && pointsGiven >=MINNUMBEROFPOINTS ?
-                "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony":
-                "Nieprawidłowo podana liczba punktów na obu rękach partnerów-  podano: " + pointsGiven + " a powinna być liczba dodatnia  i nie większa od "+MAXNUBEROFPOINTS+" - spróbuj jeszcze raz!");
-         this.pointsGiven = pointsGiven;
+        super(pointsGiven <= MAXNUBEROFPOINTS && pointsGiven >= MINNUMBEROFPOINTS ? wrongExceptionCaseMessage
+                : "Nieprawidłowo podana liczba punktów na obu rękach partnerów-  podano: " + pointsGiven
+                + " a powinna być liczba dodatnia  i nie większa od " + MAXNUBEROFPOINTS + " - spróbuj jeszcze raz!");
+        this.pointsGiven = pointsGiven;
     }
 
     public float getPointsGiven() {

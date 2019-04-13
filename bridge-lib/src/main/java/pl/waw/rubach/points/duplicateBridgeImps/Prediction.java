@@ -58,27 +58,7 @@ setDes(" \n Oczekiwane wyniki przy "+getPointsInBothDeclarerHands()+ " to "+ get
          +"</B>  <BR> a ty ugrasz (zdobędziesz) pomiędzy "  + wynikUjemnyMin + " a "+ wynikUjemnyMax + "punktów. ");
     }
 
-
-    public static void main(String[] args){
-        int imps = 0;
-         System.out.println("Aby uzyskać "+ imps + " impów różnica punktów musi być między: " +ImpTable.findingDifferenceFromImp(imps)[0] + " a " + ImpTable.findingDifferenceFromImp(imps)[1]);
-
-float poinst = 23.0f;
-
-try {
-    Prediction ex =new Prediction(imps,poinst, false, false, false, false,true);
-
-    System.out.print("\n "+ex.getDes());
-} catch (Exception e) {
-System.out.print(e.getMessage());
-}
-
-    }
-
-
-
-
-//getters and setters
+   //getters and setters
 
 
     public int getExpectedPoints() {

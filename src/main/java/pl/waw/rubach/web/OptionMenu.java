@@ -5,7 +5,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.duplicateBridgeImps.*;
 import pl.waw.rubach.points.exceptions.BridgeException;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
+import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRubber;
 import pl.waw.rubach.points.rubberBridge.RubberScorring;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
@@ -530,7 +530,7 @@ class OptionMenu extends MenuBar {
         Button calculateImpPoints = new Button("Oblicz punkty i impy za jedno rozdanie - niezależnie kto gra! ", clickEvent -> {
             try {
                 int contractNumber = Integer.parseInt(numberOfContract.getValue()); //bo liczy od zera
-                if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
+                if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRubber(contractNumber);
 
 
                 DuplicateBridgeScoring duplicateBridgeScoring =
@@ -572,7 +572,7 @@ class OptionMenu extends MenuBar {
         Button makeScorringOfFourDeal = new Button("Prowadz zapis 4 rozdań! ", clickEvent -> {
             try {
                 int contractNumber = Integer.parseInt(numberOfContract.getValue()); //bo liczy od zera
-                if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRuber(contractNumber);
+                if (contractNumber > 4 || contractNumber <= 0) throw new InvalidNumberOfGamesInRubber(contractNumber);
 
 
                 DuplicateBridgeScoring duplicateBridgeScoring =

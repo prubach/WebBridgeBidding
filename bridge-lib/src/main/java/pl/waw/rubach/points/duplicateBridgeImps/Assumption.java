@@ -1,7 +1,7 @@
 package pl.waw.rubach.points.duplicateBridgeImps;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRuber;
+import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRubber;
 
 public enum Assumption {
   NOR(1),WE(2),THEY(3),BOTH(4);
@@ -10,12 +10,7 @@ public enum Assumption {
     WE(true,false),
     THEY(false,true),
     BOTH(true,true);
-*/
-    private  boolean we;
-    private  boolean they;
-    private  int contractNumber;
-
-    Assumption(boolean we,boolean they) {
+ Assumption(boolean we,boolean they) {
         this.we = we;
         this.they = they;
        if(!we && !they) this.contractNumber = 1;
@@ -23,6 +18,13 @@ public enum Assumption {
        else if(!we) this.contractNumber=3;
        else this.contractNumber=4;
     }
+
+*/
+    private  boolean we;
+    private  boolean they;
+    private  int contractNumber;
+
+
     Assumption(int contractNumber) {
         this.contractNumber = contractNumber;
         if (contractNumber == 1) {
@@ -72,7 +74,7 @@ public enum Assumption {
    }
 
    private static void checkIfCorrectContractNumber(int contractNumber) throws BridgeException {
-        if(contractNumber>4 || contractNumber<=0) throw new InvalidNumberOfGamesInRuber(contractNumber);
+        if(contractNumber>4 || contractNumber<=0) throw new InvalidNumberOfGamesInRubber(contractNumber);
    }
 
     public int getContractNumber() {

@@ -20,11 +20,9 @@ public class CalculatedOneDealRubberScorring extends InternationalBridgeScoring 
 
     public CalculatedOneDealRubberScorring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
                                            boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)  throws  BridgeException {
-        super(contractLevel, contractSuit, isContractDouble, isContractRedouble, auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
+        this(contractLevel, contractSuit, isContractDouble? IS_DOUBLE: isContractRedouble? IS_REDOUBLE:IS_UNDOUBLE,
+                auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
 
-
-        setDeclarerUnderPoints();
-        setDeclarerOverPoints();
     }
 
     public int getDeclarerUnderPoints(){

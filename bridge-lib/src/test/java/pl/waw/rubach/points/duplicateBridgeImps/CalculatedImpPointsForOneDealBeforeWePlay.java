@@ -96,6 +96,14 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         }
     }
 
+    @Test
+    public void testCountingPointsRes() throws BridgeException {
+        testFunction1(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
+        testFunction1(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
+        testFunction1(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
+        testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
+    }
+
     private void testFunction2(MultiKeyMap<Float, Integer> map, boolean[] assumption, boolean fitWe, boolean fitThey) throws BridgeException {
 
         String des2 = printFit(fitWe, fitThey);
@@ -125,31 +133,7 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
         testFunction2(testCountingPointsFitBothMap, assumption, true, true);
     }
 
-    @Test
-    public void testCountingPointsRes() throws BridgeException {
-        testFunction1(testCountingPointsNoFitBothMap, a, wePlay, assumption, false, false);
 
-    }
-
-    @Test
-    public void testCountingPointsFitWeRes() throws BridgeException {
-        testFunction1(testCountingPointsFitWeMap, a, wePlay, assumption, true, false);
-
-    }
-
-
-    @Test
-    public void testCountingPointsFitTheyRes() throws BridgeException {
-        testFunction1(testCountingPointsFitTheyMap, a, wePlay, assumption, false, true);
-
-    }
-
-    @Test
-    public void testCountingPointsBothFitRes() throws BridgeException {
-        testFunction1(testCountingPointsFitBothMap, a, wePlay, assumption, true, true);
-
-
-    }
 
     //todo zdecydować co zostaje?  - zamiast tej pustej klasy- lepiej tak: jakoś to mi się wydaje mało eleganckie :) ale z tą pustą klasą to trochę bez sensu...
     //odp podobnie, myślę, że obydwa rozwiązania są ok.
