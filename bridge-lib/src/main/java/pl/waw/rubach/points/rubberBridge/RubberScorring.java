@@ -59,8 +59,8 @@ public class RubberScorring extends AbstractWholeGameScorring {
 
      if(isWinWe() || isWinThey()) throw new EndOfRubberException(getOurWiningScorring(),isWinWe() ,isWinThey() );
 
-     setContractParameter(getContractNumber()+1, whoPlay,d.getContractLevel(),d.getContractSuit(),
-                d.getNoDoubleReSignature(),d.getDeclarerNumberOfTrickTaken());
+     setContractParameter(whoPlay, d.getContractLevel(),
+             d.getContractSuit(), d.getNoDoubleReSignature(), d.getDeclarerNumberOfTrickTaken());
 
         setScorringForOneGame(getContractNumber(), d);
         setShortDescription(getContractDescription(whoPlay ? isAreWeVunerable() : isAreTheyVunerable()));
@@ -302,7 +302,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
         this.wePlay = whoPlay;
     }
 
-    private void setContractParameter(int contractNumber, boolean whoPlay,
+    private void setContractParameter(boolean whoPlay,
                                       int contractLevel, String contractSuit,
                                       int nDRSig,
                                       int numerOfTricskTakenByDeclarere

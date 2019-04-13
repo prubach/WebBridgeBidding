@@ -11,10 +11,10 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.Map;
 
-public class RubberScorringTest {
+public class RubberScorringTestFirst {
 
 
-    private static Logger logger = LoggerFactory.getLogger(RubberScorringTest.class);
+    private static Logger logger = LoggerFactory.getLogger(RubberScorringTestFirst.class);
 
 
 

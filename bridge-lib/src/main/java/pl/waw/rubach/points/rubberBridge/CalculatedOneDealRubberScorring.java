@@ -25,6 +25,16 @@ public class CalculatedOneDealRubberScorring extends InternationalBridgeScoring 
 
     }
 
+
+    public CalculatedOneDealRubberScorring(boolean whoPlay, int contractLevel, String contractSuit, int nDRSignature,
+                                           boolean auctionAssumptionWe,boolean auctionAssumptionThey, int numberOfTrickTakenByWe)  throws  BridgeException {
+        this(contractLevel, contractSuit, nDRSignature,
+                whoPlay? auctionAssumptionWe: auctionAssumptionThey,
+                whoPlay? numberOfTrickTakenByWe: NUBEROFTRICS -numberOfTrickTakenByWe);
+
+        setWePlay(whoPlay);
+    }
+
     public int getDeclarerUnderPoints(){
         return declarerUnderPoints;
     }
