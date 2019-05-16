@@ -15,16 +15,6 @@ public class OneDealImp extends OneDeal {
 
 
     /**
-     * Fit for  we of playing Pair means if we have 8 cards in suit (major or all depending of points)
-     */
-    private boolean fitWe;
-
-    /**
-     * Fit for they means if they have 8 cards in suit (major or all depending of poinst)
-     */
-    private boolean fitThey;
-
-    /**
      * ATTENTION fit opponents not they!!!
      * Fit for  opponents of playing Pair means if they have 8 cards in suit (major or all depending of points)
      */
@@ -137,27 +127,11 @@ public class OneDealImp extends OneDeal {
     //***************** FIT
 
     public boolean isFitWe() {
-        return fitWe;
-    }
-
-    public void setFitWe(boolean fitWe) {
-        this.fitWe = fitWe;
-    }
-
-    public void setFitWe() {
-        this.fitWe = areWePlay() ? declarerFit : opponensFit;
+        return areWePlay() ? declarerFit : opponensFit;
     }
 
     public boolean isFitThey() {
-        return fitThey;
-    }
-
-    public void setFitThey(boolean fitThey) {
-        this.fitThey = fitThey;
-    }
-
-    private void setFitThey() {
-        this.fitThey = areWePlay() ? opponensFit : declarerFit;
+        return areWePlay() ? opponensFit : declarerFit;
     }
 
     public boolean isOpponensFit() {
@@ -166,8 +140,7 @@ public class OneDealImp extends OneDeal {
 
     public void setOpponensFit(boolean opponensFit) {
         this.opponensFit = opponensFit;
-        setFitThey();
-        setFitWe();
+
     }
 
     public boolean isDeclarerFit() {
@@ -176,9 +149,7 @@ public class OneDealImp extends OneDeal {
 
     public void setDeclarerFit(boolean declarerFit) {
         this.declarerFit = declarerFit;
-        setFitThey();
-        setFitWe();
-    }
+        }
 
     //*****OTHER
 

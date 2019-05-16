@@ -218,6 +218,10 @@ public class FourGameImpScorringFirstTest {
         logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych  jest: " + a2.getSumm() + " \n");
         Assert.assertEquals(a2.getSumm(), 2);
 
+        FourGameImpScorring a3 = new FourGameImpScorring(true, true, true, true, 0, "nt", 1, "nt", 1, "nt", 1, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+        logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych  jest: " + a3.getSumm() + " \n");
+        Assert.assertEquals(a3.getSumm(), -1);
+
 
     }
 

@@ -73,6 +73,7 @@ public class InternationalBridgeScoringTestBefore {
         //testPointsMap.put()
 
         //all equal normal contract
+        testPointsForMajorContract.put(0,0);
         testPointsForMajorContract.put(1, 30 + premiaZaCzesciowke);
         testPointsForMajorContract.put(2, 60 + premiaZaCzesciowke);
         testPointsForMajorContract.put(3, 90 + premiaZaCzesciowke);
@@ -81,6 +82,7 @@ public class InternationalBridgeScoringTestBefore {
         testPointsForMajorContract.put(6, 180 + premiaZaKoncowke + premiaZaSzlemika);
         testPointsForMajorContract.put(7, 210 + premiaZaKoncowke + premiaZaSzlema);
 
+        testPointsForMinorContract.put(0,0);
         testPointsForMinorContract.put(1, 20 + premiaZaCzesciowke);
         testPointsForMinorContract.put(2, 40 + premiaZaCzesciowke);
         testPointsForMinorContract.put(3, 60 + premiaZaCzesciowke);
@@ -89,6 +91,7 @@ public class InternationalBridgeScoringTestBefore {
         testPointsForMinorContract.put(6, 120 + premiaZaKoncowke + premiaZaSzlemika);
         testPointsForMinorContract.put(7, 140 + premiaZaKoncowke + premiaZaSzlema);
 
+        testPointsForNoTrumphContract.put(0,0);
         testPointsForNoTrumphContract.put(1, 40 + premiaZaCzesciowke);
         testPointsForNoTrumphContract.put(2, 70 + premiaZaCzesciowke);
         testPointsForNoTrumphContract.put(3, 100 + premiaZaKoncowke);

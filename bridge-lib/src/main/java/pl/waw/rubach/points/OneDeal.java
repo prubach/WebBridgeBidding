@@ -12,26 +12,26 @@ public class OneDeal {
     public static final int IS_REDOUBLE = 4;
     public static final int IS_UNDOUBLE = 1;
     public static final int NUBEROFTRICS = 13;
-    public static final int MINCONTRACTLEVEL = 1;
+    public static final int MINCONTRACTLEVEL = 0;
     public static final int MAXCONTRACTLEVEL = 7;
     public static final List<String> SUITS = Arrays.asList("S","H","D","C","NT","N");
 
     /**
      * indicates who is Declarer - but all value here for declarer
      */
-    private boolean wePlay = true;
+    protected boolean wePlay = true;
 
     /**
      * The number of tricks that (when added to the book of six tricks) a bid or contract states will be taken to win.
      * in future from other part of application - declarerResluts of biding part or user input
      */
-    private int contractLevel;
+    protected int contractLevel;
 
     /**
      * Cards suits [denomination or strain] that denotes the proposed trump suit or no trump.
      * Thus, there are five denominations – no trump, spades, hearts, diamonds and clubs.
      */
-    private String contractSuit;
+    protected String contractSuit;
 
     /**
      * Signature that shows is it undouble (=1), double (=2) or redouble (=4) contract.
@@ -97,6 +97,7 @@ public class OneDeal {
         setNoDoubleReSignature(noDoubleReSignature);
         setDeclarerVulnerable(auctionAssumptionDeclarer);
         setDeclarerNumberOfTrickTaken(declarerNumberOfTrickTaken);
+
 
     }
 

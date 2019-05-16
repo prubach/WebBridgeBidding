@@ -65,7 +65,8 @@ public class InternationalBridgeScoring extends OneDeal {
         } else {
             setDeclarerContractScoringPoints(getPenaltyPoints());
         }
-
+        if(contractLevel ==0) setDeclarerContractScoringPoints(0);
+        else
         setDeclarerContractScoringPoints(getDeclarerContractScoringPoints()
                 + getGamePartGameBonus(getDeclarerContractScoringPoints())
                 + getOvertrickPoints()
