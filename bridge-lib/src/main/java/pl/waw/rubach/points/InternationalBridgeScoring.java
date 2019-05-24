@@ -242,6 +242,7 @@ public class InternationalBridgeScoring extends OneDeal {
 
     //getter
     public String getDescription() {
+        if(contractLevel==0) description = "nie było gry";
         description =description.replace("%", Integer.toString(getSlamsBonusPoints()));
         return description;
     }
