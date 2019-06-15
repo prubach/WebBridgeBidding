@@ -241,7 +241,16 @@ class OptionMenu extends MenuBar {
                 "\n      10   - A109x, K109x, D109x"+
                 "" +
                 "\n\n\n Zrzutki odwrotne: "+
-        "\n -do koloru partnera dokładamy markę – jakościówka (mała karta lub młodsza – starsza zachęca [demarka to duża lub starsza młodsza];" +
+
+
+                "\n   Sygnał ilościowy"+
+        "\n niższa - wyższa - wskazuje na parzystą liczbę kart w kolorze,"+
+        "\n wyższa - niższa - wskazuje nieparzystą liczbę kart w kolorze,"+
+        "\n        Sygnał jakościowy"+
+        "\n niska blotka - zachęca do kontynuowania wistu (marka)"+
+        "\n       wysoka blotka - zniechęca do kontynuowania wistu (demarka)"+
+        " \n czyli konkretnie: "+
+                "\n -do koloru partnera dokładamy markę – jakościówka (mała karta lub młodsza – starsza zachęca [demarka to duża lub starsza młodsza];" +
         "\n -do koloru rozygrywającego ilościówkę (dołożenie w danym kolorze młodsza starsza – parzysta liczba kart w tym kolorze; starsza – młodsza -nieparzystą);" +
         "\n - Lavintal do koloru innego (mała – mam figurę – wychodź w ten kolor ; duża – nie mam figury – nie chcę tego koloru)" +
         "\n -do koloru atutowego LAVINTHAL; (wyższa-młodsza= wartości w starszych)    do atu rozgrywającego 962 mam coś najstarszym kolorze / 269 mam coś w najmłodszym kolorze, 692 mam coś w środkowym kolorze" +
