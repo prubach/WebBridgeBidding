@@ -224,7 +224,23 @@ class OptionMenu extends MenuBar {
                 "\n spod czwartej lub dłuższej figury wistujemy czwartą najstarszą kartą (czwarta najlepsza),   " +
                 "\n spod czwartej lub dłuższej dziesiątki postępujemy tak, jak przy wiście z blotek,  czyli wychodzimy drugą kartą od góry. " +
                 "\n\n\n Przykłady:  AKx(żąda ilościówki), AK, KDx, KD(w sytuacjach, gdy nie może to zmylić partnera), KDW, DW, DWx, W10x, W10, KW10(x,x), K109x, D109x, 10x, xx, xxx, 109x(x,x), xxxx(x,x), Hxx, Hxxx, Hxxxx(x,x); "+
-        "\n\n\n Zrzutki odwrotne: "+
+        " Wist z blotek: xx         - blotka niższa, "+
+                "\n          xxx       - blotka środkowa, później blotka niższa ,"+
+                "\n         xxxx     - druga od góry, później wyższa (wskazanie parzystości),"+
+                "\n         xxxxx   - druga od góry, później niższa (wskazanie nieparzystości),"+
+                "\n       Wist spod figury "+
+                 "\n Fx        - wistujemy figurą, z 10x wistujemy 10,"+
+                "\n    Fxx      - karta środkowa,"+
+                "\n    Fxxx    - czwarta najlepsza,"+
+                "\n     Fxxxx  - czwarta najlepsza,"+
+                "\n     Wist z sekwensów"+
+                "\n  A    - AKx,"+
+                "\n      K    - KDx lub AKsec ,"+
+                "\n D    - DWx, ADWx,"+
+                "\n        W   - W10x, AW10x, KW10x,"+
+                "\n      10   - A109x, K109x, D109x"+
+                "" +
+                "\n\n\n Zrzutki odwrotne: "+
         "\n -do koloru partnera dokładamy markę – jakościówka (mała karta lub młodsza – starsza zachęca [demarka to duża lub starsza młodsza];" +
         "\n -do koloru rozygrywającego ilościówkę (dołożenie w danym kolorze młodsza starsza – parzysta liczba kart w tym kolorze; starsza – młodsza -nieparzystą);" +
         "\n - Lavintal do koloru innego (mała – mam figurę – wychodź w ten kolor ; duża – nie mam figury – nie chcę tego koloru)" +
