@@ -293,7 +293,29 @@ public class InternationalBridgeScoringTestBefore {
 
 
         //TESTS WPADKI - all possibilitis
-        //example test jedna wpadka  (wysokość kontraktu, oczekiwany wynik)
+        //test for contract  with missig p tricks - all possibilites
+
+        for (int i = 1; i <= 13; i++) {
+            testPointsContractMinusMore.put(i, -i * wpadkaBezKontry);
+        }
+
+        testPointsForContractMinusMoreDouble.put(1, -wpadka1Zkontra);
+        testPointsForContractMinusMoreDouble.put(2, -wpadka1Zkontra - wpadka2Zkontra);
+        testPointsForContractMinusMoreDouble.put(3, -wpadka1Zkontra - 2 * wpadka2Zkontra);
+
+        for (int i = 4; i <= 13; i++) {
+            testPointsForContractMinusMoreDouble.put(i, -wpadka1Zkontra - 2 * wpadka2Zkontra - (i - 3) * 300);
+        }
+
+        testPointsForContractMinusMoreReDouble.put(1, 2 * (-wpadka1Zkontra));
+        testPointsForContractMinusMoreReDouble.put(2, 2 * (-wpadka1Zkontra - wpadka2Zkontra));
+        testPointsForContractMinusMoreReDouble.put(3, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra));
+
+        for (int i = 4; i <= 13; i++) {
+            testPointsForContractMinusMoreReDouble.put(i, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - (i - 3) * 300));
+        }
+
+        //example test jedna wpadka  (wysokość kontraktu, oczekiwany wynik) - not nessesery (is included above)
         testPointsContractMinusOne.put(1, -wpadkaBezKontry);
         testPointsContractMinusOne.put(2, -wpadkaBezKontry);
         testPointsContractMinusOne.put(3, -wpadkaBezKontry);
@@ -308,64 +330,6 @@ public class InternationalBridgeScoringTestBefore {
         testPointsContractMinusOneDouble.put(6, -2 * wpadkaBezKontry);
         testPointsContractMinusOneDouble.put(7, -2 * wpadkaBezKontry);
 
-        //test for contract  with missig p tricks - all possibilites
-
-        for (int i = 1; i <= 13; i++) {
-            testPointsContractMinusMore.put(i, -i * wpadkaBezKontry);
-        }
-/*
-        testPointsContractMinusMore.put(1, -wpadkaBezKontry);
-        testPointsContractMinusMore.put(2, -2 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(3, -3 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(4, -4 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(5, -5 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(6, -6 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(7, -7 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(8, -8 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(9, -9 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(10, -10 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(11, -11 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(12, -12 * wpadkaBezKontry);
-        testPointsContractMinusMore.put(13, -13 * wpadkaBezKontry);
-*/
-        testPointsForContractMinusMoreDouble.put(1, -wpadka1Zkontra);
-        testPointsForContractMinusMoreDouble.put(2, -wpadka1Zkontra - wpadka2Zkontra);
-        testPointsForContractMinusMoreDouble.put(3, -wpadka1Zkontra - 2 * wpadka2Zkontra);
-
-        for (int i = 4; i <= 13; i++) {
-            testPointsForContractMinusMoreDouble.put(i, -wpadka1Zkontra - 2 * wpadka2Zkontra - (i - 3) * 300);
-        }
-        /*
-        testPointsForContractMinusMoreDouble.put(4, -wpadka1Zkontra - 2 * wpadka2Zkontra - 300);
-        testPointsForContractMinusMoreDouble.put(5, -wpadka1Zkontra - 2 * wpadka2Zkontra - 2 * 300);
-        testPointsForContractMinusMoreDouble.put(6, -wpadka1Zkontra - 2 * wpadka2Zkontra - 3 * 300);
-        testPointsForContractMinusMoreDouble.put(7, -wpadka1Zkontra - 2 * wpadka2Zkontra - 4 * 300);
-        testPointsForContractMinusMoreDouble.put(8, -wpadka1Zkontra - 2 * wpadka2Zkontra - 5 * 300);
-        testPointsForContractMinusMoreDouble.put(9, -wpadka1Zkontra - 2 * wpadka2Zkontra - 6 * 300);
-        testPointsForContractMinusMoreDouble.put(10, -wpadka1Zkontra - 2 * wpadka2Zkontra - 7 * 300);
-        testPointsForContractMinusMoreDouble.put(11, -wpadka1Zkontra - 2 * wpadka2Zkontra - 8 * 300);
-        testPointsForContractMinusMoreDouble.put(12, -wpadka1Zkontra - 2 * wpadka2Zkontra - 9 * 300);
-        testPointsForContractMinusMoreDouble.put(13, -wpadka1Zkontra - 2 * wpadka2Zkontra - 10 * 300);
-*/
-        testPointsForContractMinusMoreReDouble.put(1, 2 * (-wpadka1Zkontra));
-        testPointsForContractMinusMoreReDouble.put(2, 2 * (-wpadka1Zkontra - wpadka2Zkontra));
-        testPointsForContractMinusMoreReDouble.put(3, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra));
-
-        for (int i = 4; i <= 13; i++) {
-            testPointsForContractMinusMoreReDouble.put(i, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - (i - 3) * 300));
-        }
-        /*
-        testPointsForContractMinusMoreReDouble.put(4, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 300));
-        testPointsForContractMinusMoreReDouble.put(5, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 2 * 300));
-        testPointsForContractMinusMoreReDouble.put(6, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 3 * 300));
-        testPointsForContractMinusMoreReDouble.put(7, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 4 * 300));
-        testPointsForContractMinusMoreReDouble.put(8, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 5 * 300));
-        testPointsForContractMinusMoreReDouble.put(9, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 6 * 300));
-        testPointsForContractMinusMoreReDouble.put(10, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 7 * 300));
-        testPointsForContractMinusMoreReDouble.put(11, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 8 * 300));
-        testPointsForContractMinusMoreReDouble.put(12, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 9 * 300));
-        testPointsForContractMinusMoreReDouble.put(13, 2 * (-wpadka1Zkontra - 2 * wpadka2Zkontra - 10 * 300));
-*/
         //test for contract nt on level 3 with missig p - not nessesery (is included above)
 
         testPointsForContractLevel3MinusMore.put(1, -wpadkaBezKontry);

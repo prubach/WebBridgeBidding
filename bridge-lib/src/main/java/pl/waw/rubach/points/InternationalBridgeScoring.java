@@ -128,9 +128,7 @@ public class InternationalBridgeScoring extends OneDeal {
         int overtricksPoints = 0;
         int overtricks = oddTricks - getContractLevel();
 
-        // jaki warunek lepiej (bardziej elegancko) - to chyba jest to samo :
         // if (oddTricks > getContractLevel()) {
-        //odp nie widzę specjalnej różnicy
         if (made && overtricks > 0) {
 
             if (getNoDoubleReSignature() == IS_UNDOUBLE) {

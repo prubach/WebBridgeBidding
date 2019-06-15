@@ -7,7 +7,7 @@ public class InternationalBridgeScoringTestAfter extends InternationalBridgeScor
     @Before
     public void fillTestPointsMap() {
         beforeAfter = true;
-        karaZaKontre = 50;
+     //   karaZaKontre = 50;
       //  premiaZaCzesciowke = 50;
       //  premiaZaKoncowke = 500;
         premiaZaSzlemika = 750;

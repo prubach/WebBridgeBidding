@@ -7,7 +7,7 @@ public class DuplicateBridgeScoringTestAfter extends DuplicateBridgeScoringTestB
     @Before
     public void fillTestPointsMap() {
         beforeAfter = true;
-        karaZaKontre = 50;
+     //   karaZaKontre = 50;
     //    premiaZaCzesciowke = 50;
     //    premiaZaKoncowke = 500;
         premiaZaSzlemika = 750;
