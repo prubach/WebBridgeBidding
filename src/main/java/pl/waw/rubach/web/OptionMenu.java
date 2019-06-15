@@ -65,6 +65,8 @@ class OptionMenu extends MenuBar {
         instructionMenuItemBidsTypes.addItem("Tabelki  do obliczania punktów:", null, commandToDisplayPointsTable);
         Command commandToOpenDescription = (Command) selectedItem -> actionOpenWindow(ui, "Jak liczyć punkty? ", createDesciption());
         instructionMenuItemBidsTypes.addItem("Zasady obliczania punktów", null, commandToOpenDescription);
+        Command commandToOpenDescriptionOfBiding = (Command) selectedItem -> actionOpenWindow(ui, "Dodatkowe informacje ", createDesciption2());
+        instructionMenuItemBidsTypes.addItem("Wisty i zrzutki", null, commandToOpenDescriptionOfBiding);
 
 
         //  Yet another top-level item with biding system (moved from other menu moved to Vaadin because is to difficult ?)
@@ -201,6 +203,37 @@ class OptionMenu extends MenuBar {
                 "Rekontra Podwojenie zapisu (z kontrą) za ugrane lewy oraz nadróbki, podwojenie zapisu (z kontrą) za wpadki i za nieudaną kontrę";
 
         TextArea text = new TextArea("Punktacja w systemie międzynarodowym");
+        text.setStyleName("description");
+        text.setValue(s);
+        text.setWidth("100%");
+        text.setHeight("400px");
+        description.addComponent(text);
+
+        return description;
+    }
+
+
+    private VerticalLayout createDesciption2() {
+        VerticalLayout description = new VerticalLayout();
+
+        String s = " \n Wist odmienny: z sekwensu zawsze wistujemy kartą najstarszą, chyba że nasze figury są secowe (tzn. mamy tylko dwie karty w danym kolorze i jest to sekwens " +
+                "\n- wtedy wistujemy figurą młodszą) albo chcemy poprosić partnera o odblokowanie (wtedy też wistujemy kartą młodszą),"+
+                "\n z blotek wistujemy kartą drugą od góry,  " +
+                "\n z drugiego honoru wistujemy honorem,  " +
+                "\n spod trzeciego honoru wistujemy środkową kartą (nawet gdy również jest ona honorem)," +
+                "\n spod czwartej lub dłuższej figury wistujemy czwartą najstarszą kartą (czwarta najlepsza),   " +
+                "\n spod czwartej lub dłuższej dziesiątki postępujemy tak, jak przy wiście z blotek,  czyli wychodzimy drugą kartą od góry. " +
+                "\n\n\n Przykłady:  AKx(żąda ilościówki), AK, KDx, KD(w sytuacjach, gdy nie może to zmylić partnera), KDW, DW, DWx, W10x, W10, KW10(x,x), K109x, D109x, 10x, xx, xxx, 109x(x,x), xxxx(x,x), Hxx, Hxxx, Hxxxx(x,x); "+
+        "\n\n\n Zrzutki odwrotne: "+
+        "\n -do koloru partnera dokładamy markę – jakościówka (mała karta lub młodsza – starsza zachęca [demarka to duża lub starsza młodsza];" +
+        "\n -do koloru rozygrywającego ilościówkę (dołożenie w danym kolorze młodsza starsza – parzysta liczba kart w tym kolorze; starsza – młodsza -nieparzystą);" +
+        "\n - Lavintal do koloru innego (mała – mam figurę – wychodź w ten kolor ; duża – nie mam figury – nie chcę tego koloru)" +
+        "\n -do koloru atutowego LAVINTHAL; (wyższa-młodsza= wartości w starszych)    do atu rozgrywającego 962 mam coś najstarszym kolorze / 269 mam coś w najmłodszym kolorze, 692 mam coś w środkowym kolorze" +
+        " \n        -zrzutki nie do koloru przy grze atutowej: marka bezpośrednia (np. mała trefl - dobre trefle);" +
+        "\n zrzutki przy grze w BA:   potwierdzenie wistu; -mała potwierdza;" +
+        "\n zrzutka krakowska (pierwsza zrzutka bezwartościowego koloru (jak nie ma do koloru) przy bezatu wskazuje swoją wysokością wyższa starszy, niska młodszy z pozostałych kolorów;";
+
+        TextArea text = new TextArea("Wisty i zrzutki");
         text.setStyleName("description");
         text.setValue(s);
         text.setWidth("100%");
