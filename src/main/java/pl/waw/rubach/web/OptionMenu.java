@@ -216,29 +216,32 @@ class OptionMenu extends MenuBar {
     private VerticalLayout createDesciption2() {
         VerticalLayout description = new VerticalLayout();
 
-        String s = " \n Wist odmienny: z sekwensu zawsze wistujemy kartą najstarszą, chyba że nasze figury są secowe (tzn. mamy tylko dwie karty w danym kolorze i jest to sekwens " +
+        String s = " \n Wist ODMIENNY (z figur naturalnie z blotek odwrotnie): " +
+                "\n z sekwensu zawsze wistujemy kartą najstarszą, chyba że nasze figury są secowe (tzn. mamy tylko dwie karty w danym kolorze i jest to sekwens " +
                 "\n- wtedy wistujemy figurą młodszą) albo chcemy poprosić partnera o odblokowanie (wtedy też wistujemy kartą młodszą),"+
+                "\n wyjątek od tej zasady stanowi wyjście z dwóch honorów sec lub w kolor licytowany przez partnera – w takich przypadkach z pary honorów lub z sekwensu wychodzimy najstarszą kartą"+
                 "\n z blotek wistujemy kartą drugą od góry,  " +
                 "\n z drugiego honoru wistujemy honorem,  " +
                 "\n spod trzeciego honoru wistujemy środkową kartą (nawet gdy również jest ona honorem)," +
                 "\n spod czwartej lub dłuższej figury wistujemy czwartą najstarszą kartą (czwarta najlepsza),   " +
                 "\n spod czwartej lub dłuższej dziesiątki postępujemy tak, jak przy wiście z blotek,  czyli wychodzimy drugą kartą od góry. " +
-                "\n\n\n Przykłady:  AKx(żąda ilościówki), AK, KDx, KD(w sytuacjach, gdy nie może to zmylić partnera), KDW, DW, DWx, W10x, W10, KW10(x,x), K109x, D109x, 10x, xx, xxx, 109x(x,x), xxxx(x,x), Hxx, Hxxx, Hxxxx(x,x); "+
-                "\n  Wist z blotek: xx         - blotka niższa, "+
-                "\n \txxx      - blotka środkowa, później blotka niższa ,"+
+                "\n\n\n Przykłady:  "+
+                "\n  Wist z blotek: " +
+                "\n \txx       - blotka niższa z dwóch, "+
+                "\n \txxx      - blotka środkowa, później blotka niższa z trzech ,"+
                 "\n \txxxx     - druga od góry, później wyższa (wskazanie parzystości),"+
                 "\n \txxxxx    - druga od góry, później niższa (wskazanie nieparzystości),"+
                 "\n  Wist spod figury "+
                 "\n \tFx       - wistujemy figurą, z 10x wistujemy 10,"+
-                "\n \tFxx      - karta środkowa,"+
-                "\n \tFxxx     - czwarta najlepsza,"+
-                "\n \tFxxxx    - czwarta najlepsza,"+
+                "\n \tFxx      - karta środkowa z trzech,"+
+                "\n \tFxxx(xx) - czwarta najlepsza (z czterech lub wiecej),"+
                 "\n Wist figurami z sekwensów"+
-                "\n  \tA:   AKx,"+
-                "\n  \tK:   KDx lub AKsec ,"+
-                "\n  \tD:   DWx, ADWx,"+
-                "\n  \tW:   W10x, AW10x, KW10x,"+
-                "\n  \t10:  A109x, K109x, D109x"+
+                "\n  \tA:   AKx (żąda ilościówki),"+
+                "\n  \tK:   AK, KDx, KD(w sytuacjach, gdy nie może to zmylić partnera),KDW lub AKsec,"+
+                "\n  \tD:   DWx, ADWx, DW (wyklucza króla!) "+
+                "\n  \tW:   W10x, W10, AW10x, KW10x(xx), (wyklucza damę!)"+
+                "\n  \t10:  A109x, K109x, D109x, 10x(wyklucza waleta!)"+
+                "\n  \t9:   109x(x,x), "+
                 "" +
                 "\n\n\n Zrzutki odwrotne: "+
 
@@ -247,16 +250,18 @@ class OptionMenu extends MenuBar {
                 "\n  niższa - wyższa - wskazuje na parzystą liczbę kart w kolorze,"+
                 "\n  wyższa - niższa - wskazuje nieparzystą liczbę kart w kolorze,"+
                 "\n        Sygnał jakościowy"+
-                "\n  niska blotka - zachęca do kontynuowania wistu (marka)"+
-                "\n  wysoka blotka - zniechęca do kontynuowania wistu (demarka)"+
+                "\n  niska blotka (niższa - wyższa)  - zachęca do kontynuowania wistu (marka)"+
+                "\n  wysoka blotka (wyższa - niższa) - zniechęca do kontynuowania wistu (demarka)"+
                 " \n\n czyli konkretnie: "+
-                "\n  -do koloru partnera dokładamy markę – jakościówka (mała karta lub młodsza – starsza zachęca [demarka to duża lub starsza młodsza];" +
+                "\n  -do koloru partnera dokładamy markę – jakościówka (mała karta lub młodsza – starsza zachęca [demarka to duża lub starsza młodsza]; " +
+                "\n \t \t W sytuacji, gdy lewa zostanie zabita na ręce przed nami i nie mamy karty starszej, użyteczna może być ilościówka." +
                 "\n  -do koloru rozygrywającego ilościówkę (dołożenie w danym kolorze młodsza starsza – parzysta liczba kart w tym kolorze; starsza – młodsza -nieparzystą);" +
                 "\n - Lavintal do koloru innego (mała – mam figurę – wychodź w ten kolor ; duża – nie mam figury – nie chcę tego koloru)" +
                 "\n -do koloru atutowego LAVINTHAL; (wyższa-młodsza= wartości w starszych)    do atu rozgrywającego 962 mam coś najstarszym kolorze / 269 mam coś w najmłodszym kolorze, 692 mam coś w środkowym kolorze" +
                 "\n -zrzutki nie do koloru przy grze atutowej: marka bezpośrednia (np. mała trefl - dobre trefle);" +
                 "\n zrzutki przy grze w BA:   potwierdzenie wistu; -mała potwierdza;" +
-                "\n zrzutka krakowska (pierwsza zrzutka bezwartościowego koloru (jak nie ma do koloru) przy bezatu wskazuje swoją wysokością wyższa starszy, niska młodszy z pozostałych kolorów;";
+                "\n zrzutka krakowska (pierwsza zrzutka bezwartościowego koloru (jak nie ma do koloru)) wskazuje swoją wysokością wyższa starszy, niska młodszy z pozostałych kolorów;" +
+                "\n Wiele par stosuje także markę bezpośrednią przy obronie przeciwko kontraktom kolorowym, a zrzutkę krakowską przy bez atu.";
 
         TextArea text = new TextArea("Wisty i zrzutki");
         text.setStyleName("description");
