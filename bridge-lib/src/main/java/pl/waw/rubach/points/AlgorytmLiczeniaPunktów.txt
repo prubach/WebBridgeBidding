@@ -1,7 +1,7 @@
 Uwagi co do zpisu impowego:
     Nadróbki są mniej ważne. Nie ma sensu ryzykować straty gry premiowej (300-500 = 8-11 IMP) dla potencjalnej nadróbki dającej 1 IMP;
     Z tego samego powodu bardzo ważne jest bezpieczeństwo gry;
-    Częste są gry końcowe i szlemowe o niskim prawdopodobieństwie powodzenia. 40% gra końcowa przed partią, 45% gra końcowa po partii oraz 50% szlemik dają pozytywny wynik IMP w dłuższej perspektywie;
+    Częste są gry końcowe i szlemowe o niskim prawdopodobieństwie powodzenia. 40%  końcówka przed partią, 45% końcówka po partii oraz 50% szlemik dają pozytywny wynik IMP w dłuższej perspektywie;
     Rzadko są poświęcenia i niosą większe ryzyko;
     Niezbyt częste są gry z kontrą. Kontra powoduje, że rozgrywający bardziej asekuruje się przed przegraną.
 
@@ -217,7 +217,7 @@ odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  
     //jeśli tylko dziedziczące mają mieć dostęp to protected jest ok
 
     //dlaczego wpisałeś zero -przecież zero nie może być? no i private (bo getter) - a jeszcze mówiłeś że można tu coś zrobić zeby obejść - czyli tak sztuka dla sztuki może np podstawić jakąś przykładową wartość 
-        //odp nie ma znaczenia czy jest zero czy nie, bo int ma i tak domyślną wartość 0 jeśli się nic nie ustawi.
+        //odpo nie ma znaczenia czy jest zero czy nie, bo int ma i tak domyślną wartość 0 jeśli się nic nie ustawi.
         //nie wiem o jakie obejście chodzi. Getter ew potrzebny, żeby z samego wyjątku odczytać jaki poziom gry był podany.
  //nie - nie ma sensu warunek ma być na zewnątrz tu mogą być jakieś parametry - czy mogłoby tu sprawdzać warunek a nie w kodzie?
 
@@ -228,7 +228,7 @@ odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  
             //chodzi o to że podoba mi się jak nie ma if tylko ? . Ale wtedy nie umiem dopisać drugiego polecenia bo musiałby być nawias np :  description = description + " + premia szlemikowa.";
             // Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
             // nieużywany znak np. "%" a potem wykonująć replace
-            //odp nie do końca rozumiem problem, ale replace wygląda sensownie
+            //odpo nie do końca rozumiem problem, ale replace wygląda sensownie
             //nie wiem jak ten replace: chodzi o to że chciałabym znaleźć krótką wersję (jak poniżej) na to co jest zakomentowane
 
 CalculatedImpPointsForOneDeal:
@@ -237,7 +237,7 @@ CalculatedImpPointsForOneDeal:
     //jeśli się przydaje do odczytania jak było liczone, to niech będzie.
 
     //czy to jest potrzebne - myślałam że lepiej żeby przechowywało w jedym miejscu
-           //odp chyba potrzebne
+           //odpo chyba potrzebne
 
 
  public static void main(String[] args){
