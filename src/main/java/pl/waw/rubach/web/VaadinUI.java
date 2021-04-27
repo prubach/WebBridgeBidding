@@ -2,9 +2,7 @@ package pl.waw.rubach.web;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.provider.ListDataProvider;
-import com.vaadin.server.Responsive;
-import com.vaadin.server.SerializableComparator;
-import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.*;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.spring.annotation.SpringUI;
@@ -22,12 +20,9 @@ import pl.waw.rubach.repo.BidRepository;
 import pl.waw.rubach.repo.BidSystemRepository;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_LEFT;
-import static com.vaadin.icons.VaadinIcons.ARROW_CIRCLE_RIGHT;
-import static com.vaadin.icons.VaadinIcons.HOME;
+import static com.vaadin.icons.VaadinIcons.*;
 
 @SpringUI
 @Theme("WebBridgeBidding")
@@ -46,6 +41,7 @@ public class VaadinUI extends UI {
     private Label bidSystemLabel = new Label("");
     private boolean assumption = false;
     private Label auctionAssumptionLabel = new Label("Założenia: Przed partią");
+    private Link brydzApkLink = new Link("", new ExternalResource("/brydz.apk"));
 
     private MenuBar optionMenuBar = new MenuBar();
     private HorizontalLayout legendLabel = new HorizontalLayout();
@@ -134,7 +130,6 @@ public class VaadinUI extends UI {
     }
 
 
-
     @Override
     protected void init(VaadinRequest request) {
 
@@ -143,28 +138,33 @@ public class VaadinUI extends UI {
         curBidLabel.setContentMode(ContentMode.HTML);
         curBidLabel.setWidth("100%");
         createLegendLabel();
-        optionMenuBar =new OptionMenu(this);
-//		//HorizontalLayout topRightLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
-        HorizontalLayout topRightLayout = new HorizontalLayout(legendLabel, auctionAssumptionLabel, bidSystemLabel, optionMenuBar);//, bidSystemMenuBar);
+        optionMenuBar = new OptionMenu(this);
+        //layout.addComponent(new Image(null,
+        //       new ClassResource("smiley.jpg")));
+        brydzApkLink.setIcon(new ThemeResource("androidapp.png"));
+        brydzApkLink.setTargetName("_blank");
+//		//HorizontalLayout topLayout = new HorizontalLayout(bidSystemLabel, optionMenuBar, bidSystemMenuBar);
+        HorizontalLayout topLayout = new HorizontalLayout(brydzApkLink, bidSystemLabel, optionMenuBar);//, bidSystemMenuBar);
 
         auctionAssumptionLabel.setStyleName("window");
 
-        topRightLayout.setComponentAlignment(legendLabel, Alignment.MIDDLE_LEFT);
-        topRightLayout.setComponentAlignment(bidSystemLabel, Alignment.MIDDLE_LEFT);
-        topRightLayout.setComponentAlignment(optionMenuBar, Alignment.MIDDLE_LEFT);
-        topRightLayout.setComponentAlignment(auctionAssumptionLabel, Alignment.MIDDLE_LEFT);
 
-        //topRightLayout.setComponentAlignment(bidSystemMenuBar,Alignment.MIDDLE_RIGHT);
-        //topRightLayout.setExpandRatio(bidSystemMenuBar,1);
-      //  topRightLayout.setExpandRatio(optionMenuBar, 1);
-        topRightLayout.setExpandRatio(bidSystemLabel, 1);
-        topRightLayout.setExpandRatio(legendLabel, 1);
-        topRightLayout.setExpandRatio(auctionAssumptionLabel, 1);
-        topRightLayout.setWidth("100%");
+        topLayout.setComponentAlignment(bidSystemLabel, Alignment.MIDDLE_CENTER);
+        topLayout.setComponentAlignment(optionMenuBar, Alignment.MIDDLE_RIGHT);
+        topLayout.setComponentAlignment(brydzApkLink, Alignment.MIDDLE_LEFT);
+
+        //    topLayout.setExpandRatio(bidSystemMenuBar,1);
+        //    topLayout.setExpandRatio(optionMenuBar, 1);
+        topLayout.setExpandRatio(bidSystemLabel, 1);
+        //    topLayout.setExpandRatio(legendLabel, 1);
+        //    topLayout.setExpandRatio(auctionAssumptionLabel, 1);
+        topLayout.setWidth("100%");
         fwdBtn.setEnabled(false);
-        HorizontalLayout topLayout = new HorizontalLayout(backBtn, homeBtn, fwdBtn, navigatorLabel);
-        topLayout.setComponentAlignment(navigatorLabel, Alignment.MIDDLE_LEFT);
-        VerticalLayout topVertLayout = new VerticalLayout(topRightLayout, topLayout);
+        HorizontalLayout bottomLayout = new HorizontalLayout(backBtn, homeBtn, fwdBtn, navigatorLabel, auctionAssumptionLabel, legendLabel);
+        bottomLayout.setComponentAlignment(navigatorLabel, Alignment.MIDDLE_CENTER);
+        bottomLayout.setComponentAlignment(legendLabel, Alignment.MIDDLE_RIGHT);
+        bottomLayout.setComponentAlignment(auctionAssumptionLabel, Alignment.MIDDLE_RIGHT);
+        VerticalLayout topVertLayout = new VerticalLayout(topLayout, bottomLayout);
         //topVertLayout.setComponentAlignment(bidingPersonLabel,Alignment.BOTTOM_CENTER);
         topVertLayout.setSpacing(false);
         topVertLayout.setMargin(false);
@@ -205,7 +205,7 @@ public class VaadinUI extends UI {
 
         bidSystemLabel.setValue(curBidSystem.getName());
         bidSystemLabel.addStyleName("title");
-        navigatorLabel.setValue("Wybierz odzywkę:");
+        navigatorLabel.setValue("Wybierz odzywkę -");
 
         // Define Left Grid Columns
         initializeGridLayout(bidGrid);
@@ -253,11 +253,11 @@ public class VaadinUI extends UI {
             isNaviBack = true;
             logger.debug(bidNaviList.toString());
             int curPos = bidNaviList.indexOf(curBid);
-            if (!bidNaviList.isEmpty() && (curBid==null || (curPos>=0 && curPos<bidNaviList.size()-1))) {
-                if (curBid==null && !bidNaviList.isEmpty())
+            if (!bidNaviList.isEmpty() && (curBid == null || (curPos >= 0 && curPos < bidNaviList.size() - 1))) {
+                if (curBid == null && !bidNaviList.isEmpty())
                     listBids(bidNaviList.get(0));
                 else {
-                    logger.debug("SETTING: " + bidNaviList.get(curPos+1));
+                    logger.debug("SETTING: " + bidNaviList.get(curPos + 1));
                     listBids(bidNaviList.get(curPos + 1));
                 }
             }
@@ -316,7 +316,7 @@ public class VaadinUI extends UI {
     }
 
     /**
-     * Add extra header to grid and group columns
+     * Add extra header to grid and suitGroup columns
      *
      * @param grid to which to add header
      * @return reference to the header Cell
@@ -344,11 +344,11 @@ public class VaadinUI extends UI {
                             bidRepo.findByBidSystemAndBidLevelAndAssumptionLessThanEqual(curBidSystem, 0, 0)));
         } else {
             bidGrid.setDataProvider(new ListDataProvider<>(assumption ?
-                    bidRepo.findByBidSystemAndParentBidAndAssumptionGreaterThanEqual(curBidSystem, bid.getParentBid(),0)
+                    bidRepo.findByBidSystemAndParentBidAndAssumptionGreaterThanEqual(curBidSystem, bid.getParentBid(), 0)
                     :
-                    bidRepo.findByBidSystemAndParentBidAndAssumptionLessThanEqual(curBidSystem, bid.getParentBid(),0)));
+                    bidRepo.findByBidSystemAndParentBidAndAssumptionLessThanEqual(curBidSystem, bid.getParentBid(), 0)));
             //logger.warn("Selecting bid in bidGrid: " + getBidLevelSuit(bid));
-            //TODO Selection doesn't work!!!
+            //fixme Selection doesn't work!!!
             bidGrid.deselectAll();
             bidGrid.asSingleSelect().setValue(bid);
             bidGrid.select(bid);
@@ -375,9 +375,9 @@ public class VaadinUI extends UI {
         } else {
             bidGrid2nd.setDataProvider(
                     new ListDataProvider<>(assumption ?
-                            bidRepo.findByBidSystemAndParentBidAndAssumptionGreaterThanEqual(curBidSystem, parentBid,0)
+                            bidRepo.findByBidSystemAndParentBidAndAssumptionGreaterThanEqual(curBidSystem, parentBid, 0)
                             :
-                            bidRepo.findByBidSystemAndParentBidAndAssumptionLessThanEqual(curBidSystem, parentBid,0)));
+                            bidRepo.findByBidSystemAndParentBidAndAssumptionLessThanEqual(curBidSystem, parentBid, 0)));
         }
     }
 
@@ -471,7 +471,7 @@ public class VaadinUI extends UI {
     }
 
     private void addToBidNaviList(Bid bid) {
-        if (isNaviBack==false && (bidNaviList.isEmpty() || !bid.equals(bidNaviList.get(bidNaviList.size()-1)))) {
+        if (isNaviBack == false && (bidNaviList.isEmpty() || !bid.equals(bidNaviList.get(bidNaviList.size() - 1)))) {
             bidNaviList.add(bid);
             logger.debug("adding to naviList: " + bid + "\n" + bidNaviList.toString());
         }

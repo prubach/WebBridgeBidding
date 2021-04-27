@@ -10,6 +10,7 @@ bin
 target
 build/
 .gradle
+gradle/wrapper
 
 # Eclipse Project Files #
 
@@ -36,3 +37,9 @@ src/main/webapp/VAADIN/themes/WebBridgeBidding/styles.css
 src/main/webapp/VAADIN/themes/WebBridgeBidding/styles.css.gz
 src/main/webapp/VAADIN/themes/valo/
 
+
+bridgeOut.xlsx
+gradle/
+gradlew
+gradlew.bat
+local.properties

@@ -1,0 +1,257 @@
+Uwagi co do zpisu impowego:
+    Nadróbki są mniej ważne. Nie ma sensu ryzykować straty gry premiowej (300-500 = 8-11 IMP) dla potencjalnej nadróbki dającej 1 IMP;
+    Z tego samego powodu bardzo ważne jest bezpieczeństwo gry;
+    Częste są gry końcowe i szlemowe o niskim prawdopodobieństwie powodzenia. 40%  końcówka przed partią, 45% końcówka po partii oraz 50% szlemik dają pozytywny wynik IMP w dłuższej perspektywie;
+    Rzadko są poświęcenia i niosą większe ryzyko;
+    Niezbyt częste są gry z kontrą. Kontra powoduje, że rozgrywający bardziej asekuruje się przed przegraną.
+
+Postanowiłam spisać jak się liczy punkty, żeby spróbować znaleźć gdzie potencjalnie jest błąd.
+Poza tym można tu zapisać jakieś uwagi pomysły żeby nie zaśmiecać komentarzami plików z kodem?
+
+
+Liczenie punktów:
+
+
+ Realne                                                                                              Program
+0. Ustala założenia na początku rozgrywki, rozdaje karty, licytuje, rozgrywa :)         wczytuje założenia albo nic :)
+1. [tylko wersja porównawczego brydża - sportowa]
+ Policz ile jest punktów na obu rękach partnerów uwzględniając single albo nie,       wczytuje liczbę punktów PC - UI czy jak to tam
+ - Sprawdzć ile mają przeciwnicy i czy się zgadza - jeżeli nie to wróć do pkt 1. :)     oblicza liczbę punktów przeciwników 40-points   ????
+ - Sprawdzć kto ma fit a kto nie (w zależności od liczby puntków:                        [wczytuje dane o fitach]
+                - jeżeli punktów jest >30 to w dowolnym kolorze
+                - jeżeli punktów jest >20 a mniej niż 30 to w starszym
+                - jeżeli punktów jest równo 20 to kto ma fit i do tego starszy (czyli piki)
+
+2. [tylko wersja porównawczego brydża - sportowa]
+  Sprawdza w tabeli oczekiwanych ile powinno być ugrane przez tych co mają wiecej      - sprawdza kto ma wiecej  (zakładam że nie ważne kto grał (niezależnie od opini KubyG.)
+    w odpowiedniej kolumnie tabeli                                                      - ustala założenia dla tych co mają wiecej PC: fit i po/przed
+    ustala kto to powinien ugrać                                                                                     - sprawdza w tabeli
+                                                  -> do tego miejsca nie obchodzi nas jaki kontrakt, kto grał i czy ugrany (rozważania są teoretyczne)
+                                                  -> program zapisuje wynik dla My
+                                                  -> wynik może być ujemny bo powinni grać przeciwnicy i zdobyć punkty
+
+3. Przypomina sobie założenia rozdania, rodzaj wylicytowanego kontraktu itp oraz wynik.  [wczytuje dane kontrakt, założenia i wynik, rozgrywa]  - UI czy jak to tam
+
+4. Oblicza liczbę punktów (zapis) rozdania                                              potrzebuje na wejściu danych z pkt 1 :
+   ile punktów za lewy, nadróbki wpadki i bonusy                                        - kontraktu(wysokość, miano (kolor), kontra itp), założenia pary która rozgrywa
+                                                                                        - liczby wziętych lew (wynik)    - Oblicza wyniki DuplicateBrigeScoring
+
+                                                  -> wynik może być ujemny gdy są wpadki    ugrane (+) / przegrane (-)
+
+    kto je ma (my czy przeciwnicy)                                                      - wczytuje kto grał i zmienia znak bądź nie       - my ugraliśmy na plus (przeciwnicy mają minus)
+                                                                                          [jak oni to zmienia]                            - my przegraliśmy (oni plus)
+   zapisuje po ich stronie lub naszej (robrowo)                                                                                           - oni grali i ugrali (my minus)
+   kombinuje i liczy dalej (porównawczo)                                                                                                  - oni przegrali (my plus)
+                                                         DOTĄD  DZIAŁA DOBRZE WG MNIE
+ *********************************************************************************************************************************************** *******
+*********************************************************************************************************************************************** *******
+                                                         TU JEST JAKIŚ PROBLEM ...
+
+5. RÓŻNICA punktów : Liczy róznice między oczekiwaną a ugraną dla konkretnej pary
+                                                                -> na tym etapie mamy ustalone:
+   realnie wiemy kto powinien ugrać                             - ile my powinniśmy ugrać [ może być dowolne] (oni to samo z minusem)
+    [zawsze dodatnie = ugrana]                                  - ile my punktów zdobyliśmy za rozdanie  [ może być dowolne] (oni to samo z minusem)
+   oraz ile punków mają rozgywający                            [niezależnie kto miał wiecej punktów i kto grał]
+      [plus/minus] =wynik                                       ->   komputer trzyma wynik my (tylko) ale można łatwo zmienić na drugi tylko chyba za wiele razy zmieniam ...
+                                                                ->   musimy znależć róznice między tym co powinniśmy ugrać a tym co ugraliśmy
+                                                                [czyli niby banalnie DBS - EXpexted, ale ]
+
+   obliczamy róznice i czasem się myli w którą stronę:)
+   a) jeżeli my mieliśmy ugrać i my graliśmy to :   wynik - ugrana = różnica    (może być dodatnia - impy dla nas/ może być ujemna impy dla nich) - pasuje wygraliśmy / przegraliśmy
+   b) jeżeli oni mieli ugrać   i my graliśmy to :   wynik + ugrana = różnica    (
+   c) jeżeli my mieliśmy ugrać a grali oni to   :   -wynik - ugrana = różnica   (
+   d) jeżeli oni mieli ugrać  i grali oni to    :   -wynik  + ugrana = różnica ?  /
+
+                                                  -
+Przykłady:
+(zwykle tej co grała) : my: (mieliśmy wiecej punktów i graliśmy wynik może być plus/minus)
+                            ugraliśmy - powinniśmy     np ugraliśmy 300 powinniśmy 300
+                            nieugraliśmy - powinniśmy  np ugraliśmy -100 powinniśmy 300 razem -400
+                        oni grali mieli wiecej punktów
+                     nasze puntky:   minus( ugrali - powinni)
+                                     minus (nieugrali - powinni)
+
+                       my graliśmy oni mieli wiecej punktów powinni
+                     nasze punkty:   minus( ugraliśmy (czyli pewnie ujemne) - powinni) jeszcze bardziej ujemne zmieniamy znak - mamy dużo punktów
+
+
+ 6. Odnajduje w tabeli impy dla danej róznicy i bez wachania przypisuje je jednej stronie ...
+
+
+
+
+Notatki luźne - wywalone z innych miejsc:
+DuplicateBridgeScoring:
+
+odpowiedź:   z tym stałymo jest ok - chyba można wywalić to co poniżej...  wydaje mi się że dużo czytelniejsze jest jak jest isContractDouble a nie jak jest wskaźnik???? ale do przemyślenia
+     // było że tak choć ostrożnie  pomysł - czy zamienić boolean double/ reooube na jedną zmienna int na przykład 0-nic, 1-kontra, 2- rekontra albo lepiej 1-nic, 2- kontra 4 rekontra (będzie mógł być może mnożnik)
+     /**
+      * Indicates if  contract is  double -
+      */
+     private boolean isContractDouble;
+     /**
+      * Indicates if  contract is redouble
+      */
+     private boolean isContractRedouble;
+//ze stałą może być  Bo jakoś mam wrażenie że ta pierwsza wersja była dużo czytelniejsza a oszczędność dwóch liniek (tam gdzie było mnożenie)...  i mniej czytelnie - na razie zostawiam zmienne a nie s?
+// No i nie chce mi się zmieniać testów wiec ten drugi konstruktor i tak musi zostać ...
+// kombinowałam w testach z mnożnikami żeby np samo się generowało z kontrą i rekontrką ale nie da się chyba bo za dużo się zmienia...
+//DuplicateBridgeScoring (albo DealScorring??? ale jakoś mi się nie podoba)  -a drugi będzie RubberScorring (i będzie się niewiele różnił w bonusach!) albo tu będą dwie opcje i wtedy ta ogólniejsza nazwa- bo różnice są małe)
+//  this.isContractDouble = nDRSignature == IS_DOUBLE;
+      //  this.isContractRedouble = nDRSignature == IS_REDOUBLE;
+        //checking if double is false when redouble - not important because it could not be both
+        //  if (isContractRedouble) isContractDouble = false;
+
+           //    if (isContractDouble) calculatedPointsForContract = calculatedPointsForContract * 2;
+                    //    if (isContractRedouble) calculatedPointsForContract = calculatedPointsForContract * 4;
+
+//= 0;     //dlaczego tak?  że niżej a nie tu zerowanie (to samo pytanie jest w DuplicateBridgeScoring i ono ma dwa razy i działa a tu nie ?
+    /odpowiedź: nie potrzeba zerowania - zmienna typu int ma domyślną wartość 0, inaczej jest z Integer, bo to obiekt, więc byłby null
+
+
+/* dobre testy ale nieładnie zapisane (kopia wyżej)
+    @Test
+    public void testCountingPoints() throws InvalidNumberOfPointsException, InvalidNumberOfPointsToCalculateImpException {
+        // System.out.println("Dla " + 24 + " pkt: " + ExpectedResultsTable.getInstance().getPoints(24, true, false,true) + " oczekiwane.");
+
+        CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(24, 500, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych 500 pkt przy założeniach po i Fit jest: " + a.getResults());
+        Assert.assertEquals(2, a.getResults());
+
+        CalculatedImpPointsForOneDeal b = new CalculatedImpPointsForOneDeal(24, 300, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych 300 pkt przy założeniach po i Fit jest: " + b.getResults());
+        Assert.assertEquals(-4, b.getResults());
+
+        CalculatedImpPointsForOneDeal c = new CalculatedImpPointsForOneDeal(24, 100, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych +100 pkt przy założeniach po i Fit jest: " + c.getResults());
+        Assert.assertEquals(-8, c.getResults());
+
+        CalculatedImpPointsForOneDeal d = new CalculatedImpPointsForOneDeal(24, -100, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + d.getResults());
+        Assert.assertEquals(-11, d.getResults());
+
+        CalculatedImpPointsForOneDeal e = new CalculatedImpPointsForOneDeal(24, -500, true, false, true, false);
+        System.out.println("Wynik gry dla 24PC i ugranych -100 pkt przy założeniach po i Fit jest: " + e.getResults());
+        Assert.assertEquals(-14, e.getResults());
+
+
+        CalculatedImpPointsForOneDeal f = new CalculatedImpPointsForOneDeal(20, 0, true, false, true, false);
+        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i my Fit jest: " + f.getResults());
+        Assert.assertEquals(-2, f.getResults());
+
+        CalculatedImpPointsForOneDeal g = new CalculatedImpPointsForOneDeal(20, 0, true, false, false, true);
+        System.out.println("Wynik gry dla 20PC i ugranych 0 pkt przy założeniach po i oni Fit jest: " + g.getResults());
+        Assert.assertEquals(2, g.getResults());
+
+
+        CalculatedImpPointsForOneDeal h = new CalculatedImpPointsForOneDeal(10, -660, true, true, false, false);
+        System.out.println("Wynik gry dla 10PC i ugranych -660 pkt przy założeniach po i oni bez fit jest: " + h.getResults());
+        Assert.assertEquals(0, h.getResults());
+
+
+    }
+
+*/
+
+
+//chyba jest już dobrze (dodałam testy)-  nadal coś jest źle ... ale nie wiem czy testy czy formuły czy jedno i drugie (co najbardziej prawdopodobne) na poniższym testy przechodzą ale formuły mi się nie podobają)
+//to poniżej też dobrze - ale pewnie do wywalenia? - chyba lepiej jak to siedzi w tabeli ?
+//   /*    if (pointsInBothHands == 20) {
+//            if (fitInOlderColorWe) {
+//                expectedPoints = 50; //ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true, auctionAssumptionWe);
+//            } else if (fitInOlderColorThey) {
+//                expectedPoints = -50; //ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, true,  auctionAssumptionThey);
+//            } else
+//                expectedPoints = 0;// ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, false,auctionAssumptionWe);
+//
+//        } else if (pointsInBothHands < 20) {
+//            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorThey,auctionAssumptionThey);
+//        } else {
+//            expectedPoints = ExpectedResultsTable.getInstance().getPoints(pointsInBothHands, fitInOlderColorWe, auctionAssumptionWe);
+//        }
+//*/
+
+
+
+/*old constructor with double / redouble
+    public CalculatedImpPointsForOneDeal(boolean wePlay, float pointsInBothHandsWe,
+                                         int contractLevel, String contractSuit, boolean doubleGame, boolean redoubleGame, int numberOfTrickTakenByDeclarer,
+                                         boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitInOlderColorWe, boolean fitInOlderColorThey)
+            throws BridgeException {
+
+        this(wePlay, pointsInBothHandsWe, contractLevel, contractSuit, redoubleGame ? 4 : (doubleGame ? 2 : 1), numberOfTrickTakenByDeclarer,
+                auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+    }*/
+     //to jest zle bo się dwa razy zmienia - przeciez w konsturktorze właściwym też się zmieni
+        //      this(wePlay, wePlay ? pointsInBothHandsWe: 40-pointsInBothHandsWe,
+        //              new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
+        //                      wePlay ? numberOfTrickTakenByWe : 13-numberOfTrickTakenByWe).getContractScoringPoints(),
+        //              auctionAssumptionWe, auctionAssumptionThey, fitInOlderColorWe, fitInOlderColorThey);
+   RubberScoring c = new RubberScoring(1,2,3,4);
+        int res = c.getSumm();
+        logger.info("Wynik dla całego robra z podanych wyników rozdań jest: "+ res +" \n");
+        Assert.assertEquals(10, res);
+
+        RubberScoring c1 = new RubberScoring(6,10,-5,-3);
+        int res1 = c1.getSumm();
+        logger.info("Wynik dla całego robra z następujących wyników rozdań:  jest: "+ res1 +" \n");
+        Assert.assertEquals(res1, 8);
+
+        RubberScoring c2 = new RubberScoring(3,-5,5,-3);
+        int res2 = c2.getSumm();
+        logger.info("Wynik dla całego robra z podanych wyników rozdań jest: "+ res2 +" \n");
+        Assert.assertEquals(res2, 0);
+
+
+         // private Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+               // DuplicateBridgeScoring dbs = new DuplicateBridgeScoring(3, "nt", 1, false, 9);
+               // CalculatedImpPointsForOneDeal ipr2 = new CalculatedImpPointsForOneDeal(true, 20, dbs.getContractScoringPoints(), false, false, false, false);
+               // CalculatedImpPointsForOneDeal ipr1 = new CalculatedImpPointsForOneDeal(true, 20, 400, false, false, false, false);
+               // CalculatedImpPointsForOneDeal ipr0 = new CalculatedImpPointsForOneDeal(true, 20, 3, "nt", 1, 9, false, false, false, false);
+
+
+ z klasy DuplicateBridgeScoringTestBefore
+  //czemu to wszystko jest protected jak idea proponuje żeby było bez niczego (package-private) - niby tylko ta druga klasa z pakietu z tego korzysta? Może Idea ma rację? Próbowałam i było ok.
+    //protected to dostęp dla wszystkich klas dziedziczących bez względu na to w jakim są pakiecie, więc de facto to jeszcze węższy poziom niż package-private
+    //czyli zostaje protected? Bo to TYLKO klasy dziedziczące wiec żeby inny test z tego pakietu czegoś nie poużywał sobie ?
+    //jeśli tylko dziedziczące mają mieć dostęp to protected jest ok
+
+    //dlaczego wpisałeś zero -przecież zero nie może być? no i private (bo getter) - a jeszcze mówiłeś że można tu coś zrobić zeby obejść - czyli tak sztuka dla sztuki może np podstawić jakąś przykładową wartość 
+        //odpo nie ma znaczenia czy jest zero czy nie, bo int ma i tak domyślną wartość 0 jeśli się nic nie ustawi.
+        //nie wiem o jakie obejście chodzi. Getter ew potrzebny, żeby z samego wyjątku odczytać jaki poziom gry był podany.
+ //nie - nie ma sensu warunek ma być na zewnątrz tu mogą być jakieś parametry - czy mogłoby tu sprawdzać warunek a nie w kodzie?
+
+
+
+    //czy można dodać opis tak żeby został zapis ze znakami zapytania? Uważam że może być bez opisu bo o premi szlemikowej mało kto zapomina  description = description + "+ premia szlemowa/szlemikowa (zależnie od założeń).";
+            //nie rozumiem w jakim sensie ze znakami zapytania?
+            //chodzi o to że podoba mi się jak nie ma if tylko ? . Ale wtedy nie umiem dopisać drugiego polecenia bo musiałby być nawias np :  description = description + " + premia szlemikowa.";
+            // Chodzi oto, aby potem je wypełnić? To można bardzo prosto zrobić wstawiając
+            // nieużywany znak np. "%" a potem wykonująć replace
+            //odpo nie do końca rozumiem problem, ale replace wygląda sensownie
+            //nie wiem jak ten replace: chodzi o to że chciałabym znaleźć krótką wersję (jak poniżej) na to co jest zakomentowane
+
+CalculatedImpPointsForOneDeal:
+//przeniosłam to tu z powrotem - to jest specyficzny parametr dla liczenia impów (może wogóle nie potrzebny jako parametr klasy
+    // - ewentualnie tylko do wyciągnięcia i sprawdzenia jak było liczone... ale może wobec tego też co powinno być ?
+    //jeśli się przydaje do odczytania jak było liczone, to niech będzie.
+
+    //czy to jest potrzebne - myślałam że lepiej żeby przechowywało w jedym miejscu
+           //odpo chyba potrzebne
+
+
+ public static void main(String[] args){
+        int imps = 0;
+         System.out.println("Aby uzyskać "+ imps + " impów różnica punktów musi być między: " +ImpTable.findingDifferenceFromImp(imps)[0] + " a " + ImpTable.findingDifferenceFromImp(imps)[1]);
+
+float poinst = 23.0f;
+
+try {
+    Prediction ex =new Prediction(imps,poinst, false, false, false, false,true);
+
+    System.out.print("\n "+ex.getDes());
+} catch (Exception e) {
+System.out.print(e.getMessage());
+}
+
+    }

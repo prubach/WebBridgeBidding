@@ -30,7 +30,7 @@ webbridge:
   cleardatabase: true
 # Set to 'true' to enable loading data from XLSX file at startup
   loadBidsFromXlsx: true
-  writeBidsToXlsx: false
+  writeBidsToXlsx: true
 vaadin:
   servlet:
     productionMode: false
@@ -39,11 +39,11 @@ vaadin:
 spring:
   profiles: production
 server:
-  port: 9000
-  ssl:
-    key-store: classpath:bridge.p12
-    key-store-password: haselkobridge
-    ssl.key-password: haselkobridge
+  port: 7700
+  #ssl:
+    #key-store: classpath:bridge.p12
+    #key-store-password: haselkobridge
+    #ssl.key-password: haselkobridge
 vaadin:
   servlet:
     productionMode: true
