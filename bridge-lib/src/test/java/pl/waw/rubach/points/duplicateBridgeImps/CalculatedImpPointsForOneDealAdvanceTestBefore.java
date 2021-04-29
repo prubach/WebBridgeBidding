@@ -83,7 +83,7 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
 
             CalculatedImpPointsForOneDeal roog = new CalculatedImpPointsForOneDeal(true, pointsInBothHands,
                     contractLevel, "nt", 1, numberOfTricksTaken, weBeforeAfter, theyBeforeAfter, weFit, theyFit);
-//            Integer res = roog.getDeclarerResluts();
+//            Integer res = roog.getDeclarerResults();
             Integer res = roog.getResultsWe(true);
 
             logger.info("My gramy: Dla " + pointsInBothHands + " pkt.   przy kontrakcie " + contractLevel + "NT i zebranych " + numberOfTricksTaken + " lewach - wynik jest " + res + " impów. Obie przed, "+ opis +".");
@@ -92,7 +92,7 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
 
             CalculatedImpPointsForOneDeal roogR = new CalculatedImpPointsForOneDeal(false, 40 - pointsInBothHands,
                     contractLevel, "nt", 1, 13 - numberOfTricksTaken, theyBeforeAfter, weBeforeAfter,  theyFit,weFit);
-            Integer resRR = roogR.getDeclarerResluts();
+            Integer resRR = roogR.getDeclarerResults();
             Integer resR = roogR.getResultsWe(false);
             Integer ressRM = (-1)* resR;  //oponets results
             Integer ressRRM = (-1)* resRR;  // they results
@@ -105,7 +105,7 @@ public class CalculatedImpPointsForOneDealAdvanceTestBefore {
             Assert.assertEquals(resRR, ressRM);
             Assert.assertEquals(resR, ressRRM);
 
-            FourGameImpScorring aa =new FourGameImpScorring();
+            FourGameImpScoring aa =new FourGameImpScoring();
             Integer imp = aa.fillOneContract(1,roog);
             Assert.assertEquals(res,imp);
             Integer imp2 = aa.fillOneContract(1,roogR);

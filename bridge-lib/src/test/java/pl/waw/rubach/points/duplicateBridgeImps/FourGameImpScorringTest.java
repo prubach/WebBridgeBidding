@@ -123,16 +123,16 @@ public class FourGameImpScorringTest {
                     int pfc4 = entry2.getKey().getKey(3);
 
                     {
-                        FourGameImpScorring rS = new FourGameImpScorring(wp1, wp2, wp3, wp4,
+                        FourGameImpScoring rS = new FourGameImpScoring(wp1, wp2, wp3, wp4,
                                 ph1, ph2, ph3, ph4, pfc1, pfc2, pfc3, pfc4,
                                 false, false, false, false, false, false, false, false);
-                        Integer res = rS.getSumm();
+                        Integer res = rS.getSum();
                         logger.info("Wynik dla całego robra z podanych punktów na ręku/wynik ("
                                 + ph1 + "/" + pfc1 + "," + ph2 + "/" + pfc2 + "," + ph3 + "/" + pfc3 + "," + ph4 + "/" + pfc4 + ") jest: " + res + " \n");
                         Assert.assertEquals(testRubberFromPoints2MultiKey.get(inputDataPointsInHands, inputDataPointsForContract, whoPlay), res);
                     }
                     {
-                        FourGameImpScorring rSfromPart = new FourGameImpScorring(22);
+                        FourGameImpScoring rSfromPart = new FourGameImpScoring(22);
                         int result1 = rSfromPart.fillOneContract(1, wp1, ph1, pfc1, false, false);
                         int result2 = rSfromPart.fillOneContract(2, wp2, ph2, pfc2, false, false);
                         int result3 = rSfromPart.fillOneContract(3, wp3, ph3, pfc3, false, false);
@@ -159,16 +159,16 @@ public class FourGameImpScorringTest {
 
                     if (entry.getValue().equals(Integer.parseInt("1"))) {
                         {
-                            FourGameImpScorring rS = new FourGameImpScorring(wp1, wp2, wp3, wp4,
+                            FourGameImpScoring rS = new FourGameImpScoring(wp1, wp2, wp3, wp4,
                                     ph1, ph2, ph3, ph4, pfc1, pfc2, pfc3, pfc4,
                                     false, false, false, false, false, false, false, false);
-                            Integer res = -rS.getSumm();
+                            Integer res = -rS.getSum();
                             logger.info("Wynik (rewers) dla całego robra z podanych punktów na ręku/wynik ("
                                     + ph1 + "/" + pfc1 + "," + ph2 + "/" + pfc2 + "," + ph3 + "/" + pfc3 + "," + ph4 + "/" + pfc4 + ") jest: " + res + " \n");
                             Assert.assertEquals(testRubberFromPoints2MultiKey.get(inputDataPointsInHands, inputDataPointsForContract, whoPlay), res);
                         }
                         {
-                            FourGameImpScorring rSfromPart = new FourGameImpScorring(22);
+                            FourGameImpScoring rSfromPart = new FourGameImpScoring(22);
                             int result1 = rSfromPart.fillOneContract(1, wp1, ph1, pfc1, false, false);
                             int result2 = rSfromPart.fillOneContract(2, wp2, ph2, pfc2, false, false);
                             int result3 = rSfromPart.fillOneContract(3, wp3, ph3, pfc3, false, false);

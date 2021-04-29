@@ -55,7 +55,7 @@ public class FourGameImpScorringFirstTest {
         //                              0       -5       5        3
     }
 
-    private FourGameImpScorring help(int ph1,int ph2, int ph3, int ph4, int cS, boolean whoPlay, boolean fitWe, boolean fitThey) throws BridgeException{
+    private FourGameImpScoring help(int ph1, int ph2, int ph3, int ph4, int cS, boolean whoPlay, boolean fitWe, boolean fitThey) throws BridgeException{
 
         ArrayList<CalculatedImpPointsForOneDeal> aa = new ArrayList<>();
         aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph1,cS,false,false,fitWe, fitThey));
@@ -63,7 +63,7 @@ public class FourGameImpScorringFirstTest {
         aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph3,cS,false,true,fitWe, fitThey));
         aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph4,cS,true,true,fitWe, fitThey));
 
-        FourGameImpScorring aaaaa =  new FourGameImpScorring(aa);
+        FourGameImpScoring aaaaa =  new FourGameImpScoring(aa);
         aaaaa.setSumm();
         return aaaaa;
     }
@@ -78,16 +78,16 @@ public class FourGameImpScorringFirstTest {
             int ph4 = entry.getKey().getKey(3);
             int cS = entry.getKey().getKey(4);
             {
-                FourGameImpScorring rS = new FourGameImpScorring(true, true, true, true,
+                FourGameImpScoring rS = new FourGameImpScoring(true, true, true, true,
                         ph1, ph2, ph3, ph4, cS, cS, cS, cS,
                         false, false, false, false, false, false, false, false);
-                Integer res = rS.getSumm();
+                Integer res = rS.getSum();
                 logger.info("Wynik dla całego robra z podanych punktów na ręku (" + ph1 + "," + ph2 + "," + ph3 + "," + ph4 + ") i wyniku każdego rozdania " + cS + " jest: " + res + " \n");
                 Assert.assertEquals(testRubberFromPoints1.get(ph1, ph2, ph3, ph4, cS), res);
 
 
                 {
-                    FourGameImpScorring rSfromPart = new FourGameImpScorring(22);
+                    FourGameImpScoring rSfromPart = new FourGameImpScoring(22);
                     int result1 = rSfromPart.fillOneContract(1, true, ph1, cS, false, false);
                     int result2 = rSfromPart.fillOneContract(2, true, ph2, cS, false, false);
                     int result3 = rSfromPart.fillOneContract(3, true, ph3, cS, false, false);
@@ -97,7 +97,7 @@ public class FourGameImpScorringFirstTest {
 
                 }
 
-            Integer summm =  help(ph1,ph2,ph3,ph4,cS,true,false,false).getSumm();
+            Integer summm =  help(ph1,ph2,ph3,ph4,cS,true,false,false).getSum();
             Assert.assertEquals(testRubberFromPoints1.get(ph1, ph2, ph3, ph4, cS), summm);
             }
         }
@@ -120,20 +120,20 @@ public class FourGameImpScorringFirstTest {
             int cS = Math.round(cSFloat);
 
             {
-                FourGameImpScorring rS = new FourGameImpScorring(true, true, true, true,
+                FourGameImpScoring rS = new FourGameImpScoring(true, true, true, true,
                         ph1, ph2, ph3, ph4, cS, cS, cS, cS,
                         false, false, false, false, false, false, false, false);
-                Integer res = rS.getSumm();
+                Integer res = rS.getSum();
                 logger.info("Wynik dla całego robra z podanych punktów na ręku (" + ph1 + "," + ph2 + "," + ph3 + "," + ph4 + ") i wyniku każdego rozdania " + cS + " jest: " + res + " \n");
                 Assert.assertEquals(testRubberFromPointsFloat.get(ph1, ph2, ph3, ph4, cSFloat), res);
 
-                FourGameImpScorring rSRevers = new FourGameImpScorring(false, false, false, false, 40 - ph1, 40 - ph2, 40 - ph3, 40 - ph4, -cS, -cS, -cS, -cS, false, false, false, false, false, false, false, false);
-                Integer resRevers = rSRevers.getSumm();
+                FourGameImpScoring rSRevers = new FourGameImpScoring(false, false, false, false, 40 - ph1, 40 - ph2, 40 - ph3, 40 - ph4, -cS, -cS, -cS, -cS, false, false, false, false, false, false, false, false);
+                Integer resRevers = rSRevers.getSum();
 
                 Assert.assertEquals(res, resRevers);
             }
             {
-                FourGameImpScorring rSfromPart = new FourGameImpScorring(2);
+                FourGameImpScoring rSfromPart = new FourGameImpScoring(2);
                 int result1 = rSfromPart.fillOneContract(1, true, ph1, cS, false, false);
                 int result2 = rSfromPart.fillOneContract(2, true, ph2, cS, false, false);
                 int result3 = rSfromPart.fillOneContract(3, true, ph3, cS, false, false);
@@ -157,25 +157,25 @@ public class FourGameImpScorringFirstTest {
             int ph4 = entry.getKey().getKey(3);
             int cS = entry.getKey().getKey(4);
             {
-                FourGameImpScorring rS = new FourGameImpScorring(true, true, true, true,
+                FourGameImpScoring rS = new FourGameImpScoring(true, true, true, true,
                         ph1, ph2, ph3, ph4, cS, cS, cS, cS,
                         false, false, false, false, false, false, false, false);
-                Integer res = rS.getSumm();
+                Integer res = rS.getSum();
                 logger.info("Wynik dla całego robra z podanych punktów na ręku (" + ph1 + "," + ph2 + "," + ph3 + "," + ph4 + ") i wyniku każdego rozdania " + cS + " jest: " + res + " \n");
                 Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3, ph4, cS), res);
 
-                FourGameImpScorring rSRevers = new FourGameImpScorring(false, false, false, false,
+                FourGameImpScoring rSRevers = new FourGameImpScoring(false, false, false, false,
                         40 - ph1, 40 - ph2, 40 - ph3, 40 - ph4, -cS, -cS, -cS, -cS,
                         false, false, false, false, false, false, false, false);
-                Integer resRevers = rSRevers.getSumm();
+                Integer resRevers = rSRevers.getSum();
 
                 Assert.assertEquals(res, resRevers);
             }
-            Integer summm =  -help(40-ph1,40-ph2,40-ph3,40-ph4,-cS,false,false,false).getSumm();
+            Integer summm =  -help(40-ph1,40-ph2,40-ph3,40-ph4,-cS,false,false,false).getSum();
             Assert.assertEquals(testRubberFromPoints.get(ph1, ph2, ph3, ph4, cS), summm);
 
             {
-                FourGameImpScorring rSfromPart = new FourGameImpScorring(22);
+                FourGameImpScoring rSfromPart = new FourGameImpScoring(22);
                 int result1 = rSfromPart.fillOneContract(1, true, ph1, cS, false, false);
                 int result2 = rSfromPart.fillOneContract(2, true, ph2, cS, false, false);
                 int result3 = rSfromPart.fillOneContract(3, true, ph3, cS, false, false);
@@ -196,8 +196,8 @@ public class FourGameImpScorringFirstTest {
             int result3 = entry.getKey().getKey(2);
             int result4 = entry.getKey().getKey(3);
 
-            FourGameImpScorring rS = new FourGameImpScorring(result1, result2, result3, result4);
-            Integer res = rS.getSumm();
+            FourGameImpScoring rS = new FourGameImpScoring(result1, result2, result3, result4);
+            Integer res = rS.getSum();
             logger.info("Wynik dla całego robra z podanych wyników rozdań (" + result1 + "," + result2 + "," + result3 + "," + result4 + ") jest: " + res + " \n");
             Assert.assertEquals(testRubberFromResults.get(result1, result2, result3, result4), res);
         }
@@ -206,21 +206,21 @@ public class FourGameImpScorringFirstTest {
     @Test
     public void testRubberScoringTest() throws BridgeException {
 
-        FourGameImpScorring a = new FourGameImpScorring(true, true, true, true, 1, "nt", 1, "nt", 3, "nt", 3, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
-        logger.info("Wynik dla całego robra liczonengo na raz z podstawowych parametrów wejściowych jest: " + a.getSumm() + " \n");
-        Assert.assertEquals(a.getSumm(), 6);
+        FourGameImpScoring a = new FourGameImpScoring(true, true, true, true, 1, "nt", 1, "nt", 3, "nt", 3, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+        logger.info("Wynik dla całego robra liczonengo na raz z podstawowych parametrów wejściowych jest: " + a.getSum() + " \n");
+        Assert.assertEquals(a.getSum(), 6);
 
-        FourGameImpScorring a1 = new FourGameImpScorring(true, true, true, true, 1, "nt", 1, "nt", 6, "nt", 6, "nt", 12, 28, 15, 35, 7, 6, 1, 12, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
-        logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych jest: " + a1.getSumm() + " \n");
-        Assert.assertEquals(a1.getSumm(), -10);
+        FourGameImpScoring a1 = new FourGameImpScoring(true, true, true, true, 1, "nt", 1, "nt", 6, "nt", 6, "nt", 12, 28, 15, 35, 7, 6, 1, 12, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+        logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych jest: " + a1.getSum() + " \n");
+        Assert.assertEquals(a1.getSum(), -10);
 
-        FourGameImpScorring a2 = new FourGameImpScorring(true, true, true, true, 1, "nt", 1, "nt", 1, "nt", 1, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
-        logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych  jest: " + a2.getSumm() + " \n");
-        Assert.assertEquals(a2.getSumm(), 2);
+        FourGameImpScoring a2 = new FourGameImpScoring(true, true, true, true, 1, "nt", 1, "nt", 1, "nt", 1, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+        logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych  jest: " + a2.getSum() + " \n");
+        Assert.assertEquals(a2.getSum(), 2);
 
-        FourGameImpScorring a3 = new FourGameImpScorring(true, true, true, true, 0, "nt", 1, "nt", 1, "nt", 1, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
-        logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych  jest: " + a3.getSumm() + " \n");
-        Assert.assertEquals(a3.getSumm(), -1);
+        FourGameImpScoring a3 = new FourGameImpScoring(true, true, true, true, 0, "nt", 1, "nt", 1, "nt", 1, "nt", 20, 21, 22, 23, 7, 6, 8, 9, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false);
+        logger.info("Wynik dla całego robra  liczonengo na raz z podstawowych parametrów wejściowych  jest: " + a3.getSum() + " \n");
+        Assert.assertEquals(a3.getSum(), -1);
 
 
     }
@@ -229,7 +229,7 @@ public class FourGameImpScorringFirstTest {
     public void testRubberScorigFillingDeals() throws BridgeException {
 
         {
-            FourGameImpScorring rooG = new FourGameImpScorring(15);
+            FourGameImpScoring rooG = new FourGameImpScoring(15);
             int a = rooG.fillOneContract(1, true, 20, -110, false, false);
             Assert.assertEquals(a, -3);
 
@@ -242,12 +242,12 @@ public class FourGameImpScorringFirstTest {
             int d = rooG.fillOneContract(4, true, 17, -110, false, false);
             Assert.assertEquals(d, 0);
 
-            int sum = rooG.getSumm();
+            int sum = rooG.getSum();
             logger.info("Wynik dla całego robra wpisanego ręcznie (punkty i wyniki) rozdanie po rozdaniu jest: " + sum + ". ");
             Assert.assertEquals(sum, -6);
         }
         {
-            FourGameImpScorring rooG = new FourGameImpScorring(14);
+            FourGameImpScoring rooG = new FourGameImpScoring(14);
             int a = rooG.fillOneContract(1, true, 20, 110, false, false);
             Assert.assertEquals(a, 3);
 
@@ -260,33 +260,33 @@ public class FourGameImpScorringFirstTest {
             int d = rooG.fillOneContract(4, true, 23, 110, false, false);
             Assert.assertEquals(d, 0);
 
-            int sum = rooG.getSumm();
+            int sum = rooG.getSum();
             logger.info("Wynik dla całego robra wpisanego ręcznie (punkty i wyniki) rozdanie po rozdaniu jest:  " + sum + ". ");
             Assert.assertEquals(sum, 6);
         }
 
         {
-            FourGameImpScorring rooG = new FourGameImpScorring(13);
+            FourGameImpScoring rooG = new FourGameImpScoring(13);
             int a = rooG.fillOneContract(1, true, 28, 400, false, false);
             Assert.assertEquals(a, 0);
-            int i = new CalculatedImpPointsForOneDeal(true, 28, 400, false, false, false, false).getDeclarerResluts();
+            int i = new CalculatedImpPointsForOneDeal(true, 28, 400, false, false, false, false).getDeclarerResults();
             Assert.assertEquals(a, i);
             int b = rooG.fillOneContract(2, true, 25, 400, false, false);
             Assert.assertEquals(b, 3);
-            int ib = new CalculatedImpPointsForOneDeal(true, 25, 400, true, false, false, false).getDeclarerResluts();
+            int ib = new CalculatedImpPointsForOneDeal(true, 25, 400, true, false, false, false).getDeclarerResults();
             Assert.assertEquals(b, ib);
 
             int c = rooG.fillOneContract(3, true, 28, 400, false, false);
             Assert.assertEquals(c, 0);
-            int ic = new CalculatedImpPointsForOneDeal(true, 28, 400, false, true, false, false).getDeclarerResluts();
+            int ic = new CalculatedImpPointsForOneDeal(true, 28, 400, false, true, false, false).getDeclarerResults();
             Assert.assertEquals(c, ic);
 
             int d = rooG.fillOneContract(4, true, 27, 400, false, false);
             Assert.assertEquals(d, -3);
-            int id = new CalculatedImpPointsForOneDeal(true, 27, 400, true, true, false, false).getDeclarerResluts();
+            int id = new CalculatedImpPointsForOneDeal(true, 27, 400, true, true, false, false).getDeclarerResults();
             Assert.assertEquals(d, id);
 
-            int sum = rooG.getSumm();
+            int sum = rooG.getSum();
             logger.info("Wynik dla całego robra wpisanego ręcznie (punkty i wyniki) rozdanie po rozdaniu jest:  " + sum + ". ");
             Assert.assertEquals(sum, 0);
         }
@@ -298,22 +298,22 @@ public class FourGameImpScorringFirstTest {
 
         CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, false, false, false, false);
-        Assert.assertEquals(a.getDeclarerResluts(), 9);
+        Assert.assertEquals(a.getDeclarerResults(), 9);
         Assert.assertEquals(a.getResultsWe(true), 9);
 
         CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, true, false, false, false);
-        Assert.assertEquals(a2.getDeclarerResluts(), 12);
+        Assert.assertEquals(a2.getDeclarerResults(), 12);
         Assert.assertEquals(a2.getResultsWe(true), 12);
 
         CalculatedImpPointsForOneDeal a1 = new CalculatedImpPointsForOneDeal(false,20f,
                 3, "nt", 1, 4, false, true, false, false);
-        Assert.assertEquals(a1.getDeclarerResluts(), 12);
+        Assert.assertEquals(a1.getDeclarerResults(), 12);
         Assert.assertEquals(a1.getResultsWe(false), -12);
 
         CalculatedImpPointsForOneDeal a12 = new CalculatedImpPointsForOneDeal(false,20f,
                 3, "nt", 1, 4, true, true, false, false);
-        Assert.assertEquals(a12.getDeclarerResluts(), 12);
+        Assert.assertEquals(a12.getDeclarerResults(), 12);
         Assert.assertEquals(a12.getResultsWe(false), -12);
 
         ArrayList<CalculatedImpPointsForOneDeal> aa = new ArrayList<>();
@@ -321,18 +321,18 @@ public class FourGameImpScorringFirstTest {
         aa.add(a2);
         aa.add(a1);
         aa.add(a12);
-        FourGameImpScorring fg = new FourGameImpScorring(aa);
-        int i = fg.getSumm();
+        FourGameImpScoring fg = new FourGameImpScoring(aa);
+        int i = fg.getSum();
         Assert.assertEquals(i,-3);
         logger.info(fg.getResultsDescription());
         ArrayList<CalculatedImpPointsForOneDeal> aa3 = new ArrayList<>();
         aa3.add(a);
-        FourGameImpScorring fg3 = new FourGameImpScorring(aa3);
-        int i3 = fg3.getSumm();
+        FourGameImpScoring fg3 = new FourGameImpScoring(aa3);
+        int i3 = fg3.getSum();
         Assert.assertEquals(i3,9);
         fg3.fillOneContract(2,a2);
         fg3.fillOneContract(3,a1);
-        Assert.assertEquals(fg3.getSumm(),9+12-12);
+        Assert.assertEquals(fg3.getSum(),9+12-12);
         logger.info("\n " + fg3.getResultsDescription());
 
     }

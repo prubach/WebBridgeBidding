@@ -20,7 +20,7 @@ public class CalculatedOneDealRubberScorring extends InternationalBridgeScoring 
 
     public CalculatedOneDealRubberScorring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
                                            boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)  throws  BridgeException {
-        this(contractLevel, contractSuit, isContractDouble? IS_DOUBLE: isContractRedouble? IS_REDOUBLE:IS_UNDOUBLE,
+        this(contractLevel, contractSuit, isContractDouble? IS_DOUBLE: isContractRedouble? IS_REDOUBLE: IS_UNDOUBTED,
                 auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
 
     }
@@ -30,7 +30,7 @@ public class CalculatedOneDealRubberScorring extends InternationalBridgeScoring 
                                            boolean auctionAssumptionWe,boolean auctionAssumptionThey, int numberOfTrickTakenByWe)  throws  BridgeException {
         this(contractLevel, contractSuit, nDRSignature,
                 whoPlay? auctionAssumptionWe: auctionAssumptionThey,
-                whoPlay? numberOfTrickTakenByWe: NUBEROFTRICS -numberOfTrickTakenByWe);
+                whoPlay? numberOfTrickTakenByWe: NUMBEROFTRICS -numberOfTrickTakenByWe);
 
         setWePlay(whoPlay);
     }

@@ -50,7 +50,7 @@ public enum Assumption {
     {
         checkIfCorrectContractNumber(contractNumber);
         for (Assumption a : Assumption.values()) {
-            if (contractNumber == a.getContractNumber()) return a.areWeVunerable();
+            if (contractNumber == a.getContractNumber()) return a.areWeVulnerable();
             }
         return false;
 
@@ -59,7 +59,7 @@ public enum Assumption {
     {
         checkIfCorrectContractNumber(contractNumber);
         for (Assumption a : Assumption.values()) {
-            if (contractNumber == a.getContractNumber()) return a.areTheyVunerable();
+            if (contractNumber == a.getContractNumber()) return a.areTheyVulnerable();
             }
         return false;
 
@@ -68,7 +68,7 @@ public enum Assumption {
    public static boolean fillAssumption(int contractNumber, boolean who) throws BridgeException
    {  checkIfCorrectContractNumber(contractNumber);
        for (Assumption a : Assumption.values()) {
-           if (contractNumber == a.getContractNumber()) return who ? a.areWeVunerable() : a.areTheyVunerable();
+           if (contractNumber == a.getContractNumber()) return who ? a.areWeVulnerable() : a.areTheyVulnerable();
     }
        return false;
    }
@@ -81,11 +81,11 @@ public enum Assumption {
         return contractNumber;
     }
 
-    public boolean areWeVunerable() {
+    public boolean areWeVulnerable() {
         return we;
     }
 
-    public boolean areTheyVunerable() {
+    public boolean areTheyVulnerable() {
         return they;
     }
 }

@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.duplicateBridgeImps;
 
-import pl.waw.rubach.points.AbstractWholeGameScorring;
+import pl.waw.rubach.points.AbstractWholeGameScoring;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import static pl.waw.rubach.points.duplicateBridgeImps.Assumption.fillAssumption
 import static pl.waw.rubach.points.duplicateBridgeImps.Assumption.fillAssumptionWe;
 
 //this was RubberScorring
-public class FourGameImpScorring extends AbstractWholeGameScorring {
+public class FourGameImpScoring extends AbstractWholeGameScoring {
 
 
     /**
@@ -26,23 +26,23 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
     //ale jak rober to nie będą impy - wydaje mi się ze wtedy to będzie musiało być inne ?  po polsku mogło by być Punkty/ZapisPorównawczy i drugi ZapisRobrowy
     //
 
-    public FourGameImpScorring() {
+    public FourGameImpScoring() {
         this(1);
     }
 
-    public FourGameImpScorring(int gameID) {
+    public FourGameImpScoring(int gameID) {
         super(gameID, "na impy");
         setGameType("IMP");
     }
 
 
-    public FourGameImpScorring(int result1, int result2, int result3, int result4) {
+    public FourGameImpScoring(int result1, int result2, int result3, int result4) {
         this();
-        setSumm(result1 + result2 + result3 + result4);
-        setResultsDescription("Końcowy wynik gry na impy numer:" + getGameID() + " z podanymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
+        setSum(result1 + result2 + result3 + result4);
+        setResultsDescription("Końcowy wynik gry na impy numer:" + getGameID() + " z podanymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSum() + " \n");
     }
 
-    public FourGameImpScorring(ArrayList<CalculatedImpPointsForOneDeal> d) {
+    public FourGameImpScoring(ArrayList<CalculatedImpPointsForOneDeal> d) {
         this();
         int lastContractNumber=0;
         for (int i = 0; i < d.size(); i++) {
@@ -51,16 +51,16 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
             lastContractNumber = i;
         }
 
-        setResultsDescription("Końcowy wynik gry nr: "+ getGameID() + " do rozdania numer:" + lastContractNumber + " jest: " + getSumm() + " \n");
+        setResultsDescription("Końcowy wynik gry nr: "+ getGameID() + " do rozdania numer:" + lastContractNumber + " jest: " + getSum() + " \n");
 
     }
 
 
     //0ld no very usefull  but in tests ...
-    public FourGameImpScorring(boolean wp1, boolean wp2, boolean wp3, boolean wp4,
-                               float piH1, float piH2, float piH3, float piH4,
-                               int sp1, int sp2, int sp3, int sp4,
-                               boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
+    public FourGameImpScoring(boolean wp1, boolean wp2, boolean wp3, boolean wp4,
+                              float piH1, float piH2, float piH3, float piH4,
+                              int sp1, int sp2, int sp3, int sp4,
+                              boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
         this();
 
@@ -69,17 +69,17 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         int result3 = fillOneContract(3, wp3, piH3, sp3, fW3, fT3);
         int result4 = fillOneContract(4, wp4, piH4, sp4, fW4, fT4);
 
-        setSumm(result1 + result2 + result3 + result4);
-        setResultsDescription("Końcowy wynik gry numer:" + getGameID() + " z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
+        setSum(result1 + result2 + result3 + result4);
+        setResultsDescription("Końcowy wynik gry numer:" + getGameID() + " z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSum() + " \n");
 
     }
 
 
     //0ld no very usefull  but in tests ...
-    public FourGameImpScorring(boolean wp1, boolean wp2, boolean wp3, boolean wp4, int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
-                               float piH1, float piH2, float piH3, float piH4, int ntt1, int ntt2, int ntt3, int ntt4,
-                               boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
-                               boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
+    public FourGameImpScoring(boolean wp1, boolean wp2, boolean wp3, boolean wp4, int lev1, String color1, int lev2, String color2, int lev3, String color3, int lev4, String color4,
+                              float piH1, float piH2, float piH3, float piH4, int ntt1, int ntt2, int ntt3, int ntt4,
+                              boolean d1, boolean r1, boolean d2, boolean r2, boolean d3, boolean r3, boolean d4, boolean r4,
+                              boolean fW1, boolean fW2, boolean fW3, boolean fW4, boolean fT1, boolean fT2, boolean fT3, boolean fT4)
             throws BridgeException {
         this();
 
@@ -88,8 +88,8 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         int result3 = fillOneContract(3, wp3, piH3, lev3, color3, d3, r3, ntt3, fW3, fT3);
         int result4 = fillOneContract(4, wp4, piH4, lev4, color4, d4, r4, ntt4, fW4, fT4);
 
-        setSumm(result1 + result2 + result3 + result4);
-        setResultsDescription("Końcowy wynik gry numer:" + getGameID() + " na podstawie danych podstawowych wprowadzonych na raz,  z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSumm() + " \n");
+        setSum(result1 + result2 + result3 + result4);
+        setResultsDescription("Końcowy wynik gry numer:" + getGameID() + " na podstawie danych podstawowych wprowadzonych na raz,  z obliczonymi wynikami " + result1 + " " + result2 + " " + result3 + " " + result4 + " jest: " + getSum() + " \n");
 
     }
 
@@ -115,7 +115,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         setScorringForOneGame(contractNumber, cIPfoDforWe);
         //scorringForOneGame.put(contractNumber, cIPfoDforWe);
         setSumm();
-        //    return cIPfoDforWe.getDeclarerResluts();
+        //    return cIPfoDforWe.getDeclarerResults();
         return cIPfoDforWe.getResultsWe(cIPfoDforWe.areWePlay());
     }
 
@@ -221,7 +221,7 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         //  s.append("\n").append(this.getRubberSpecialDescription());
         for (Integer key : new TreeSet<>(getScorringForOneGame().keySet())) {
             s.append("\n dla ").append(key).append(" gry jest (dla rozgrywającego: ").append(getScorringForOneGame().get(key).getDeclarerContractScoringPoints())
-                    .append(" punktów i wynik jest ").append(getScorringForOneGame().get(key).getDeclarerResluts()).append(" impów");
+                    .append(" punktów i wynik jest ").append(getScorringForOneGame().get(key).getDeclarerResults()).append(" impów");
 
         }
 
@@ -243,15 +243,15 @@ public class FourGameImpScorring extends AbstractWholeGameScorring {
         int summ = 0;
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
-            summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay(), getScorringForOneGame().get(key).getDeclarerResluts());
-            //    summ = summ + getScorringForOneGame().get(key).getDeclarerResluts();
+            summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay(), getScorringForOneGame().get(key).getDeclarerResults());
+            //    summ = summ + getScorringForOneGame().get(key).getDeclarerResults();
 
             setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: "
-                    + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay(), getScorringForOneGame().get(key).getDeclarerResluts())
+                    + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay(), getScorringForOneGame().get(key).getDeclarerResults())
                     + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
-        setSumm(summ);
+        setSum(summ);
     }
 
 }

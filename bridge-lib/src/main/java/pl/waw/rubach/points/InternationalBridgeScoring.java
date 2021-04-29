@@ -131,7 +131,7 @@ public class InternationalBridgeScoring extends OneDeal {
         // if (oddTricks > getContractLevel()) {
         if (made && overtricks > 0) {
 
-            if (getNoDoubleReSignature() == IS_UNDOUBLE) {
+            if (getNoDoubleReSignature() == IS_UNDOUBTED) {
                 overtricksPoints = getContractPoints(overtricks);  //bez kontry i rekontry - tak samo jak lewa
                 if (getContractSuit().equals("nt") || getContractSuit().equals("n") || getContractSuit().equals("N") || getContractSuit().equals("NT"))
                     overtricksPoints = overtricksPoints - 10; //przy bez atu pierwsza nadróbka za 30 a nie 40!

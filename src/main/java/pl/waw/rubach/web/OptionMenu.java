@@ -6,7 +6,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import pl.waw.rubach.points.duplicateBridgeImps.*;
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRubber;
-import pl.waw.rubach.points.rubberBridge.RubberScorring;
+import pl.waw.rubach.points.rubberBridge.RubberScoring;
 
 import static com.vaadin.icons.VaadinIcons.QUESTION_CIRCLE;
 import static java.lang.Math.abs;
@@ -462,7 +462,7 @@ class OptionMenu extends MenuBar {
 
                 resultsLabel.setValue("<B>W tym rozdaniu rozgrywający uzyskał " + duplicateBridgeScoring.getDeclarerContractScoringPoints() +
                         " punktów za kontrakt, (" + duplicateBridgeScoring.getDescription() + ") </B> " +
-                        " <BR> czyli " + a.getDeclarerResluts() + impDeclination(a.getDeclarerResluts()) + ".  ");
+                        " <BR> czyli " + a.getDeclarerResults() + impDeclination(a.getDeclarerResults()) + ".  ");
 
             } catch (NumberFormatException | BridgeException e) {
                 String message = (e instanceof NumberFormatException) ?
@@ -490,7 +490,7 @@ class OptionMenu extends MenuBar {
         checkboxWe.setValue(true);
         vL.addComponent(checkboxWe);
 
-        final RubberScorring aa = new RubberScorring(1);
+        final RubberScoring aa = new RubberScoring(1);
         Button calculateRubberPoints = new Button("Oblicz punkty  za jedno rodzanie (dla rozgrywającego)! ", clickEvent -> {
             try {
                int result =  aa.fillOneContract(checkboxWe.getValue(),Integer.parseInt(contractLevelField.getValue()),colorOfContractField.getValue(),
@@ -626,7 +626,7 @@ class OptionMenu extends MenuBar {
         Label resultsLabelFor4Game = new Label("");
         resultsLabelFor4Game.setContentMode(ContentMode.HTML);
         setGameID(getGameID() + 1);
-        final FourGameImpScorring aa = new FourGameImpScorring(getGameID());
+        final FourGameImpScoring aa = new FourGameImpScoring(getGameID());
 
         Button makeNew4GameScoring = new Button("Zacznij nowy zapis 4 rozdań", clickEvent -> {
             setGameID(getGameID() + 1);
@@ -667,7 +667,7 @@ class OptionMenu extends MenuBar {
                 resultsLabel.setValue("<B>To " + numberOfContract.getValue() + "  rozdanie i uzyskaliście "
                         + (checkboxWe.getValue() ? duplicateBridgeScoring.getDeclarerContractScoringPoints() : -duplicateBridgeScoring.getDeclarerContractScoringPoints())
                         + " punktów za kontrakt, czyli " + a.getResultsWe(checkboxWe.getValue()) + impDeclination(a.getResultsWe(checkboxWe.getValue())) + ". "
-                        + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSumm() + impDeclination(aa.getSumm()) + ". ");
+                        + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach " + aa.getSum() + impDeclination(aa.getSum()) + ". ");
                 //         + " </B>  <BR> W sumie uzyskaliście do tej pory w ostanich rozdaniach :" + imp + impDeclination(imp) + ". ");
 
 
@@ -699,7 +699,7 @@ class OptionMenu extends MenuBar {
         return vL;
     }
 
-    private String makeDescription(FourGameImpScorring aa, String[] descriptionTable) throws BridgeException {
+    private String makeDescription(FourGameImpScoring aa, String[] descriptionTable) throws BridgeException {
         StringBuilder s = new StringBuilder("\n*** Zapis gier numer: " + aa.getGameID() + ".  ***  \n");
         for (int i = 0; i < 4; i++) s.append("\n").append(descriptionTable[i]);
 

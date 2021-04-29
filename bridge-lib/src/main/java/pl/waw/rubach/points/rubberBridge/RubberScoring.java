@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.rubberBridge;
 
-import pl.waw.rubach.points.AbstractWholeGameScorring;
+import pl.waw.rubach.points.AbstractWholeGameScoring;
 import pl.waw.rubach.points.OneDeal;
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.EndOfRubberException;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class RubberScorring extends AbstractWholeGameScorring {
+public class RubberScoring extends AbstractWholeGameScoring {
 
 
     /**
@@ -24,23 +24,23 @@ public class RubberScorring extends AbstractWholeGameScorring {
     private int overWeSumm = 0, overTheySumm = 0, underWeSumm = 0, underTheySumm = 0;
     private int contractNumber=0;
 
-    public RubberScorring(ArrayList<CalculatedOneDealRubberScorring> d) throws BridgeException {
+    public RubberScoring(ArrayList<CalculatedOneDealRubberScorring> d) throws BridgeException {
         this(1);
 
         for (CalculatedOneDealRubberScorring calculatedOneDealRubberScorring : d)
             fillOneContract(calculatedOneDealRubberScorring.areWePlay(), calculatedOneDealRubberScorring);
 
-        setResultsDescription("Końcowy wynik gry do rozdania numer:" + getGameID() + " dla nas jest: " + getSumm() + " \n");
+        setResultsDescription("Końcowy wynik gry do rozdania numer:" + getGameID() + " dla nas jest: " + getSum() + " \n");
 
     }
 
     //defut constructor adding number of game 1 - possible use other constructor with special number of game with next constructor
-    public RubberScorring() {
+    public RubberScoring() {
         this(1);
     }
 
     //create special game with special gameID
-    public RubberScorring(int gameID) {
+    public RubberScoring(int gameID) {
         super(gameID, " robrowej ");
         setGameType("RUBER");
         setAreWeVunerable(false);
@@ -97,14 +97,14 @@ public class RubberScorring extends AbstractWholeGameScorring {
         for (int key : new TreeSet<>(getScorringForOneGame().keySet())) {
 //            if (scorringForOneGame.get(key).getPointsInBothDeclarerHands() != 0)
          //   summ = summ + getScorringForOneGame().get(key).getResultsWe(getScorringForOneGame().get(key).areWePlay());
-            setSumm(getUnderWeSumm()+ getOverWeSumm()-getUnderTheySumm()- getOverTheySumm());
+            setSum(getUnderWeSumm()+ getOverWeSumm()-getUnderTheySumm()- getOverTheySumm());
             setResultsDescription(getResultsDescription() + "Wynik rozdania " + key + " jest: "
-                    + getScorringForOneGame().get(key).getDeclarerResluts()
+                    + getScorringForOneGame().get(key).getDeclarerResults()
                     + " \t Do tej pory  wynik jest: " + summ + " \n");
         }
 
-        setSumm(getUnderWeSumm()+ getOverWeSumm()-getUnderTheySumm()- getOverTheySumm());
-       // setSumm(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
+        setSum(getUnderWeSumm()+ getOverWeSumm()-getUnderTheySumm()- getOverTheySumm());
+       // setSum(areWePlay() ? isEndOfTheGame() : -isEndOfTheGame());
 
     }
 
@@ -313,7 +313,7 @@ public class RubberScorring extends AbstractWholeGameScorring {
         setContractLevel(contractLevel);
         setContractSuit(contractSuit);
         setNoDoubleReSignature(nDRSig);
-        setNuberoftricsTakenWe(numerOfTricskTakenByDeclarere);
+        setNumberOfTricksTakenWe(numerOfTricskTakenByDeclarere);
         setDeclarerVulnerable(whoPlay ? isAreTheyVunerable():isAreTheyVunerable());
 
     }

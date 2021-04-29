@@ -1,6 +1,6 @@
 package pl.waw.rubach.points;
 
-public abstract class AbstractWholeGameScorring extends OneDeal{
+public abstract class AbstractWholeGameScoring extends OneDeal{
 
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:
@@ -8,16 +8,16 @@ public abstract class AbstractWholeGameScorring extends OneDeal{
      * place
      * names of players
      * photos etc ...
-     * should be done automaticly incriasing of 1 - but how????- gdzieś tak widziałam...
+     * should be done automatically increasing of 1 - but how???? - I saw it somewhere...
      */
     private int gameID;
 
     /**
-     * Wchich typ of scoriing trhe game is
+     * Which typ of scoring the game is
      */
     private String gameType;
     /**
-     * rubberSpecialDescription describe parameter of game - if accesible and results describe results of rubber
+     * rubberSpecialDescription describe parameter of game - if accessible and results describe results of rubber
      */
     private String rubberSpecialDescription, resultsDescription;
 
@@ -25,22 +25,22 @@ public abstract class AbstractWholeGameScorring extends OneDeal{
     /**
      * Result of 4 games - imp points
      */
-    private int summ;
+    private int sum;
 
 
 
-    protected AbstractWholeGameScorring(int gameID, String des) {
+    protected AbstractWholeGameScoring(int gameID, String des) {
         setGameID(gameID);
         setRubberSpecialDescription(" \n *** Nowa seria gier "+ des +" z numerem:  " + getGameID() + ". ***  \n");
         setResultsDescription(" \nWyniki: \n");
-        setSumm(0);
+        setSum(0);
 
     }
 
 
-  //  abstract public int fillOneContract(int contractNumber, boolean whoPlay, int contractLevel, String contractSuit,
-  //                                      boolean isContractDouble, boolean isContractRedouble,
-  //                                      int numberOfTrickTakenByDeclarer) throws BridgeException;
+  /*  abstract public int fillOneContract(int contractNumber, boolean whoPlay, int contractLevel, String contractSuit,
+                                        boolean isContractDouble, boolean isContractRedouble,
+                                        int numberOfTrickTakenByDeclarer) throws BridgeException; */
 
     public String getGameType() {
         return gameType;
@@ -75,12 +75,12 @@ public abstract class AbstractWholeGameScorring extends OneDeal{
         this.resultsDescription = resultsDescription;
     }
 
-     public int getSumm() {
-        return this.summ;
+     public int getSum() {
+        return this.sum;
     }
 
-    protected void setSumm(int summ) {
-        this.summ = summ;
+    protected void setSum(int sum) {
+        this.sum = sum;
     }
 
 }

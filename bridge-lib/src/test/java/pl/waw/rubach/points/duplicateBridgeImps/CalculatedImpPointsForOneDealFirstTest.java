@@ -139,10 +139,10 @@ public class CalculatedImpPointsForOneDealFirstTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new CalculatedImpPointsForOneDeal(true,pointsInBothHands, pointsOfContract, assWe, assThey, fitWe, fitThey).getDeclarerResluts();
+            Integer res = new CalculatedImpPointsForOneDeal(true,pointsInBothHands, pointsOfContract, assWe, assThey, fitWe, fitThey).getDeclarerResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " imp."+ des);
             Assert.assertEquals(map.get(pointsInBothHands, pointsOfContractFloat), res);
-            Integer resT = -new CalculatedImpPointsForOneDeal(false,pointsInBothHands, pointsOfContract, assWe, assThey, fitWe, fitThey).getDeclarerResluts();
+            Integer resT = -new CalculatedImpPointsForOneDeal(false,pointsInBothHands, pointsOfContract, assWe, assThey, fitWe, fitThey).getDeclarerResults();
             Assert.assertEquals(map.get(pointsInBothHands, pointsOfContractFloat), resT);
         }
         }
@@ -154,10 +154,10 @@ public class CalculatedImpPointsForOneDealFirstTest {
             float pointsInBothHands = entry.getKey().getKey(0);
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
-            Integer res = new CalculatedImpPointsForOneDeal(true,pointsInBothHands, pointsOfContract, false, false, false, false).getDeclarerResluts();
+            Integer res = new CalculatedImpPointsForOneDeal(true,pointsInBothHands, pointsOfContract, false, false, false, false).getDeclarerResults();
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. Obie przed, obie bez fitu");
             Assert.assertEquals(testCountingPointsBothBeforNoFitBothMap.get(pointsInBothHands, pointsOfContractFloat), res);
-            Integer resT = -new CalculatedImpPointsForOneDeal(false,pointsInBothHands, pointsOfContract, false, false, false, false).getDeclarerResluts();
+            Integer resT = -new CalculatedImpPointsForOneDeal(false,pointsInBothHands, pointsOfContract, false, false, false, false).getDeclarerResults();
             Assert.assertEquals(testCountingPointsBothBeforNoFitBothMap.get(pointsInBothHands, pointsOfContractFloat), resT);
         }
 
@@ -178,7 +178,7 @@ public class CalculatedImpPointsForOneDealFirstTest {
             float pointsOfContractFloat = entry.getKey().getKey(1);
             int pointsOfContract = Math.round(pointsOfContractFloat);
             CalculatedImpPointsForOneDeal cpfod = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, assDec, assOp, fitDe, fitOp);
-            Integer res = cpfod.getDeclarerResluts();
+            Integer res = cpfod.getDeclarerResults();
             logger.info("Rozgrywający ma fit: "+ cpfod.isDeclarerFit()+ " a powinno być " + fitDe);
             logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. " +des);
             Assert.assertEquals(map.get(pointsInBothHands, pointsOfContractFloat), res);
@@ -194,7 +194,7 @@ public class CalculatedImpPointsForOneDealFirstTest {
             int pointsOfContract = Math.round(pointsOfContractFloat);
             if(pointsInBothHands>20.0){
                 CalculatedImpPointsForOneDeal cpfod = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, assDec, assOp, fitDe, fitOp);
-                Integer res = cpfod.getDeclarerResluts();
+                Integer res = cpfod.getDeclarerResults();
                 logger.info("Rozgrywający ma fit: " + cpfod.isDeclarerFit() + " a powinno być " + fitDe);
                 logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. " + des);
               Assert.assertEquals(map.get(pointsInBothHands, pointsOfContractFloat), res);
@@ -207,7 +207,7 @@ public class CalculatedImpPointsForOneDealFirstTest {
             int pointsOfContract = Math.round(pointsOfContractFloat);
             if(pointsInBothHands<20.0){
                 CalculatedImpPointsForOneDeal cpfod = new CalculatedImpPointsForOneDeal(pointsInBothHands, pointsOfContract, assDec, assOp, fitDe, fitOp);
-                Integer res = cpfod.getDeclarerResluts();
+                Integer res = cpfod.getDeclarerResults();
                 logger.info("Rozgrywający ma fit: " + cpfod.isDeclarerFit() + " a powinno być " + fitDe);
                 logger.info("Dla " + pointsInBothHands + " pkt:  oraz ugranych " + pointsOfContract + " wynik jest " + res + " impów. " + des);
                 Assert.assertEquals(map2.get(pointsInBothHands, pointsOfContractFloat), res);
@@ -259,22 +259,22 @@ public class CalculatedImpPointsForOneDealFirstTest {
 
         CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, false, false, false, false);
-        Assert.assertEquals(a.getDeclarerResluts(), 9);
+        Assert.assertEquals(a.getDeclarerResults(), 9);
         Assert.assertEquals(a.getResultsWe(true), 9);
 
         CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, true, false, false, false);
-        Assert.assertEquals(a2.getDeclarerResluts(), 12);
+        Assert.assertEquals(a2.getDeclarerResults(), 12);
         Assert.assertEquals(a2.getResultsWe(true), 12);
 
         CalculatedImpPointsForOneDeal a1 = new CalculatedImpPointsForOneDeal(false,20f,
                 3, "nt", 1, 4, false, true, false, false);
-        Assert.assertEquals(a1.getDeclarerResluts(), 12);
+        Assert.assertEquals(a1.getDeclarerResults(), 12);
         Assert.assertEquals(a1.getResultsWe(false), -12);
 
         CalculatedImpPointsForOneDeal a12 = new CalculatedImpPointsForOneDeal(false,20f,
                 3, "nt", 1, 4, true, true, false, false);
-        Assert.assertEquals(a12.getDeclarerResluts(), 12);
+        Assert.assertEquals(a12.getDeclarerResults(), 12);
         Assert.assertEquals(a12.getResultsWe(false), -12);
 
 
@@ -285,22 +285,22 @@ public class CalculatedImpPointsForOneDealFirstTest {
 
         CalculatedImpPointsForOneDeal a = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, false, false, false, false);
-        Assert.assertEquals(a.getDeclarerResluts(), 9);
+        Assert.assertEquals(a.getDeclarerResults(), 9);
         Assert.assertEquals(a.getResultsWe(true), 9);
 
         CalculatedImpPointsForOneDeal a2 = new CalculatedImpPointsForOneDeal(false,20f,
                 3, "nt", 1, 4, true, false, false, false);
-        Assert.assertEquals(a2.getDeclarerResluts(), 9);
+        Assert.assertEquals(a2.getDeclarerResults(), 9);
         Assert.assertEquals(a2.getResultsWe(false), -9);
 
         CalculatedImpPointsForOneDeal a1 = new CalculatedImpPointsForOneDeal(false,20f,
                 3, "nt", 1, 4, false, true, false, false);
-        Assert.assertEquals(a1.getDeclarerResluts(), 12);
+        Assert.assertEquals(a1.getDeclarerResults(), 12);
         Assert.assertEquals(a1.getResultsWe(false), -12);
 
         CalculatedImpPointsForOneDeal a12 = new CalculatedImpPointsForOneDeal(true,20f,
                 3, "nt", 1, 9, true, true, false, false);
-        Assert.assertEquals(a12.getDeclarerResluts(), 12);
+        Assert.assertEquals(a12.getDeclarerResults(), 12);
         Assert.assertEquals(a12.getResultsWe(true), 12);
 
 

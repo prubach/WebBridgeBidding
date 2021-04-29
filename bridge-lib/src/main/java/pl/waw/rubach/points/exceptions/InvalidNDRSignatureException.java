@@ -11,7 +11,7 @@ public class InvalidNDRSignatureException extends BridgeException {
 
 
     public InvalidNDRSignatureException(int nRDsign) {
-        super((nRDsign == IS_UNDOUBLE || nRDsign == IS_DOUBLE || nRDsign == IS_REDOUBLE)
+        super((nRDsign == IS_UNDOUBTED || nRDsign == IS_DOUBLE || nRDsign == IS_REDOUBLE)
                 ? wrongExceptionCaseMessage :
                 "Są tylko trzy opcje (1 = bez kontry, 2 - kontra, 4 - rekontra. Podałeś : "
                         + nRDsign + " - spróbuj jeszcze raz");

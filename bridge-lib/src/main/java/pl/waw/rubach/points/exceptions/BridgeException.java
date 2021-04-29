@@ -7,7 +7,8 @@ import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MEDIUMNUMBEROF
  */
 public class BridgeException extends Exception {
 
-    protected static String wrongExceptionCaseMessage = "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony";
+    protected static String wrongExceptionCaseMessage =
+        "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony";
 
     public BridgeException(String message) {
         super(message);
