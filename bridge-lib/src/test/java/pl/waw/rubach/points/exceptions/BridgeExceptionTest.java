@@ -12,8 +12,8 @@ import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.*;
 
 public class BridgeExceptionTest {
 
-  private static Logger logger = LoggerFactory.getLogger(FourGameImpScorringFirstTest.class);
-
+  private static final Logger logger = LoggerFactory.getLogger(BridgeException.class);
+  private static final double DELTA = 0.0001;
  //introducing good value of each parameter
   boolean wePlay = true;
   boolean isRedouble = false;
@@ -56,15 +56,15 @@ public class BridgeExceptionTest {
       c.setNoDoubleReSignature(NDR);
       fail("Exception wasn't thrown!");
     } catch (InvalidContractLevelException exception) {
-      assertEquals(contractLevel, exception.getContractLevel(), 0.05);
+      assertEquals(contractLevel, exception.getContractLevel());
       assertFalse(exception.getContractLevel() <= MAXCONTRACTLEVEL && exception.getContractLevel() > 0);
       logger.info(exception.getMessage());
     } catch (InvalidNumberOfPointsException exception) {
-      assertEquals(pointsInBothHandsWe, exception.getPointsGiven(), 0.05);
+      assertEquals(pointsInBothHandsWe, exception.getPointsGiven(), DELTA);
       assertFalse(exception.getPointsGiven() <= MAXNUBEROFPOINTS && exception.getPointsGiven() > MINNUMBEROFPOINTS);
       logger.info(exception.getMessage());
     } catch (InvalidNumberOfTrickTakenException exception) {
-      assertEquals(numberOfTrickTakenByWe, exception.getNumberOfTricksTaken(), 0.05);
+      assertEquals(numberOfTrickTakenByWe, exception.getNumberOfTricksTaken());
       assertFalse(exception.getNumberOfTricksTaken() > 0 && exception.getNumberOfTricksTaken() <= 13);
       logger.info(exception.getMessage());
     } catch (InvalidContractSuitException exception) {
@@ -129,6 +129,18 @@ public class BridgeExceptionTest {
     RubberScoring r = new RubberScoring(1);
     for (int i = 0; i < 3; i++) {  //two times for rubber and then third trying to add next contract after rubber
       r.fillOneContract(wePlay, 3, "NT", isDouble, isRedouble, 9);
+    }
+  }
+
+  @Test
+  public void shouldThrowEndOfRubberExceptionWithMessage() throws BridgeException {
+    RubberScoring r = new RubberScoring(1);
+    try {
+      for (int i = 0; i < 3; i++) {  //two times for rubber and then third trying to add next contract after rubber
+        r.fillOneContract(wePlay, 3, "NT", isDouble, isRedouble, 9);
+      }
+    }catch (EndOfRubberException exception) {
+      logger.info(exception.getMessage());
     }
   }
 

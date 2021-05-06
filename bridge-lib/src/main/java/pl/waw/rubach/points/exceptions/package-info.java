@@ -1,0 +1,1 @@
+package pl.waw.rubach.points.exceptions;

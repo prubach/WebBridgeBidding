@@ -6,13 +6,12 @@ public class InvalidNumberOfTrickTakenException extends BridgeException {
 
     private final int numberOfTricksTaken;
 
-    public InvalidNumberOfTrickTakenException(int numberOfTricksTaken) {
-        super(numberOfTricksTaken < 0 | numberOfTricksTaken > NUMBEROFTRICS ?
-                 "liczba wziętych lew źle podana: podano" + numberOfTricksTaken
-                + " a powinno być mniej niż" + NUMBEROFTRICS + " - spróbuj jeszcze raz"
-            :WRONG_EXCEPTION_CASE_MESSAGE);
+    public InvalidNumberOfTrickTakenException(final int tricksTaken) {
+        super(tricksTaken < 0 | tricksTaken > NUMBEROFTRICS
+                ? String.format(ExceptionMessages.INVALID_NUMBER_OF_TRICKS_TAKEN_MESSAGE,tricksTaken)
+                : WRONG_EXCEPTION_CASE_MESSAGE);
 
-        this.numberOfTricksTaken = numberOfTricksTaken;
+        this.numberOfTricksTaken = tricksTaken;
     }
 
     public int getNumberOfTricksTaken() {

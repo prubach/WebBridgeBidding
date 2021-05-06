@@ -14,7 +14,7 @@ public class BridgeException extends Exception {
    * General constructor.
    * @param message is string message to print with the exception
    */
-  public BridgeException(String message) {
+  public BridgeException(final String message) {
     super(message);
   }
 
@@ -22,7 +22,7 @@ public class BridgeException extends Exception {
    * General bridge exception. No special cases...
    */
   public BridgeException() {
-    super("Niezgodność z zasadami brydża. ");
+    super(ExceptionMessages.GENERAL_BRIDGE_EXCEPTION_CASE_MESSAGE);
   }
 
 
