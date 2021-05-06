@@ -1,7 +1,7 @@
 package pl.waw.rubach.points.rubberBridge;
 
 import pl.waw.rubach.points.AbstractWholeGameScoring;
-import pl.waw.rubach.points.OneDeal;
+import pl.waw.rubach.points.AbstractOneDeal;
 import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.EndOfRubberException;
 
@@ -16,7 +16,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
     /**
      * Map number of game with scorring for one game
      */
-    private Map<Integer, OneDeal> scorringForOneGame = new HashMap<>();
+    private Map<Integer, AbstractOneDeal> scorringForOneGame = new HashMap<>();
     private boolean areWeVunerable, areTheyVunerable, wePlay;
     private boolean winWe, winThey;
     private int ourWiningScorring;
@@ -157,7 +157,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
            this.scorringForOneGame.put(contractNumber, d);
     }
 
-    public Map<Integer, OneDeal> getScorringForOneGame() {
+    public Map<Integer, AbstractOneDeal> getScorringForOneGame() {
         return scorringForOneGame;
     }
 

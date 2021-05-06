@@ -1,9 +1,9 @@
 package pl.waw.rubach.points.duplicateBridgeImps;
 
 
-import pl.waw.rubach.points.OneDeal;
+import pl.waw.rubach.points.AbstractOneDeal;
 
-public class OneDealImp extends OneDeal {
+public class OneDealImp extends AbstractOneDeal {
 
     public static final int MAXNUBEROFPOINTS = 40;
     public static final float MEDIUMNUMBEROFPOINS = 20;
@@ -93,18 +93,18 @@ public class OneDealImp extends OneDeal {
         return wePlay ? isDeclarerVulnerable() : isOpponentVulnerable() ;
     }
 
-    public void setWeVulnerable(boolean wePlay, boolean areWeVunerable) {
-        if(wePlay) this.declarerVulnerable =areWeVunerable;
-        else this.opponentVulnerable=areWeVunerable;
+    public void setWeVulnerable(boolean wePlay, boolean areWeVulnerable) {
+        if(wePlay) this.declarerVulnerable = areWeVulnerable;
+        else this.opponentVulnerable= areWeVulnerable;
     }
 
     public boolean areTheyVulnerable(boolean wePlay) {
         return wePlay ? isOpponentVulnerable(): isDeclarerVulnerable();
     }
 
-    public void setTheyVulnerable(boolean wePlay, boolean areTheyVunerable) {
-        if(wePlay) this.declarerVulnerable =areTheyVunerable;
-        else this.opponentVulnerable=areTheyVunerable;
+    public void setTheyVulnerable(boolean wePlay, boolean areTheyVulnerable) {
+        if(wePlay) this.declarerVulnerable = areTheyVulnerable;
+        else this.opponentVulnerable= areTheyVulnerable;
     }
 
     public boolean isDeclarerVulnerable() {

@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.OneDeal.*;
+import static pl.waw.rubach.points.AbstractOneDeal.*;
 
 /**
  * Exception of invalid undoubted/ double/ redouble signature

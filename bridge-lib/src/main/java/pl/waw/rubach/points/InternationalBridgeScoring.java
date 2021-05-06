@@ -4,7 +4,7 @@ import pl.waw.rubach.points.exceptions.BridgeException;
 import pl.waw.rubach.points.exceptions.InvalidContractSuitException;
 
 //This was  PointsForContract(...)
-public class InternationalBridgeScoring extends OneDeal {
+public class InternationalBridgeScoring extends AbstractOneDeal {
 
   /**
    * The number of tricks above six (the book) that are taken by declarer.

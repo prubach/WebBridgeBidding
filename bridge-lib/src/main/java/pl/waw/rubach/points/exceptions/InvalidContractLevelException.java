@@ -1,7 +1,7 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.OneDeal.MAXCONTRACTLEVEL;
-import static pl.waw.rubach.points.OneDeal.MINCONTRACTLEVEL;
+import static pl.waw.rubach.points.AbstractOneDeal.MAXCONTRACTLEVEL;
+import static pl.waw.rubach.points.AbstractOneDeal.MINCONTRACTLEVEL;
 
 /**
  * Exception of invalid contract level.
@@ -16,11 +16,10 @@ public class InvalidContractLevelException extends BridgeException {
    */
   public InvalidContractLevelException(int contractLevel) {
     super(contractLevel > MAXCONTRACTLEVEL | contractLevel < MAXCONTRACTLEVEL
-        ? WRONG_EXCEPTION_CASE_MESSAGE :
-        "Nie ma takiego poziomu gry, podano: "
+        ? "Nie ma takiego poziomu gry, podano: "
             + contractLevel + " a powinno być między "
             + MINCONTRACTLEVEL + " a " + MAXCONTRACTLEVEL
-            + " (szlem) - spróbuj jeszcze raz");
+            + " (szlem) - spróbuj jeszcze raz" : WRONG_EXCEPTION_CASE_MESSAGE);
     this.contractLevel = contractLevel;
   }
 

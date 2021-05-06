@@ -9,7 +9,7 @@ import pl.waw.rubach.points.exceptions.InvalidNDRSignatureException;
 import pl.waw.rubach.points.exceptions.InvalidNumberOfTrickTakenException;
 
 
-public class OneDeal {
+public abstract class AbstractOneDeal {
 
   public static final int IS_DOUBLE = 2;
   public static final int IS_REDOUBLE = 4;
@@ -91,12 +91,12 @@ public class OneDeal {
   private String shortDescription;
 
 
-  protected OneDeal() {
+  protected AbstractOneDeal() {
   }
 
-  protected OneDeal(int contractLevel, String contractSuit,
-                    int noDoubleReSignature, int declarerNumberOfTrickTaken,
-                    boolean auctionAssumptionDeclarer)
+  protected AbstractOneDeal(int contractLevel, String contractSuit,
+                            int noDoubleReSignature, int declarerNumberOfTrickTaken,
+                            boolean auctionAssumptionDeclarer)
       throws BridgeException {
 
     setContractLevel(contractLevel);
@@ -197,11 +197,11 @@ public class OneDeal {
     return wePlay ? isDeclarerVulnerable() : isOpponentVulnerable();
   }
 
-  public void setWeVulnerable(boolean wePlay, boolean areWeVunerable) {
+  public void setWeVulnerable(boolean wePlay, boolean areWeVulnerable) {
     if (wePlay) {
-      this.declarerVulnerable = areWeVunerable;
+      this.declarerVulnerable = areWeVulnerable;
     } else {
-      this.opponentVulnerable = areWeVunerable;
+      this.opponentVulnerable = areWeVulnerable;
     }
   }
 
@@ -209,11 +209,11 @@ public class OneDeal {
     return wePlay ? isOpponentVulnerable() : isDeclarerVulnerable();
   }
 
-  public void setTheyVulnerable(boolean wePlay, boolean areTheyVunerable) {
+  public void setTheyVulnerable(boolean wePlay, boolean areTheyVulnerable) {
     if (wePlay) {
-      this.declarerVulnerable = areTheyVunerable;
+      this.declarerVulnerable = areTheyVulnerable;
     } else {
-      this.opponentVulnerable = areTheyVunerable;
+      this.opponentVulnerable = areTheyVulnerable;
     }
   }
 

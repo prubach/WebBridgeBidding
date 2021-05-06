@@ -63,9 +63,9 @@ public class FourGameImpScorringFirstTest {
         aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph3,cS,false,true,fitWe, fitThey));
         aa.add(new CalculatedImpPointsForOneDeal(whoPlay,ph4,cS,true,true,fitWe, fitThey));
 
-        FourGameImpScoring aaaaa =  new FourGameImpScoring(aa);
-        aaaaa.setSumm();
-        return aaaaa;
+        FourGameImpScoring fourGameImpScoring =  new FourGameImpScoring(aa);
+        fourGameImpScoring.setSumm();
+        return fourGameImpScoring;
     }
 
     @Test

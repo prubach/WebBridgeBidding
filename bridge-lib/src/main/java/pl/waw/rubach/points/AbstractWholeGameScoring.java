@@ -1,6 +1,6 @@
 package pl.waw.rubach.points;
 
-public abstract class AbstractWholeGameScoring extends OneDeal{
+public abstract class AbstractWholeGameScoring extends AbstractOneDeal {
 
     /**
      * game (for contract) ID - not sure if needed but probably for something?  - could be added in future:

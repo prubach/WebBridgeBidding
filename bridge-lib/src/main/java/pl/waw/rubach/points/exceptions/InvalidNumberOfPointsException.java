@@ -10,8 +10,10 @@ public class InvalidNumberOfPointsException extends BridgeException {
 
     public InvalidNumberOfPointsException(float pointsGiven) {
         super(pointsGiven <= MAXNUBEROFPOINTS && pointsGiven >= MINNUMBEROFPOINTS
-            ? WRONG_EXCEPTION_CASE_MESSAGE : "Nieprawidłowo podana liczba punktów na obu rękach partnerów-  podano: " + pointsGiven
-                + " a powinna być liczba dodatnia  i nie większa od " + MAXNUBEROFPOINTS + " - spróbuj jeszcze raz!");
+            ? WRONG_EXCEPTION_CASE_MESSAGE :
+            "Nieprawidłowo podana liczba punktów na obu rękach partnerów-  podano: "
+                + pointsGiven + " a powinna być liczba dodatnia  i nie większa od "
+                + MAXNUBEROFPOINTS + " - spróbuj jeszcze raz!");
         this.pointsGiven = pointsGiven;
     }
 

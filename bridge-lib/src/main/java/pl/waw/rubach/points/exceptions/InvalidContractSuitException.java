@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.OneDeal.SUITS;
+import static pl.waw.rubach.points.AbstractOneDeal.SUITS;
 
 /**
  * Exception of invalid suits of cards declarer by user.
