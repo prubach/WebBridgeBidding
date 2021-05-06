@@ -412,8 +412,8 @@ public class VaadinUI extends UI {
     /**
      * Present points as 12-17 or 12+ depending on what's the pointsMax
      *
-     * @param bid
-     * @return
+     * @param bid for each points are calculated
+     * @return number of points
      */
     private String getPointsForBid(Bid bid) {
         return bid.getPointsMin() + (bid.getPointsMax() >= 37 ? "+" : "-" + bid.getPointsMax());
@@ -428,7 +428,6 @@ public class VaadinUI extends UI {
         curBid = bid;
         if (bid == null) {
             navigatorLabel.setValue("Wybierz odzywkę:");
-            //bidGrid.setCaption("Otwarcie - gracz S:");
             leftHeaderCell.setText("Otwarcia - gracz S:");
             rightHeaderCell.setText("");
             curBidLabel.setValue("");

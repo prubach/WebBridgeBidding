@@ -13,7 +13,7 @@ public class InvalidContractSuitException extends BridgeException {
    * Exception of invalid suits of cards declarer by user.
    */
   public InvalidContractSuitException(String inputValue) {
-    super(SUITS.stream().anyMatch(inputValue::contains) ? wrongExceptionCaseMessage :
+    super(SUITS.stream().anyMatch(inputValue::contains) ? WRONG_EXCEPTION_CASE_MESSAGE :
         "Nie ma takiego koloru: podałeś " + inputValue + " - wpisz jeszcze raz.");
     this.contractSuit = inputValue;
   }

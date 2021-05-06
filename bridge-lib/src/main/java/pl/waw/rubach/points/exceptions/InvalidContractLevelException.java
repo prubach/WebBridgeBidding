@@ -16,7 +16,7 @@ public class InvalidContractLevelException extends BridgeException {
    */
   public InvalidContractLevelException(int contractLevel) {
     super(contractLevel > MAXCONTRACTLEVEL | contractLevel < MAXCONTRACTLEVEL
-        ? wrongExceptionCaseMessage :
+        ? WRONG_EXCEPTION_CASE_MESSAGE :
         "Nie ma takiego poziomu gry, podano: "
             + contractLevel + " a powinno być między "
             + MINCONTRACTLEVEL + " a " + MAXCONTRACTLEVEL

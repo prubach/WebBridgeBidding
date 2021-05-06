@@ -8,7 +8,7 @@ public class InvalidNumberOfGamesInRubber extends BridgeException {
 
   public InvalidNumberOfGamesInRubber(int numberOfContractInRubber) {
     super(numberOfContractInRubber <= NUMBEROFGAMEINRUBBER && numberOfContractInRubber > 0
-        ? wrongExceptionCaseMessage
+        ? WRONG_EXCEPTION_CASE_MESSAGE
         : "Nieprawidłowy numer gry-  podano: " + numberOfContractInRubber
         + " a powinna 1, 2, 3 lub 4- spróbuj jeszcze raz!");
     this.numberOfContract = numberOfContractInRubber;

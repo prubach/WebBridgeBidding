@@ -3,6 +3,7 @@ package pl.waw.rubach.points.duplicateBridgeImps;
 import static java.lang.Math.abs;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
+import pl.waw.rubach.points.exceptions.InvalidPointToCalculateImpsException;
 
 
 /**
@@ -34,7 +35,7 @@ public class CalculatedImpPointsForOneDeal extends OneDealImp {
     setPointDifferent(abs(getDeclarerContractScoringPoints() - getExpectedPoints()));
 
     if (!(ImpTable.getInstance().checkInputValue(0, 10000, getPointDifferent()))) {
-      throw new BridgeException(getPointDifferent());
+      throw new InvalidPointToCalculateImpsException(getPointDifferent());
     }
 
     setDeclarerResults(ImpTable.getInstance().getImpPoints(getPointDifferent()));
@@ -79,7 +80,7 @@ public class CalculatedImpPointsForOneDeal extends OneDealImp {
         numberOfTrickTakenByWe, auctionAssumptionWe, auctionAssumptionThey, fitWe, fitThey);
   }
 
-  //contructors when only we play:
+  //contractors when only we play:
   public CalculatedImpPointsForOneDeal(float pointsInBothDeclarerHands,
                                        int pointsForContractDeclarer,
                                        boolean auctionAssumptionDeclarer, boolean auctionAssumptionOponenst, boolean fitDeclarer, boolean fitOponents)
@@ -109,7 +110,7 @@ public class CalculatedImpPointsForOneDeal extends OneDealImp {
   }
 
 
-  //geters and setters
+  //getters and setters
   public int getPointDifferent() {
     return pointDifferent;
   }
