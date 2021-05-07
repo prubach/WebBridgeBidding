@@ -23,8 +23,8 @@
 
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.AbstractOneDeal.MAXCONTRACTLEVEL;
-import static pl.waw.rubach.points.AbstractOneDeal.MINCONTRACTLEVEL;
+import static pl.waw.rubach.points.AbstractOneDeal.MAX_CONTRACT_LEVEL;
+import static pl.waw.rubach.points.AbstractOneDeal.MIN_CONTRACT_LEVEL;
 
 /**
  * Exception of invalid contract level.
@@ -42,7 +42,7 @@ public class InvalidContractLevelException extends BridgeException {
    * @param level is  contract level
    */
   public InvalidContractLevelException(final int level) {
-    super(level > MAXCONTRACTLEVEL | level < MINCONTRACTLEVEL
+    super(level > MAX_CONTRACT_LEVEL | level < MIN_CONTRACT_LEVEL
         ? String.format(ExceptionMessages.INVALID_CONTRACT_LEVEL_MESSAGE,
         level)
         : WRONG_EXCEPTION_CASE_MESSAGE);

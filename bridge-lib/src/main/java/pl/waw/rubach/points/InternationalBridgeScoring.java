@@ -30,19 +30,18 @@ import pl.waw.rubach.points.exceptions.InvalidContractSuitException;
 public class InternationalBridgeScoring extends AbstractOneDeal {
 
   /**
-   * The number of tricks above six (the book) that are taken by declarer.
-   */
-  private int oddTricks;
-  /**
    * Indicates if contract is made  which means  take at least as many tricks as a contract calls for.
    */
   protected boolean made;
-
   /**
    * Long description explain how points are calculating.
    * is setting in time of calculation, so no setter need!
    */
   protected String description = "Punkty za kontrakt: ";
+  /**
+   * The number of tricks above six (the book) that are taken by declarer.
+   */
+  private int oddTricks;
 
 
   //This was :  PointsForContract(...)
@@ -84,7 +83,8 @@ public class InternationalBridgeScoring extends AbstractOneDeal {
 
     if (made) {
       setDeclarerContractScoringPoints(getContractPoints(contractLevel) * nDRSignature);
-      description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit + " to: " + getDeclarerContractScoringPoints() + "pkt. ";
+      description = description + "Za ugraną grę:" + contractLevel + " " + contractSuit
+          + " to: " + getDeclarerContractScoringPoints() + "pkt. ";
     } else {
       setDeclarerContractScoringPoints(getPenaltyPoints());
     }

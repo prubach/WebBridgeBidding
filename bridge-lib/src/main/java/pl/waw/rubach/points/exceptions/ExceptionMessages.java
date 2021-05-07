@@ -23,9 +23,9 @@
 
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.AbstractOneDeal.MAXCONTRACTLEVEL;
-import static pl.waw.rubach.points.AbstractOneDeal.MINCONTRACTLEVEL;
-import static pl.waw.rubach.points.AbstractOneDeal.NUMBEROFTRICS;
+import static pl.waw.rubach.points.AbstractOneDeal.MAX_CONTRACT_LEVEL;
+import static pl.waw.rubach.points.AbstractOneDeal.MIN_CONTRACT_LEVEL;
+import static pl.waw.rubach.points.AbstractOneDeal.NUMBER_OF_TRICKS;
 import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MAX_NUMBER_OF_POINTS;
 import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MEDIUM_NUMBER_OF_POINTS;
 
@@ -52,11 +52,11 @@ class ExceptionMessages {
 
   public static final String INVALID_NUMBER_OF_TRICKS_TAKEN_MESSAGE =
          "Liczba wziętych lew źle podana: podano %d"
-        + " a powinno być mniej niż" + NUMBEROFTRICS + " - spróbuj jeszcze raz";
+        + " a powinno być mniej niż" + NUMBER_OF_TRICKS + " - spróbuj jeszcze raz";
 
   public static final String INVALID_CONTRACT_LEVEL_MESSAGE =
       "Nie ma takiego poziomu gry, podano: %d a powinno być między "
-          + MINCONTRACTLEVEL + " a " + MAXCONTRACTLEVEL
+          + MIN_CONTRACT_LEVEL + " a " + MAX_CONTRACT_LEVEL
           + " (szlem) - spróbuj jeszcze raz";
 
   public static final String INVALID_FIT_MESSAGE =

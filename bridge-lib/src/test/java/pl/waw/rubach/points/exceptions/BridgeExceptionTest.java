@@ -57,7 +57,7 @@ public class BridgeExceptionTest {
       fail("Exception wasn't thrown!");
     } catch (InvalidContractLevelException exception) {
       assertEquals(contractLevel, exception.getContractLevel());
-      assertFalse(exception.getContractLevel() <= MAXCONTRACTLEVEL && exception.getContractLevel() > 0);
+      assertFalse(exception.getContractLevel() <= MAX_CONTRACT_LEVEL && exception.getContractLevel() > 0);
       logger.info(exception.getMessage());
     } catch (InvalidContractSuitException exception) {
       String suit = exception.getContractSuit();

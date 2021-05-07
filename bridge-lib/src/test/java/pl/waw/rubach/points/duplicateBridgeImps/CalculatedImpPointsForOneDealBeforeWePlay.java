@@ -134,9 +134,6 @@ public class CalculatedImpPointsForOneDealBeforeWePlay {
     }
 
 
-
-    //todo zdecydować co zostaje?  - zamiast tej pustej klasy- lepiej tak: jakoś to mi się wydaje mało eleganckie :) ale z tą pustą klasą to trochę bez sensu...
-    //odp podobnie, myślę, że obydwa rozwiązania są ok.
     @Test
     public void testCountingPointsResThey() throws BridgeException {
         wePlay = false;

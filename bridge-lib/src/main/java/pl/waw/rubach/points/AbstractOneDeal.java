@@ -23,13 +23,10 @@
 
 package pl.waw.rubach.points;
 
+import pl.waw.rubach.points.exceptions.*;
+
 import java.util.Arrays;
 import java.util.List;
-import pl.waw.rubach.points.exceptions.BridgeException;
-import pl.waw.rubach.points.exceptions.InvalidContractLevelException;
-import pl.waw.rubach.points.exceptions.InvalidContractSuitException;
-import pl.waw.rubach.points.exceptions.InvalidNDRSignatureException;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfTrickTakenException;
 
 
 public abstract class AbstractOneDeal {
@@ -37,10 +34,11 @@ public abstract class AbstractOneDeal {
   public static final int IS_DOUBLE = 2;
   public static final int IS_REDOUBLE = 4;
   public static final int IS_UNDOUBTED = 1;
-  public static final int NUMBEROFTRICS = 13;
-  public static final int MINCONTRACTLEVEL = 0;
-  public static final int MAXCONTRACTLEVEL = 7;
-  public static final List<String> SUITS = Arrays.asList("S", "H", "D", "C", "NT", "N");
+  public static final int NUMBER_OF_TRICKS = 13;
+  public static final int MIN_CONTRACT_LEVEL = 0;
+  public static final int MAX_CONTRACT_LEVEL = 7;
+  public static final List<String> SUITS
+      = Arrays.asList("S", "H", "D", "C", "NT", "N");
 
   /**
    * Indicates who is Declarer - but all value here for declarer.
@@ -85,7 +83,7 @@ public abstract class AbstractOneDeal {
 
 
   /**
-   *  Auction Assumption for Playing Pair means if pair is  vulnerable or invulnerable.
+   * Auction Assumption for Playing Pair means if pair is  vulnerable or invulnerable.
    * ATTENTION Auction assumption declarer not we!!!
    */
   private boolean declarerVulnerable;
@@ -97,7 +95,7 @@ public abstract class AbstractOneDeal {
    * (calculated from duplicate bridge scoring)
    * calculated by DuplicateBridgeScoring by we!!! (Pair who make scoring not always playing pair)
    * //calculatedPointForContract -> contractScoringPoint
-   *    * because it is no point exactly but scoring (zapis)
+   * * because it is no point exactly but scoring (zapis)
    */
   private int declarerContractScoringPoints;
 
@@ -143,10 +141,7 @@ public abstract class AbstractOneDeal {
   public String getContractDescription(boolean assumptionB) {
     String assumption = assumptionB ? ": po parti, " : ": przed partią, ";
     //fixme poprawić wczytywanie założeń
-    String lew = getDeclarerNumberOfTrickTaken() == 1
-        ? " tylko lewę. " : getDeclarerNumberOfTrickTaken() > 1
-                          && getDeclarerNumberOfTrickTaken() < 5
-        ? " lewy." : " lew.";
+    String lew = tricksDeclination(getDeclarerNumberOfTrickTaken());
 
     if (getNoDoubleReSignature() == IS_DOUBLE) {
       return " Kontrakt jest: " + getContractLevel()
@@ -163,6 +158,15 @@ public abstract class AbstractOneDeal {
     }
   }
 
+  private String tricksDeclination(int num_trick) {
+    if (num_trick == 1) {
+      return "tylko lewę.";
+    } else if (num_trick > 1 && num_trick < 5) {
+      return "lewy";
+    } else {
+      return "lew";
+    }
+  }
 
   //Getters and Setters
   public boolean areWePlay() {
@@ -179,7 +183,7 @@ public abstract class AbstractOneDeal {
 
   public void setContractLevel(int contractLevel) throws InvalidContractLevelException {
     //checking if contractLevel is correct
-    if (contractLevel > MAXCONTRACTLEVEL || contractLevel < MINCONTRACTLEVEL) {
+    if (contractLevel > MAX_CONTRACT_LEVEL || contractLevel < MIN_CONTRACT_LEVEL) {
       throw new InvalidContractLevelException(contractLevel);
     }
 
@@ -266,20 +270,10 @@ public abstract class AbstractOneDeal {
   public void setDeclarerNumberOfTrickTaken(int declarerNumberOfTrickTaken)
       throws InvalidNumberOfTrickTakenException {
     //checking if number of tricks is correct
-    if (declarerNumberOfTrickTaken > NUMBEROFTRICS || declarerNumberOfTrickTaken < 0) {
+    if (declarerNumberOfTrickTaken > NUMBER_OF_TRICKS || declarerNumberOfTrickTaken < 0) {
       throw new InvalidNumberOfTrickTakenException(declarerNumberOfTrickTaken);
     }
     this.declarerNumberOfTrickTaken = declarerNumberOfTrickTaken;
-  }
-
-  public void setNumberOfTricksTakenWe(int numberOfTricksTakenWe)
-      throws InvalidNumberOfTrickTakenException {
-    if (numberOfTricksTakenWe > NUMBEROFTRICS || numberOfTricksTakenWe < 0) {
-      throw new InvalidNumberOfTrickTakenException(declarerNumberOfTrickTaken);
-    }
-    this.declarerNumberOfTrickTaken = areWePlay()
-        ? numberOfTricksTakenWe : NUMBEROFTRICS - numberOfTricksTakenWe;
-
   }
 
   public int getNumberOfTricksTakenWe() {
@@ -288,6 +282,16 @@ public abstract class AbstractOneDeal {
     } else {
       return 13 - getDeclarerNumberOfTrickTaken();
     }
+  }
+
+  public void setNumberOfTricksTakenWe(int numberOfTricksTakenWe)
+      throws InvalidNumberOfTrickTakenException {
+    if (numberOfTricksTakenWe > NUMBER_OF_TRICKS || numberOfTricksTakenWe < 0) {
+      throw new InvalidNumberOfTrickTakenException(declarerNumberOfTrickTaken);
+    }
+    this.declarerNumberOfTrickTaken = areWePlay()
+        ? numberOfTricksTakenWe : NUMBER_OF_TRICKS - numberOfTricksTakenWe;
+
   }
 
   public int getDeclarerContractScoringPoints() {

@@ -23,7 +23,7 @@
 
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.AbstractOneDeal.NUMBEROFTRICS;
+import static pl.waw.rubach.points.AbstractOneDeal.NUMBER_OF_TRICKS;
 /**
  * Exception of invalid number of tricks taken.
  */
@@ -41,7 +41,7 @@ public class InvalidNumberOfTrickTakenException extends BridgeException {
      * @param tricksTaken which is checked
      */
   public InvalidNumberOfTrickTakenException(final int tricksTaken) {
-    super(tricksTaken < 0 | tricksTaken > NUMBEROFTRICS
+    super(tricksTaken < 0 | tricksTaken > NUMBER_OF_TRICKS
         ? String.format(
             ExceptionMessages.INVALID_NUMBER_OF_TRICKS_TAKEN_MESSAGE,
             tricksTaken)

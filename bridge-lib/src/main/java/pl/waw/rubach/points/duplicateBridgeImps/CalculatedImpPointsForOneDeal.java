@@ -77,13 +77,13 @@ public class CalculatedImpPointsForOneDeal extends OneDealImp {
 
     this(wePlay, pointsInBothHandsWe,
         (wePlay ? 1 : -1) * new DuplicateBridgeScoring(contractLevel, contractSuit, normalDoubleRedubleSingnature, wePlay ? auctionAssumptionWe : auctionAssumptionThey,
-            wePlay ? numberOfTrickTakenByWe : NUMBEROFTRICS - numberOfTrickTakenByWe).getDeclarerContractScoringPoints(),
+            wePlay ? numberOfTrickTakenByWe : NUMBER_OF_TRICKS - numberOfTrickTakenByWe).getDeclarerContractScoringPoints(),
         auctionAssumptionWe, auctionAssumptionThey, fitWe, fitThey);
     setContractLevel(contractLevel);
     setContractSuit(contractSuit);
     setNoDoubleReSignature(normalDoubleRedubleSingnature);
     //setDeclarerVulnerable(wePlay ? auctionAssumptionWe : auctionAssumptionThey);
-    setDeclarerNumberOfTrickTaken(wePlay ? numberOfTrickTakenByWe : NUMBEROFTRICS - numberOfTrickTakenByWe);
+    setDeclarerNumberOfTrickTaken(wePlay ? numberOfTrickTakenByWe : NUMBER_OF_TRICKS - numberOfTrickTakenByWe);
   }
 
   //constructor using ENUM -no tests

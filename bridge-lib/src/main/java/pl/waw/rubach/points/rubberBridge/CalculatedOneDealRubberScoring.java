@@ -26,14 +26,14 @@ package pl.waw.rubach.points.rubberBridge;
 import pl.waw.rubach.points.InternationalBridgeScoring;
 import pl.waw.rubach.points.exceptions.BridgeException;
 
-public class CalculatedOneDealRubberScorring extends InternationalBridgeScoring {
+public class CalculatedOneDealRubberScoring extends InternationalBridgeScoring {
 
 
      private int declarerOverPoints =0, declarerUnderPoints =0;
 
 
-    public CalculatedOneDealRubberScorring(int contractLevel, String contractSuit, int nDRSignature,
-                                           boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer) throws BridgeException {
+    public CalculatedOneDealRubberScoring(int contractLevel, String contractSuit, int nDRSignature,
+                                          boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer) throws BridgeException {
         super(contractLevel, contractSuit, nDRSignature, auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
 
     setDeclarerUnderPoints();
@@ -41,19 +41,19 @@ public class CalculatedOneDealRubberScorring extends InternationalBridgeScoring 
 
     }
 
-    public CalculatedOneDealRubberScorring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
-                                           boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)  throws  BridgeException {
+    public CalculatedOneDealRubberScoring(int contractLevel, String contractSuit, boolean isContractDouble, boolean isContractRedouble,
+                                          boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)  throws  BridgeException {
         this(contractLevel, contractSuit, isContractDouble? IS_DOUBLE: isContractRedouble? IS_REDOUBLE: IS_UNDOUBTED,
                 auctionAssumptionDeclarer, numberOfTrickTakenByDeclarer);
 
     }
 
 
-    public CalculatedOneDealRubberScorring(boolean whoPlay, int contractLevel, String contractSuit, int nDRSignature,
-                                           boolean auctionAssumptionWe,boolean auctionAssumptionThey, int numberOfTrickTakenByWe)  throws  BridgeException {
+    public CalculatedOneDealRubberScoring(boolean whoPlay, int contractLevel, String contractSuit, int nDRSignature,
+                                          boolean auctionAssumptionWe, boolean auctionAssumptionThey, int numberOfTrickTakenByWe)  throws  BridgeException {
         this(contractLevel, contractSuit, nDRSignature,
                 whoPlay? auctionAssumptionWe: auctionAssumptionThey,
-                whoPlay? numberOfTrickTakenByWe: NUMBEROFTRICS -numberOfTrickTakenByWe);
+                whoPlay? numberOfTrickTakenByWe: NUMBER_OF_TRICKS -numberOfTrickTakenByWe);
 
         setWePlay(whoPlay);
     }
@@ -72,6 +72,6 @@ public class CalculatedOneDealRubberScorring extends InternationalBridgeScoring 
     }
 
     private void setDeclarerUnderPoints() throws BridgeException {
-        this.declarerUnderPoints = made ? getContractPoints(getContractLevel()) * getNoDoubleReSignature() :0 ;
+        this.declarerUnderPoints = made ? getContractPoints(getContractLevel()) * getNoDoubleReSignature() : 0 ;
     }
 }

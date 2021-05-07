@@ -79,7 +79,7 @@ public class CalculatedRubberPointsForOneDealBefore {
              int tricksTaken = entry.getKey().getKey(1);
              int ndrSig = entry.getKey().getKey(2);
              int overPoints = entry.getKey().getKey(3);
-             CalculatedOneDealRubberScorring we = new CalculatedOneDealRubberScorring( contractLevel,suit,ndrSig, assumption[0],tricksTaken);
+             CalculatedOneDealRubberScoring we = new CalculatedOneDealRubberScoring( contractLevel,suit,ndrSig, assumption[0],tricksTaken);
              Integer resUnder = we.getDeclarerUnderPoints();
              int resOver = we.getDeclarerOverPoints();
              int scorrint = resOver + resUnder;
@@ -110,7 +110,7 @@ public class CalculatedRubberPointsForOneDealBefore {
             int tricksTaken = entry.getKey().getKey(1);
             int ndrSig = entry.getKey().getKey(2);
             int overPoints = entry.getKey().getKey(3);
-            CalculatedOneDealRubberScorring they = new CalculatedOneDealRubberScorring( wePlay,contractLevel,suit,ndrSig, assumption[0],assumption[1],13-tricksTaken);
+            CalculatedOneDealRubberScoring they = new CalculatedOneDealRubberScoring( wePlay,contractLevel,suit,ndrSig, assumption[0],assumption[1],13-tricksTaken);
             Integer resUnder = they.getDeclarerUnderPoints();
             int resOver = they.getDeclarerOverPoints();
             int scorrint =-(resOver + resUnder);

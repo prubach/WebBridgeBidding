@@ -47,11 +47,11 @@ public class RubberScoring extends AbstractWholeGameScoring {
     private int overWeSumm = 0, overTheySumm = 0, underWeSumm = 0, underTheySumm = 0;
     private int contractNumber=0;
 
-    public RubberScoring(ArrayList<CalculatedOneDealRubberScorring> d) throws BridgeException {
+    public RubberScoring(ArrayList<CalculatedOneDealRubberScoring> d) throws BridgeException {
         this(1);
 
-        for (CalculatedOneDealRubberScorring calculatedOneDealRubberScorring : d)
-            fillOneContract(calculatedOneDealRubberScorring.areWePlay(), calculatedOneDealRubberScorring);
+        for (CalculatedOneDealRubberScoring calculatedOneDealRubberScoring : d)
+            fillOneContract(calculatedOneDealRubberScoring.areWePlay(), calculatedOneDealRubberScoring);
 
         setResultsDescription("Końcowy wynik gry do rozdania numer:" + getGameID() + " dla nas jest: " + getSum() + " \n");
 
@@ -75,7 +75,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
     }
 
 
-    public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScorring d) throws BridgeException {
+    public int fillOneContract(boolean whoPlay, CalculatedOneDealRubberScoring d) throws BridgeException {
 
      if(isWinWe() || isWinThey()) throw new EndOfRubberException(getOurWiningScorring(),isWinWe() ,isWinThey() );
 
@@ -97,7 +97,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
     public int fillOneContract(boolean whoPlay, int contractLevel, String contractSuit,
                                int nDRsig, int numberOfTrickTakenByDeclarer)
             throws BridgeException {
-        return fillOneContract(whoPlay, new CalculatedOneDealRubberScorring(contractLevel, contractSuit,
+        return fillOneContract(whoPlay, new CalculatedOneDealRubberScoring(contractLevel, contractSuit,
                 nDRsig, (whoPlay ? isAreWeVunerable() : isAreTheyVunerable()),
                 numberOfTrickTakenByDeclarer) );
     }
@@ -128,7 +128,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
 
     }
 
-    private void setUnderAbovePoints(CalculatedOneDealRubberScorring d) {
+    private void setUnderAbovePoints(CalculatedOneDealRubberScoring d) {
 
         setUnderWe(d);
         setOverWe(d);
@@ -173,7 +173,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
 
     //getters and setters
 
-    private void setScorringForOneGame(Integer contractNumber, CalculatedOneDealRubberScorring d) {
+    private void setScorringForOneGame(Integer contractNumber, CalculatedOneDealRubberScoring d) {
            this.scorringForOneGame.put(contractNumber, d);
     }
 
@@ -186,7 +186,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
         return overWe;
     }
 
-    private void setOverWe(CalculatedOneDealRubberScorring d)  {
+    private void setOverWe(CalculatedOneDealRubberScoring d)  {
         this.overWe = areWePlay() ? d.getDeclarerOverPoints() : 0;
 
     }
@@ -195,7 +195,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
         return overThey;
     }
 
-    private void setOverThey(CalculatedOneDealRubberScorring d)  {
+    private void setOverThey(CalculatedOneDealRubberScoring d)  {
         this.overThey = areWePlay() ? 0 : d.getDeclarerOverPoints();
     }
 
@@ -203,7 +203,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
         return underWe;
     }
 
-    private void setUnderWe(CalculatedOneDealRubberScorring d)  {
+    private void setUnderWe(CalculatedOneDealRubberScoring d)  {
         this.underWe = areWePlay() ? d.getDeclarerUnderPoints() : 0;
 
     }
@@ -212,7 +212,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
         return underThey;
     }
 
-    private void setUnderThey(CalculatedOneDealRubberScorring d) {
+    private void setUnderThey(CalculatedOneDealRubberScoring d) {
         this.underThey = areWePlay() ? 0 : d.getDeclarerUnderPoints();
     }
 
