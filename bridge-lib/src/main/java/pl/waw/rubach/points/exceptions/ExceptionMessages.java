@@ -52,5 +52,6 @@ class ExceptionMessages {
           + "a powinna 1, 2, 3 lub 4- spróbuj jeszcze raz!";
 
   public static final String INVALID_POINTS_TO_IMPS_MESSAGE =
-      "Błąd różnicy punktów - %d mniejsza od zera- to jakiś błąd programu";
+      "Błąd różnicy punktów - %d nie mieści się w zakresie"
+         + "- to jakiś błąd programu";
 }

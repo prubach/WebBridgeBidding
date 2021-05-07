@@ -34,7 +34,7 @@ public class CalculatedImpPointsForOneDeal extends OneDealImp {
 
     setPointDifferent(abs(getDeclarerContractScoringPoints() - getExpectedPoints()));
 
-    if (!(ImpTable.getInstance().checkInputValue(0, 10000, getPointDifferent()))) {
+    if (!(ImpTable.getInstance().checkInputValue(0, MAX_NUMBER_OF_POINTS_BETWEEN_EXPECTED, getPointDifferent()))) {
       throw new InvalidPointToCalculateImpsException(getPointDifferent());
     }
 

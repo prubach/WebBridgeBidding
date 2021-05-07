@@ -7,7 +7,7 @@ import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MEDIUM_NUMBER_
  */
 public class InvalidFitException extends BridgeException {
   /**
-   * Exception of  invalid  parameters to this method of scoring.
+   * Exception of  invalid  parameters in special case 20 points.
    * is not possible both have fit with 20 points because
    * it should be mark only spades in this case according rules
    *

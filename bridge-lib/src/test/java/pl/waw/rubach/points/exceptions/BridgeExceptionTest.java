@@ -13,7 +13,7 @@ public class BridgeExceptionTest {
 
   private static final Logger logger = LoggerFactory.getLogger(BridgeException.class);
   private static final double DELTA = 0.0001;
- //introducing good value of each parameter
+  //introducing good value of each parameter
   boolean wePlay = true;
   boolean isRedouble = false;
   boolean isDouble = false;
@@ -21,11 +21,10 @@ public class BridgeExceptionTest {
   boolean isAuctionAssumptionThey = false;
   boolean fitWe = false;
   boolean fitThey = false;
-  String contractSuit = "NT";
+  String contractSuit = "N";
   float pointsInBothHandsWe = 23f;
   int contractLevel = 5;
   int numberOfTrickTakenByWe = 9;
-
 
   @Test
   public void testShouldThrowBridgeExceptionWithMessage() throws BridgeException {
@@ -36,7 +35,9 @@ public class BridgeExceptionTest {
     shouldThrowBridgeExceptionWithMessage(pointsInBothHandsWe, contractSuit, contractLevel, -4);
     shouldThrowBridgeExceptionWithMessage(pointsInBothHandsWe, contractSuit, contractLevel, 14);
     shouldThrowBridgeExceptionWithMessage(pointsInBothHandsWe, "A", contractLevel, numberOfTrickTakenByWe);
+    shouldThrowBridgeExceptionWithMessage(pointsInBothHandsWe, "Pik", contractLevel, numberOfTrickTakenByWe);
     shouldThrowBridgeExceptionWithMessage(pointsInBothHandsWe, contractSuit, contractLevel, numberOfTrickTakenByWe, 6);
+    shouldThrowBridgeExceptionWithMessage(pointsInBothHandsWe, contractSuit, contractLevel, numberOfTrickTakenByWe, -1);
   }
 
   private void shouldThrowBridgeExceptionWithMessage(
@@ -58,38 +59,58 @@ public class BridgeExceptionTest {
       assertEquals(contractLevel, exception.getContractLevel());
       assertFalse(exception.getContractLevel() <= MAXCONTRACTLEVEL && exception.getContractLevel() > 0);
       logger.info(exception.getMessage());
+    } catch (InvalidContractSuitException exception) {
+      String suit = exception.getContractSuit();
+      assertEquals(contractSuit, suit);
+      assertFalse(suit.equals("NT") | suit.equals("N") | suit.equals("S") |
+          suit.equals("D") | suit.equals("C") | suit.equals("H"));
+      logger.info(exception.getMessage());
+    } catch (InvalidNDRSignatureException exception) {
+      assertFalse(exception.getNDRSignature() == 1
+          | exception.getNDRSignature() == 4 | exception.getNDRSignature() == 2);
+      logger.info(exception.getMessage());
     } catch (InvalidNumberOfPointsException exception) {
       assertEquals(pointsInBothHandsWe, exception.getPointsGiven(), DELTA);
-      assertFalse(exception.getPointsGiven() <= MAX_NUMBER_OF_POINTS && exception.getPointsGiven() > MIN_NUMBER_OF_POINTS);
+      assertFalse(exception.getPointsGiven() <= MAX_NUMBER_OF_POINTS
+          && exception.getPointsGiven() > MIN_NUMBER_OF_POINTS);
       logger.info(exception.getMessage());
     } catch (InvalidNumberOfTrickTakenException exception) {
       assertEquals(numberOfTrickTakenByWe, exception.getNumberOfTricksTaken());
       assertFalse(exception.getNumberOfTricksTaken() > 0 && exception.getNumberOfTricksTaken() <= 13);
       logger.info(exception.getMessage());
-    } catch (InvalidContractSuitException exception) {
-      String suit = exception.getContractSuit();
-      assertEquals(contractSuit, suit);
-      assertFalse(suit.equals("NT") | suit.equals("N") | suit.equals("S") |
-          suit.equals("D") | suit.equals("C") | "H".equals(suit));
-      logger.info(exception.getMessage());
-    } catch (InvalidNDRSignatureException exception) {
-      assertEquals("Są tylko trzy opcje (1 = bez kontry, 2 - kontra, 4 - rekontra. " +
-          "Podałeś " + exception.getNDRSignature() + " - spróbuj jeszcze raz", exception.getMessage());
-      logger.info(exception.getMessage());
     }
   }
 
-  @Test(expected = InvalidFitException.class)
-  public void shouldTrowInvalidFitException() throws BridgeException {
-    new CalculatedImpPointsForOneDeal(wePlay, 20, contractLevel,
-        contractSuit, isDouble, isRedouble, numberOfTrickTakenByWe,
-        auctionAssumptionWe, isAuctionAssumptionThey, true, true);
+  @Test
+  public void shouldTrowInvalidPointToCalculateImpsException() {
+    try {
+      helperInvalidPointToCalculateImpsException(MAX_NUMBER_OF_POINTS_BETWEEN_EXPECTED + 111);
+    } catch (InvalidPointToCalculateImpsException exception) {
+      assertEquals("Błąd różnicy punktów - 10001 nie mieści się w zakresie- to jakiś błąd programu", exception.getMessage());
+    } catch (BridgeException e) {
+      e.printStackTrace();
+    }
   }
 
-  @Test(expected = InvalidContractLevelException.class)
-  public void shouldThrowInvalidCInteractLevelException() throws BridgeException {
-    new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHandsWe, 166,
-        contractSuit, isDouble, isRedouble, numberOfTrickTakenByWe,
+  @Test(expected = InvalidPointToCalculateImpsException.class)
+  public void shouldTrowInvalidPointToCalculateImpsException_1() throws BridgeException {
+    helperInvalidPointToCalculateImpsException(MAX_NUMBER_OF_POINTS_BETWEEN_EXPECTED * 10);
+  }
+
+  @Test(expected = InvalidPointToCalculateImpsException.class)
+  public void shouldTrowInvalidPointToCalculateImpsException_2() throws BridgeException {
+    helperInvalidPointToCalculateImpsException(-MAX_NUMBER_OF_POINTS_BETWEEN_EXPECTED);
+  }
+
+  private void helperInvalidPointToCalculateImpsException(int num) throws BridgeException {
+    new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHandsWe, num,
+        auctionAssumptionWe, isAuctionAssumptionThey, fitWe, fitThey);
+  }
+
+  @Test(expected = InvalidNumberOfTrickTakenException.class)
+  public void shouldTrowInvalidNumberOfTrickTakenException() throws BridgeException {
+    new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHandsWe, contractLevel,
+        contractSuit, isDouble, isRedouble, 15,
         auctionAssumptionWe, isAuctionAssumptionThey, fitWe, fitThey);
   }
 
@@ -100,11 +121,20 @@ public class BridgeExceptionTest {
         isAuctionAssumptionThey, isAuctionAssumptionThey, fitWe, fitThey);
   }
 
-  @Test(expected = InvalidNumberOfTrickTakenException.class)
-  public void shouldTrowInvalidNumberOfTrickTakenException() throws BridgeException {
-    new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHandsWe, contractLevel,
-        contractSuit, isDouble, isRedouble, 150,
+  @Test(expected = InvalidNDRSignatureException.class)
+  public void testNDSignature() throws BridgeException {
+    CalculatedImpPointsForOneDeal c = new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHandsWe, contractLevel,
+        contractSuit, isDouble, isRedouble, numberOfTrickTakenByWe,
         auctionAssumptionWe, isAuctionAssumptionThey, fitWe, fitThey);
+    c.setNoDoubleReSignature(6);
+  }
+
+
+  @Test(expected = InvalidFitException.class)
+  public void shouldTrowInvalidFitException() throws BridgeException {
+    new CalculatedImpPointsForOneDeal(wePlay, 20, contractLevel,
+        contractSuit, isDouble, isRedouble, numberOfTrickTakenByWe,
+        auctionAssumptionWe, isAuctionAssumptionThey, true, true);
   }
 
   @Test(expected = InvalidContractSuitException.class)
@@ -114,13 +144,11 @@ public class BridgeExceptionTest {
         auctionAssumptionWe, isAuctionAssumptionThey, fitWe, fitThey);
   }
 
-
-  @Test(expected = InvalidNDRSignatureException.class)
-  public void testNDSignature() throws BridgeException {
-    CalculatedImpPointsForOneDeal c = new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHandsWe, contractLevel,
+  @Test(expected = InvalidContractLevelException.class)
+  public void shouldThrowInvalidCInteractLevelException() throws BridgeException {
+    new CalculatedImpPointsForOneDeal(wePlay, pointsInBothHandsWe, 166,
         contractSuit, isDouble, isRedouble, numberOfTrickTakenByWe,
         auctionAssumptionWe, isAuctionAssumptionThey, fitWe, fitThey);
-    c.setNoDoubleReSignature(6);
   }
 
   @Test(expected = EndOfRubberException.class)
@@ -138,7 +166,7 @@ public class BridgeExceptionTest {
       for (int i = 0; i < 3; i++) {  //two times for rubber and then third trying to add next contract after rubber
         r.fillOneContract(wePlay, 3, "NT", isDouble, isRedouble, 9);
       }
-    }catch (EndOfRubberException exception) {
+    } catch (EndOfRubberException exception) {
       logger.info(exception.getMessage());
     }
   }

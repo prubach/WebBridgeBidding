@@ -9,10 +9,11 @@ public abstract class OneDealImp extends AbstractOneDeal {
     public static final float MEDIUM_NUMBER_OF_POINTS = 20;
     public static final int MIN_NUMBER_OF_POINTS = 0;
     public static final int NUMBER_OF_GAME_IN_RUBBER = 4;
+    public static final int MAX_NUMBER_OF_POINTS_BETWEEN_EXPECTED =10000;
 
     /**
      * ATTENTION fit opponents not they!!!
-     * Fit for  opponents of playing Pair means if they have 8 cards in suit (major or all depending of points)
+     * Fit for  opponents of playingMAX_NUMBER_OF_POINTS_BETWEEN_EXPECTEDPair means if they have 8 cards in suit (major or all depending of points)
      */
     private boolean opponensFit;
 
