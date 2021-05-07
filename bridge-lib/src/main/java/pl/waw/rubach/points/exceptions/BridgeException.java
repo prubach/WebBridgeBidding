@@ -11,10 +11,11 @@ public class BridgeException extends Exception {
       "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony";
 
   /**
-   * General constructor.
+   * General constructor to be used by extended class.
+   *
    * @param message is string message to print with the exception
    */
-  public BridgeException(final String message) {
+  protected BridgeException(final String message) {
     super(message);
   }
 

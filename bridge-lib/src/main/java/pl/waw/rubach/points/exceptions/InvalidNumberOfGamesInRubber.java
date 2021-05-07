@@ -1,21 +1,37 @@
 package pl.waw.rubach.points.exceptions;
 
 import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.NUMBEROFGAMEINRUBBER;
-
+/**
+ * Exception of invalid number of contracts in rubber.
+ */
 public class InvalidNumberOfGamesInRubber extends BridgeException {
 
-  private final int numberOfContract;
-
-  public InvalidNumberOfGamesInRubber(int numberOfContractInRubber) {
-    super(numberOfContractInRubber <= NUMBEROFGAMEINRUBBER && numberOfContractInRubber > 0
+  /**
+   * Parameter to describe number of game in rubber.
+   * Rubber in duplicated bridge is 4 games -with different assumption
+   * so this parameter should not be bigger then 4 and less then 0 of course
+   */
+  private final int numberOfContractInRubber;
+  /**
+   * Exception of invalid number of contracts in this game declarer by user.
+   *
+   * @param numberOfContract which is checked
+   */
+  public InvalidNumberOfGamesInRubber(final int numberOfContract) {
+    super(numberOfContract <= NUMBEROFGAMEINRUBBER
+        && numberOfContract > 0
         ? WRONG_EXCEPTION_CASE_MESSAGE
-        : "Nieprawidłowy numer gry-  podano: " + numberOfContractInRubber
-        + " a powinna 1, 2, 3 lub 4- spróbuj jeszcze raz!");
-    this.numberOfContract = numberOfContractInRubber;
+        : String.format(ExceptionMessages.INVALID_NUMBER_OF_GAME_MESSAGE,
+        numberOfContract));
+    this.numberOfContractInRubber = numberOfContract;
   }
 
-
-  public int getNumberOfContract() {
-    return numberOfContract;
+  /**
+   * Getter to have parameter trigger this exception.
+   *
+   * @return number of contract in this game
+   */
+  public int getNumberOfContractInRubber() {
+    return numberOfContractInRubber;
   }
 }

@@ -7,17 +7,27 @@ import static pl.waw.rubach.points.AbstractOneDeal.SUITS;
  */
 public class InvalidContractSuitException extends BridgeException {
 
+  /**
+   * Suit which is checked in exception.
+   */
   private final String contractSuit;
 
   /**
    * Exception of invalid suits of cards declarer by user.
+   *
+   * @param suit which is checked
    */
-  public InvalidContractSuitException(String suit) {
-    super(SUITS.stream().anyMatch(suit::contains) ? WRONG_EXCEPTION_CASE_MESSAGE :
-       String.format(ExceptionMessages.INVALID_CONTRACT_SUIT_MESSAGE,suit));
+  public InvalidContractSuitException(final String suit) {
+    super(SUITS.stream().anyMatch(suit::contains) ? WRONG_EXCEPTION_CASE_MESSAGE
+        : String.format(ExceptionMessages.INVALID_CONTRACT_SUIT_MESSAGE, suit));
     this.contractSuit = suit;
   }
 
+  /**
+   * Getter to have parameter trigger this exception.
+   *
+   * @return contract suit
+   */
   public String getContractSuit() {
     return contractSuit;
   }

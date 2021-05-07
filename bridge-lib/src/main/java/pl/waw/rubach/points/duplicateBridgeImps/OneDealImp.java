@@ -3,7 +3,7 @@ package pl.waw.rubach.points.duplicateBridgeImps;
 
 import pl.waw.rubach.points.AbstractOneDeal;
 
-public class OneDealImp extends AbstractOneDeal {
+public abstract class OneDealImp extends AbstractOneDeal {
 
     public static final int MAXNUBEROFPOINTS = 40;
     public static final float MEDIUMNUMBEROFPOINS = 20;
@@ -66,7 +66,8 @@ public class OneDealImp extends AbstractOneDeal {
         setDeclarerFit(wePlay ? fitWe : fitThey);
         setOpponensFit(wePlay ? fitThey : fitWe);
 
-        setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : MAXNUBEROFPOINTS - pointsInBothHandsWe);  //pyt gra nie jestem pewna czy zawsze prawda (z doliczaniem za single i renons)
+        setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : MAXNUBEROFPOINTS - pointsInBothHandsWe);
+        //fixme to nie prawda! pyt gra nie jestem pewna czy zawsze prawda (z doliczaniem za single i renons)
 
         setDeclarerContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
 
