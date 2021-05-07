@@ -9,6 +9,11 @@ import pl.waw.rubach.points.duplicateBridgeImps.OneDealImp;
 public class InvalidPointToCalculateImpsException extends BridgeException {
 
   /**
+   * Parameter describing points which are look for in the ImpTable.
+   */
+  private int pointDifference;
+
+  /**
    * Exception testing number of points checked in Imp table.
    * It should no be less then zero points difference
    * because imp table have only positive values.
@@ -23,5 +28,15 @@ public class InvalidPointToCalculateImpsException extends BridgeException {
         ? WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_POINTS_TO_IMPS_MESSAGE,
         pointDiff));
+    this.pointDifference = pointDiff;
+  }
+
+  /**
+   * Getter to have parameter trigger this exception.
+   *
+   * @return points difference
+   */
+  public int getPointDifference() {
+    return pointDifference;
   }
 }

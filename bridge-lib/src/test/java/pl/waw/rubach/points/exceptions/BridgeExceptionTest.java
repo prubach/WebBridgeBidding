@@ -86,7 +86,7 @@ public class BridgeExceptionTest {
     try {
       helperInvalidPointToCalculateImpsException(MAX_NUMBER_OF_POINTS_BETWEEN_EXPECTED + 111);
     } catch (InvalidPointToCalculateImpsException exception) {
-      assertEquals("Błąd różnicy punktów - 10001 nie mieści się w zakresie- to jakiś błąd programu", exception.getMessage());
+      assertEquals(10001, exception.getPointDifference());
     } catch (BridgeException e) {
       e.printStackTrace();
     }
