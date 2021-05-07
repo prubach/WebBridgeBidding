@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MEDIUMNUMBEROFPOINS;
+import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MEDIUM_NUMBER_OF_POINTS;
 
 /**
  * Exception of not correct given fits for 20 points.
@@ -20,7 +20,7 @@ public class InvalidFitException extends BridgeException {
       final boolean fitWe,
       final boolean fitThey) {
     super(!fitWe || !fitThey
-        || numberPoints != MEDIUMNUMBEROFPOINS
+        || numberPoints != MEDIUM_NUMBER_OF_POINTS
         ? WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_FIT_MESSAGE, numberPoints));
 

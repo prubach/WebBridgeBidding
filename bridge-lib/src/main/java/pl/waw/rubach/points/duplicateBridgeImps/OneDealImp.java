@@ -5,14 +5,10 @@ import pl.waw.rubach.points.AbstractOneDeal;
 
 public abstract class OneDealImp extends AbstractOneDeal {
 
-    public static final int MAXNUBEROFPOINTS = 40;
-    public static final float MEDIUMNUMBEROFPOINS = 20;
-    public static final int MINNUMBEROFPOINTS = 0;
-
-    public static final int NUMBEROFGAMEINRUBBER =4;
-
-
-
+    public static final int MAX_NUMBER_OF_POINTS = 40;
+    public static final float MEDIUM_NUMBER_OF_POINTS = 20;
+    public static final int MIN_NUMBER_OF_POINTS = 0;
+    public static final int NUMBER_OF_GAME_IN_RUBBER = 4;
 
     /**
      * ATTENTION fit opponents not they!!!
@@ -57,7 +53,7 @@ public abstract class OneDealImp extends AbstractOneDeal {
 
     protected OneDealImp(boolean wePlay,
                float pointsInBothHandsWe, int pointsForContractWe,
-               boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitWe,boolean fitThey){
+               boolean auctionAssumptionWe, boolean auctionAssumptionThey, boolean fitWe, boolean fitThey) {
 
 
         setWePlay(wePlay);
@@ -66,7 +62,7 @@ public abstract class OneDealImp extends AbstractOneDeal {
         setDeclarerFit(wePlay ? fitWe : fitThey);
         setOpponensFit(wePlay ? fitThey : fitWe);
 
-        setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : MAXNUBEROFPOINTS - pointsInBothHandsWe);
+        setPointsInBothDeclarerHands(wePlay ? pointsInBothHandsWe : MAX_NUMBER_OF_POINTS - pointsInBothHandsWe);
         //fixme to nie prawda! pyt gra nie jestem pewna czy zawsze prawda (z doliczaniem za single i renons)
 
         setDeclarerContractScoringPoints(wePlay ? pointsForContractWe : -pointsForContractWe);
@@ -91,21 +87,28 @@ public abstract class OneDealImp extends AbstractOneDeal {
 
 
     public boolean areWeVulnerable(boolean wePlay) {
-        return wePlay ? isDeclarerVulnerable() : isOpponentVulnerable() ;
+        return wePlay ? isDeclarerVulnerable() : isOpponentVulnerable();
     }
 
     public void setWeVulnerable(boolean wePlay, boolean areWeVulnerable) {
-        if(wePlay) this.declarerVulnerable = areWeVulnerable;
-        else this.opponentVulnerable= areWeVulnerable;
+        if (wePlay) {
+            this.declarerVulnerable = areWeVulnerable;
+        } else {
+            this.opponentVulnerable = areWeVulnerable;
+        }
     }
 
     public boolean areTheyVulnerable(boolean wePlay) {
-        return wePlay ? isOpponentVulnerable(): isDeclarerVulnerable();
+        return wePlay ? isOpponentVulnerable()
+            : isDeclarerVulnerable();
     }
 
     public void setTheyVulnerable(boolean wePlay, boolean areTheyVulnerable) {
-        if(wePlay) this.declarerVulnerable = areTheyVulnerable;
-        else this.opponentVulnerable= areTheyVulnerable;
+        if (wePlay) {
+            this.declarerVulnerable = areTheyVulnerable;
+        } else {
+            this.opponentVulnerable = areTheyVulnerable;
+        }
     }
 
     public boolean isDeclarerVulnerable() {
@@ -158,13 +161,11 @@ public abstract class OneDealImp extends AbstractOneDeal {
 
 
     public int getContractScoringPointsWe() {
-        if (areWePlay()) return getDeclarerContractScoringPoints();
-        else return -getDeclarerContractScoringPoints();
+        return areWePlay() ? getDeclarerContractScoringPoints() : -getDeclarerContractScoringPoints();
     }
 
     public int getContractScoringPointsWe(boolean whoPlay) {
-        if (whoPlay) return getDeclarerContractScoringPoints();
-        else return -getDeclarerContractScoringPoints();
+        return whoPlay ? getDeclarerContractScoringPoints() : -getDeclarerContractScoringPoints();
     }
 
     public float getPointsInBothDeclarerHands() {
@@ -174,14 +175,16 @@ public abstract class OneDealImp extends AbstractOneDeal {
     public void setPointsInBothDeclarerHands(float pointsInBothDeclarerHands) {
         this.pointsInBothDeclarerHands = pointsInBothDeclarerHands;
     }
-    public void setPoinsInHandsWe(boolean wePlay, float pointsOnHandsWe){
-        if(wePlay) this.pointsInBothDeclarerHands = pointsOnHandsWe;
-        else this.pointsInBothDeclarerHands = MAXNUBEROFPOINTS - pointsOnHandsWe;
+    public void setPoinsInHandsWe(boolean wePlay, float pointsOnHandsWe) {
+        this.pointsInBothDeclarerHands = wePlay ? pointsOnHandsWe : MAX_NUMBER_OF_POINTS - pointsOnHandsWe;
     }
 
     public float getPoinsOnHandsWe() {
-        if (areWePlay()) return getPointsInBothDeclarerHands();
-        else return MAXNUBEROFPOINTS - getPointsInBothDeclarerHands();
+        if (areWePlay()) {
+            return getPointsInBothDeclarerHands();
+        } else {
+            return MAX_NUMBER_OF_POINTS - getPointsInBothDeclarerHands();
+        }
     }
 
 

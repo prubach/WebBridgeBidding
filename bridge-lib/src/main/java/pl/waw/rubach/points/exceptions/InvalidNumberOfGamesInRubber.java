@@ -1,6 +1,6 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.NUMBEROFGAMEINRUBBER;
+import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.NUMBER_OF_GAME_IN_RUBBER;
 /**
  * Exception of invalid number of contracts in rubber.
  */
@@ -18,7 +18,7 @@ public class InvalidNumberOfGamesInRubber extends BridgeException {
    * @param numberOfContract which is checked
    */
   public InvalidNumberOfGamesInRubber(final int numberOfContract) {
-    super(numberOfContract <= NUMBEROFGAMEINRUBBER
+    super(numberOfContract <= NUMBER_OF_GAME_IN_RUBBER
         && numberOfContract > 0
         ? WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_NUMBER_OF_GAME_MESSAGE,

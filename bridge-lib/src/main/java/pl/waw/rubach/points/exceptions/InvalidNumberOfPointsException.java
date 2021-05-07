@@ -1,7 +1,7 @@
 package pl.waw.rubach.points.exceptions;
 
-import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MAXNUBEROFPOINTS;
-import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MINNUMBEROFPOINTS;
+import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MAX_NUMBER_OF_POINTS;
+import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MIN_NUMBER_OF_POINTS;
 
 /**
  * Exception of invalid number of points in hands of player.
@@ -18,7 +18,7 @@ public class InvalidNumberOfPointsException extends BridgeException {
    * @param points checked number of points in hands
    */
   public InvalidNumberOfPointsException(final float points) {
-    super(points <= MAXNUBEROFPOINTS && points >= MINNUMBEROFPOINTS
+    super(points <= MAX_NUMBER_OF_POINTS && points >= MIN_NUMBER_OF_POINTS
         ? WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_NUMBER_OF_POINTS_MESSAGE,
         points));

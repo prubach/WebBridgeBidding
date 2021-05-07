@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.waw.rubach.points.duplicateBridgeImps.CalculatedImpPointsForOneDeal;
-import pl.waw.rubach.points.duplicateBridgeImps.FourGameImpScorringFirstTest;
 import pl.waw.rubach.points.rubberBridge.RubberScoring;
 
 import static org.junit.Assert.*;
@@ -61,7 +60,7 @@ public class BridgeExceptionTest {
       logger.info(exception.getMessage());
     } catch (InvalidNumberOfPointsException exception) {
       assertEquals(pointsInBothHandsWe, exception.getPointsGiven(), DELTA);
-      assertFalse(exception.getPointsGiven() <= MAXNUBEROFPOINTS && exception.getPointsGiven() > MINNUMBEROFPOINTS);
+      assertFalse(exception.getPointsGiven() <= MAX_NUMBER_OF_POINTS && exception.getPointsGiven() > MIN_NUMBER_OF_POINTS);
       logger.info(exception.getMessage());
     } catch (InvalidNumberOfTrickTakenException exception) {
       assertEquals(numberOfTrickTakenByWe, exception.getNumberOfTricksTaken());

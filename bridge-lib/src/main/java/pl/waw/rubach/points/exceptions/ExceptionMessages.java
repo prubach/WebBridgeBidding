@@ -3,8 +3,8 @@ package pl.waw.rubach.points.exceptions;
 import static pl.waw.rubach.points.AbstractOneDeal.MAXCONTRACTLEVEL;
 import static pl.waw.rubach.points.AbstractOneDeal.MINCONTRACTLEVEL;
 import static pl.waw.rubach.points.AbstractOneDeal.NUMBEROFTRICS;
-import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MAXNUBEROFPOINTS;
-import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MEDIUMNUMBEROFPOINS;
+import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MAX_NUMBER_OF_POINTS;
+import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MEDIUM_NUMBER_OF_POINTS;
 
 class ExceptionMessages {
 
@@ -22,7 +22,7 @@ class ExceptionMessages {
   public static final String INVALID_NUMBER_OF_POINTS_MESSAGE =
       "Nieprawidłowo podana liczba punktów na obu rękach partnerów"
       + "-  podano: %.2f a powinna być liczba dodatnia  i nie większa od "
-      + MAXNUBEROFPOINTS + " - spróbuj jeszcze raz!";
+      + MAX_NUMBER_OF_POINTS + " - spróbuj jeszcze raz!";
 
   public static final String INVALID_CONTRACT_SUIT_MESSAGE =
       "Nie ma takiego koloru: podałeś %s- wpisz jeszcze raz.";
@@ -38,7 +38,7 @@ class ExceptionMessages {
 
   public static final String INVALID_FIT_MESSAGE =
       "Nie mogą obie pary mieć fitu w starszym kolorze  przy "
-          + MEDIUMNUMBEROFPOINS
+          + MEDIUM_NUMBER_OF_POINTS
           + " PC -bo wtedy dla pików zapisuje się fit dla kierów brak fitu. "
           + "Podano: %.2f punktów oraz że są oba  fity"
           + "- popraw zaznaczenie fitów lub punktów";
