@@ -27,7 +27,7 @@ import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.NUMBER_OF_GAME
 /**
  * Exception of invalid number of contracts in rubber.
  */
-public class InvalidNumberOfGamesInRubber extends BridgeException {
+public class InvalidNumberOfGames extends BridgeException {
 
   /**
    * Parameter to describe number of game in rubber.
@@ -40,7 +40,7 @@ public class InvalidNumberOfGamesInRubber extends BridgeException {
    *
    * @param numberOfContract which is checked
    */
-  public InvalidNumberOfGamesInRubber(final int numberOfContract) {
+  public InvalidNumberOfGames(final int numberOfContract) {
     super(numberOfContract <= NUMBER_OF_GAME_IN_RUBBER
         && numberOfContract > 0
         ? WRONG_EXCEPTION_CASE_MESSAGE

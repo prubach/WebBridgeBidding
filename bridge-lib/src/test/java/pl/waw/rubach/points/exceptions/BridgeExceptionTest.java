@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.waw.rubach.points.duplicateBridgeImps.CalculatedImpPointsForOneDeal;
+import pl.waw.rubach.points.duplicateBridgeImps.FourGameImpScoring;
 import pl.waw.rubach.points.rubberBridge.RubberScoring;
 
 import static org.junit.Assert.*;
@@ -167,6 +168,30 @@ public class BridgeExceptionTest {
         r.fillOneContract(wePlay, 3, "NT", isDouble, isRedouble, 9);
       }
     } catch (EndOfRubberException exception) {
+      logger.info(exception.getMessage());
+    }
+  }
+
+  @Test(expected = InvalidNumberOfGames.class)
+  public void shouldThrowInvalidNumberOfGamesInRubber() throws BridgeException {
+    FourGameImpScoring r = new FourGameImpScoring(1);
+    //four for rubber and then fifth trying to add next contract after rubber
+    r.fillOneContract(5, wePlay, pointsInBothHandsWe, contractLevel,
+        contractSuit, isDouble, isRedouble, numberOfTrickTakenByWe,
+        fitWe, fitThey);
+
+  }
+
+  @Test
+  public void shouldThrowInvalidNumberOfGamesInRubberWithMessage() throws BridgeException {
+    FourGameImpScoring r = new FourGameImpScoring(1);
+
+    try {
+      r.fillOneContract(0, wePlay, pointsInBothHandsWe, contractLevel,
+          contractSuit, isDouble, isRedouble, numberOfTrickTakenByWe,
+          fitWe, fitThey);
+
+    } catch (InvalidNumberOfGames exception) {
       logger.info(exception.getMessage());
     }
   }

@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public abstract class AbstractOneDeal {
+public abstract class AbstractOneDeal implements ResultsInterface{
 
   public static final int IS_DOUBLE = 2;
   public static final int IS_REDOUBLE = 4;
@@ -331,8 +331,8 @@ public abstract class AbstractOneDeal {
     return wePlay ? declarerResults : -declarerResults;
   }
 
-  public int getResultsWe(boolean wePlay, int declarerResluts) {
-    return wePlay ? declarerResluts : -declarerResluts;
+  public int getResultsWe(boolean wePlay, int declarerResults) {
+    return wePlay ? declarerResults : -declarerResults;
   }
 
   public String getShortDescription() {

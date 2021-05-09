@@ -25,7 +25,7 @@ package pl.waw.rubach.points.duplicateBridgeImps;
 
 import java.util.*;
 
-public class ImpTable extends AbstractImpTable {
+public final class ImpTable extends AbstractImpTable {
 
     /**
      * one instance of ImpTable (as Singleton)??

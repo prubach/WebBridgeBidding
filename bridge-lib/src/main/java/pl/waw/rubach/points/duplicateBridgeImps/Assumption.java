@@ -24,7 +24,7 @@
 package pl.waw.rubach.points.duplicateBridgeImps;
 
 import pl.waw.rubach.points.exceptions.BridgeException;
-import pl.waw.rubach.points.exceptions.InvalidNumberOfGamesInRubber;
+import pl.waw.rubach.points.exceptions.InvalidNumberOfGames;
 
 public enum Assumption {
   NOR(1),WE(2),THEY(3),BOTH(4);
@@ -97,7 +97,7 @@ public enum Assumption {
    }
 
    private static void checkIfCorrectContractNumber(int contractNumber) throws BridgeException {
-        if(contractNumber>4 || contractNumber<=0) throw new InvalidNumberOfGamesInRubber(contractNumber);
+        if(contractNumber>4 || contractNumber<=0) throw new InvalidNumberOfGames(contractNumber);
    }
 
     public int getContractNumber() {
