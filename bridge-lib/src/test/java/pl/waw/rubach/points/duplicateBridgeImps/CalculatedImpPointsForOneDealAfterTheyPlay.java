@@ -4,9 +4,9 @@ import org.junit.Before;
 
 public class CalculatedImpPointsForOneDealAfterTheyPlay extends CalculatedImpPointsForOneDealAfterWePlay {
 
-    @Before
-    public void fillTestPointsMap() {
-        wePlay = false;
-        super.fillTestPointsMap();
-    }
+  @Before
+  public void fillTestPointsMap() {
+    wePlay = false;
+    super.fillTestPointsMap();
+  }
 }
