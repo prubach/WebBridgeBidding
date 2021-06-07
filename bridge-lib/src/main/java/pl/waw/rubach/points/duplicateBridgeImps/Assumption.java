@@ -29,7 +29,8 @@ import pl.waw.rubach.points.exceptions.InvalidNumberOfGames;
 public enum Assumption {
   NOR(1),WE(2),THEY(3),BOTH(4);
 
- /*   NOR(false,false),
+ /*
+    NOR(false,false),
     WE(true,false),
     THEY(false,true),
     BOTH(true,true);
@@ -43,9 +44,9 @@ public enum Assumption {
     }
 
 */
-    private  boolean we;
-    private  boolean they;
-    private  int contractNumber;
+    private final boolean we;
+    private final boolean they;
+    private final int contractNumber;
 
 
     Assumption(int contractNumber) {

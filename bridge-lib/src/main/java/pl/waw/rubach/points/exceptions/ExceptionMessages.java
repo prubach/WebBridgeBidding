@@ -31,6 +31,12 @@ import static pl.waw.rubach.points.duplicateBridgeImps.OneDealImp.MEDIUM_NUMBER_
 
 class ExceptionMessages {
 
+  /**
+   * String to mention wrong use of exception.
+   */
+  public static final String WRONG_EXCEPTION_CASE_MESSAGE =
+      "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony";
+
 
   public static final String GENERAL_BRIDGE_EXCEPTION_CASE_MESSAGE =
       "Niezgodność z zasadami brydża. ";

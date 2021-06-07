@@ -45,7 +45,7 @@ public class InvalidContractLevelException extends BridgeException {
     super(level > MAX_CONTRACT_LEVEL | level < MIN_CONTRACT_LEVEL
         ? String.format(ExceptionMessages.INVALID_CONTRACT_LEVEL_MESSAGE,
         level)
-        : WRONG_EXCEPTION_CASE_MESSAGE);
+        : ExceptionMessages.WRONG_EXCEPTION_CASE_MESSAGE);
     this.contractLevel = level;
   }
 

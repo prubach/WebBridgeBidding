@@ -42,7 +42,7 @@ public class InvalidNumberOfPointsException extends BridgeException {
    */
   public InvalidNumberOfPointsException(final float points) {
     super(points <= MAX_NUMBER_OF_POINTS && points >= MIN_NUMBER_OF_POINTS
-        ? WRONG_EXCEPTION_CASE_MESSAGE
+        ? ExceptionMessages.WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_NUMBER_OF_POINTS_MESSAGE,
         points));
     this.pointsGiven = points;

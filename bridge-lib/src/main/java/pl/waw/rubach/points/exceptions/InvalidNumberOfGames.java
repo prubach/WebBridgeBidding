@@ -43,7 +43,7 @@ public class InvalidNumberOfGames extends BridgeException {
   public InvalidNumberOfGames(final int numberOfContract) {
     super(numberOfContract <= NUMBER_OF_GAME_IN_RUBBER
         && numberOfContract > 0
-        ? WRONG_EXCEPTION_CASE_MESSAGE
+        ? ExceptionMessages.WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_NUMBER_OF_GAME_MESSAGE,
         numberOfContract));
     this.numberOfContractInRubber = numberOfContract;

@@ -83,7 +83,7 @@ public class RubberScoring extends AbstractWholeGameScoring {
              d.getContractSuit(), d.getNoDoubleReSignature(), d.getDeclarerNumberOfTrickTaken());
 
         setScorringForOneGame(getContractNumber(), d);
-        setShortDescription(getContractDescription(whoPlay ? isAreWeVunerable() : isAreTheyVunerable()));
+        //setShortDescription(getContractDescription(whoPlay ? isAreWeVunerable() : isAreTheyVunerable()));
         setUnderAbovePoints(d);
         d.setResultsWe(whoPlay,getOverWe() + getUnderWe()+getOverThey()+getOverWe());
 
@@ -327,14 +327,14 @@ public class RubberScoring extends AbstractWholeGameScoring {
                                       int nDRSig,
                                       int numerOfTricskTakenByDeclarere
     )
-    throws BridgeException{
+    {
         setWePlay(whoPlay);
         setContractNumber(getContractNumber()+1);
-        setContractLevel(contractLevel);
-        setContractSuit(contractSuit);
-        setNoDoubleReSignature(nDRSig);
-        setNumberOfTricksTakenWe(numerOfTricskTakenByDeclarere);
-        setDeclarerVulnerable(whoPlay ? isAreTheyVunerable():isAreTheyVunerable());
+        //setContractLevel(contractLevel);
+        //setContractSuit(contractSuit);
+        //setNoDoubleReSignature(nDRSig);
+        //setNumberOfTricksTakenWe(numerOfTricskTakenByDeclarere);
+        //setDeclarerVulnerable(whoPlay ? isAreTheyVunerable():isAreTheyVunerable());
 
     }
 

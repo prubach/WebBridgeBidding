@@ -44,7 +44,7 @@ public class InvalidFitException extends BridgeException {
       final boolean fitThey) {
     super(!fitWe || !fitThey
         || numberPoints != MEDIUM_NUMBER_OF_POINTS
-        ? WRONG_EXCEPTION_CASE_MESSAGE
+        ? ExceptionMessages.WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_FIT_MESSAGE, numberPoints));
 
   }

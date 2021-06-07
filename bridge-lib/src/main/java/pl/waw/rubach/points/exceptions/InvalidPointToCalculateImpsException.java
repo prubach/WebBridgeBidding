@@ -34,7 +34,7 @@ public class InvalidPointToCalculateImpsException extends BridgeException {
   /**
    * Parameter describing points which are look for in the ImpTable.
    */
-  private int pointDifference;
+  private final int pointDifference;
 
   /**
    * Exception testing number of points checked in Imp table.
@@ -48,7 +48,7 @@ public class InvalidPointToCalculateImpsException extends BridgeException {
   public InvalidPointToCalculateImpsException(final int pointDiff) {
     super(pointDiff > 0
         && pointDiff < OneDealImp.MAX_NUMBER_OF_POINTS_BETWEEN_EXPECTED
-        ? WRONG_EXCEPTION_CASE_MESSAGE
+        ? ExceptionMessages.WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_POINTS_TO_IMPS_MESSAGE,
         pointDiff));
     this.pointDifference = pointDiff;

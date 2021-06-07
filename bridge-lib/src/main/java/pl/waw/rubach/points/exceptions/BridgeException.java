@@ -27,11 +27,6 @@ package pl.waw.rubach.points.exceptions;
  * Parent class to all bridge exceptions.
  */
 public class BridgeException extends Exception {
-  /**
-   * String to mention wrong use of exception.
-   */
-  protected static final String WRONG_EXCEPTION_CASE_MESSAGE =
-      "Wyjątek ustawiony w złym przypadku - warunek nie jest spełniony";
 
   /**
    * General constructor to be used by extended class.

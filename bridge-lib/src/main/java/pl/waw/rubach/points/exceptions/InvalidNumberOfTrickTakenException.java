@@ -45,7 +45,7 @@ public class InvalidNumberOfTrickTakenException extends BridgeException {
         ? String.format(
             ExceptionMessages.INVALID_NUMBER_OF_TRICKS_TAKEN_MESSAGE,
             tricksTaken)
-        : WRONG_EXCEPTION_CASE_MESSAGE);
+        : ExceptionMessages.WRONG_EXCEPTION_CASE_MESSAGE);
 
     this.numberOfTricksTaken = tricksTaken;
   }

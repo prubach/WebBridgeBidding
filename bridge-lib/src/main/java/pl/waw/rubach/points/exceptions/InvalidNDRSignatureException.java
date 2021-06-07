@@ -51,7 +51,7 @@ public class InvalidNDRSignatureException extends BridgeException {
     super((nRDsign == IS_UNDOUBTED
         || nRDsign == IS_DOUBLE
         || nRDsign == IS_REDOUBLE)
-        ? WRONG_EXCEPTION_CASE_MESSAGE
+        ? ExceptionMessages.WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_NDRSIGNATURE_MESSAGE,
         nRDsign));
 

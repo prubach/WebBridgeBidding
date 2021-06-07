@@ -41,7 +41,8 @@ public class InvalidContractSuitException extends BridgeException {
    * @param suit which is checked
    */
   public InvalidContractSuitException(final String suit) {
-    super(SUITS.stream().anyMatch(suit::contains) ? WRONG_EXCEPTION_CASE_MESSAGE
+    super(SUITS.stream().anyMatch(suit::contains)
+        ? ExceptionMessages.WRONG_EXCEPTION_CASE_MESSAGE
         : String.format(ExceptionMessages.INVALID_CONTRACT_SUIT_MESSAGE, suit));
     this.contractSuit = suit;
   }
