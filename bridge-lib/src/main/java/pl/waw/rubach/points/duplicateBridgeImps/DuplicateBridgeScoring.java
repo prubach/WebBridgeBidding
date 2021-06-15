@@ -29,6 +29,7 @@ public class DuplicateBridgeScoring extends InternationalBridgeScoring {
      *                         InvalidContractSuitException       if suit is no one of 5 bridge strain (colors + nt)
      *                         InvalidContractLevelException      if level is not between 1 to 7 (according bridge rules etc
      */
+    //test git
     public DuplicateBridgeScoring(int contractLevel, String contractSuit, int nDRSignature,
                                   boolean auctionAssumptionDeclarer, int numberOfTrickTakenByDeclarer)
             throws BridgeException {

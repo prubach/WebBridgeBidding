@@ -65,7 +65,7 @@ public class DBInitializeConfig {
 								+ "SUIT VARCHAR(2),"
 								+ "POINTS_MIN INTEGER,"
 								+ "POINTS_MAX INTEGER,"
-								+ "SUIT_LENGTH VARCHAR(4),"				//odp mogę wpisać wiecej niz 4 znaki czyli to znaczy co innego - tak to jest coś tam od sql
+								+ "SUIT_LENGTH VARCHAR(4),"
 								+ "BID_TYPE VARCHAR(30),"
 								+ "BID_CLASS VARCHAR(30),"
 								+ "AFTER_INTERVEN INTEGER,"
