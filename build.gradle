@@ -38,6 +38,7 @@ apply plugin: "io.spring.dependency-management"
 apply plugin: 'org.springframework.boot'
 
 ext['hibernate.version'] = '5.4.30.Final'
+ext['log4j2.version'] = '2.16.0'
 
 jar {
     archiveBaseName = 'webbridgebidding'
